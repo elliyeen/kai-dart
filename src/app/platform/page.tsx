@@ -17,9 +17,15 @@ export default function PlatformPage() {
   const [demoView, setDemoView] = useState<string>("command");
   const [wizardOpen, setWizardOpen] = useState(false);
 
+  const switchToDemo = (view?: string) => {
+    if (view) setDemoView(view);
+    setTab("demo");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get("tab") === "demo") setTab("demo");
+    if (params.get("tab") === "demo") switchToDemo();
   }, []);
 
   return (
@@ -39,7 +45,7 @@ export default function PlatformPage() {
             Platform Overview
           </button>
           <button
-            onClick={() => setTab("demo")}
+            onClick={() => switchToDemo()}
             className={`px-4 sm:px-8 py-4 text-[10px] sm:text-[11px] font-medium tracking-[0.2em] sm:tracking-[0.25em] uppercase border-b-2 transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
               tab === "demo" ? "border-[#FF6B35] text-black" : "border-transparent text-gray-400 hover:text-black"
             }`}
@@ -52,11 +58,11 @@ export default function PlatformPage() {
 
       {/* Demo tab */}
       {tab === "demo" && (
-        <div className="bg-[#F7F5F0] p-6 min-h-screen relative">
-          {/* Tour trigger button */}
+        <div className="bg-[#F7F5F0] px-6 pb-6 pt-16 min-h-screen">
+          {/* Tour trigger — fixed so it stays visible below the sticky tab bar */}
           <button
             onClick={() => setWizardOpen(true)}
-            className="absolute top-6 right-6 z-10 flex items-center gap-2 text-xs tracking-widest uppercase bg-[#111318] text-white px-4 py-2.5 hover:bg-[#1a1d24] transition-colors"
+            className="fixed top-[120px] right-6 z-50 flex items-center gap-2 text-xs tracking-widest uppercase bg-[#111318] text-white px-4 py-2.5 hover:bg-[#1a1d24] transition-colors"
           >
             <BookOpen className="w-3.5 h-3.5" />
             Take a tour
@@ -113,7 +119,7 @@ export default function PlatformPage() {
               Request a demo
             </Link>
             <button
-              onClick={() => setTab("demo")}
+              onClick={() => switchToDemo()}
               className="border border-white/25 px-6 py-2 text-[12px] font-medium tracking-[0.05em] hover:border-white/55 hover:bg-white/[0.05] transition-all duration-300 inline-flex items-center justify-center gap-2"
             >
               Explore the platform <ArrowRight className="w-3 h-3" />
@@ -194,7 +200,7 @@ export default function PlatformPage() {
           <div className="grid lg:grid-cols-3 gap-1">
             <FadeUp className="h-full">
               <button
-                onClick={() => setTab("demo")}
+                onClick={() => switchToDemo()}
                 className="block h-full w-full text-left group cursor-pointer"
               >
                 <div className="bg-black text-white p-12 h-full relative transition-all duration-300 group-hover:bg-[#0d0d0d] group-hover:ring-1 group-hover:ring-white/20">
@@ -225,7 +231,7 @@ export default function PlatformPage() {
 
             <FadeUp delay={120} className="h-full">
               <button
-                onClick={() => setTab("demo")}
+                onClick={() => switchToDemo()}
                 className="block h-full w-full text-left group cursor-pointer"
               >
                 <div className="bg-[#FF6B35] text-white p-12 h-full relative transition-all duration-300 group-hover:bg-[#e85e2a] group-hover:ring-1 group-hover:ring-white/30">
@@ -256,7 +262,7 @@ export default function PlatformPage() {
 
             <FadeUp delay={240} className="h-full">
               <button
-                onClick={() => { setDemoView("intelligence"); setTab("demo"); }}
+                onClick={() => switchToDemo("intelligence")}
                 className="block h-full w-full text-left group cursor-pointer"
               >
                 <div className="bg-[#2C3E50] text-white p-12 h-full relative transition-all duration-300 group-hover:bg-[#243342] group-hover:ring-1 group-hover:ring-white/15">
