@@ -14,18 +14,49 @@ KAI is built on three layers — the **Kai Fabric**:
 
 | Layer | Description |
 |---|---|
-| **Data Fabric** | Connects every data source across stations, vehicles, and systems into a unified real-time picture |
-| **Operations Intelligence** | Predictive AI forecasts maintenance needs 4 hours ahead with 94.2% accuracy |
+| **Data Fabric** | Connects every sensor, system, and record across stations into a unified real-time picture |
+| **Operations Intelligence** | Predictive AI forecasts maintenance needs up to 4 hours ahead with 94.2% accuracy |
 | **Workflow Automation** | AI-driven task routing and rapid-response team deployment in under 5 minutes |
+
+---
+
+## Live Command Center Demo
+
+The platform page includes a fully interactive **Live Command Center** — a real-time station readiness dashboard covering all five DART lines.
+
+### DART Lines
+
+| Line | Terminals | Stations | Status |
+|---|---|---|---|
+| **Red** | Westmoreland → Parker Rd | 26 | Active |
+| **Green** | Buckner → N. Carrollton/Frankford | 28 | Active |
+| **Blue** | UNT Dallas → Downtown Rowlett | 23 | Active — 1 Closure |
+| **Orange** | Parker Road → DFW Airport | 13 | Active |
+| **Silver** | Shiloh Rd → DFW Terminal B | 10 | Active |
+
+### Dashboard Features
+
+- **Command Center** — Network-wide readiness overview with spark charts per line, critical station table, and AI accuracy metrics
+- **Stations View** — Per-line station list with live scores, issue flags, staff deployment, and closure notices
+- **Asset Dashboards** — Elevator, camera, stairwell, trash can, and bus cover uptime across all stations
+- **Inspection** — 48-point crew checklist with photo upload and section scoring
+- **Intelligence Engine** — AI anomaly detection, predictive alerts, and confidence-scored decisions
+
+### Notable Station Data
+
+- **Convention Center (Blue Line)** — Closed Jan 5 2026 for KBHCC redevelopment. Est. reopening 2029.
+- **Cedars (Blue Line)** — Score: 42, Critical (safety, smell, vandalism, litter, lighting)
+- **Forest/Jupiter (Blue Line)** — Score: 42, Critical
+- **St. Paul (Blue Line)** — Score: 48, Critical
 
 ---
 
 ## Tech Stack
 
-- [Next.js 16](https://nextjs.org) (App Router, Turbopack)
+- [Next.js](https://nextjs.org) 16 (App Router, Turbopack)
 - React 19 + TypeScript
 - Tailwind CSS v4
-- CI/CD (GitHub Actions → GitHub Pages)
+- CI/CD — GitHub Actions → GitHub Pages
 
 ---
 
@@ -47,7 +78,7 @@ Open [http://localhost:3001](http://localhost:3001) to view the site.
 | Route | Description |
 |---|---|
 | `/` | Home — hero, stats, platform overview |
-| `/platform` | The Kai Fabric — three-layer architecture deep-dive + live command center demo |
+| `/platform` | Platform deep-dive + Live Command Center demo |
 | `/world-cup-2026` | FIFA 2026 countdown, Dallas match schedule, readiness tracker |
 | `/contact` | Contact / demo request form |
 
