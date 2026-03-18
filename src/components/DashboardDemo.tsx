@@ -2067,22 +2067,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
                 }
               </svg>
             </button>
-            <svg width="26" height="26" viewBox="0 0 100 100" fill="none" style={{ opacity:.92, flexShrink:0 }}>
-              <ellipse cx="50" cy="62" rx="22" ry="14" fill={T.gold}/>
-              <circle cx="50" cy="38" r="14" fill={T.gold}/>
-              <path d="M35 55 Q20 68 18 80 Q30 72 45 68" fill="#8B6914"/>
-              <path d="M42 30 L44 12 M46 29 L50 10 M54 30 L56 12" stroke="#8B6914" strokeWidth="2" strokeLinecap="round"/>
-              <circle cx="56" cy="34" r="2.5" fill="#1a1a1a"/>
-            </svg>
-            {/* Brand block */}
-            <div style={{ flex:1, display:"flex", flexDirection:"column", gap:2 }}>
-              <div style={{ display:"flex", alignItems:"baseline", gap:8 }}>
-                <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:900, fontSize:18, letterSpacing:"0.14em", color:T.text, lineHeight:1 }}>KAI</div>
-                <div style={{ width:1, height:12, background:T.border, flexShrink:0 }}/>
-                <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:700, fontSize:11, letterSpacing:"0.18em", color:T.textSub, textTransform:"uppercase", lineHeight:1 }}>Command Center</div>
-              </div>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:500, fontSize:9, letterSpacing:"0.28em", color:T.gold, textTransform:"uppercase", lineHeight:1 }}>DART Station Readiness · 65 Stations Live</div>
-            </div>
+            <div style={{ flex:1 }}/>
             <div className="kd-header-chips" style={{ display:"flex", alignItems:"center", gap:10 }}>
               {crit > 0 && <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.06em", color:"#C62828", background:"#FFEBEE", padding:"3px 10px", borderRadius:2, fontWeight:700 }}>{crit} CRITICAL</div>}
               {warn > 0 && <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.06em", color:"#E65100", background:"#FFF3E0", padding:"3px 10px", borderRadius:2 }}>{warn} ATTENTION</div>}
