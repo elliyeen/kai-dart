@@ -3,16 +3,19 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Database, Cpu, Workflow, BarChart3, Smartphone, Map } from "lucide-react";
+import { ArrowRight, Database, Cpu, Workflow, BarChart3, Smartphone, Map, BookOpen } from "lucide-react";
 import CountUp from "@/components/CountUp";
 import FadeUp from "@/components/FadeUp";
 import DashboardDemo from "@/components/DashboardDemo";
 import Nav from "@/components/Nav";
+import WizardOverlay from "@/components/WizardOverlay";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export default function PlatformPage() {
   const [tab, setTab] = useState<"overview" | "demo">("overview");
+  const [demoView, setDemoView] = useState<string>("command");
+  const [wizardOpen, setWizardOpen] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -49,8 +52,17 @@ export default function PlatformPage() {
 
       {/* Demo tab */}
       {tab === "demo" && (
-        <div className="bg-[#F7F5F0] p-6 min-h-screen">
-          <DashboardDemo />
+        <div className="bg-[#F7F5F0] p-6 min-h-screen relative">
+          {/* Tour trigger button */}
+          <button
+            onClick={() => setWizardOpen(true)}
+            className="absolute top-6 right-6 z-10 flex items-center gap-2 text-xs tracking-widest uppercase bg-[#111318] text-white px-4 py-2.5 hover:bg-[#1a1d24] transition-colors"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            Take a tour
+          </button>
+          <DashboardDemo initialView={demoView} />
+          {wizardOpen && <WizardOverlay onClose={() => setWizardOpen(false)} />}
         </div>
       )}
 
@@ -71,40 +83,40 @@ export default function PlatformPage() {
 
         <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
           <p
-            className="hero-animate text-[11px] font-medium tracking-[0.55em] text-white/40 mb-10 uppercase"
+            className="hero-animate text-[10px] font-medium tracking-[0.6em] text-white/35 mb-6 uppercase"
             style={{ animationDelay: "0ms" }}
           >
             KAI Platform
           </p>
           <h1
-            className="hero-animate text-[3rem] sm:text-[4.5rem] lg:text-[6rem] xl:text-[7rem] font-thin leading-[0.93] tracking-[-0.03em] mb-10"
+            className="hero-animate text-[2.8rem] sm:text-[4rem] lg:text-[5.25rem] xl:text-[6rem] font-semibold leading-[1.0] tracking-[-0.03em] mb-7"
             style={{ animationDelay: "160ms" }}
           >
             The operating system<br />
-            <span className="text-white/75">for cities and enterprise.</span>
+            <span className="text-white/85 font-light">for cities.</span>
           </h1>
           <p
-            className="hero-animate text-lg lg:text-xl text-white/50 mb-14 max-w-2xl mx-auto leading-relaxed font-light"
+            className="hero-animate text-base lg:text-lg text-white/80 mb-12 max-w-xl mx-auto leading-relaxed font-light tracking-wide"
             style={{ animationDelay: "360ms" }}
           >
             Kai unifies data, operations, and intelligence into a single platform —
             turning complexity into clarity, at any scale.
           </p>
           <div
-            className="hero-animate flex flex-col sm:flex-row gap-4 justify-center"
+            className="hero-animate flex flex-col sm:flex-row gap-3 justify-center"
             style={{ animationDelay: "520ms" }}
           >
             <Link
               href="/contact"
-              className="bg-white text-black px-10 py-3.5 text-sm font-medium tracking-wide hover:bg-white/90 transition-all duration-300"
+              className="bg-white text-black px-6 py-2 text-[12px] font-medium tracking-[0.05em] hover:bg-white/90 transition-all duration-300"
             >
               Request a demo
             </Link>
             <button
               onClick={() => setTab("demo")}
-              className="border border-white/30 px-10 py-3.5 text-sm font-medium tracking-wide hover:border-white/60 hover:bg-white/[0.04] transition-all duration-300 inline-flex items-center justify-center gap-2"
+              className="border border-white/25 px-6 py-2 text-[12px] font-medium tracking-[0.05em] hover:border-white/55 hover:bg-white/[0.05] transition-all duration-300 inline-flex items-center justify-center gap-2"
             >
-              Explore the platform <ArrowRight className="w-3.5 h-3.5" />
+              Explore the platform <ArrowRight className="w-3 h-3" />
             </button>
           </div>
         </div>
@@ -117,6 +129,46 @@ export default function PlatformPage() {
           <div className="w-px h-14 bg-linear-to-b from-white/25 to-transparent mx-auto" />
         </div>
       </section>
+
+      {/* Cities ticker */}
+      <div className="bg-white border-b border-gray-100 py-6 overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
+        <div className="animate-marquee whitespace-nowrap">
+          {[
+            { name: "Dallas",          weight: "font-bold" },
+            { name: "Plano",           weight: "font-light" },
+            { name: "Irving",          weight: "font-semibold" },
+            { name: "Garland",         weight: "font-medium" },
+            { name: "Richardson",      weight: "font-thin" },
+            { name: "Carrollton",      weight: "font-bold" },
+            { name: "Addison",         weight: "font-light" },
+            { name: "Farmers Branch",  weight: "font-semibold" },
+            { name: "Glenn Heights",   weight: "font-medium" },
+            { name: "Rowlett",         weight: "font-thin" },
+            { name: "University Park", weight: "font-bold" },
+            { name: "Highland Park",   weight: "font-light" },
+            { name: "DFW Airport",     weight: "font-semibold" },
+          ].concat([
+            { name: "Dallas",          weight: "font-bold" },
+            { name: "Plano",           weight: "font-light" },
+            { name: "Irving",          weight: "font-semibold" },
+            { name: "Garland",         weight: "font-medium" },
+            { name: "Richardson",      weight: "font-thin" },
+            { name: "Carrollton",      weight: "font-bold" },
+            { name: "Addison",         weight: "font-light" },
+            { name: "Farmers Branch",  weight: "font-semibold" },
+            { name: "Glenn Heights",   weight: "font-medium" },
+            { name: "Rowlett",         weight: "font-thin" },
+            { name: "University Park", weight: "font-bold" },
+            { name: "Highland Park",   weight: "font-light" },
+            { name: "DFW Airport",     weight: "font-semibold" },
+          ]).map((city, i) => (
+            <span key={i} className="inline-flex items-center">
+              <span className={`text-[1.35rem] tracking-tight text-black ${city.weight} px-8`}>{city.name}</span>
+              <span className="text-gray-300 text-lg">·</span>
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* The Kai Fabric — Three Layers */}
       <section className="py-36 bg-white text-black" id="platform">
@@ -141,72 +193,96 @@ export default function PlatformPage() {
 
           <div className="grid lg:grid-cols-3 gap-1">
             <FadeUp className="h-full">
-              <div className="bg-black text-white p-12 h-full">
-                <div className="w-12 h-12 border border-white/20 flex items-center justify-center mb-8">
-                  <Database className="w-5 h-5 text-white/50" />
+              <button
+                onClick={() => setTab("demo")}
+                className="block h-full w-full text-left group cursor-pointer"
+              >
+                <div className="bg-black text-white p-12 h-full relative transition-all duration-300 group-hover:bg-[#0d0d0d] group-hover:ring-1 group-hover:ring-white/20">
+                  <div className="w-12 h-12 border border-white/20 flex items-center justify-center mb-8 transition-all duration-300 group-hover:border-white/50 group-hover:scale-110">
+                    <Database className="w-5 h-5 text-white/50 transition-colors duration-300 group-hover:text-white/90" />
+                  </div>
+                  <div className="text-[10px] font-medium tracking-[0.35em] text-white/30 mb-4 uppercase transition-colors duration-300 group-hover:text-white/50">Layer 01</div>
+                  <h3 className="text-2xl font-light mb-6 transition-colors duration-300 group-hover:text-white">Data Fabric</h3>
+                  <p className="font-light text-white/50 leading-relaxed text-sm transition-colors duration-300 group-hover:text-white/70">
+                    Every sensor, system, and record unified into one operational truth.
+                    IoT streams, workforce data, inspection logs, environmental feeds —
+                    all harmonized, all real-time, all in one place.
+                  </p>
+                  <div className="mt-10 pt-8 border-t border-white/[0.08] space-y-3">
+                    {["IoT & sensor integration", "Legacy system connectors", "Real-time data pipelines", "Open API architecture"].map((item) => (
+                      <div key={item} className="flex items-center gap-3 text-sm font-light text-white/35 transition-colors duration-300 group-hover:text-white/55">
+                        <div className="w-1 h-1 bg-white/25 rounded-full shrink-0 transition-colors duration-300 group-hover:bg-white/50" />
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="absolute bottom-8 right-8 flex items-center gap-1.5 text-[10px] font-medium tracking-[0.18em] uppercase opacity-0 translate-y-1 group-hover:opacity-50 group-hover:translate-y-0 transition-all duration-300">
+                    Station Readiness <ArrowRight className="w-3 h-3" />
+                  </div>
                 </div>
-                <div className="text-[10px] font-medium tracking-[0.35em] text-white/30 mb-4 uppercase">Layer 01</div>
-                <h3 className="text-2xl font-light mb-6">Data Fabric</h3>
-                <p className="font-light text-white/50 leading-relaxed text-sm">
-                  Every sensor, system, and record unified into one operational truth.
-                  IoT streams, workforce data, inspection logs, environmental feeds —
-                  all harmonized, all real-time, all in one place.
-                </p>
-                <div className="mt-10 pt-8 border-t border-white/[0.08] space-y-3">
-                  {["IoT & sensor integration", "Legacy system connectors", "Real-time data pipelines", "Open API architecture"].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-sm font-light text-white/35">
-                      <div className="w-1 h-1 bg-white/25 rounded-full shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              </button>
             </FadeUp>
 
             <FadeUp delay={120} className="h-full">
-              <div className="bg-[#FF6B35] text-white p-12 h-full">
-                <div className="w-12 h-12 border border-white/30 flex items-center justify-center mb-8">
-                  <Workflow className="w-5 h-5 text-white/70" />
+              <button
+                onClick={() => setTab("demo")}
+                className="block h-full w-full text-left group cursor-pointer"
+              >
+                <div className="bg-[#FF6B35] text-white p-12 h-full relative transition-all duration-300 group-hover:bg-[#e85e2a] group-hover:ring-1 group-hover:ring-white/30">
+                  <div className="w-12 h-12 border border-white/30 flex items-center justify-center mb-8 transition-all duration-300 group-hover:border-white/70 group-hover:scale-110">
+                    <Workflow className="w-5 h-5 text-white/70 transition-colors duration-300 group-hover:text-white" />
+                  </div>
+                  <div className="text-[10px] font-medium tracking-[0.35em] text-white/50 mb-4 uppercase transition-colors duration-300 group-hover:text-white/80">Layer 02</div>
+                  <h3 className="text-2xl font-light mb-6 transition-colors duration-300 group-hover:text-white">Operations Layer</h3>
+                  <p className="font-light text-white/70 leading-relaxed text-sm transition-colors duration-300 group-hover:text-white/90">
+                    Real-time orchestration of people, assets, and workflows.
+                    Task routing, staff deployment, incident response — all automated,
+                    all traceable, all accountable.
+                  </p>
+                  <div className="mt-10 pt-8 border-t border-white/20 space-y-3">
+                    {["Automated task routing", "GPS staff tracking", "Incident management", "Workflow automation"].map((item) => (
+                      <div key={item} className="flex items-center gap-3 text-sm font-light text-white/60 transition-colors duration-300 group-hover:text-white/85">
+                        <div className="w-1 h-1 bg-white/50 rounded-full shrink-0 transition-colors duration-300 group-hover:bg-white/80" />
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="absolute bottom-8 right-8 flex items-center gap-1.5 text-[10px] font-medium tracking-[0.18em] uppercase opacity-0 translate-y-1 group-hover:opacity-70 group-hover:translate-y-0 transition-all duration-300">
+                    Stations View <ArrowRight className="w-3 h-3" />
+                  </div>
                 </div>
-                <div className="text-[10px] font-medium tracking-[0.35em] text-white/50 mb-4 uppercase">Layer 02</div>
-                <h3 className="text-2xl font-light mb-6">Operations Layer</h3>
-                <p className="font-light text-white/70 leading-relaxed text-sm">
-                  Real-time orchestration of people, assets, and workflows.
-                  Task routing, staff deployment, incident response — all automated,
-                  all traceable, all accountable.
-                </p>
-                <div className="mt-10 pt-8 border-t border-white/20 space-y-3">
-                  {["Automated task routing", "GPS staff tracking", "Incident management", "Workflow automation"].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-sm font-light text-white/60">
-                      <div className="w-1 h-1 bg-white/50 rounded-full shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              </button>
             </FadeUp>
 
             <FadeUp delay={240} className="h-full">
-              <div className="bg-[#2C3E50] text-white p-12 h-full">
-                <div className="w-12 h-12 border border-white/20 flex items-center justify-center mb-8">
-                  <Cpu className="w-5 h-5 text-white/50" />
+              <button
+                onClick={() => { setDemoView("intelligence"); setTab("demo"); }}
+                className="block h-full w-full text-left group cursor-pointer"
+              >
+                <div className="bg-[#2C3E50] text-white p-12 h-full relative transition-all duration-300 group-hover:bg-[#243342] group-hover:ring-1 group-hover:ring-white/15">
+                  <div className="w-12 h-12 border border-white/20 flex items-center justify-center mb-8 transition-all duration-300 group-hover:border-[#4fc3f7]/60 group-hover:scale-110">
+                    <Cpu className="w-5 h-5 text-white/50 transition-colors duration-300 group-hover:text-[#4fc3f7]/90" />
+                  </div>
+                  <div className="text-[10px] font-medium tracking-[0.35em] text-white/30 mb-4 uppercase transition-colors duration-300 group-hover:text-[#4fc3f7]/60">Layer 03</div>
+                  <h3 className="text-2xl font-light mb-6 transition-colors duration-300 group-hover:text-white">Intelligence Engine</h3>
+                  <p className="font-light text-white/50 leading-relaxed text-sm transition-colors duration-300 group-hover:text-white/70">
+                    AI that predicts demand, routes resources, and learns from every
+                    outcome. Not a tool on top of your operations — the brain running
+                    through them.
+                  </p>
+                  <div className="mt-10 pt-8 border-t border-white/[0.08] space-y-3">
+                    {["Predictive demand modeling", "Anomaly detection", "Adaptive ML models", "Decision intelligence"].map((item) => (
+                      <div key={item} className="flex items-center gap-3 text-sm font-light text-white/35 transition-colors duration-300 group-hover:text-white/55">
+                        <div className="w-1 h-1 bg-white/25 rounded-full shrink-0 transition-colors duration-300 group-hover:bg-[#4fc3f7]/50" />
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="absolute bottom-8 right-8 flex items-center gap-1.5 text-[10px] font-medium tracking-[0.18em] uppercase opacity-0 translate-y-1 group-hover:opacity-50 group-hover:translate-y-0 transition-all duration-300">
+                    Intelligence Engine <ArrowRight className="w-3 h-3" />
+                  </div>
                 </div>
-                <div className="text-[10px] font-medium tracking-[0.35em] text-white/30 mb-4 uppercase">Layer 03</div>
-                <h3 className="text-2xl font-light mb-6">Intelligence Engine</h3>
-                <p className="font-light text-white/50 leading-relaxed text-sm">
-                  AI that predicts demand, routes resources, and learns from every
-                  outcome. Not a tool on top of your operations — the brain running
-                  through them.
-                </p>
-                <div className="mt-10 pt-8 border-t border-white/[0.08] space-y-3">
-                  {["Predictive demand modeling", "Anomaly detection", "Adaptive ML models", "Decision intelligence"].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-sm font-light text-white/35">
-                      <div className="w-1 h-1 bg-white/25 rounded-full shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              </button>
             </FadeUp>
           </div>
         </div>
@@ -280,18 +356,18 @@ export default function PlatformPage() {
               },
             ].map((module, i) => (
               <FadeUp key={module.num} delay={(i % 3) * 120}>
-                <div className="group hover:-translate-y-1 transition-transform duration-300">
+                <div className="group hover:-translate-y-1.5 transition-all duration-300">
                   <div className="flex items-start justify-between mb-6">
-                    <div className="text-[3.5rem] font-thin text-white/15 leading-none tracking-[-0.02em]">{module.num}</div>
-                    <div className="w-9 h-9 border border-white/[0.08] flex items-center justify-center text-white/50 transition-all duration-300 group-hover:border-[#FF6B35] group-hover:text-[#FF6B35]">
+                    <div className="text-[3.5rem] font-thin text-white/15 leading-none tracking-[-0.02em] transition-colors duration-300 group-hover:text-[#FF6B35]/25">{module.num}</div>
+                    <div className="w-9 h-9 border border-white/[0.08] flex items-center justify-center text-white/50 transition-all duration-300 group-hover:border-[#FF6B35] group-hover:text-[#FF6B35] group-hover:scale-110">
                       {module.icon}
                     </div>
                   </div>
-                  <h3 className="text-xl font-light mb-4">{module.title}</h3>
-                  <p className="font-light text-white/65 leading-relaxed text-sm">{module.desc}</p>
-                  <div className="mt-8 pt-6 border-t border-white/10">
-                    <div className="text-[11px] font-medium text-white/50 tracking-[0.2em] uppercase">{module.statLabel}</div>
-                    <div className="text-3xl font-thin mt-2 tracking-[-0.01em]">{module.stat}</div>
+                  <h3 className="text-xl font-light mb-4 transition-colors duration-300 group-hover:text-white">{module.title}</h3>
+                  <p className="font-light text-white/65 leading-relaxed text-sm transition-colors duration-300 group-hover:text-white/80">{module.desc}</p>
+                  <div className="mt-8 pt-6 border-t border-white/10 transition-colors duration-300 group-hover:border-white/25">
+                    <div className="text-[11px] font-medium text-white/50 tracking-[0.2em] uppercase transition-colors duration-300 group-hover:text-white/70">{module.statLabel}</div>
+                    <div className="text-3xl font-thin mt-2 tracking-[-0.01em] transition-colors duration-300 group-hover:text-[#FF6B35]">{module.stat}</div>
                   </div>
                 </div>
               </FadeUp>
@@ -327,22 +403,22 @@ export default function PlatformPage() {
                 { num: "04", industry: "Healthcare",            desc: "Hospital environments where compliance, cleanliness, and response time are mission-critical. Continuous inspection and accountability.", proof: "HIPAA-compatible" },
                 { num: "05", industry: "Energy & Utilities",    desc: "Maintenance scheduling, asset inspection, and predictive failure detection for critical infrastructure.", proof: "Critical infrastructure" },
               ].map((item) => (
-                <div key={item.industry} className="border-b border-gray-100 py-8 lg:py-10">
+                <div key={item.industry} className="group border-b border-gray-100 py-8 lg:py-10 transition-all duration-200 hover:bg-gray-50/60 px-3 -mx-3">
                   {/* Mobile */}
                   <div className="lg:hidden">
                     <div className="flex items-baseline gap-4 mb-2">
-                      <span className="text-xl font-thin text-gray-200">{item.num}</span>
-                      <h3 className="text-xl font-light">{item.industry}</h3>
+                      <span className="text-xl font-thin text-gray-200 transition-colors duration-200 group-hover:text-gray-300">{item.num}</span>
+                      <h3 className="text-xl font-light transition-colors duration-200 group-hover:text-black">{item.industry}</h3>
                     </div>
                     <p className="text-base font-light text-gray-500 leading-relaxed mb-3">{item.desc}</p>
                     <span className="text-[11px] font-medium text-gray-400 tracking-[0.2em] uppercase">{item.proof}</span>
                   </div>
                   {/* Desktop */}
                   <div className="hidden lg:grid lg:grid-cols-12 gap-8 items-baseline">
-                    <div className="lg:col-span-1 text-2xl font-thin text-gray-200 tracking-[-0.01em]">{item.num}</div>
-                    <div className="lg:col-span-3"><h3 className="text-xl font-light">{item.industry}</h3></div>
-                    <div className="lg:col-span-6"><p className="text-lg font-light text-gray-500 leading-relaxed">{item.desc}</p></div>
-                    <div className="lg:col-span-2 text-right"><span className="text-[11px] font-medium text-gray-400 tracking-[0.2em] uppercase">{item.proof}</span></div>
+                    <div className="lg:col-span-1 text-2xl font-thin text-gray-200 tracking-[-0.01em] transition-colors duration-200 group-hover:text-gray-300">{item.num}</div>
+                    <div className="lg:col-span-3"><h3 className="text-xl font-light transition-colors duration-200 group-hover:text-black">{item.industry}</h3></div>
+                    <div className="lg:col-span-6"><p className="text-lg font-light text-gray-500 leading-relaxed transition-colors duration-200 group-hover:text-gray-700">{item.desc}</p></div>
+                    <div className="lg:col-span-2 text-right"><span className="text-[11px] font-medium text-gray-400 tracking-[0.2em] uppercase transition-colors duration-200 group-hover:text-black">{item.proof}</span></div>
                   </div>
                 </div>
               ))}
@@ -401,17 +477,17 @@ export default function PlatformPage() {
                 },
               ].map((item, i) => (
                 <FadeUp key={item.step} delay={i * 100}>
-                  <div className="grid grid-cols-[40px_1fr] lg:grid-cols-[56px_1fr_auto] gap-4 lg:gap-6 items-start py-10 border-b border-white/[0.08]">
-                    <div className="text-[11px] font-medium text-white/40 tracking-[0.2em] pt-1">{item.step}</div>
+                  <div className="group grid grid-cols-[40px_1fr] lg:grid-cols-[56px_1fr_auto] gap-4 lg:gap-6 items-start py-10 border-b border-white/[0.08] transition-all duration-200 hover:border-white/20">
+                    <div className="text-[11px] font-medium text-white/40 tracking-[0.2em] pt-1 transition-colors duration-200 group-hover:text-[#FF6B35]">{item.step}</div>
                     <div>
                       <div className="flex items-start justify-between gap-3 mb-3">
-                        <h3 className="text-2xl font-light">{item.title}</h3>
-                        <span className="lg:hidden text-[11px] font-medium text-white/40 tracking-[0.15em] uppercase whitespace-nowrap mt-2">{item.metric}</span>
+                        <h3 className="text-2xl font-light transition-colors duration-200 group-hover:text-white">{item.title}</h3>
+                        <span className="lg:hidden text-[11px] font-medium text-white/40 tracking-[0.15em] uppercase whitespace-nowrap mt-2 transition-colors duration-200 group-hover:text-white/70">{item.metric}</span>
                       </div>
-                      <p className="font-light text-white/60 leading-relaxed text-sm">{item.desc}</p>
+                      <p className="font-light text-white/60 leading-relaxed text-sm transition-colors duration-200 group-hover:text-white/75">{item.desc}</p>
                     </div>
                     <div className="hidden lg:block text-right pt-1">
-                      <span className="text-[11px] font-medium text-white/40 tracking-[0.15em] uppercase whitespace-nowrap">{item.metric}</span>
+                      <span className="text-[11px] font-medium text-white/40 tracking-[0.15em] uppercase whitespace-nowrap transition-colors duration-200 group-hover:text-white/70">{item.metric}</span>
                     </div>
                   </div>
                 </FadeUp>
@@ -460,9 +536,9 @@ export default function PlatformPage() {
                 { label: "Team deployment time",        value: "<5 min" },
                 { label: "Platform uptime SLA",         value: <CountUp end={99.9} decimals={1} suffix="%" /> },
               ].map((row, i) => (
-                <div key={i} className="flex justify-between items-baseline border-b border-gray-100 py-5">
-                  <span className="text-[12px] text-gray-400 tracking-wide">{row.label}</span>
-                  <span className="text-2xl font-thin tracking-[-0.01em]">{row.value}</span>
+                <div key={i} className="group flex justify-between items-baseline border-b border-gray-100 py-5 transition-all duration-150 hover:border-gray-300">
+                  <span className="text-[12px] text-gray-400 tracking-wide transition-colors duration-150 group-hover:text-gray-700">{row.label}</span>
+                  <span className="text-2xl font-thin tracking-[-0.01em] transition-colors duration-150 group-hover:text-black">{row.value}</span>
                 </div>
               ))}
             </div>
@@ -505,9 +581,9 @@ export default function PlatformPage() {
                   { label: "Compliance",    value: "FTA · NIST 800-53" },
                   { label: "Go-live time",  value: "30 days" },
                 ].map((row) => (
-                  <div key={row.label} className="flex justify-between items-baseline border-b border-white/10 py-5">
-                    <span className="text-[12px] text-white/55 tracking-wide">{row.label}</span>
-                    <span className="text-lg font-light">{row.value}</span>
+                  <div key={row.label} className="group flex justify-between items-baseline border-b border-white/10 py-5 transition-all duration-150 hover:px-2 hover:-mx-2 hover:border-white/20">
+                    <span className="text-[12px] text-white/55 tracking-wide transition-colors duration-150 group-hover:text-white/80">{row.label}</span>
+                    <span className="text-lg font-light transition-colors duration-150 group-hover:text-white">{row.value}</span>
                   </div>
                 ))}
               </div>

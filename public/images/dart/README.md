@@ -1,87 +1,27 @@
 # DART Photo Assets
 
-This folder contains high-quality images of DART stations, trains, and facilities.
+Real photography from DART stations and infrastructure, captured February 2026.
 
-## Folder Structure
+## Files
 
-```
-dart/
-├── hero/          # Homepage hero images (1920x1080 or larger)
-├── stations/      # Station interiors and platforms
-├── trains/        # DART light rail trains
-└── before-after/  # Cleaning/maintenance comparisons
-```
+| File | Used in |
+|------|---------|
+| `parkeroad.jpg` | Homepage hero |
+| `20260223_191335.jpg` | Platform page hero, homepage platform section |
+| `20260223_191302.jpg` | Available |
+| `20260223_195532.jpg` | Available |
+| `20260223_195547.jpg` | Available |
+| `20260223_195550.jpg` | Available |
+| `DartredlineParker.jpg` | Available |
 
-## Priority Photos Needed
+## Guidelines
 
-### 1. Hero Image (Homepage)
-- **File**: `hero/dart-train-hero.jpg`
-- **Specs**: 2400px wide minimum, landscape orientation
-- **Subject**: Clean DART light rail train at modern station OR sleek station interior
-- **Examples**:
-  - DART train pulling into Union Station
-  - Modern platform at Pearl/Arts District Station
-  - AT&T Stadium station exterior
-
-### 2. Stations
-- Union Station (main hub)
-- AT&T Stadium station (World Cup venue)
-- Pearl/Arts District (modern, clean)
-- DFW Airport station
-- Interior platforms during peak hours
-- Escalators, ticketing areas, clean facilities
-
-### 3. Trains
-- DART light rail exterior (side profile)
-- Interior of clean, modern train car
-- Train at platform (passengers boarding)
-- Multiple trains at maintenance yard (optional)
-
-### 4. Before/After (for case studies)
-- Station platforms: dirty vs. clean
-- Restroom facilities: before/after maintenance
-- Ticketing area: before/after cleaning
-- Train interior: before/after deep clean
-
-## Photo Guidelines
-
-- **Resolution**: 1920px+ wide for web use
-- **Format**: .jpg (compressed) or .webp (preferred)
-- **Lighting**: Well-lit, natural or professional lighting
-- **Composition**: Follow rule of thirds, avoid busy/cluttered shots
-- **Quality**: Sharp, in-focus, professional appearance
-- **Rights**: Must have usage rights for commercial website
-
-## How to Get Photos
-
-1. **DART Media Relations**
-   - Contact: media@dart.org
-   - Request press kit/media assets
-   - Explain: Website for FIFA 2026 readiness proposal
-
-2. **Personal Photography**
-   - Visit during off-peak hours
-   - Get permission from DART if shooting commercial
-   - Use iPhone 12+ or professional camera
-
-3. **Temporary Placeholders**
-   - Currently using Unsplash transit photos
-   - Replace ASAP with authentic DART imagery
-
-## Once You Have Photos
-
-1. Place files in appropriate folders
-2. Name files descriptively: `union-station-platform.jpg`
-3. Update image paths in React components:
+- All images are original photography — no stock
+- Format: `.jpg`
+- Preferred minimum width: 1920px for full-bleed sections
+- Always pair with the cinematic gradient overlay when used as a section background:
 
 ```tsx
-// In src/app/page.tsx
-<div className="absolute inset-0 bg-[url('/images/dart/hero/dart-train-hero.jpg')] bg-cover bg-center"></div>
+<div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/10 to-black/70" />
+<div className="absolute inset-0 bg-linear-to-r from-black/15 via-transparent to-black/15" />
 ```
-
-## Status
-
-- [ ] Hero image
-- [ ] Station photos (5-10)
-- [ ] Train photos (3-5)
-- [ ] Before/after sets (2-3)

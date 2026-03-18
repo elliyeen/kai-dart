@@ -16,7 +16,7 @@ Kai defines and owns the category of *City Operating Systems*. It is not a tool,
 Transit authorities, municipal governments, stadium operators, enterprise facility owners, and critical infrastructure operators. These are buyers where operational failure is not an option.
 
 **Proof point:**
-Live across 65 DART stations, 16,055 inspection points, 93 miles of light rail. Built for FIFA World Cup 2026.
+Live across 65 DART stations, 16,055 inspection points. Built for FIFA World Cup 2026.
 
 ---
 
@@ -90,10 +90,10 @@ Kai does not use grays from a traditional gray scale. Instead, it uses `white` o
 ```
 white/[0.06]  → hairline borders, dividers
 white/20      → icon backgrounds, subtle separators
-white/30      → eyebrow labels, captions
-white/40      → secondary labels
-white/50      → body text on dark
-white/75      → secondary headline on dark
+white/35      → eyebrow labels, captions
+white/50      → body text on dark, secondary labels
+white/80      → subtitle text on dark
+white/85      → secondary hero headline line ("for cities.")
 white          → primary text, primary CTAs
 ```
 
@@ -123,21 +123,23 @@ Geist is a variable font; all weights are available without additional loading c
 
 | Weight | Class | Usage |
 |--------|-------|-------|
-| Thin (100) | `font-thin` | Hero display text, large stat numbers, decorative numerals |
-| Light (300) | `font-light` | Body copy, card descriptions, paragraph text |
+| Thin (100) | `font-thin` | Section H2 headings, large stat numbers, decorative numerals |
+| Light (300) | `font-light` | Hero secondary line, body copy, card descriptions |
 | Regular (400) | *(default)* | Not explicitly used |
 | Medium (500) | `font-medium` | Eyebrow labels, nav links, CTA button text, section labels |
+| Semi-bold (600) | `font-semibold` | Hero display H1 (main line) |
 
 ### Type scale
 
 | Context | Size | Weight | Tracking | Line height |
 |---------|------|--------|----------|-------------|
-| Hero display | `clamp(3.2rem, 8vw, 7.5rem)` | `font-thin` | `tracking-[-0.03em]` | `leading-[0.93]` |
+| Hero display (main line) | `2.8rem` → `6rem` | `font-semibold` | `tracking-[-0.03em]` | `leading-[1.0]` |
+| Hero display (secondary line) | same size | `font-light text-white/85` | `tracking-[-0.03em]` | `leading-[1.0]` |
 | Section H2 | `text-5xl` → `text-6xl` | `font-thin` | `tracking-[-0.02em]` | `leading-tight` |
 | Module H3 | `text-xl` → `text-2xl` | `font-light` | default | default |
 | Stat display | `3.5rem` → `4.5rem` | `font-thin` | `tracking-[-0.02em]` | `leading-none` |
 | Body | `text-sm` → `text-xl` | `font-light` | default | `leading-relaxed` |
-| Eyebrow label | `text-[11px]` | `font-medium` | `tracking-[0.2em]` → `tracking-[0.55em]` | — |
+| Eyebrow label | `text-[10px]` | `font-medium` | `tracking-[0.6em]` | — |
 | Stat label | `text-[11px]` | `font-medium` | `tracking-[0.2em]` | — |
 | Nav links | `text-[13px]` | default | default | — |
 | Footer / meta | `text-[13px]` | default | default | — |
@@ -275,16 +277,30 @@ links: text-[13px] text-white/50 hover:text-white (active: text-white)
 contact CTA: border border-white/20 px-5 py-2 hover:bg-white hover:text-black
 ```
 
-### Primary CTA button (dark background)
+### Primary CTA button — hero (dark background)
 ```
-bg-white text-black px-10 py-3.5 text-sm font-medium tracking-wide
+bg-white text-black px-8 py-3 text-[13px] font-medium tracking-[0.05em]
 hover:bg-white/90 transition-all duration-300
 ```
 
-### Secondary CTA button (dark background)
+### Secondary CTA button — hero (dark background)
 ```
-border border-white/30 px-10 py-3.5 text-sm font-medium tracking-wide
-hover:border-white/60 hover:bg-white/[0.04] transition-all duration-300
+border border-white/25 px-8 py-3 text-[13px] font-medium tracking-[0.05em]
+hover:border-white/55 hover:bg-white/[0.05] transition-all duration-300
+inline-flex items-center justify-center gap-2
+```
+Include `<ArrowRight className="w-3 h-3" />` as trailing icon.
+
+### Primary CTA button — section (dark background)
+```
+bg-white text-black px-12 py-4 text-sm font-medium tracking-wide
+hover:bg-white/90 transition-all duration-300
+```
+
+### Secondary CTA button — section (dark background)
+```
+border border-white/20 px-12 py-4 text-sm font-medium tracking-wide
+hover:border-white/50 transition-all duration-300
 inline-flex items-center justify-center gap-2
 ```
 Include `<ArrowRight className="w-3.5 h-3.5" />` as trailing icon.
@@ -355,4 +371,4 @@ value: text-2xl font-thin tracking-[-0.01em]
 
 ---
 
-*KAI Brand Guidelines — Last updated February 2026*
+*KAI Brand Guidelines — Last updated March 2026*

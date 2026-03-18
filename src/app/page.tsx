@@ -15,7 +15,7 @@ export default function Home() {
       <Nav />
 
       {/* Hero */}
-      <section className="h-screen flex flex-col items-center justify-center relative overflow-hidden">
+      <section className="h-[calc(100vh-80px)] flex flex-col items-center justify-center relative overflow-hidden">
         <Image
           src={`${basePath}/images/dart/parkeroad.jpg`}
           alt="City infrastructure"
@@ -27,41 +27,41 @@ export default function Home() {
         <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/10 to-black/70" />
         <div className="absolute inset-0 bg-linear-to-r from-black/15 via-transparent to-black/15" />
 
-        <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
           <p
-            className="hero-animate text-[11px] font-medium tracking-[0.55em] text-white/40 mb-10 uppercase"
+            className="hero-animate text-[10px] font-medium tracking-[0.6em] text-white/35 mb-6 uppercase"
             style={{ animationDelay: "0ms" }}
           >
             KAI
           </p>
           <h1
-            className="hero-animate text-[3.2rem] sm:text-[4.8rem] lg:text-[6.5rem] xl:text-[7.5rem] font-thin leading-[0.93] tracking-[-0.03em] mb-10"
+            className="hero-animate text-[2.8rem] sm:text-[4rem] lg:text-[5.25rem] xl:text-[6rem] font-semibold leading-[1.0] tracking-[-0.03em] mb-7"
             style={{ animationDelay: "160ms" }}
           >
             The operating system<br />
-            <span className="text-white/75">for cities.</span>
+            <span className="text-white/60 font-light">for cities.</span>
           </h1>
           <p
-            className="hero-animate text-lg lg:text-xl text-white/50 mb-14 max-w-2xl mx-auto leading-relaxed font-light"
+            className="hero-animate text-base lg:text-lg text-white/80 mb-12 max-w-xl mx-auto leading-relaxed font-light tracking-wide"
             style={{ animationDelay: "360ms" }}
           >
-            Data, operations, and intelligence, unified.
+            Data, operations, and intelligence — unified.
           </p>
           <div
-            className="hero-animate flex flex-col sm:flex-row gap-4 justify-center"
+            className="hero-animate flex flex-col sm:flex-row gap-3 justify-center"
             style={{ animationDelay: "520ms" }}
           >
             <Link
               href="/platform?tab=demo"
-              className="bg-white text-black px-10 py-3.5 text-sm font-medium tracking-wide hover:bg-white/90 transition-all duration-300"
+              className="bg-white text-black px-8 py-3 text-[13px] font-medium tracking-[0.05em] hover:bg-white/90 transition-all duration-300"
             >
-              Explore the Platform
+              Explore the platform
             </Link>
             <Link
               href="/contact"
-              className="border border-white/30 px-10 py-3.5 text-sm font-medium tracking-wide hover:border-white/60 hover:bg-white/[0.04] transition-all duration-300 inline-flex items-center justify-center gap-2"
+              className="border border-white/25 px-8 py-3 text-[13px] font-medium tracking-[0.05em] hover:border-white/55 hover:bg-white/[0.05] transition-all duration-300 inline-flex items-center justify-center gap-2"
             >
-              Request a demo <ArrowRight className="w-3.5 h-3.5" />
+              Request a demo <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
         </div>
@@ -75,18 +75,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust bar */}
-      <div className="bg-white border-b border-gray-100 py-4">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-wrap items-center justify-center gap-8 lg:gap-12 text-[11px] text-gray-400 tracking-[0.2em] uppercase">
-          <span>DART Authority</span>
-          <span className="text-gray-200 hidden sm:inline">·</span>
-          <span>FIFA World Cup 2026</span>
-          <span className="text-gray-200 hidden sm:inline">·</span>
-          <span>AT&amp;T Stadium, Arlington</span>
-          <span className="text-gray-200 hidden sm:inline">·</span>
-          <span>65 Live Stations</span>
-          <span className="text-gray-200 hidden sm:inline">·</span>
-          <span>16,055 Inspection Points</span>
+      {/* Cities ticker */}
+      <div className="bg-white border-b border-gray-100 py-6 overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
+        <div className="animate-marquee whitespace-nowrap">
+          {[
+            { name: "Dallas",          weight: "font-bold" },
+            { name: "Plano",           weight: "font-light" },
+            { name: "Irving",          weight: "font-semibold" },
+            { name: "Garland",         weight: "font-medium" },
+            { name: "Richardson",      weight: "font-thin" },
+            { name: "Carrollton",      weight: "font-bold" },
+            { name: "Addison",         weight: "font-light" },
+            { name: "Farmers Branch",  weight: "font-semibold" },
+            { name: "Glenn Heights",   weight: "font-medium" },
+            { name: "Rowlett",         weight: "font-thin" },
+            { name: "University Park", weight: "font-bold" },
+            { name: "Highland Park",   weight: "font-light" },
+            { name: "DFW Airport",     weight: "font-semibold" },
+          ].concat([
+            { name: "Dallas",          weight: "font-bold" },
+            { name: "Plano",           weight: "font-light" },
+            { name: "Irving",          weight: "font-semibold" },
+            { name: "Garland",         weight: "font-medium" },
+            { name: "Richardson",      weight: "font-thin" },
+            { name: "Carrollton",      weight: "font-bold" },
+            { name: "Addison",         weight: "font-light" },
+            { name: "Farmers Branch",  weight: "font-semibold" },
+            { name: "Glenn Heights",   weight: "font-medium" },
+            { name: "Rowlett",         weight: "font-thin" },
+            { name: "University Park", weight: "font-bold" },
+            { name: "Highland Park",   weight: "font-light" },
+            { name: "DFW Airport",     weight: "font-semibold" },
+          ]).map((city, i) => (
+            <span key={i} className="inline-flex items-center">
+              <span className={`text-[1.35rem] tracking-tight text-black ${city.weight} px-8`}>{city.name}</span>
+              <span className="text-gray-300 text-lg">·</span>
+            </span>
+          ))}
         </div>
       </div>
 
@@ -118,30 +143,40 @@ export default function Home() {
 
           <div className="grid lg:grid-cols-3 gap-1">
             <FadeUp className="h-full">
-              <div className="bg-black text-white p-10 h-full">
-                <div className="w-10 h-10 border border-white/20 flex items-center justify-center mb-8">
-                  <Database className="w-4 h-4 text-white/40" />
+              <Link href="/platform?tab=demo" className="block h-full group cursor-pointer">
+                <div className="bg-black text-white p-10 h-full relative transition-all duration-300 group-hover:bg-[#0d0d0d] group-hover:ring-1 group-hover:ring-white/20">
+                  <div className="w-10 h-10 border border-white/20 flex items-center justify-center mb-8 transition-all duration-300 group-hover:border-white/50 group-hover:scale-110">
+                    <Database className="w-4 h-4 text-white/40 transition-colors duration-300 group-hover:text-white/80" />
+                  </div>
+                  <div className="text-[10px] font-medium tracking-[0.35em] text-white/30 mb-3 uppercase transition-colors duration-300 group-hover:text-white/50">Layer 01</div>
+                  <h3 className="text-xl font-light mb-4 transition-colors duration-300 group-hover:text-white">Data Fabric</h3>
+                  <p className="text-sm text-white/50 leading-relaxed font-light transition-colors duration-300 group-hover:text-white/70">
+                    Every sensor, system, and record unified into one operational truth.
+                    IoT streams, workforce data, and inspection logs — all harmonized, all real-time.
+                  </p>
+                  <div className="absolute bottom-6 right-6 flex items-center gap-1.5 text-[10px] font-medium tracking-[0.18em] uppercase opacity-0 translate-y-1 group-hover:opacity-50 group-hover:translate-y-0 transition-all duration-300">
+                    Station Readiness <ArrowRight className="w-3 h-3" />
+                  </div>
                 </div>
-                <div className="text-[10px] font-medium tracking-[0.35em] text-white/30 mb-3 uppercase">Layer 01</div>
-                <h3 className="text-xl font-light mb-4">Data Fabric</h3>
-                <p className="text-sm text-white/50 leading-relaxed font-light">
-                  Every sensor, system, and record unified into one operational truth.
-                  IoT streams, workforce data, and inspection logs — all harmonized, all real-time.
-                </p>
-              </div>
+              </Link>
             </FadeUp>
             <FadeUp delay={120} className="h-full">
-              <div className="bg-[#FF6B35] text-white p-10 h-full">
-                <div className="w-10 h-10 border border-white/30 flex items-center justify-center mb-8">
-                  <Workflow className="w-4 h-4 text-white/60" />
+              <Link href="/platform?tab=demo" className="block h-full group cursor-pointer">
+                <div className="bg-[#FF6B35] text-white p-10 h-full relative transition-all duration-300 group-hover:bg-[#e85e2a] group-hover:ring-1 group-hover:ring-white/30">
+                  <div className="w-10 h-10 border border-white/30 flex items-center justify-center mb-8 transition-all duration-300 group-hover:border-white/70 group-hover:scale-110">
+                    <Workflow className="w-4 h-4 text-white/60 transition-colors duration-300 group-hover:text-white" />
+                  </div>
+                  <div className="text-[10px] font-medium tracking-[0.35em] text-white/50 mb-3 uppercase transition-colors duration-300 group-hover:text-white/80">Layer 02</div>
+                  <h3 className="text-xl font-light mb-4 transition-colors duration-300 group-hover:text-white">Operations Layer</h3>
+                  <p className="text-sm text-white/70 leading-relaxed font-light transition-colors duration-300 group-hover:text-white/90">
+                    Real-time orchestration of people, assets, and workflows.
+                    Task routing, staff deployment, incident response — all automated and accountable.
+                  </p>
+                  <div className="absolute bottom-6 right-6 flex items-center gap-1.5 text-[10px] font-medium tracking-[0.18em] uppercase opacity-0 translate-y-1 group-hover:opacity-70 group-hover:translate-y-0 transition-all duration-300">
+                    Stations View <ArrowRight className="w-3 h-3" />
+                  </div>
                 </div>
-                <div className="text-[10px] font-medium tracking-[0.35em] text-white/50 mb-3 uppercase">Layer 02</div>
-                <h3 className="text-xl font-light mb-4">Operations Layer</h3>
-                <p className="text-sm text-white/70 leading-relaxed font-light">
-                  Real-time orchestration of people, assets, and workflows.
-                  Task routing, staff deployment, incident response — all automated and accountable.
-                </p>
-              </div>
+              </Link>
             </FadeUp>
             <FadeUp delay={240} className="h-full">
               <div className="bg-[#2C3E50] text-white p-10 h-full">

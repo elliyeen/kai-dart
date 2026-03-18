@@ -1,4 +1,4 @@
-# KAI — The Operating System for Cities and Enterprise
+# KAI — The Operating System for Cities
 
 **[Live Site →](https://elliyeen.github.io/kai-dart/)**
 
@@ -22,10 +22,10 @@ KAI is built on three layers — the **Kai Fabric**:
 
 ## Tech Stack
 
-- [Next.js 15](https://nextjs.org) (App Router, Turbopack)
+- [Next.js 16](https://nextjs.org) (App Router, Turbopack)
 - React 19 + TypeScript
 - Tailwind CSS v4
-- Docker + CI/CD (GitHub Actions → GitHub Pages)
+- CI/CD (GitHub Actions → GitHub Pages)
 
 ---
 
@@ -33,10 +33,12 @@ KAI is built on three layers — the **Kai Fabric**:
 
 ```bash
 npm install
-npm run dev
+npm run dev -- --port 3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+Open [http://localhost:3001](http://localhost:3001) to view the site.
+
+> Port 3001 is used because port 3000 is reserved for another local project.
 
 ---
 
@@ -45,7 +47,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 | Route | Description |
 |---|---|
 | `/` | Home — hero, stats, platform overview |
-| `/platform` | The Kai Fabric — three-layer architecture deep-dive |
+| `/platform` | The Kai Fabric — three-layer architecture deep-dive + live command center demo |
 | `/world-cup-2026` | FIFA 2026 countdown, Dallas match schedule, readiness tracker |
 | `/contact` | Contact / demo request form |
 
@@ -55,10 +57,9 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 | Metric | Value |
 |---|---|
-| DART Stations | 73 |
+| DART Stations | 65 |
 | Inspection Points / Station | 247 |
-| Total Inspection Points | 18,031 |
-| Light Rail Vehicles | 163 |
+| Total Inspection Points | 16,055 |
 | Match Day Ridership Surge | +286% |
 | AI Forecast Accuracy | 94.2% |
 | Incident Response Time | < 30 seconds |
@@ -68,10 +69,11 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ## Infrastructure
 
-- **Docker**: 3-stage Dockerfile, docker-compose for local dev
 - **CI/CD**: GitHub Actions — lint/build on PR, deploy to GitHub Pages on push to `main`
 - **Live URL**: https://elliyeen.github.io/kai-dart/
+- **Repo**: `elliyeen/kai-dart`
+- **Base path**: `/kai-dart` (configured in `next.config.ts`)
 
 ---
 
-© 2026 KAI. The Operating System for Cities and Enterprise.
+© 2026 KAI. The Operating System for Cities.

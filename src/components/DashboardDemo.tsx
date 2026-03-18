@@ -15,6 +15,7 @@ interface Station {
   id: string; name: string; score: number; status: Status;
   issues: string[]; lastInspected: string; staff: StaffMember[];
   lineId: string; lineColor: string; lineName: string;
+  closure?: string;
 }
 interface Line { name: string; sub: string; color: string; stations: Station[]; }
 interface InspItem    { id: string; name: string; desc: string; priority: "critical"|"high"|"standard"; }
@@ -46,6 +47,11 @@ const ISSUES: Record<string, Issue> = {
   debris:           { key:"debris",           label:"Debris on Platform",      icon:"DEB", priority:"standard" },
   crew_delayed:     { key:"crew_delayed",     label:"Crew Deployment Delayed", icon:"DLY", priority:"high"     },
   camera_offline:   { key:"camera_offline",   label:"Camera Offline",          icon:"CAM", priority:"critical" },
+  safety:           { key:"safety",           label:"Safety Concern",          icon:"SFY", priority:"critical" },
+  smell:            { key:"smell",            label:"Odor/Sanitation",          icon:"SNL", priority:"high"     },
+  litter:           { key:"litter",           label:"Litter on Platform",       icon:"LIT", priority:"standard" },
+  vandalism:        { key:"vandalism",        label:"Vandalism",                icon:"VND", priority:"high"     },
+  lighting:         { key:"lighting",         label:"Lighting Issue",           icon:"LGT", priority:"high"     },
 };
 
 /* ─── Asset data ────────────────────────────────── */
@@ -112,14 +118,16 @@ const ASSETS: Record<string, AssetEntry> = {
   "unt-dallas":            { elevators:2,elevators_ok:2, cameras:8,cameras_ok:8,   stairwells:3,stairwells_ok:3, trash_cans:10,trash_cans_ok:10, bus_covers:2,bus_covers_ok:2 },
   "camp-wisdom":           { elevators:1,elevators_ok:1, cameras:5,cameras_ok:5,   stairwells:2,stairwells_ok:2, trash_cans:7,trash_cans_ok:7,   bus_covers:1,bus_covers_ok:1 },
   "va-medical":            { elevators:3,elevators_ok:3, cameras:10,cameras_ok:10, stairwells:4,stairwells_ok:4, trash_cans:12,trash_cans_ok:12, bus_covers:2,bus_covers_ok:2 },
-  "8th-corinth":           { elevators:2,elevators_ok:2, cameras:7,cameras_ok:6,   stairwells:3,stairwells_ok:3, trash_cans:9,trash_cans_ok:8,   bus_covers:1,bus_covers_ok:1 },
-  "convention-b":          { elevators:4,elevators_ok:4, cameras:14,cameras_ok:14, stairwells:6,stairwells_ok:6, trash_cans:18,trash_cans_ok:18, bus_covers:4,bus_covers_ok:4 },
-  "union-b":               { elevators:4,elevators_ok:4, cameras:12,cameras_ok:12, stairwells:6,stairwells_ok:6, trash_cans:16,trash_cans_ok:15, bus_covers:3,bus_covers_ok:3 },
-  "west-end-b":            { elevators:2,elevators_ok:2, cameras:8,cameras_ok:8,   stairwells:3,stairwells_ok:3, trash_cans:10,trash_cans_ok:10, bus_covers:2,bus_covers_ok:2 },
-  "akard-b":               { elevators:2,elevators_ok:2, cameras:6,cameras_ok:6,   stairwells:3,stairwells_ok:3, trash_cans:9,trash_cans_ok:9,   bus_covers:1,bus_covers_ok:1 },
-  "st-paul-b":             { elevators:2,elevators_ok:2, cameras:6,cameras_ok:6,   stairwells:3,stairwells_ok:3, trash_cans:9,trash_cans_ok:9,   bus_covers:1,bus_covers_ok:1 },
-  "cityplace-b":           { elevators:2,elevators_ok:1, cameras:8,cameras_ok:6,   stairwells:4,stairwells_ok:4, trash_cans:10,trash_cans_ok:8,  bus_covers:2,bus_covers_ok:2 },
-  "smu-b":                 { elevators:2,elevators_ok:2, cameras:7,cameras_ok:7,   stairwells:3,stairwells_ok:3, trash_cans:9,trash_cans_ok:9,   bus_covers:2,bus_covers_ok:2 },
+  "eight-blue":            { elevators:2,elevators_ok:2, cameras:7,cameras_ok:6,   stairwells:3,stairwells_ok:3, trash_cans:9,trash_cans_ok:8,   bus_covers:1,bus_covers_ok:1 },
+  "cedars-blue":           { elevators:2,elevators_ok:1, cameras:6,cameras_ok:3,   stairwells:3,stairwells_ok:2, trash_cans:8,trash_cans_ok:5,   bus_covers:1,bus_covers_ok:1 },
+  "convention-blue":       { elevators:4,elevators_ok:0, cameras:14,cameras_ok:8,  stairwells:6,stairwells_ok:4, trash_cans:18,trash_cans_ok:0,  bus_covers:4,bus_covers_ok:0 },
+  "union-blue":            { elevators:4,elevators_ok:4, cameras:12,cameras_ok:12, stairwells:6,stairwells_ok:6, trash_cans:16,trash_cans_ok:15, bus_covers:3,bus_covers_ok:3 },
+  "west-end-blue":         { elevators:2,elevators_ok:2, cameras:8,cameras_ok:8,   stairwells:3,stairwells_ok:3, trash_cans:10,trash_cans_ok:10, bus_covers:2,bus_covers_ok:2 },
+  "akard-blue":            { elevators:2,elevators_ok:2, cameras:6,cameras_ok:6,   stairwells:3,stairwells_ok:3, trash_cans:9,trash_cans_ok:8,   bus_covers:1,bus_covers_ok:1 },
+  "st-paul-blue":          { elevators:2,elevators_ok:1, cameras:6,cameras_ok:4,   stairwells:3,stairwells_ok:2, trash_cans:9,trash_cans_ok:6,   bus_covers:1,bus_covers_ok:1 },
+  "pearl-blue":            { elevators:3,elevators_ok:3, cameras:10,cameras_ok:10, stairwells:4,stairwells_ok:4, trash_cans:12,trash_cans_ok:12, bus_covers:2,bus_covers_ok:2 },
+  "cityplace-blue":        { elevators:2,elevators_ok:2, cameras:8,cameras_ok:8,   stairwells:4,stairwells_ok:4, trash_cans:10,trash_cans_ok:10, bus_covers:2,bus_covers_ok:2 },
+  "mockingbird-blue":      { elevators:2,elevators_ok:2, cameras:7,cameras_ok:7,   stairwells:3,stairwells_ok:3, trash_cans:9,trash_cans_ok:9,   bus_covers:2,bus_covers_ok:2 },
   "white-rock":            { elevators:2,elevators_ok:2, cameras:6,cameras_ok:6,   stairwells:3,stairwells_ok:3, trash_cans:8,trash_cans_ok:8,   bus_covers:1,bus_covers_ok:1 },
   "lake-highlands":        { elevators:2,elevators_ok:2, cameras:6,cameras_ok:5,   stairwells:3,stairwells_ok:3, trash_cans:8,trash_cans_ok:7,   bus_covers:1,bus_covers_ok:1 },
   "lbj-skillman":          { elevators:2,elevators_ok:2, cameras:7,cameras_ok:7,   stairwells:3,stairwells_ok:3, trash_cans:9,trash_cans_ok:9,   bus_covers:1,bus_covers_ok:1 },
@@ -140,36 +148,36 @@ const ASSETS: Record<string, AssetEntry> = {
 };
 
 /* ─── Station builder ───────────────────────────── */
-const mk = (id:string,name:string,score:number,status:Status,issues:string[],last:string,staff:StaffMember[],lid:string,lc:string,ln:string):Station =>
-  ({id,name,score,status,issues,lastInspected:last,staff,lineId:lid,lineColor:lc,lineName:ln});
+const mk = (id:string,name:string,score:number,status:Status,issues:string[],last:string,staff:StaffMember[],lid:string,lc:string,ln:string,closure?:string):Station =>
+  ({id,name,score,status,issues,lastInspected:last,staff,lineId:lid,lineColor:lc,lineName:ln,closure});
 
 const RED: Station[] = [
-  mk("westmoreland",     "Westmoreland",         92,"good",    [],                                         "5 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("hampton",          "Hampton",              90,"good",    [],                                         "8 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("tyler-vernon",     "Tyler/Vernon",         91,"good",    [],                                         "7 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("zoo",              "Zoo",                  88,"warning", ["debris"],                                 "16 min ago", [],                                                                                     "red","#DA291C","Red Line"),
-  mk("8th-corinth-r",    "8th & Corinth",        86,"warning", ["debris"],                                 "14 min ago", [],                                                                                     "red","#DA291C","Red Line"),
-  mk("cedars-r",         "Cedars",               90,"good",    [],                                         "7 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("convention-r",     "Convention Center",    97,"good",    [],                                         "2 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("union-r",          "EBJ Union Station",    95,"good",    [],                                         "3 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("west-end-r",       "West End",             93,"good",    [],                                         "6 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("akard",            "Akard",                96,"good",    [],                                         "7 min ago",  [{name:"Rosa M.",  role:"Inspector",  status:"Available",detail:""}],                  "red","#DA291C","Red Line"),
-  mk("st-paul",          "St. Paul",             87,"warning", ["cleaning_overdue"],                       "12 min ago", [{name:"James W.",role:"Maintenance",status:"On Task",  detail:"Restroom check"}],    "red","#DA291C","Red Line"),
-  mk("pearl",            "Pearl/Arts District",  98,"good",    [],                                         "1 min ago",  [{name:"David R.", role:"Cleaner",    status:"On Task",  detail:"Platform sweep"}],   "red","#DA291C","Red Line"),
-  mk("cityplace-up",     "Cityplace/Uptown",     71,"critical",["restroom_closed","crew_delayed"],          "31 min ago", [{name:"Priya K.",role:"Field Tech", status:"En Route", detail:"ETA 2 min"}],         "red","#DA291C","Red Line"),
-  mk("smu",              "SMU/Mockingbird",      93,"good",    [],                                         "9 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("lovers-lane",      "Lovers Lane",          94,"good",    [],                                         "5 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("park-lane",        "Park Lane",            91,"good",    [],                                         "14 min ago", [],                                                                                     "red","#DA291C","Red Line"),
-  mk("walnut-hill-r",    "Walnut Hill",          89,"warning", ["lighting_fault"],                         "17 min ago", [],                                                                                     "red","#DA291C","Red Line"),
-  mk("forest-lane",      "Forest Lane",          94,"good",    [],                                         "6 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("lbj-central",      "LBJ/Central",          73,"critical",["elevator_down","lighting_fault","camera_offline"],"22 min ago",[{name:"Aisha B.",role:"Field Tech",status:"En Route",detail:"ETA 4 min"}],    "red","#DA291C","Red Line"),
-  mk("spring-valley",    "Spring Valley",        95,"good",    [],                                         "4 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("arapaho-center",   "Arapaho Center",       92,"good",    [],                                         "8 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("galatyn-park",     "Galatyn Park",         96,"good",    [],                                         "3 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("cityline-bush",    "CityLine/Bush",        97,"good",    [],                                         "2 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("12th-street",      "12th Street",          90,"good",    [],                                         "9 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("downtown-plano",   "Downtown Plano",       93,"good",    [],                                         "6 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
-  mk("parker-road",      "Parker Road",          99,"good",    [],                                         "1 min ago",  [],                                                                                     "red","#DA291C","Red Line"),
+  mk("westmoreland",  "Westmoreland",        74,"warning",  ["debris","cleaning_overdue"],                           "18 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("hampton",       "Hampton",             70,"warning",  ["debris","cleaning_overdue"],                           "22 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("tyler-vernon",  "Tyler/Vernon",        66,"warning",  ["cleaning_overdue","lighting_fault"],                   "25 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("zoo",           "Zoo",                 78,"good",     [],                                                       "11 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("8th-corinth-r", "8th & Corinth",       71,"warning",  ["cleaning_overdue"],                                    "19 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("cedars-r",      "Cedars",              38,"critical", ["safety","cleaning_overdue","graffiti","debris","lighting_fault"], "41 min ago", [],                                                                      "red","#DA291C","Red Line"),
+  mk("convention-r",  "Convention Center",    0,"closed",   ["safety","lighting_fault"],                              "N/A",        [],                                                                                 "red","#DA291C","Red Line"),
+  mk("union-r",       "EBJ Union Station",   79,"deploying",["debris","cleaning_overdue"],                            "14 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("west-end-r",    "West End",            82,"good",     [],                                                       "9 min ago",  [],                                                                                 "red","#DA291C","Red Line"),
+  mk("akard",         "Akard",               68,"warning",  ["cleaning_overdue","debris"],                            "15 min ago", [{name:"Rosa M.",  role:"Inspector",  status:"Available",detail:""}],              "red","#DA291C","Red Line"),
+  mk("st-paul",       "St. Paul",            44,"critical", ["safety","graffiti","cleaning_overdue","lighting_fault"],"38 min ago", [{name:"James W.",role:"Maintenance",status:"On Task",  detail:"Safety sweep"}],  "red","#DA291C","Red Line"),
+  mk("pearl",         "Pearl/Arts District", 92,"good",     [],                                                       "1 min ago",  [{name:"David R.", role:"Cleaner",    status:"On Task",  detail:"Platform sweep"}], "red","#DA291C","Red Line"),
+  mk("cityplace-up",  "CityPlace/Uptown",    87,"good",     [],                                                       "8 min ago",  [],                                                                                 "red","#DA291C","Red Line"),
+  mk("smu",           "SMU/Mockingbird",     55,"deploying",["cleaning_overdue","debris"],                            "27 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("lovers-lane",   "Lovers Lane",         83,"good",     [],                                                       "6 min ago",  [],                                                                                 "red","#DA291C","Red Line"),
+  mk("park-lane",     "Park Lane",           41,"critical", ["safety","cleaning_overdue","graffiti","lighting_fault"],"35 min ago", [{name:"Priya K.",role:"Field Tech", status:"En Route", detail:"ETA 5 min"}],     "red","#DA291C","Red Line"),
+  mk("walnut-hill-r", "Walnut Hill",         78,"warning",  ["debris"],                                              "17 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("forest-lane",   "Forest Lane",         73,"warning",  ["debris"],                                              "20 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("lbj-central",   "LBJ/Central",         61,"warning",  ["cleaning_overdue","debris"],                           "24 min ago", [{name:"Aisha B.",role:"Field Tech",status:"En Route",detail:"ETA 4 min"}],        "red","#DA291C","Red Line"),
+  mk("spring-valley", "Spring Valley",       34,"critical", ["safety","cleaning_overdue","graffiti","lighting_fault"],"44 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("arapaho-center","Arapaho Center",      91,"good",     [],                                                       "7 min ago",  [],                                                                                 "red","#DA291C","Red Line"),
+  mk("galatyn-park",  "Galatyn Park",        85,"good",     [],                                                       "5 min ago",  [],                                                                                 "red","#DA291C","Red Line"),
+  mk("cityline-bush", "CityLine/Bush",       88,"good",     [],                                                       "4 min ago",  [],                                                                                 "red","#DA291C","Red Line"),
+  mk("12th-street",   "12th Street",         80,"good",     [],                                                       "10 min ago", [],                                                                                 "red","#DA291C","Red Line"),
+  mk("downtown-plano","Downtown Plano",      84,"good",     [],                                                       "8 min ago",  [],                                                                                 "red","#DA291C","Red Line"),
+  mk("parker-road",   "Parker Road",         88,"good",     [],                                                       "6 min ago",  [],                                                                                 "red","#DA291C","Red Line"),
 ];
 const GREEN: Station[] = [
   mk("buckner",                "Buckner",                          93,"good",     [],                                        "8 min ago",  [],"green","#00A84F","Green Line"),
@@ -198,29 +206,29 @@ const GREEN: Station[] = [
   mk("north-carrollton-frank", "N. Carrollton/Frankford",          99,"good",     [],                                        "1 min ago",  [],"green","#00A84F","Green Line"),
 ];
 const BLUE: Station[] = [
-  mk("unt-dallas",       "UNT Dallas",                    96,"good",     [],                                 "4 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("camp-wisdom",      "Camp Wisdom",                   92,"good",     [],                                 "7 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("ledbetter",        "Ledbetter",                     91,"good",     [],                                 "8 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("va-medical",       "VA Medical Center",             97,"good",     [],                                 "2 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("kiest",            "Kiest",                         88,"warning",  ["escalator_maint"],                "20 min ago", [],"blue","#0076CE","Blue Line"),
-  mk("illinois",         "Illinois",                      94,"good",     [],                                 "5 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("morrell",          "Morrell",                       91,"good",     [],                                 "9 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("8th-corinth",      "8th & Corinth",                 86,"warning",  ["debris"],                         "14 min ago", [],"blue","#0076CE","Blue Line"),
-  mk("cedars",           "Cedars",                        90,"good",     [],                                 "7 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("convention-b",     "Convention Center",             97,"good",     [],                                 "2 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("union-b",          "EBJ Union Station",             95,"good",     [],                                 "3 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("west-end-b",       "West End",                      93,"good",     [],                                 "6 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("akard-b",          "Akard",                         96,"good",     [],                                 "4 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("st-paul-b",        "St. Paul",                      94,"good",     [],                                 "5 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("pearl-b",          "Pearl/Arts District",           98,"good",     [],                                 "1 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("cityplace-b",      "Cityplace/Uptown",              74,"critical", ["restroom_closed","crew_delayed"],  "26 min ago", [{name:"Priya K.",role:"Field Tech",status:"En Route",detail:"ETA 2 min"}],"blue","#0076CE","Blue Line"),
-  mk("smu-b",            "SMU/Mockingbird",               95,"good",     [],                                 "4 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("white-rock",       "White Rock",                    93,"good",     [],                                 "6 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("lake-highlands",   "Lake Highlands",                87,"warning",  ["lighting_fault"],                 "17 min ago", [],"blue","#0076CE","Blue Line"),
-  mk("lbj-skillman",     "LBJ/Skillman",                  92,"good",     [],                                 "8 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("forest-jupiter",   "Forest/Jupiter",                90,"good",     [],                                 "10 min ago", [],"blue","#0076CE","Blue Line"),
-  mk("downtown-garland", "Downtown Garland",              94,"good",     [],                                 "5 min ago",  [],"blue","#0076CE","Blue Line"),
-  mk("downtown-rowlett", "Downtown Rowlett",              97,"good",     [],                                 "3 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("unt-dallas",        "UNT Dallas",          80,"good",     [],                                      "4 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("camp-wisdom",       "Camp Wisdom",         76,"good",     [],                                      "7 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("ledbetter",         "Ledbetter",           72,"warning",  ["smell","litter"],                      "20 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("va-medical",        "VA Medical Center",   84,"good",     [],                                      "2 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("kiest",             "Kiest",               69,"warning",  ["litter"],                              "18 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("illinois-tc",       "Illinois TC",         74,"warning",  ["smell"],                               "15 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("morrell",           "Morrell",             70,"warning",  ["litter","lighting"],                   "22 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("eight-blue",        "8th & Corinth",       71,"warning",  ["smell"],                               "14 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("cedars-blue",       "Cedars",              42,"critical", ["safety","smell","vandalism","litter","lighting"], "31 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("convention-blue",   "Convention Center",    0,"closed",   ["safety","lighting"],                   "—",          [],"blue","#0076CE","Blue Line","Closed Jan 5 2026 — KBHCC redevelopment. Est. reopening 2029. Use EBJ Union Station or Akard."),
+  mk("union-blue",        "EBJ Union Station",   82,"deploying",["litter"],                              "3 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("west-end-blue",     "West End",            83,"good",     [],                                      "6 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("akard-blue",        "Akard",               70,"warning",  ["litter","smell"],                      "12 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("st-paul-blue",      "St. Paul",            48,"critical", ["safety","smell","lighting"],            "28 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("pearl-blue",        "Pearl/Arts District", 92,"good",     [],                                      "1 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("cityplace-blue",    "CityPlace/Uptown",    87,"good",     [],                                      "5 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("mockingbird-blue",  "SMU/Mockingbird",     77,"good",     [],                                      "4 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("white-rock",        "White Rock",          88,"good",     [],                                      "6 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("lake-highlands",    "Lake Highlands",      91,"good",     [],                                      "9 min ago",  [],"blue","#0076CE","Blue Line"),
+  mk("lbj-skillman",      "LBJ/Skillman",        66,"warning",  ["litter"],                              "16 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("forest-jupiter",    "Forest/Jupiter",      42,"critical", ["safety","vandalism","smell","lighting"],"30 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("downtown-garland",  "Downtown Garland",    75,"warning",  ["litter"],                              "11 min ago", [],"blue","#0076CE","Blue Line"),
+  mk("downtown-rowlett",  "Downtown Rowlett",    85,"good",     [],                                      "3 min ago",  [],"blue","#0076CE","Blue Line"),
 ];
 const ORANGE: Station[] = [
   mk("parker-road-o",    "Parker Road",                      99,"good",    [],                             "1 min ago",  [],"orange","#F77F00","Orange Line"),
@@ -272,7 +280,7 @@ const SILVER: Station[] = [
 const LINES: Record<string, Line> = {
   red:    { name:"Red Line",    sub:"Westmoreland — Parker Rd", color:"#DA291C", stations:RED    },
   green:  { name:"Green Line",  sub:"Buckner — N. Carrollton/Frankford", color:"#00A84F", stations:GREEN  },
-  blue:   { name:"Blue Line",   sub:"UNT Dallas — Downtown Rowlett", color:"#0076CE", stations:BLUE   },
+  blue:   { name:"Blue Line",   sub:"UNT Dallas → Downtown Rowlett • 23 Stations", color:"#0076CE", stations:BLUE   },
   orange: { name:"Orange Line", sub:"Parker Road — DFW Airport", color:"#F77F00", stations:ORANGE },
   silver: { name:"Silver Line", sub:"Shiloh Rd — DFW Terminal B", color:"#8C9BAB", stations:SILVER },
 };
@@ -499,7 +507,7 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
       </div>
 
       {/* KPI row */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
+      <div className="kd-grid-5col" style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
         {[
           { label:"Critical Stations", val:crit,       sub:"Require immediate action", color:"#D32F2F" },
           { label:"Needs Attention",   val:warn,        sub:"Scheduled service needed", color:"#F57C00" },
@@ -507,11 +515,9 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
           { label:"Asset Uptime",      val:`${uptime}%`,sub:`${no} of ${nt} assets`,   color:scoreColor(uptime) },
           { label:"AI Accuracy",       val:"94.2%",     sub:"Model v2.1 · Live",        color:T.gold },
         ].map(k => (
-          <div key={k.label} style={{ background:T.panel, padding:"14px 18px", cursor:"default", transition:"background 0.15s" }}
-               onMouseEnter={e => (e.currentTarget.style.background = "#F9FAFB")}
-               onMouseLeave={e => (e.currentTarget.style.background = T.panel)}>
+          <div key={k.label} className="dash-cell" style={{ background:T.panel, padding:"14px 18px", cursor:"default" }}>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", color:T.textMuted, marginBottom:5 }}>{k.label}</div>
-            <div style={{ fontFamily:"'Share Tech Mono'", fontSize:28, color:k.color, lineHeight:1 }}>{k.val}</div>
+            <div className="dash-cell-value summary-num" style={{ fontFamily:"'Share Tech Mono'", fontSize:28, color:k.color, lineHeight:1 }}>{k.val}</div>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:4, letterSpacing:"0.04em" }}>{k.sub}</div>
           </div>
         ))}
@@ -521,7 +527,7 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
       <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.28em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>
         LINES — READINESS OVERVIEW · Click to drill down
       </div>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
+      <div className="kd-grid-lines" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
         {Object.entries(LINES).map(([lid, line]) => {
           const scores = line.stations.map(s => s.score);
           const lavg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
@@ -585,7 +591,7 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
       <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.28em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>
         10 LOWEST READINESS — NETWORK-WIDE
       </div>
-      <table style={{ width:"100%", borderCollapse:"collapse", background:T.panel, border:`1px solid ${T.border}`, boxShadow:T.shadow }}>
+      <div className="kd-table-wrap"><table className="tufte-table" style={{ width:"100%", borderCollapse:"collapse", background:T.panel, border:`1px solid ${T.border}`, boxShadow:T.shadow }}>
         <thead>
           <tr style={{ background:"#F9FAFB" }}>
             {["Station","Line","Score","Readiness","Issues","Status"].map((h, i) => (
@@ -611,7 +617,7 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
                 <td style={{ padding:"9px 14px" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:6 }}>
                     <div style={{ flex:1, height:4, background:T.border, borderRadius:1 }}>
-                      <div style={{ height:4, width:`${st.score}%`, background:scoreFill(st.score), borderRadius:1 }}/>
+                      <div className={`score-fill${st.score < 70 ? " critical-fill" : ""}`} style={{ height:4, width:`${st.score}%`, background:scoreFill(st.score), borderRadius:1 }}/>
                     </div>
                     <span style={{ fontFamily:"'Share Tech Mono'", fontSize:10, color:scoreColor(st.score), width:26, textAlign:"right" }}>{st.score}</span>
                   </div>
@@ -628,7 +634,7 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
             );
           })}
         </tbody>
-      </table>
+      </table></div>
     </div>
   );
 }
@@ -641,10 +647,10 @@ function StationView({ lineId, selectedId, onSelect }: { lineId:string; selected
   const a = ASSETS[selected.id];
 
   return (
-    <div style={{ display:"flex", flex:1, overflow:"hidden" }}>
+    <div className="kd-station-layout" style={{ display:"flex", flex:1, overflow:"hidden" }}>
 
       {/* Station list */}
-      <div style={{ width:280, borderRight:`1px solid ${T.border}`, overflowY:"auto", flexShrink:0, background:T.panel }}>
+      <div className="kd-station-list" style={{ width:280, borderRight:`1px solid ${T.border}`, overflowY:"auto", flexShrink:0, background:T.panel }}>
         <div style={{ padding:"10px 14px", borderBottom:`1px solid ${T.border}`, display:"flex", alignItems:"center", justifyContent:"space-between", background:"#F9FAFB", flexShrink:0 }}>
           <div style={{ display:"flex", alignItems:"center", gap:7 }}>
             <div style={{ width:9, height:9, borderRadius:"50%", background:line.color }}/>
@@ -654,17 +660,18 @@ function StationView({ lineId, selectedId, onSelect }: { lineId:string; selected
         </div>
         {line.stations.map((st, i) => (
           <div key={st.id} onClick={() => onSelect(st.id)}
-               style={{ display:"flex", alignItems:"center", cursor:"pointer", background:selectedId === st.id ? "#F9FAFB" : "transparent", borderLeft:`3px solid ${selectedId === st.id ? line.color : "transparent"}`, transition:"background 0.12s" }}
+               className={`station-row line-btn${selectedId === st.id ? " selected active" : ""}`}
+               style={{ display:"flex", alignItems:"center", cursor:"pointer", background:selectedId === st.id ? "#F9FAFB" : "transparent", borderLeft:`3px solid ${selectedId === st.id ? line.color : "transparent"}`, "--active-line-color": line.color } as React.CSSProperties}
                onMouseEnter={e => { if (selectedId !== st.id) e.currentTarget.style.background = "#FAFAFA"; }}
                onMouseLeave={e => { if (selectedId !== st.id) e.currentTarget.style.background = "transparent"; }}>
             {/* Connector */}
             <div style={{ display:"flex", flexDirection:"column", alignItems:"center", width:36, flexShrink:0 }}>
               <div style={{ width:2, height:18, background:i === 0 ? "transparent" : line.color }}/>
-              <div style={{ width:12, height:12, borderRadius:"50%", border:`2.5px solid ${st.status === "critical" ? "#D32F2F" : st.status === "warning" ? "#F57C00" : "#2E7D32"}`, background: st.status === "critical" ? "#FFEBEE" : st.status === "warning" ? "#FFF8E1" : "#E8F5E9", zIndex:1 }}/>
+              <div className={`station-node${st.status === "critical" ? " critical" : ""}`} style={{ width:12, height:12, borderRadius:"50%", border:`2.5px solid ${st.status === "critical" ? "#D32F2F" : st.status === "warning" ? "#F57C00" : "#2E7D32"}`, background: st.status === "critical" ? "#FFEBEE" : st.status === "warning" ? "#FFF8E1" : "#E8F5E9", zIndex:1 }}/>
               <div style={{ width:2, height:18, background:i === line.stations.length - 1 ? "transparent" : line.color }}/>
             </div>
             {/* Card info */}
-            <div style={{ flex:1, padding:"5px 10px 5px 4px", borderBottom:`1px solid #F4F5F7` }}>
+            <div className="station-card" style={{ flex:1, padding:"5px 10px 5px 4px", borderBottom:`1px solid #F4F5F7` }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                 <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, fontWeight:600, letterSpacing:"0.02em", color:T.text }}>{st.name}</div>
                 <div style={{ fontFamily:"'Share Tech Mono'", fontSize:11, color:scoreColor(st.score) }}>{st.score}%</div>
@@ -687,21 +694,27 @@ function StationView({ lineId, selectedId, onSelect }: { lineId:string; selected
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, letterSpacing:"0.1em" }}>{line.name}</div>
           </div>
           <div style={{ display:"flex", alignItems:"flex-end", gap:6, marginTop:12 }}>
-            <div style={{ fontFamily:"'Share Tech Mono'", fontSize:38, lineHeight:1, color:scoreColor(selected.score) }}>{selected.score}%</div>
+            <div className="score-big-num" style={{ fontFamily:"'Share Tech Mono'", fontSize:38, lineHeight:1, color:scoreColor(selected.score) }}>{selected.score}%</div>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, color:T.textMuted, letterSpacing:"0.15em", paddingBottom:6 }}>READINESS</div>
           </div>
           <div style={{ height:5, background:T.border, borderRadius:2, marginTop:8, overflow:"hidden" }}>
-            <div style={{ height:5, width:`${selected.score}%`, background:scoreFill(selected.score), borderRadius:2 }}/>
+            <div className={`score-fill${selected.score < 70 ? " critical-fill" : ""}`} style={{ height:5, width:`${selected.score}%`, background:scoreFill(selected.score), borderRadius:2 }}/>
           </div>
           <div style={{ marginTop:8 }}>
-            <span style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.15em", padding:"3px 9px", borderRadius:2, background:style.bg, color:style.text, border:`1px solid ${style.border}` }}>
+            <span className="status-chip" style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.15em", padding:"3px 9px", borderRadius:2, background:style.bg, color:style.text, border:`1px solid ${style.border}` }}>
               {style.label}
             </span>
           </div>
+          {selected.closure && (
+            <div style={{ marginTop:10, padding:"8px 12px", borderRadius:4, background:"#F5F5F5", border:"1px solid #BDBDBD" }}>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.2em", color:"#616161", marginBottom:2 }}>CLOSURE NOTICE</div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:"#424242", lineHeight:1.4 }}>{selected.closure}</div>
+            </div>
+          )}
         </div>
 
         {/* Issues */}
-        <div style={{ padding:"14px 22px", borderBottom:`1px solid ${T.border}` }}>
+        <div className="fade-in" style={{ padding:"14px 22px", borderBottom:`1px solid ${T.border}` }}>
           <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.25em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>Open Issues</div>
           {selected.issues.length === 0
             ? <div style={{ fontFamily:"'Barlow Condensed'", fontSize:12, color:"#2E7D32", letterSpacing:"0.05em" }}>✓ All clear</div>
@@ -725,7 +738,7 @@ function StationView({ lineId, selectedId, onSelect }: { lineId:string; selected
         </div>
 
         {/* Staff */}
-        <div style={{ padding:"14px 22px", borderBottom:`1px solid ${T.border}` }}>
+        <div className="fade-in" style={{ padding:"14px 22px", borderBottom:`1px solid ${T.border}` }}>
           <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.25em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>Deployed Staff</div>
           {selected.staff.length === 0
             ? <div style={{ fontFamily:"'Barlow Condensed'", fontSize:12, color:T.textMuted }}>No staff currently assigned</div>
@@ -746,16 +759,16 @@ function StationView({ lineId, selectedId, onSelect }: { lineId:string; selected
 
         {/* Assets */}
         {a && (
-          <div style={{ padding:"14px 22px", borderBottom:`1px solid ${T.border}` }}>
+          <div className="fade-in" style={{ padding:"14px 22px", borderBottom:`1px solid ${T.border}` }}>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.25em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>Station Assets</div>
             {(["elevators","cameras","stairwells","trash_cans","bus_covers"] as const).map(k => {
               const total = a[k], ok = a[`${k}_ok` as keyof AssetEntry] as number;
               const pct = total ? Math.round((ok / total) * 100) : 100;
               return (
-                <div key={k} style={{ display:"flex", alignItems:"center", gap:8, padding:"5px 0", borderBottom:`1px solid #F4F5F7` }}>
+                <div key={k} className="asset-row" style={{ display:"flex", alignItems:"center", gap:8, padding:"5px 0", borderBottom:`1px solid #F4F5F7` }}>
                   <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:600, color:T.textSub, letterSpacing:"0.03em", width:96, flexShrink:0, textTransform:"capitalize" }}>{k.replace(/_/g," ")}</div>
                   <div style={{ flex:1, height:3, background:T.border, borderRadius:1 }}>
-                    <div style={{ height:3, width:`${pct}%`, background:scoreFill(pct), borderRadius:1 }}/>
+                    <div className={`score-fill${pct < 70 ? " critical-fill" : ""}`} style={{ height:3, width:`${pct}%`, background:scoreFill(pct), borderRadius:1 }}/>
                   </div>
                   <div style={{ fontFamily:"'Share Tech Mono'", fontSize:10, color:scoreColor(pct), width:32, textAlign:"right" }}>{ok}/{total}</div>
                 </div>
@@ -792,11 +805,12 @@ function InspPhotoCell({ itemId }: { itemId: string }) {
   return (
     <div style={{ display:"flex", alignItems:"center", gap:4 }}>
       {thumbs.map((url, i) => (
-        <img key={i} src={url} alt="" style={{ width:28, height:28, objectFit:"cover", borderRadius:3, border:`1px solid ${T.border}`, cursor:"pointer" }} onClick={() => window.open(url, "_blank")}/>
+        <img key={i} src={url} alt="" className="insp-thumb-wrap" style={{ width:28, height:28, objectFit:"cover", borderRadius:3, border:`1px solid ${T.border}`, cursor:"pointer" }} onClick={() => window.open(url, "_blank")}/>
       ))}
       {thumbs.length < 3 && (
         <>
           <button onClick={() => inputRef.current?.click()}
+            className="insp-upload-zone"
             style={{ width:28, height:28, border:`1px dashed ${T.borderHard}`, borderRadius:3, background:"transparent", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, color:T.textMuted, flexShrink:0 }}
             title="Attach photo">
             +
@@ -820,6 +834,7 @@ function InspectionView() {
   const [flashRows, setFlashRows]   = useState<Record<string, "pass"|"fail">>({});
   const [flashSecs, setFlashSecs]   = useState<Set<string>>(new Set());
   const [openNotes, setOpenNotes]   = useState<Set<string>>(new Set());
+  const [savedNotes, setSavedNotes] = useState<Set<string>>(new Set());
 
   const toggle = (id: string, val: InspVal) => {
     const next = inspState[id] === val ? null : val;
@@ -837,6 +852,15 @@ function InspectionView() {
   };
 
   const toggleNote = (id: string) => setOpenNotes(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+
+  const saveNote = (id: string) => {
+    setOpenNotes(prev => { const n = new Set(prev); n.delete(id); return n; });
+    if (inspNotes[id]?.trim()) {
+      setSavedNotes(prev => new Set(prev).add(id));
+    } else {
+      setSavedNotes(prev => { const n = new Set(prev); n.delete(id); return n; });
+    }
+  };
 
   const secScore = (sec: InspSection) => {
     const vals = sec.items.map(it => inspState[it.id]);
@@ -864,13 +888,13 @@ function InspectionView() {
           <div style={{ fontSize:48, marginBottom:16 }}>✓</div>
           <div style={{ fontFamily:"'Share Tech Mono'", fontSize:22, color:"#2E7D32", marginBottom:8 }}>Inspection Submitted</div>
           <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, color:T.textMuted, marginBottom:24, letterSpacing:"0.04em" }}>
-            {station} · Inspector {inspector} · {passCount} pass / {failCount} fail / {naCount} N/A
+            {station} · Inspector {inspector} · {passCount} pass / {failCount} fail / {naCount} N/A{savedNotes.size > 0 ? ` · ${savedNotes.size} note${savedNotes.size > 1 ? "s" : ""}` : ""}
           </div>
           {overallScore !== null && (
             <div style={{ fontFamily:"'Share Tech Mono'", fontSize:44, color:scoreColor(overallScore), marginBottom:4, lineHeight:1 }}>{overallScore}%</div>
           )}
           <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, letterSpacing:"0.2em", marginBottom:28 }}>OVERALL SCORE</div>
-          <button onClick={() => { setSubmitted(false); setInspState({}); setInspNotes({}); setStation(""); setInspector(""); setCrewId(""); setOpenNotes(new Set()); }}
+          <button onClick={() => { setSubmitted(false); setInspState({}); setInspNotes({}); setStation(""); setInspector(""); setCrewId(""); setOpenNotes(new Set()); setSavedNotes(new Set()); }}
             style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", padding:"10px 24px", background:T.gold, color:"#FFFFFF", border:"none", borderRadius:3, cursor:"pointer" }}>
             New Inspection
           </button>
@@ -880,10 +904,10 @@ function InspectionView() {
   }
 
   return (
-    <div style={{ display:"flex", flex:1, overflow:"hidden" }}>
+    <div className="kd-insp-layout" style={{ display:"flex", flex:1, overflow:"hidden" }}>
 
       {/* Left sidebar — form header + section nav */}
-      <div style={{ width:260, borderRight:`1px solid ${T.border}`, background:T.panel, display:"flex", flexDirection:"column", flexShrink:0 }}>
+      <div className="kd-insp-sidebar" style={{ width:260, borderRight:`1px solid ${T.border}`, background:T.panel, display:"flex", flexDirection:"column", flexShrink:0 }}>
         {/* Metadata form */}
         <div style={{ padding:"16px 16px 12px", borderBottom:`1px solid ${T.border}` }}>
           <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.28em", textTransform:"uppercase", color:T.textMuted, marginBottom:12 }}>
@@ -940,7 +964,7 @@ function InspectionView() {
             )}
           </div>
           <div style={{ height:3, background:T.border, borderRadius:2, overflow:"hidden", marginBottom:10 }}>
-            <div style={{ height:3, width:`${(answeredCount / totalItems.length) * 100}%`, background:T.gold, borderRadius:2, transition:"width 0.3s" }}/>
+            <div className="insp-progress-fill" style={{ height:3, width:`${(answeredCount / totalItems.length) * 100}%`, background:T.gold, borderRadius:2 }}/>
           </div>
           <div style={{ display:"flex", gap:6, marginBottom:10, fontFamily:"'Share Tech Mono'", fontSize:9 }}>
             <span style={{ color:"#2E7D32" }}>{passCount}P</span>
@@ -948,7 +972,8 @@ function InspectionView() {
             <span style={{ color:T.textMuted }}>{naCount}N/A</span>
           </div>
           <button onClick={() => canSubmit && setSubmitted(true)} disabled={!canSubmit}
-            style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", padding:"9px", borderRadius:3, border:"none", cursor: canSubmit ? "pointer" : "not-allowed", background: canSubmit ? T.gold : T.border, color: canSubmit ? "#FFFFFF" : T.textMuted, transition:"background 0.2s" }}>
+            className="insp-submit-btn"
+            style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", padding:"9px", borderRadius:3, border:"none", cursor: canSubmit ? "pointer" : "not-allowed", background: canSubmit ? T.gold : T.border, color: canSubmit ? "#FFFFFF" : T.textMuted }}>
             {canSubmit ? "Submit Inspection" : `${Math.ceil(totalItems.length * 0.8) - answeredCount} more to enable`}
           </button>
           {!station.trim() && <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, color:"#D32F2F", marginTop:5, letterSpacing:"0.06em" }}>Station name required</div>}
@@ -996,13 +1021,13 @@ function InspectionView() {
                   {sec.items.filter(it => inspState[it.id] !== null && inspState[it.id] !== undefined).length}/{sec.items.length}
                 </div>
                 {secScore(sec) !== null && (
-                  <div style={{ fontFamily:"'Share Tech Mono'", fontSize:14, color:scoreColor(secScore(sec)!), fontWeight:700, transition:"color 0.3s" }}>{secScore(sec)}%</div>
+                  <div className={`insp-section-score${flashSecs.has(sec.id) ? " updated" : ""}`} style={{ fontFamily:"'Share Tech Mono'", fontSize:14, color:scoreColor(secScore(sec)!), fontWeight:700 }}>{secScore(sec)}%</div>
                 )}
               </div>
             </div>
 
             {/* Items */}
-            <table style={{ width:"100%", borderCollapse:"collapse" }}>
+            <table className="insp-table" style={{ width:"100%", borderCollapse:"collapse" }}>
               <thead>
                 <tr style={{ background:"#FAFAFA" }}>
                   {["Item","Priority","Pass","Fail","N/A","Photo","Notes"].map((h, i) => (
@@ -1019,7 +1044,7 @@ function InspectionView() {
                   const rowBg = flash === "pass" ? "#E8F5E9" : flash === "fail" ? "#FFEBEE" : "transparent";
                   return (
                     <>
-                      <tr key={it.id} style={{ borderBottom:`1px solid #F4F5F7`, transition:"background 0.15s", background:rowBg }}>
+                      <tr key={it.id} className={flash === "pass" ? "just-passed" : flash === "fail" ? "just-failed" : ""} style={{ borderBottom:`1px solid #F4F5F7` }}>
                         <td style={{ padding:"9px 12px", maxWidth:240 }}>
                           <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, fontWeight:600, color:T.text }}>{it.name}</div>
                           <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:1 }}>{it.desc}</div>
@@ -1030,7 +1055,8 @@ function InspectionView() {
                         {(["pass","fail","na"] as const).map(v => (
                           <td key={v} style={{ padding:"9px 8px", textAlign:"center" }}>
                             <button onClick={() => toggle(it.id, v)}
-                              style={{ width:26, height:26, borderRadius:3, border:`1.5px solid ${val === v ? (v === "pass" ? "#4CAF50" : v === "fail" ? "#EF5350" : "#9E9E9E") : T.border}`, background: val === v ? (v === "pass" ? "#E8F5E9" : v === "fail" ? "#FFEBEE" : "#F3F4F6") : "transparent", cursor:"pointer", fontFamily:"'Share Tech Mono'", fontSize:9, fontWeight:700, color: val === v ? (v === "pass" ? "#2E7D32" : v === "fail" ? "#C62828" : "#6B7280") : T.textMuted, transition:"all 0.15s" }}>
+                              className={`insp-radio-btn${val === v ? ` ${v}` : ""}`}
+                              style={{ width:26, height:26, borderRadius:3, border:`1.5px solid ${val === v ? (v === "pass" ? "#4CAF50" : v === "fail" ? "#EF5350" : "#9E9E9E") : T.border}`, background: val === v ? (v === "pass" ? "#E8F5E9" : v === "fail" ? "#FFEBEE" : "#F3F4F6") : "transparent", cursor:"pointer", fontFamily:"'Share Tech Mono'", fontSize:9, fontWeight:700, color: val === v ? (v === "pass" ? "#2E7D32" : v === "fail" ? "#C62828" : "#6B7280") : T.textMuted }}>
                               {v === "pass" ? "✓" : v === "fail" ? "✗" : "–"}
                             </button>
                           </td>
@@ -1040,8 +1066,10 @@ function InspectionView() {
                         </td>
                         <td style={{ padding:"9px 8px" }}>
                           <button onClick={() => toggleNote(it.id)}
-                            style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.08em", padding:"3px 8px", borderRadius:2, border:`1px solid ${openNotes.has(it.id) ? T.gold : T.border}`, background: openNotes.has(it.id) ? "#FFFDE7" : "transparent", color: openNotes.has(it.id) ? "#8B6914" : T.textMuted, cursor:"pointer", whiteSpace:"nowrap" }}>
-                            {inspNotes[it.id] ? "Edit" : "Add"}
+                            className="btn-sm"
+                            style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.08em", padding:"3px 8px", borderRadius:2, border:`1px solid ${openNotes.has(it.id) ? T.gold : savedNotes.has(it.id) ? "#A5D6A7" : T.border}`, background: openNotes.has(it.id) ? "#FFFDE7" : savedNotes.has(it.id) ? "#E8F5E9" : "transparent", color: openNotes.has(it.id) ? "#8B6914" : savedNotes.has(it.id) ? "#2E7D32" : T.textMuted, cursor:"pointer", whiteSpace:"nowrap", display:"flex", alignItems:"center", gap:4 }}>
+                            {savedNotes.has(it.id) && <span style={{ width:5, height:5, borderRadius:"50%", background:"#4CAF50", display:"inline-block", flexShrink:0 }}/>}
+                            {inspNotes[it.id] ? "Note ✓" : "Add note"}
                           </button>
                         </td>
                       </tr>
@@ -1054,6 +1082,16 @@ function InspectionView() {
                               onFocus={e => (e.currentTarget.style.borderColor = T.gold)}
                               onBlur={e => (e.currentTarget.style.borderColor = T.border)}
                             />
+                            <div style={{ display:"flex", gap:6, marginTop:5 }}>
+                              <button onClick={() => saveNote(it.id)} className="btn-sm"
+                                style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.12em", padding:"4px 12px", borderRadius:2, border:"none", background: inspNotes[it.id]?.trim() ? "#2E7D32" : T.border, color: inspNotes[it.id]?.trim() ? "#FFFFFF" : T.textMuted, cursor: inspNotes[it.id]?.trim() ? "pointer" : "default", textTransform:"uppercase" }}>
+                                Save Note
+                              </button>
+                              <button onClick={() => { setOpenNotes(prev => { const n = new Set(prev); n.delete(it.id); return n; }); }} className="btn-sm"
+                                style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.08em", padding:"4px 10px", borderRadius:2, border:`1px solid ${T.border}`, background:"transparent", color:T.textMuted, cursor:"pointer" }}>
+                                Cancel
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       )}
@@ -1118,7 +1156,7 @@ function AssetDashboardView({ assetKey }: { assetKey: AssetKey }) {
   });
 
   return (
-    <div style={{ padding:"24px 28px", overflowY:"auto", flex:1, background:T.bg }}>
+    <div className="asset-dashboard" style={{ padding:"24px 28px", overflowY:"auto", flex:1, background:T.bg }}>
       <div style={{ marginBottom:20 }}>
         <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginBottom:3 }}>
           KAI Asset Dashboard · DART Rail Network
@@ -1130,16 +1168,16 @@ function AssetDashboardView({ assetKey }: { assetKey: AssetKey }) {
       </div>
 
       {/* KPIs */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
+      <div className="kd-grid-4col" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
         {[
           { label:"Total Network",  val:totalNet,        sub:"Units across all stations",    color:T.text                                        },
           { label:"Operational",    val:okNet,           sub:"Currently online",             color:"#2E7D32"                                     },
           { label:"Down",           val:downNet,         sub:"Requiring attention",          color: downNet > 0 ? "#D32F2F" : "#2E7D32"          },
           { label:"Network Uptime", val:`${uptimePct}%`, sub:"Overall availability",         color:scoreColor(uptimePct)                         },
         ].map(k => (
-          <div key={k.label} style={{ background:T.panel, padding:"14px 18px" }}>
+          <div key={k.label} className="dash-cell" style={{ background:T.panel, padding:"14px 18px" }}>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", color:T.textMuted, marginBottom:5 }}>{k.label}</div>
-            <div style={{ fontFamily:"'Share Tech Mono'", fontSize:28, color:k.color, lineHeight:1 }}>{k.val}</div>
+            <div className="dash-cell-value" style={{ fontFamily:"'Share Tech Mono'", fontSize:28, color:k.color, lineHeight:1 }}>{k.val}</div>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:4 }}>{k.sub}</div>
           </div>
         ))}
@@ -1147,7 +1185,7 @@ function AssetDashboardView({ assetKey }: { assetKey: AssetKey }) {
 
       {/* Per-line */}
       <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.28em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>BY LINE</div>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
+      <div className="kd-asset-grid-5 kd-grid-5col" style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
         {lineBreakdown.map(({ lid, line, total, ok, down, pct }) => (
           <div key={lid} style={{ background:T.panel, padding:"14px 18px", borderLeft:`3px solid ${line.color}` }}>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, fontWeight:700, color:line.color, marginBottom:6 }}>{line.name}</div>
@@ -1162,7 +1200,7 @@ function AssetDashboardView({ assetKey }: { assetKey: AssetKey }) {
 
       {/* Station table */}
       <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.28em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>STATIONS — SORTED BY UNITS DOWN</div>
-      <table style={{ width:"100%", borderCollapse:"collapse", background:T.panel, border:`1px solid ${T.border}`, boxShadow:T.shadow }}>
+      <div className="kd-table-wrap"><table className="tufte-table" style={{ width:"100%", borderCollapse:"collapse", background:T.panel, border:`1px solid ${T.border}`, boxShadow:T.shadow }}>
         <thead>
           <tr style={{ background:"#F9FAFB" }}>
             {["Station","Line","Units","Down","Uptime","Status"].map((h, i) => (
@@ -1206,7 +1244,7 @@ function AssetDashboardView({ assetKey }: { assetKey: AssetKey }) {
             );
           })}
         </tbody>
-      </table>
+      </table></div>
     </div>
   );
 }
@@ -1244,14 +1282,14 @@ function IntelligenceView() {
             AI Prediction &amp; Decision Engine
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:5, fontFamily:"'Share Tech Mono'", fontSize:9, color:"#2E7D32", background:"#E8F5E9", padding:"3px 10px", borderRadius:2, letterSpacing:"0.06em" }}>
-            <div style={{ width:6, height:6, borderRadius:"50%", background:"#4CAF50", animation:"kdlive 1.5s infinite" }}/>
+            <div className="live-dot" style={{ width:6, height:6, borderRadius:"50%", flexShrink:0 }}/>
             MODEL ACTIVE
           </div>
         </div>
       </div>
 
       {/* KPI strip */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
+      <div className="kd-grid-5col" style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
         {[
           { label:"Model Accuracy",     val:"94.2%",               sub:"v2.1 · Trained on 18mo data",   color:T.gold    },
           { label:"Active Predictions", val:AI_PREDICTIONS.length, sub:"Next 4h · across all stations", color:"#1565C0" },
@@ -1259,18 +1297,16 @@ function IntelligenceView() {
           { label:"Auto-Dispatched",    val:autoDisp,              sub:"Actions sent · 0 overrides",    color:"#2E7D32" },
           { label:"Pending Approval",   val:pending,               sub:"Awaiting supervisor review",    color:"#F57C00" },
         ].map(k => (
-          <div key={k.label} style={{ background:T.panel, padding:"14px 18px", cursor:"default", transition:"background 0.15s" }}
-               onMouseEnter={e => (e.currentTarget.style.background = "#F9FAFB")}
-               onMouseLeave={e => (e.currentTarget.style.background = T.panel)}>
+          <div key={k.label} className="dash-cell" style={{ background:T.panel, padding:"14px 18px", cursor:"default" }}>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", color:T.textMuted, marginBottom:5 }}>{k.label}</div>
-            <div style={{ fontFamily:"'Share Tech Mono'", fontSize:28, color:k.color, lineHeight:1 }}>{String(k.val)}</div>
+            <div className="dash-cell-value" style={{ fontFamily:"'Share Tech Mono'", fontSize:28, color:k.color, lineHeight:1 }}>{String(k.val)}</div>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:4, letterSpacing:"0.04em" }}>{k.sub}</div>
           </div>
         ))}
       </div>
 
       {/* Three-column main */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24, alignItems:"start" }}>
+      <div className="kd-grid-3col" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24, alignItems:"start" }}>
 
         {/* Column 1: Predictive Demand */}
         <div style={{ background:T.panel }}>
@@ -1381,7 +1417,7 @@ function IntelligenceView() {
       <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.28em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>
         MODEL PERFORMANCE · v2.1
       </div>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(6,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}` }}>
+      <div className="kd-grid-6col" style={{ display:"grid", gridTemplateColumns:"repeat(6,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}` }}>
         {[
           { label:"Overall Accuracy",     val:"94.2%", sub:"All prediction types",  color:T.gold    },
           { label:"Cleaning Demand",       val:"96.1%", sub:"Precision / recall",    color:"#2E7D32" },
@@ -1521,7 +1557,7 @@ function NavDrawer({ open, onClose, view, setView }: {
 }
 
 /* ─── Permanent sidebar ──────────────────────────── */
-function PermanentSidebar({ view, setView }: { view: View; setView: (v: View) => void }) {
+function PermanentSidebar({ view, setView, collapsed, onToggle }: { view: View; setView: (v: View) => void; collapsed: boolean; onToggle: () => void }) {
   const assetKeys: AssetKey[] = ["elevators","cameras","stairwells","trash_cans","bus_covers"];
 
   const downCounts = assetKeys.reduce((acc, key) => {
@@ -1542,98 +1578,122 @@ function PermanentSidebar({ view, setView }: { view: View; setView: (v: View) =>
   const navRow = (label: string, desc: string, v: View, icon: React.ReactNode) => {
     const active = view === v;
     return (
-      <div key={label} onClick={() => setView(v)}
-           style={{ padding:"9px 14px", margin:"2px 8px", cursor:"pointer",
+      <div key={label} onClick={() => setView(v)} title={collapsed ? label : undefined}
+           style={{ padding: collapsed ? "9px 0" : "9px 14px", margin:"2px 8px", cursor:"pointer",
              border:`1px solid ${active ? T.gold : "transparent"}`,
              borderRadius:3,
              background: active ? "#FFFDE7" : "transparent",
-             display:"flex", alignItems:"center", gap:10, transition:"background 0.12s" }}
+             display:"flex", alignItems:"center", justifyContent: collapsed ? "center" : "flex-start", gap:10, transition:"background 0.12s" }}
            onMouseEnter={e => { if (!active) e.currentTarget.style.background = "#F9FAFB"; }}
            onMouseLeave={e => { e.currentTarget.style.background = active ? "#FFFDE7" : "transparent"; }}>
         <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(201,168,76,0.15)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted }}>
           {icon}
         </span>
-        <div>
-          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:14, fontWeight:700, letterSpacing:"0.04em", color:T.text }}>{label}</div>
-          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:1 }}>{desc}</div>
-        </div>
+        {!collapsed && (
+          <div>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:14, fontWeight:700, letterSpacing:"0.04em", color:T.text }}>{label}</div>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:1 }}>{desc}</div>
+          </div>
+        )}
       </div>
     );
   };
 
   return (
-    <div style={{ width:260, flexShrink:0, background:T.panel, borderRight:`1px solid ${T.border}`, display:"flex", flexDirection:"column", boxShadow:"1px 0 4px rgba(0,0,0,0.04)" }}>
+    <div className="kd-permanent-sidebar" style={{ width: collapsed ? 52 : 260, flexShrink:0, background:T.panel, borderRight:`1px solid ${T.border}`, display:"flex", flexDirection:"column", boxShadow:"1px 0 4px rgba(0,0,0,0.04)", transition:"width 0.25s cubic-bezier(0.4,0,0.2,1)", overflow:"hidden" }}>
       {/* Sidebar header */}
-      <div style={{ padding:"14px 18px", borderBottom:`2px solid ${T.gold}`, flexShrink:0 }}>
-        <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:900, fontSize:20, letterSpacing:"0.15em", color:T.text }}>KAI</div>
-        <div style={{ fontFamily:"'Barlow Condensed'", fontSize:8, letterSpacing:"0.3em", color:T.gold, textTransform:"uppercase", marginTop:1 }}>DART STATION READINESS</div>
+      <div style={{ padding: collapsed ? "14px 8px" : "14px 18px", borderBottom:`2px solid ${T.gold}`, flexShrink:0, display:"flex", alignItems:"center", justifyContent: collapsed ? "center" : "flex-start" }}>
+        {collapsed
+          ? <svg width="22" height="22" viewBox="0 0 100 100" fill="none" style={{ opacity:.85 }}><ellipse cx="50" cy="62" rx="22" ry="14" fill={T.gold}/><circle cx="50" cy="38" r="14" fill={T.gold}/></svg>
+          : <div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:900, fontSize:20, letterSpacing:"0.15em", color:T.text }}>KAI</div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:8, letterSpacing:"0.3em", color:T.gold, textTransform:"uppercase", marginTop:1 }}>DART STATION READINESS</div>
+            </div>
+        }
       </div>
 
       {/* Nav items */}
       <div className="kd-scroll" style={{ flex:1, overflowY:"auto" }}>
-        <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted }}>Command</div>
+        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted }}>Command</div>}
         {navRow("Command Center","Network overview & spark charts","command",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="1" width="5" height="5" rx="0.75"/><rect x="8" y="1" width="5" height="5" rx="0.75"/><rect x="1" y="8" width="5" height="5" rx="0.75"/><rect x="8" y="8" width="5" height="5" rx="0.75"/></svg>)}
 
-        <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Station Operations</div>
+        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Station Operations</div>}
         {navRow("Stations","All lines · select to inspect","stations",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 1.5C5.07 1.5 3.5 3.07 3.5 5c0 2.8 3.5 7 3.5 7s3.5-4.2 3.5-7c0-1.93-1.57-3.5-3.5-3.5z"/><circle cx="7" cy="5" r="1.25"/></svg>)}
 
-        <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Asset Dashboards</div>
+        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Asset Dashboards</div>}
         {assetKeys.map(key => {
           const assetView = `asset_${key}` as View;
           const active = view === assetView;
           const down = downCounts[key];
           return (
-            <div key={key} onClick={() => setView(assetView)}
-                 style={{ padding:"9px 14px", margin:"2px 8px", cursor:"pointer",
+            <div key={key} onClick={() => setView(assetView)} title={collapsed ? ASSET_META[key].label : undefined}
+                 style={{ padding: collapsed ? "9px 0" : "9px 14px", margin:"2px 8px", cursor:"pointer",
                    border:`1px solid ${active ? T.gold : "transparent"}`,
                    borderRadius:3,
                    background: active ? "#FFFDE7" : "transparent",
-                   display:"flex", alignItems:"center", justifyContent:"space-between", transition:"background 0.12s" }}
+                   display:"flex", alignItems:"center", justifyContent: collapsed ? "center" : "space-between", transition:"background 0.12s", position:"relative" }}
                  onMouseEnter={e => { if (!active) e.currentTarget.style.background = "#F9FAFB"; }}
                  onMouseLeave={e => { e.currentTarget.style.background = active ? "#FFFDE7" : "transparent"; }}>
               <div style={{ display:"flex", gap:10, alignItems:"center" }}>
-                <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(201,168,76,0.15)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted }}>
+                <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(201,168,76,0.15)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted, position:"relative" }}>
                   {ASSET_ICONS[key]}
+                  {collapsed && down > 0 && <span style={{ position:"absolute", top:-3, right:-3, width:7, height:7, borderRadius:"50%", background:"#DC2626", border:"1px solid white" }}/>}
                 </span>
-                <div>
-                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:14, fontWeight:700, color:T.text }}>{ASSET_META[key].label}</div>
-                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:1 }}>{ASSET_META[key].desc}</div>
-                </div>
+                {!collapsed && (
+                  <div>
+                    <div style={{ fontFamily:"'Barlow Condensed'", fontSize:14, fontWeight:700, color:T.text }}>{ASSET_META[key].label}</div>
+                    <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:1 }}>{ASSET_META[key].desc}</div>
+                  </div>
+                )}
               </div>
-              {down > 0 && (
+              {!collapsed && down > 0 && (
                 <span style={{ fontFamily:"'Share Tech Mono'", fontSize:9, fontWeight:700, padding:"2px 6px", borderRadius:2, background:"#DC2626", color:"#FFFFFF", whiteSpace:"nowrap", flexShrink:0 }}>{down} DOWN</span>
               )}
             </div>
           );
         })}
 
-        <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Field Operations</div>
+        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Field Operations</div>}
         {navRow("Inspection","48-item crew checklist · photo upload","inspect",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="1.5" width="10" height="11" rx="1"/><line x1="5" y1="5.5" x2="9" y2="5.5"/><line x1="5" y1="8" x2="9" y2="8"/><line x1="5" y1="10.5" x2="7" y2="10.5"/></svg>)}
 
-        <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>AI Intelligence</div>
+        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>AI Intelligence</div>}
         {navRow("Intelligence Engine","Predictions · anomalies · decisions","intelligence",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 2L8.5 5 12 5.5 9.5 8 10 11.5 7 10 4 11.5 4.5 8 2 5.5 5.5 5z"/></svg>)}
       </div>
 
       {/* Sidebar footer */}
-      <div style={{ padding:"10px 16px", borderTop:`1px solid ${T.border}`, flexShrink:0 }}>
-        <div style={{ fontFamily:"'Barlow Condensed'", fontSize:8, letterSpacing:"0.15em", color:T.textMuted, textTransform:"uppercase" }}>KAI Facilities Management · DART Network</div>
-        <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, color:T.textMuted, marginTop:2 }}>{new Date().toLocaleTimeString()}</div>
-      </div>
+      {!collapsed && (
+        <div style={{ padding:"10px 16px", borderTop:`1px solid ${T.border}`, flexShrink:0 }}>
+          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:8, letterSpacing:"0.15em", color:T.textMuted, textTransform:"uppercase" }}>KAI Facilities Management · DART Network</div>
+          <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, color:T.textMuted, marginTop:2 }}>{new Date().toLocaleTimeString()}</div>
+        </div>
+      )}
     </div>
   );
 }
 
 /* ─── Root ───────────────────────────────────────── */
-export default function DashboardDemo() {
-  const [view,        setView]      = useState<View>("command");
+export default function DashboardDemo({ initialView }: { initialView?: string } = {}) {
+  const [view,        setView]      = useState<View>((initialView as View) ?? "command");
+
+  useEffect(() => {
+    if (initialView) setView(initialView as View);
+  }, [initialView]);
   const [lineId,      setLineId]    = useState("red");
   const [stationId,   setStationId] = useState<string>("cityplace-up");
   const [time,        setTime]      = useState("");
-  const [drawerOpen,  setDrawerOpen]= useState(false);
+  const [drawerOpen,       setDrawerOpen]      = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     const tick = () => setTime(new Date().toLocaleTimeString("en-US", { hour12:false, hour:"2-digit", minute:"2-digit", second:"2-digit" }));
     tick(); const id = setInterval(tick, 1000); return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const check = () => { if (window.innerWidth < 960) setSidebarCollapsed(true); };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
   const drill = useCallback((id: string) => {
@@ -1772,12 +1832,209 @@ export default function DashboardDemo() {
         .nav-drawer.open .drawer-item:nth-child(8)  { animation-delay:0.25s; }
         .nav-drawer.open .drawer-item:nth-child(9)  { animation-delay:0.28s; }
         @keyframes drawerItemIn { from{opacity:0;transform:translateX(-12px)} to{opacity:1;transform:translateX(0)} }
+
+        /* ── MICRO-INTERACTIONS ─────────────────────────────────────────────────── */
+
+        /* Nav tab underline slide */
+        .nav-tab { position:relative; overflow:hidden; }
+        .nav-tab::after { content:''; position:absolute; bottom:0; left:50%; right:50%; height:2px; background:var(--kai-gold); transition:left 0.25s cubic-bezier(0.4,0,0.2,1), right 0.25s cubic-bezier(0.4,0,0.2,1); }
+        .nav-tab.active::after { left:0; right:0; }
+        .nav-tab::before { content:''; position:absolute; inset:0; background:rgba(201,168,76,0.07); transform:scaleX(0); transform-origin:center; transition:transform 0.2s ease; }
+        .nav-tab:hover::before { transform:scaleX(1); }
+
+        /* Line button active slide */
+        .line-btn { transition:background 0.18s ease, border-left-color 0.2s ease, padding-left 0.18s ease; }
+        .line-btn:hover { padding-left:23px !important; }
+        .line-btn.active { padding-left:23px !important; border-left-color:var(--active-line-color, var(--kai-gold)) !important; }
+
+        /* Station card translate */
+        .station-card { transition:box-shadow 0.18s ease, border-color 0.18s ease, transform 0.15s ease; }
+        .station-row:hover .station-card { transform:translateX(2px); }
+        .station-row.selected .station-card { transform:translateX(3px); }
+
+        /* Station node: critical pulse ring */
+        .station-node.critical { animation:nodePulse 2s ease-in-out infinite; }
+        @keyframes nodePulse { 0%,100% { box-shadow:0 0 0 0 rgba(211,47,47,0.45); } 60% { box-shadow:0 0 0 6px rgba(211,47,47,0); } }
+        .station-node { transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease; }
+        .station-row.selected .station-node { box-shadow:0 0 0 3px rgba(201,168,76,0.35); }
+
+        /* Score bar entrance */
+        .score-fill { animation:scoreReveal 0.55s cubic-bezier(0.4,0,0.2,1) both; }
+        @keyframes scoreReveal { from { width:0 !important; } }
+        .score-fill.critical-fill { background:linear-gradient(90deg,#D32F2F 0%,#EF5350 50%,#D32F2F 100%) !important; background-size:200% 100% !important; animation:scoreReveal 0.55s cubic-bezier(0.4,0,0.2,1) both, shimmer 2.5s linear 0.6s infinite; }
+        @keyframes shimmer { from { background-position:200% 0; } to { background-position:-200% 0; } }
+
+        /* Summary stat hover lift */
+        .summary-stat { border-radius:4px; padding:4px 8px; margin:-4px -8px; transition:background 0.15s ease, transform 0.15s ease; cursor:pointer; }
+        .summary-stat:hover { background:rgba(0,0,0,0.04); transform:translateY(-1px); }
+        .summary-stat:active { transform:translateY(0); }
+        .summary-num { transition:color 0.3s ease; }
+        .summary-num.flash { animation:numFlash 0.35s ease; }
+        @keyframes numFlash { 0% { opacity:1; transform:scale(1); } 40% { opacity:0.3; transform:scale(0.82); } 100% { opacity:1; transform:scale(1); } }
+
+        /* Deploy button ripple */
+        .deploy-btn { position:relative; overflow:hidden; }
+        .deploy-btn::after { content:''; position:absolute; top:50%; left:50%; width:0; height:0; background:rgba(255,255,255,0.22); border-radius:50%; transform:translate(-50%,-50%); opacity:0; }
+        .deploy-btn.ripple::after { width:320px; height:320px; opacity:0; transition:width 0.5s ease, height 0.5s ease, opacity 0.5s ease; }
+        .deploy-btn.deployed { animation:deployPulse 0.4s ease, deployGlow 1.2s ease 0.4s forwards; }
+        @keyframes deployGlow { from { box-shadow:0 0 0 0 rgba(21,101,192,0.5); } to { box-shadow:0 0 0 8px rgba(21,101,192,0); } }
+
+        /* Detail panel staggered slide-in */
+        .fade-in { animation:panelSlideIn 0.28s cubic-bezier(0.4,0,0.2,1) both; }
+        @keyframes panelSlideIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .fade-in:nth-child(2) { animation-delay:0.05s; }
+        .fade-in:nth-child(3) { animation-delay:0.10s; }
+        .fade-in:nth-child(4) { animation-delay:0.15s; }
+        .fade-in:nth-child(5) { animation-delay:0.20s; }
+
+        /* Asset row stagger slide */
+        .asset-row { transition:background 0.12s ease; animation:assetRowIn 0.25s ease both; }
+        @keyframes assetRowIn { from { opacity:0; transform:translateX(-6px); } to { opacity:1; transform:translateX(0); } }
+        .asset-row:nth-child(1) { animation-delay:0.04s; }
+        .asset-row:nth-child(2) { animation-delay:0.08s; }
+        .asset-row:nth-child(3) { animation-delay:0.12s; }
+        .asset-row:nth-child(4) { animation-delay:0.16s; }
+        .asset-row:nth-child(5) { animation-delay:0.20s; }
+        .asset-row:hover { background:#F9FAFB; }
+
+        /* Score big number pop */
+        .score-big-num { animation:scoreNumIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
+        @keyframes scoreNumIn { from { transform:scale(0.6); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+        /* Status chip bounce in */
+        .status-chip { animation:chipIn 0.25s cubic-bezier(0.34,1.56,0.64,1) both; }
+        @keyframes chipIn { from { transform:scale(0.7); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+        /* Dashboard KPI entrance */
+        .dash-cell-value { animation:kpiIn 0.4s cubic-bezier(0.4,0,0.2,1) both; }
+        @keyframes kpiIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+        /* Dash cell hover */
+        .dash-cell { transition:background 0.15s ease, box-shadow 0.15s ease; }
+        .dash-cell:hover { background:#F9FAFB; box-shadow:inset 0 0 0 1px #C4C8CF; }
+
+        /* Tufte table row hover */
+        .tufte-table tbody tr { transition:background 0.12s ease; }
+        .tufte-table tbody tr:hover td { background:#F2EFE9; }
+
+        /* Inspection table row hover + flash */
+        .insp-table tbody tr { transition:background 0.12s ease; }
+        .insp-table tbody tr:hover td { background:#F9FAFB; }
+        .insp-table tbody tr.just-passed { animation:rowPass 0.55s ease; }
+        @keyframes rowPass { 0% { background:transparent; } 35% { background:rgba(46,125,50,0.09); } 100% { background:transparent; } }
+        .insp-table tbody tr.just-failed { animation:rowFail 0.55s ease; }
+        @keyframes rowFail { 0% { background:transparent; } 35% { background:rgba(211,47,47,0.09); } 100% { background:transparent; } }
+
+        /* Inspection radio button micro-bounce */
+        .insp-radio-btn { transition:background 0.12s ease, color 0.12s ease, border-color 0.12s ease, transform 0.12s ease; }
+        .insp-radio-btn:hover { transform:translateY(-1px); }
+        .insp-radio-btn:active { transform:scale(0.93); }
+        .insp-radio-btn.pass,.insp-radio-btn.fail,.insp-radio-btn.na { animation:btnSelect 0.22s cubic-bezier(0.34,1.56,0.64,1) both; }
+        @keyframes btnSelect { from { transform:scale(0.85); } to { transform:scale(1); } }
+
+        /* Section score tick */
+        .insp-section-score.updated { animation:sectionTick 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+        @keyframes sectionTick { from { transform:scale(0.75); opacity:0.3; } to { transform:scale(1); opacity:1; } }
+
+        /* Thumb pop */
+        .insp-thumb-wrap { animation:thumbPop 0.25s cubic-bezier(0.34,1.56,0.64,1) both; }
+        @keyframes thumbPop { from { transform:scale(0); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+        /* Upload zone */
+        .insp-upload-zone { transition:border-color 0.15s ease, background 0.15s ease, transform 0.12s ease; }
+        .insp-upload-zone:hover { transform:scale(1.015); }
+        .insp-upload-zone:active { transform:scale(0.98); }
+
+        /* Buttons lift */
+        .btn-sm { transition:background 0.15s ease, border-color 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease; }
+        .btn-sm:hover { transform:translateY(-1px); box-shadow:0 2px 6px rgba(0,0,0,0.12); }
+        .btn-sm:active { transform:translateY(0); box-shadow:none; }
+
+        /* Submit button lift */
+        .insp-submit-btn { transition:background 0.2s ease, color 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease; }
+        .insp-submit-btn:not(:disabled):hover { transform:translateY(-2px); box-shadow:0 4px 16px rgba(0,0,0,0.2); }
+        .insp-submit-btn:not(:disabled):active { transform:translateY(0); box-shadow:none; }
+
+        /* Deploy all flash */
+        .btn-deploy.deploying-all { animation:deployAllFlash 0.4s ease 3; }
+        @keyframes deployAllFlash { 0%,100% { background:#1C1A16; } 50% { background:#1565C0; } }
+
+        /* Enhanced live dot */
+        .live-dot { animation:livePulse 2s ease-in-out infinite; background:#22C55E !important; }
+        @keyframes livePulse { 0%,100% { transform:scale(1); box-shadow:0 0 0 0 rgba(76,175,80,0.6); } 60% { transform:scale(0.85); box-shadow:0 0 0 5px rgba(76,175,80,0); } }
+
+        /* Asset dashboard scan-line entrance */
+        .asset-dashboard { animation:dashEnter 0.3s cubic-bezier(0.4,0,0.2,1) both; }
+        @keyframes dashEnter { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+        /* Inspection progress bar smooth */
+        .insp-progress-fill { transition:width 0.5s cubic-bezier(0.4,0,0.2,1), background 0.4s ease; }
+
+        /* ── END MICRO-INTERACTIONS ──────────────────────────────────────────────── */
+
+        /* ── RESPONSIVE / MOBILE ────────────────────────────────────────────────── */
+
+        /* Desktop: hide hamburger, show sidebar toggle */
+        .kd-hamburger { display:none; }
+        .kd-sidebar-toggle { display:flex; }
+
+        /* Mobile: show hamburger, hide sidebar toggle */
+        @media (max-width: 768px) {
+          .kd-hamburger { display:flex !important; }
+          .kd-sidebar-toggle { display:none !important; }
+        }
+
+        /* Hide permanent sidebar on mobile — use drawer instead */
+        @media (max-width: 768px) {
+          .kd-permanent-sidebar { display:none !important; }
+          .kd-nav-tabs { overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+          .kd-nav-tabs::-webkit-scrollbar { display:none; }
+          .kd-main-header { padding: 0 10px 0 6px !important; }
+          .kd-content-area { padding: 14px 12px !important; }
+          .kd-grid-5col { grid-template-columns: repeat(2,1fr) !important; }
+          .kd-grid-4col { grid-template-columns: repeat(2,1fr) !important; }
+          .kd-grid-3col { grid-template-columns: 1fr !important; }
+          .kd-grid-6col { grid-template-columns: repeat(2,1fr) !important; }
+          .kd-grid-lines { grid-template-columns: repeat(2,1fr) !important; }
+          .kd-table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+          .kd-table-wrap table { min-width:540px; }
+          .kd-station-list { width:100% !important; border-right:none !important; max-height:280px; }
+          .kd-station-detail { min-width:0; }
+          .kd-station-layout { flex-direction:column !important; }
+          .kd-insp-layout { flex-direction:column !important; }
+          .kd-insp-sidebar { width:100% !important; border-right:none !important; border-bottom:1px solid #E8EAED; max-height:200px; }
+          .kd-asset-grid-5 { grid-template-columns: repeat(2,1fr) !important; }
+          .kd-score-big { font-size:28px !important; }
+        }
+
+        @media (max-width: 480px) {
+          .kd-grid-5col, .kd-grid-4col, .kd-grid-6col { grid-template-columns: 1fr 1fr !important; }
+          .kd-grid-lines { grid-template-columns: 1fr !important; }
+          .kd-header-chips { display:none !important; }
+          .kd-insp-sidebar { max-height:160px; }
+        }
+
+        /* ── END RESPONSIVE ─────────────────────────────────────────────────────── */
       `}</style>
 
       <div style={{ background:T.bg, borderRadius:8, overflow:"hidden", border:`1px solid ${T.border}`, display:"flex", flexDirection:"row", minHeight:700, fontFamily:"'Barlow',sans-serif", boxShadow:T.shadowMd, position:"relative" }}>
 
         {/* Permanent sidebar — always visible */}
-        <PermanentSidebar view={view} setView={setView} />
+        <PermanentSidebar view={view} setView={setView} collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(c => !c)} />
+
+        {/* Sidebar pull-tab — gold handle on sidebar edge, desktop only */}
+        <div className="kd-sidebar-toggle" style={{ position:"relative", width:0, flexShrink:0, zIndex:30 }}>
+          <button
+            onClick={() => setSidebarCollapsed(c => !c)}
+            title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            style={{ position:"absolute", top:"50%", left:0, transform:"translateY(-50%)", width:16, height:48, background:T.gold, border:"none", borderRadius:"0 6px 6px 0", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", color:"#FFFFFF", zIndex:30, transition:"width 0.15s ease", boxShadow:"3px 0 8px rgba(0,0,0,0.18)", padding:0 }}
+            onMouseEnter={e => { e.currentTarget.style.width = "22px"; }}
+            onMouseLeave={e => { e.currentTarget.style.width = "16px"; }}>
+            <svg width="8" height="12" viewBox="0 0 8 12" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              {sidebarCollapsed ? <polyline points="2,1 6,6 2,11"/> : <polyline points="6,1 2,6 6,11"/>}
+            </svg>
+          </button>
+        </div>
 
         {/* Mobile slide-out drawer overlay */}
         <NavDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} view={view} setView={setView}/>
@@ -1786,9 +2043,10 @@ export default function DashboardDemo() {
         <div style={{ flex:1, display:"flex", flexDirection:"column", minWidth:0 }}>
 
           {/* Header */}
-          <div style={{ background:T.panel, borderBottom:`2px solid ${T.gold}`, padding:"0 20px 0 10px", height:52, display:"flex", alignItems:"center", gap:10, flexShrink:0, boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
-            {/* Hamburger — only for mobile / extra-small viewports */}
+          <div style={{ background:T.panel, borderBottom:`2px solid ${T.gold}`, padding:"0 20px 0 10px", height:60, display:"flex", alignItems:"center", gap:12, flexShrink:0, boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
+            {/* Hamburger — mobile only */}
             <button onClick={() => setDrawerOpen(o => !o)} title="Open navigation"
+                    className="kd-hamburger"
                     style={{ width:32, height:32, border:`1px solid ${T.border}`, borderRadius:4, background:"transparent", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:4, flexShrink:0, transition:"background 0.15s" }}
                     onMouseEnter={e => (e.currentTarget.style.background = T.bg)}
                     onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
@@ -1796,52 +2054,89 @@ export default function DashboardDemo() {
               <div style={{ width:13, height:1.5, background:T.text, borderRadius:1 }}/>
               <div style={{ width:13, height:1.5, background:T.text, borderRadius:1 }}/>
             </button>
-            <svg width="24" height="24" viewBox="0 0 100 100" fill="none" style={{ opacity:.92, flexShrink:0 }}>
+            {/* Sidebar toggle — desktop only */}
+            <button onClick={() => setSidebarCollapsed(c => !c)} title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+                    className="kd-sidebar-toggle"
+                    style={{ width:36, height:36, border:`2px solid ${T.gold}`, borderRadius:5, background:"rgba(201,168,76,0.10)", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"background 0.15s, border-color 0.15s", color:T.gold }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(201,168,76,0.22)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(201,168,76,0.10)"; }}>
+              <svg width="16" height="16" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                {sidebarCollapsed
+                  ? <><rect x="1" y="1" width="4" height="13" rx="1"/><line x1="8" y1="4.5" x2="14" y2="4.5"/><line x1="8" y1="7.5" x2="14" y2="7.5"/><line x1="8" y1="10.5" x2="14" y2="10.5"/></>
+                  : <><rect x="1" y="1" width="4" height="13" rx="1"/><polyline points="9,5 11,7.5 9,10"/></>
+                }
+              </svg>
+            </button>
+            <svg width="26" height="26" viewBox="0 0 100 100" fill="none" style={{ opacity:.92, flexShrink:0 }}>
               <ellipse cx="50" cy="62" rx="22" ry="14" fill={T.gold}/>
               <circle cx="50" cy="38" r="14" fill={T.gold}/>
               <path d="M35 55 Q20 68 18 80 Q30 72 45 68" fill="#8B6914"/>
               <path d="M42 30 L44 12 M46 29 L50 10 M54 30 L56 12" stroke="#8B6914" strokeWidth="2" strokeLinecap="round"/>
               <circle cx="56" cy="34" r="2.5" fill="#1a1a1a"/>
             </svg>
-            <div style={{ flex:1 }}>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:700, fontSize:17, letterSpacing:"0.12em", color:T.text }}>KAI</div>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:600, fontSize:9, letterSpacing:"0.22em", color:T.gold, textTransform:"uppercase" }}>DART Station Readiness Command</div>
-            </div>
-            <div style={{ display:"flex", alignItems:"center", gap:14 }}>
-              {crit > 0 && <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.06em", color:"#C62828", background:"#FFEBEE", padding:"3px 10px", borderRadius:2 }}>{crit} CRITICAL</div>}
-              {warn > 0 && <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.06em", color:"#E65100", background:"#FFF3E0", padding:"3px 10px", borderRadius:2 }}>{warn} ATTENTION</div>}
-              <div style={{ display:"flex", alignItems:"center", gap:5, fontFamily:"'Share Tech Mono'", fontSize:9, color:T.textMuted, letterSpacing:"0.08em" }}>
-                <div style={{ width:6, height:6, borderRadius:"50%", background:"#4CAF50", animation:"kdlive 1.5s infinite" }}/>
-                LIVE · 65 STA
+            {/* Brand block */}
+            <div style={{ flex:1, display:"flex", flexDirection:"column", gap:2 }}>
+              <div style={{ display:"flex", alignItems:"baseline", gap:8 }}>
+                <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:900, fontSize:18, letterSpacing:"0.14em", color:T.text, lineHeight:1 }}>KAI</div>
+                <div style={{ width:1, height:12, background:T.border, flexShrink:0 }}/>
+                <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:700, fontSize:11, letterSpacing:"0.18em", color:T.textSub, textTransform:"uppercase", lineHeight:1 }}>Command Center</div>
               </div>
-              <div style={{ fontFamily:"'Share Tech Mono'", fontSize:12, color:T.text }}>{time}</div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:500, fontSize:9, letterSpacing:"0.28em", color:T.gold, textTransform:"uppercase", lineHeight:1 }}>DART Station Readiness · 65 Stations Live</div>
+            </div>
+            <div className="kd-header-chips" style={{ display:"flex", alignItems:"center", gap:10 }}>
+              {crit > 0 && <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.06em", color:"#C62828", background:"#FFEBEE", padding:"3px 10px", borderRadius:2, fontWeight:700 }}>{crit} CRITICAL</div>}
+              {warn > 0 && <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.06em", color:"#E65100", background:"#FFF3E0", padding:"3px 10px", borderRadius:2 }}>{warn} ATTENTION</div>}
+              <div style={{ display:"flex", alignItems:"center", gap:5, fontFamily:"'Share Tech Mono'", fontSize:9, color:T.textMuted, letterSpacing:"0.08em", background:T.bg, padding:"3px 8px", borderRadius:2 }}>
+                <div className="live-dot" style={{ width:6, height:6, borderRadius:"50%", flexShrink:0 }}/>
+                LIVE
+              </div>
+              <div style={{ fontFamily:"'Share Tech Mono'", fontSize:13, color:T.text, fontWeight:600 }}>{time}</div>
             </div>
           </div>
 
           {/* Nav tabs */}
-          <div style={{ background:T.panel, borderBottom:`1px solid ${T.border}`, display:"flex", justifyContent:"space-between", flexShrink:0 }}>
-            <div style={{ display:"flex" }}>
+          <div className="kd-nav-tabs" style={{ background:T.panel, borderBottom:`1px solid ${T.border}`, display:"flex", justifyContent:"space-between", flexShrink:0 }}>
+            <div style={{ display:"flex", alignItems:"stretch" }}>
+              {/* Command Center tab */}
               <button onClick={() => setView("command")}
-                      style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", padding:"10px 18px", background:"none", border:"none", cursor:"pointer", color: view === "command" ? T.text : T.textMuted, borderBottom: view === "command" ? `2px solid ${T.gold}` : "2px solid transparent", transition:"all 0.15s" }}>
+                      className={`nav-tab${view === "command" ? " active" : ""}`}
+                      style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.22em", textTransform:"uppercase", padding:"11px 16px", background:"none", border:"none", cursor:"pointer", color: view === "command" ? T.text : T.textMuted, transition:"color 0.15s", whiteSpace:"nowrap" }}>
                 Command Center
               </button>
-              {Object.entries(LINES).map(([id, l]) => (
-                <button key={id} onClick={() => drill(id)}
-                        style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.18em", textTransform:"uppercase", padding:"10px 14px", background:"none", border:"none", cursor:"pointer", color: view === "stations" && lineId === id ? l.color : T.textMuted, borderBottom: view === "stations" && lineId === id ? `2px solid ${l.color}` : "2px solid transparent", transition:"all 0.15s" }}>
-                  {l.name.replace(" Line", "")}
-                </button>
-              ))}
+
+              {/* Thin separator */}
+              <div style={{ width:1, background:T.border, margin:"8px 4px", flexShrink:0 }}/>
+
+              {/* Line tabs — each with a persistent color-coded dot */}
+              {Object.entries(LINES).map(([id, l]) => {
+                const isActive = view === "stations" && lineId === id;
+                return (
+                  <button key={id} onClick={() => drill(id)}
+                          className={`nav-tab${isActive ? " active" : ""}`}
+                          style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.16em", textTransform:"uppercase", padding:"11px 12px", background:"none", border:"none", cursor:"pointer", color: isActive ? l.color : T.textMuted, transition:"color 0.15s", "--kai-gold": l.color, display:"inline-flex", alignItems:"center", gap:5 } as React.CSSProperties}>
+                    <span style={{ width:7, height:7, borderRadius:"50%", background:l.color, flexShrink:0, opacity: isActive ? 1 : 0.45, transition:"opacity 0.15s, transform 0.15s", transform: isActive ? "scale(1.2)" : "scale(1)" }}/>
+                    {l.name.replace(" Line", "")}
+                  </button>
+                );
+              })}
+
+              {/* Thin separator */}
+              <div style={{ width:1, background:T.border, margin:"8px 4px", flexShrink:0 }}/>
+
               <button onClick={() => setView("inspect")}
-                      style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", padding:"10px 18px", background:"none", border:"none", cursor:"pointer", color: view === "inspect" ? T.text : T.textMuted, borderBottom: view === "inspect" ? `2px solid ${T.gold}` : "2px solid transparent", transition:"all 0.15s" }}>
+                      className={`nav-tab${view === "inspect" ? " active" : ""}`}
+                      style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", padding:"11px 14px", background:"none", border:"none", cursor:"pointer", color: view === "inspect" ? T.text : T.textMuted, transition:"color 0.15s" }}>
                 Inspect
               </button>
               <button onClick={() => setView("intelligence")}
-                      style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", padding:"10px 18px", background:"none", border:"none", cursor:"pointer", color: view === "intelligence" ? T.text : T.textMuted, borderBottom: view === "intelligence" ? `2px solid ${T.gold}` : "2px solid transparent", transition:"all 0.15s", display:"flex", alignItems:"center", gap:5 }}>
-                <span style={{ display:"inline-block", width:5, height:5, borderRadius:"50%", background: view === "intelligence" ? "#4CAF50" : T.textMuted }}/>
+                      className={`nav-tab${view === "intelligence" ? " active" : ""}`}
+                      style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.22em", textTransform:"uppercase", padding:"11px 14px", background:"none", border:"none", cursor:"pointer", color: view === "intelligence" ? T.text : T.textMuted, transition:"color 0.15s", display:"inline-flex", alignItems:"center", gap:5 }}>
+                <span style={{ width:6, height:6, borderRadius:"50%", background: view === "intelligence" ? "#4CAF50" : T.textMuted, opacity: view === "intelligence" ? 1 : 0.5, transition:"background 0.15s, opacity 0.15s" }}/>
                 Intelligence
               </button>
             </div>
-            <div style={{ display:"flex", alignItems:"center", padding:"0 18px", borderLeft:`1px solid ${T.border}` }}>
+            <div style={{ display:"flex", alignItems:"center", padding:"0 16px", borderLeft:`1px solid ${T.border}`, gap:6 }}>
+              <span style={{ width:6, height:6, borderRadius:"50%", background:T.gold, opacity:0.7 }}/>
               <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.18em", color:T.gold }}>FIFA 2026 · 9 MATCH DAYS</div>
             </div>
           </div>
