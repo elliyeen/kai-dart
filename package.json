@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@types/mapbox-gl": "^3.4.1",
     "@types/nodemailer": "^7.0.11",
     "lucide-react": "^0.564.0",
+    "mapbox-gl": "^3.20.0",
     "next": "16.1.6",
     "nodemailer": "^8.0.1",
     "react": "19.2.3",

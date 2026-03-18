@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import dynamic from "next/dynamic";
+
+const StationMapGL = dynamic(() => import("./StationMapGL"), { ssr: false });
 
 /* ─── Types ──────────────────────────────────────── */
 type Status  = "good" | "warning" | "critical" | "deploying" | "closed";
-type View    = "command" | "stations" | "inspect" | "asset_elevators" | "asset_cameras" | "asset_stairwells" | "asset_trash_cans" | "asset_bus_covers" | "intelligence";
+type View    = "command" | "stations" | "inspect" | "report" | "asset_elevators" | "asset_cameras" | "asset_stairwells" | "asset_trash_cans" | "asset_bus_covers" | "intelligence";
 type AssetKey = "elevators" | "cameras" | "stairwells" | "trash_cans" | "bus_covers";
 type InspVal = "pass" | "fail" | "na" | null;
 
@@ -145,6 +148,74 @@ const ASSETS: Record<string, AssetEntry> = {
   "cypress-waters":        { elevators:2,elevators_ok:2, cameras:7,cameras_ok:7,   stairwells:3,stairwells_ok:3, trash_cans:9,trash_cans_ok:9,   bus_covers:2,bus_covers_ok:2 },
   "dfw-north-sl":          { elevators:4,elevators_ok:4, cameras:12,cameras_ok:12, stairwells:5,stairwells_ok:5, trash_cans:14,trash_cans_ok:14, bus_covers:3,bus_covers_ok:3 },
   "dfw-terminal-b-sl":     { elevators:6,elevators_ok:6, cameras:20,cameras_ok:20, stairwells:8,stairwells_ok:8, trash_cans:24,trash_cans_ok:24, bus_covers:4,bus_covers_ok:4 },
+};
+
+/* ─── Station coordinates [lng, lat] ────────────── */
+/* Source: official DART GTFS stops.txt              */
+const COORDS: Record<string, [number, number]> = {
+  // ── Red Line ─────────────────────────────────────
+  "westmoreland":   [-96.871727, 32.719758], "hampton":        [-96.855532, 32.726333],
+  "tyler-vernon":   [-96.838390, 32.733140], "zoo":            [-96.812896, 32.740771],
+  "8th-corinth-r":  [-96.798474, 32.748082], "cedars-r":       [-96.793253, 32.768574],
+  "convention-r":   [-96.802992, 32.772481], "union-r":        [-96.808201, 32.776208],
+  "west-end-r":     [-96.805443, 32.780915], "akard":          [-96.800633, 32.781893],
+  "st-paul":        [-96.797026, 32.784296], "pearl":          [-96.794310, 32.786618],
+  "cityplace-up":   [-96.793176, 32.805424], "smu":            [-96.774939, 32.837828],
+  "lovers-lane":    [-96.771758, 32.848601], "park-lane":      [-96.765899, 32.872513],
+  "walnut-hill-r":  [-96.764931, 32.882650], "forest-lane":    [-96.761680, 32.908604],
+  "lbj-central":    [-96.752235, 32.918254], "spring-valley":  [-96.737424, 32.940852],
+  "arapaho-center": [-96.722981, 32.963447], "galatyn-park":   [-96.710953, 32.985226],
+  "cityline-bush":  [-96.703144, 33.002166], "12th-street":    [-96.701066, 33.014360],
+  "downtown-plano": [-96.700898, 33.020856], "parker-road":    [-96.700736, 33.033454],
+  // ── Green Line ───────────────────────────────────
+  "buckner":                [-96.685108, 32.718478], "lake-june":              [-96.709432, 32.732335],
+  "lawnview":               [-96.720388, 32.765606], "hatcher":                [-96.742471, 32.766323],
+  "mlk":                    [-96.764576, 32.773757], "fair-park":              [-96.765928, 32.782058],
+  "baylor":                 [-96.782132, 32.786495], "deep-ellum":             [-96.788532, 32.785866],
+  "pearl-g":                [-96.794310, 32.786618], "st-paul-g":              [-96.797026, 32.784296],
+  "akard-g":                [-96.800633, 32.781893], "west-end-g":             [-96.805443, 32.780915],
+  "victory-g":              [-96.812513, 32.789607], "market-center-g":        [-96.823713, 32.804635],
+  "sw-medical":             [-96.833204, 32.813602], "inwood-g":               [-96.833361, 32.822243],
+  "burbank":                [-96.862176, 32.842971], "bachman-g":              [-96.877344, 32.853778],
+  "walnut-hill":            [-96.883811, 32.882120], "royal-lane":             [-96.888110, 32.896055],
+  "farmers-branch":         [-96.896238, 32.921962], "downtown-carrollton":    [-96.908277, 32.954443],
+  "trinity-mills":          [-96.926476, 32.980876], "north-carrollton-frank": [-96.936753, 32.991611],
+  // ── Blue Line ────────────────────────────────────
+  "unt-dallas":      [-96.801091, 32.654057], "camp-wisdom":     [-96.788100, 32.666638],
+  "ledbetter":       [-96.788812, 32.683394], "va-medical":      [-96.792986, 32.693641],
+  "kiest":           [-96.801175, 32.707113], "illinois-tc":     [-96.805162, 32.723302],
+  "morrell":         [-96.802604, 32.739860], "eight-blue":      [-96.798474, 32.748082],
+  "cedars-blue":     [-96.793253, 32.768574], "convention-blue": [-96.802992, 32.772481],
+  "union-blue":      [-96.808201, 32.776208], "west-end-blue":   [-96.805443, 32.780915],
+  "akard-blue":      [-96.800633, 32.781893], "st-paul-blue":    [-96.797026, 32.784296],
+  "pearl-blue":      [-96.794310, 32.786618], "cityplace-blue":  [-96.793176, 32.805424],
+  "mockingbird-blue":[-96.774939, 32.837828], "white-rock":      [-96.732732, 32.855791],
+  "lake-highlands":  [-96.730452, 32.879487], "lbj-skillman":    [-96.712139, 32.897924],
+  "forest-jupiter":  [-96.679457, 32.908056], "downtown-garland":[-96.635369, 32.916319],
+  "downtown-rowlett":[-96.563388, 32.904111],
+  // ── Orange Line ──────────────────────────────────
+  "parker-road-o":    [-96.700736, 33.033454], "downtown-plano-o": [-96.700898, 33.020856],
+  "12th-street-o":    [-96.701066, 33.014360], "cityline-bush-o":  [-96.703144, 33.002166],
+  "galatyn-park-o":   [-96.710953, 32.985226], "arapaho-center-o": [-96.722981, 32.963447],
+  "spring-valley-o":  [-96.737424, 32.940852], "lbj-central-o":    [-96.752235, 32.918254],
+  "forest-ln-o":      [-96.761680, 32.908604], "walnut-hill-o":    [-96.764931, 32.882650],
+  "park-lane-o":      [-96.765899, 32.872513], "lovers-lane-o":    [-96.771758, 32.848601],
+  "smu-o":            [-96.774939, 32.837828], "cityplace-o":      [-96.793176, 32.805424],
+  "pearl-o":          [-96.794310, 32.786618], "st-paul-o":        [-96.797026, 32.784296],
+  "akard-o":          [-96.800633, 32.781893], "west-end-o":       [-96.805443, 32.780915],
+  "victory-o":        [-96.812513, 32.789607], "market-center-o":  [-96.823713, 32.804635],
+  "sw-medical-o":     [-96.833204, 32.813602], "love-o":           [-96.833361, 32.822243],
+  "burbank-o":        [-96.862176, 32.842971], "bachman":          [-96.877344, 32.853778],
+  "univ-dallas":      [-96.915006, 32.849085], "las-colinas":      [-96.933574, 32.868572],
+  "irving":           [-96.938558, 32.876891], "hidden-ridge":     [-96.955159, 32.882109],
+  "north-lake":       [-96.967119, 32.875197], "belt-line":        [-96.986505, 32.888023],
+  "dfw-a":            [-97.039504, 32.907386], "dfw-b":            [-97.039504, 32.907386],
+  // ── Silver Line ──────────────────────────────────
+  "shiloh-sl":              [-96.665722, 33.012603], "12th-street-sl":         [-96.698598, 33.015407],
+  "cityline-bush-sl":       [-96.703144, 33.002166], "ut-dallas-sl":           [-96.750008, 32.996459],
+  "knoll-trail":            [-96.817617, 32.962884], "addison-sl":             [-96.828258, 32.958982],
+  "downtown-carrollton-sl": [-96.908107, 32.955670], "cypress-waters":         [-96.983242, 32.950699],
+  "dfw-north-sl":           [-97.054193, 32.933913], "dfw-terminal-b-sl":      [-97.041243, 32.906306],
 };
 
 /* ─── Station builder ───────────────────────────── */
@@ -639,6 +710,31 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
   );
 }
 
+/* ─── Station map (Mapbox GL interactive) ───────── */
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? "";
+
+function StationMap({ station, lineColor }: { station: Station; lineColor: string }) {
+  const coords = COORDS[station.id];
+  if (!coords || !MAPBOX_TOKEN) return null;
+  const [lng, lat] = coords;
+  return (
+    <div className="fade-in" style={{ padding:"14px 22px", borderBottom:`1px solid ${T.border}` }}>
+      <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.25em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>Location</div>
+      <div style={{ borderRadius:4, overflow:"hidden", border:`1px solid ${T.border}` }}>
+        <StationMapGL
+          lat={lat} lng={lng}
+          stationName={station.name}
+          lineColor={lineColor}
+          token={MAPBOX_TOKEN}
+        />
+      </div>
+      <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, color:T.textMuted, marginTop:6, letterSpacing:"0.05em" }}>
+        {lat.toFixed(4)}° N · {Math.abs(lng).toFixed(4)}° W
+      </div>
+    </div>
+  );
+}
+
 /* ─── Station view ───────────────────────────────── */
 function StationView({ lineId, selectedId, onSelect }: { lineId:string; selectedId:string|null; onSelect:(id:string)=>void; }) {
   const line = LINES[lineId];
@@ -777,6 +873,9 @@ function StationView({ lineId, selectedId, onSelect }: { lineId:string; selected
           </div>
         )}
 
+        {/* Station map */}
+        <StationMap station={selected} lineColor={line.color} />
+
         {/* FIFA callout */}
         <div style={{ margin:"14px 22px", padding:"12px 14px", background:"#111827", borderRadius:4 }}>
           <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.gold, marginBottom:4 }}>FIFA World Cup 2026</div>
@@ -830,6 +929,10 @@ function InspectionView() {
   const [station,   setStation]     = useState("");
   const [inspector, setInspector]   = useState("");
   const [crewId,    setCrewId]      = useState("");
+  const [stationOpen, setStationOpen] = useState(false);
+  const stationMatches = ALL_STATIONS.filter(s =>
+    !station.trim() || s.name.toLowerCase().includes(station.toLowerCase())
+  );
   const [submitted, setSubmitted]   = useState(false);
   const [flashRows, setFlashRows]   = useState<Record<string, "pass"|"fail">>({});
   const [flashSecs, setFlashSecs]   = useState<Set<string>>(new Set());
@@ -913,8 +1016,33 @@ function InspectionView() {
           <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.28em", textTransform:"uppercase", color:T.textMuted, marginBottom:12 }}>
             Inspection Details
           </div>
+          {/* Station autocomplete */}
+          <div style={{ marginBottom:8, position:"relative" }}>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.14em", color:T.textMuted, marginBottom:3, textTransform:"uppercase" }}>Station</div>
+            <input value={station} onChange={e => { setStation(e.target.value); setStationOpen(true); }}
+              placeholder="Select station…" autoComplete="off"
+              style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:12, padding:"5px 8px", border:`1px solid ${T.border}`, borderRadius:3, background:T.bg, color:T.text, outline:"none", boxSizing:"border-box" as const }}
+              onFocus={e => { e.currentTarget.style.borderColor = T.gold; setStationOpen(true); }}
+              onBlur={e => { e.currentTarget.style.borderColor = T.border; setTimeout(() => setStationOpen(false), 150); }}
+            />
+            {stationOpen && stationMatches.length > 0 && (
+              <div style={{ position:"absolute", top:"100%", left:0, right:0, background:T.panel, border:`1px solid ${T.borderHard}`, borderRadius:3, boxShadow:T.shadowMd, zIndex:200, maxHeight:180, overflowY:"auto" }}>
+                {stationMatches.map(s => (
+                  <div key={`${s.id}-${s.lineId}`}
+                    onMouseDown={() => { setStation(s.name); setStationOpen(false); }}
+                    style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 8px", fontFamily:"'Barlow Condensed'", fontSize:12, color:T.text, cursor:"pointer", borderBottom:`1px solid ${T.border}` }}
+                    onMouseEnter={e => (e.currentTarget.style.background = T.bg)}
+                    onMouseLeave={e => (e.currentTarget.style.background = T.panel)}
+                  >
+                    <span>{s.name}</span>
+                    <span style={{ fontSize:9, color:T.textMuted, letterSpacing:"0.06em" }}>{s.lineName}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          {/* Other fields */}
           {[
-            { label:"Station", val:station, set:setStation, ph:"Select station…" },
             { label:"Inspector", val:inspector, set:setInspector, ph:"Full name" },
             { label:"Crew / Badge ID", val:crewId, set:setCrewId, ph:"Optional" },
           ].map(f => (
@@ -1249,6 +1377,256 @@ function AssetDashboardView({ assetKey }: { assetKey: AssetKey }) {
   );
 }
 
+/* ─── Report Issue view ──────────────────────────── */
+const REPORT_TYPES: { key: string; label: string; code: string; priority: "critical"|"high"|"standard" }[] = [
+  { key:"safety",    label:"Safety",    code:"SFY", priority:"critical" },
+  { key:"security",  label:"Security",  code:"SEC", priority:"critical" },
+  { key:"vandalism", label:"Vandalism", code:"VND", priority:"high"     },
+  { key:"cleaning",  label:"Cleaning",  code:"CLN", priority:"high"     },
+  { key:"equipment", label:"Equipment", code:"EQP", priority:"high"     },
+  { key:"trash_can", label:"Trash Can", code:"TRS", priority:"standard" },
+  { key:"bench",     label:"Bench",     code:"BCH", priority:"standard" },
+];
+
+function ReportIssueView() {
+  const [station,    setStation]    = useState("");
+  const [stationOpen,setStationOpen]= useState(false);
+  const stationMatches = ALL_STATIONS.filter(s =>
+    !station.trim() || s.name.toLowerCase().includes(station.toLowerCase())
+  );
+  const [issueType,  setIssueType]  = useState<string|null>(null);
+  const [priority,   setPriority]   = useState<"critical"|"high"|"standard"|null>(null);
+  const [notes,      setNotes]      = useState("");
+  const [photo,      setPhoto]      = useState<File|null>(null);
+  const [photoUrl,   setPhotoUrl]   = useState<string|null>(null);
+  const [reporter,   setReporter]   = useState("");
+  const [badge,      setBadge]      = useState("");
+  const [submitted,  setSubmitted]  = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const handleType = (key: string) => {
+    const t = REPORT_TYPES.find(r => r.key === key)!;
+    setIssueType(key);
+    setPriority(t.priority);
+  };
+
+  const handlePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0] ?? null;
+    setPhoto(f);
+    if (f) setPhotoUrl(URL.createObjectURL(f));
+    else setPhotoUrl(null);
+  };
+
+  const canSubmit = station.trim() !== "" && issueType !== null;
+
+  const reset = () => {
+    setStation(""); setIssueType(null); setPriority(null);
+    setNotes(""); setPhoto(null); setPhotoUrl(null);
+    setReporter(""); setBadge(""); setSubmitted(false);
+    if (fileRef.current) fileRef.current.value = "";
+  };
+
+  const priorityColor = (p: "critical"|"high"|"standard") =>
+    p === "critical" ? "#C62828" : p === "high" ? "#E65100" : T.textMuted;
+  const priorityBg    = (p: "critical"|"high"|"standard") =>
+    p === "critical" ? "#FFEBEE" : p === "high" ? "#FFF3E0" : T.bg;
+
+  /* ── Label helper ── */
+  const Label = ({ children }: { children: React.ReactNode }) => (
+    <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", color:T.textMuted, marginBottom:5 }}>
+      {children}
+    </div>
+  );
+
+  /* ── Field wrapper ── */
+  const Field = ({ children, mb=14 }: { children: React.ReactNode; mb?: number }) => (
+    <div style={{ marginBottom:mb }}>{children}</div>
+  );
+
+  /* ── Text input ── */
+  const Input = ({ value, onChange, placeholder, disabled=false }: { value:string; onChange:(v:string)=>void; placeholder:string; disabled?:boolean }) => (
+    <input value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} disabled={disabled}
+      style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:12, padding:"6px 10px", border:`1px solid ${T.border}`, borderRadius:3, background: disabled ? T.bg : T.panel, color:T.text, outline:"none", boxSizing:"border-box" as const, opacity: disabled ? 0.6 : 1 }}
+      onFocus={e => { if (!disabled) e.currentTarget.style.borderColor = T.gold; }}
+      onBlur={e => { e.currentTarget.style.borderColor = T.border; }}
+    />
+  );
+
+  if (submitted) {
+    const t = REPORT_TYPES.find(r => r.key === issueType)!;
+    return (
+      <div className="kd-scroll" style={{ flex:1, overflowY:"auto", background:T.bg, display:"flex", alignItems:"center", justifyContent:"center", padding:32 }}>
+        <div style={{ background:T.panel, border:`1px solid ${T.border}`, borderRadius:4, padding:"40px 48px", maxWidth:480, width:"100%", textAlign:"center", boxShadow:T.shadowMd }}>
+          <div style={{ fontFamily:"'Share Tech Mono'", fontSize:11, letterSpacing:"0.3em", color:T.gold, marginBottom:10 }}>REPORT SUBMITTED</div>
+          <div style={{ fontFamily:"'Share Tech Mono'", fontSize:28, color:T.text, marginBottom:6 }}>#{Math.floor(Math.random()*9000+1000)}</div>
+          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, color:T.textSub, marginBottom:4 }}>{station} · {t.label}</div>
+          {priority && (
+            <div style={{ display:"inline-block", fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.14em", padding:"3px 10px", borderRadius:2, background:priorityBg(priority), color:priorityColor(priority), marginBottom:20 }}>
+              {priority.toUpperCase()}
+            </div>
+          )}
+          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, marginBottom:28 }}>
+            Report logged and routed to the operations queue.
+          </div>
+          <button onClick={reset}
+            style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", padding:"9px 28px", background:T.gold, color:"#fff", border:"none", borderRadius:3, cursor:"pointer" }}>
+            New Report
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="kd-scroll" style={{ flex:1, overflowY:"auto", background:T.bg, padding:"24px 28px" }}>
+
+      {/* Page header */}
+      <div style={{ marginBottom:20 }}>
+        <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginBottom:3 }}>
+          KAI Facilities Management · DART Rail Network
+        </div>
+        <div style={{ fontFamily:"'Share Tech Mono'", fontSize:22, color:T.text, lineHeight:1.15 }}>
+          Report an Issue
+        </div>
+      </div>
+
+      {/* Form card */}
+      <div style={{ maxWidth:640, background:T.panel, border:`1px solid ${T.border}`, borderRadius:4, boxShadow:T.shadow }}>
+
+        {/* Station */}
+        <div style={{ padding:"20px 24px", borderBottom:`1px solid ${T.border}` }}>
+          <Label>Station <span style={{ color:"#D32F2F" }}>*</span></Label>
+          <div style={{ position:"relative" }}>
+            <input value={station} onChange={e => { setStation(e.target.value); setStationOpen(true); }}
+              placeholder="Select station…" autoComplete="off"
+              style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:12, padding:"6px 10px", border:`1px solid ${T.border}`, borderRadius:3, background:T.panel, color:T.text, outline:"none", boxSizing:"border-box" as const }}
+              onFocus={e => { e.currentTarget.style.borderColor = T.gold; setStationOpen(true); }}
+              onBlur={e => { e.currentTarget.style.borderColor = T.border; setTimeout(() => setStationOpen(false), 150); }}
+            />
+            {stationOpen && stationMatches.length > 0 && (
+              <div style={{ position:"absolute", top:"100%", left:0, right:0, background:T.panel, border:`1px solid ${T.borderHard}`, borderRadius:3, boxShadow:T.shadowMd, zIndex:200, maxHeight:180, overflowY:"auto" }}>
+                {stationMatches.map(s => (
+                  <div key={`${s.id}-${s.lineId}`}
+                    onMouseDown={() => { setStation(s.name); setStationOpen(false); }}
+                    style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 10px", fontFamily:"'Barlow Condensed'", fontSize:12, color:T.text, cursor:"pointer", borderBottom:`1px solid ${T.border}` }}
+                    onMouseEnter={e => (e.currentTarget.style.background = T.bg)}
+                    onMouseLeave={e => (e.currentTarget.style.background = T.panel)}
+                  >
+                    <span>{s.name}</span>
+                    <span style={{ fontSize:9, color:T.textMuted, letterSpacing:"0.06em" }}>{s.lineName}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Issue Type */}
+        <div style={{ padding:"20px 24px", borderBottom:`1px solid ${T.border}` }}>
+          <Label>Issue Type <span style={{ color:"#D32F2F" }}>*</span></Label>
+          <div style={{ display:"flex", flexWrap:"wrap" as const, gap:6 }}>
+            {REPORT_TYPES.map(t => {
+              const active = issueType === t.key;
+              return (
+                <button key={t.key} onClick={() => handleType(t.key)}
+                  style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.16em", textTransform:"uppercase" as const, padding:"6px 14px", border:`1px solid ${active ? T.gold : T.border}`, borderRadius:3, background: active ? T.gold : T.panel, color: active ? "#fff" : T.textSub, cursor:"pointer", display:"inline-flex", alignItems:"center", gap:6, transition:"all 0.12s" }}>
+                  <span style={{ fontFamily:"'Share Tech Mono'", fontSize:9, opacity:0.7 }}>{t.code}</span>
+                  {t.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Priority */}
+        <div style={{ padding:"20px 24px", borderBottom:`1px solid ${T.border}` }}>
+          <Label>Priority</Label>
+          <div style={{ display:"flex", gap:6 }}>
+            {(["critical","high","standard"] as const).map(p => {
+              const active = priority === p;
+              return (
+                <button key={p} onClick={() => setPriority(p)}
+                  style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.16em", textTransform:"uppercase" as const, padding:"5px 14px", border:`1px solid ${active ? priorityColor(p) : T.border}`, borderRadius:3, background: active ? priorityBg(p) : T.panel, color: active ? priorityColor(p) : T.textMuted, cursor:"pointer", transition:"all 0.12s" }}>
+                  {p}
+                </button>
+              );
+            })}
+          </div>
+          {!priority && (
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, color:T.textMuted, marginTop:6, letterSpacing:"0.06em" }}>
+              Auto-set when issue type is selected. Override if needed.
+            </div>
+          )}
+        </div>
+
+        {/* Notes */}
+        <div style={{ padding:"20px 24px", borderBottom:`1px solid ${T.border}` }}>
+          <Label>Location / Notes</Label>
+          <textarea value={notes} onChange={e => setNotes(e.target.value)}
+            placeholder="Describe the issue and its exact location…"
+            rows={4}
+            style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:12, padding:"6px 10px", border:`1px solid ${T.border}`, borderRadius:3, background:T.panel, color:T.text, outline:"none", resize:"vertical" as const, boxSizing:"border-box" as const, lineHeight:1.5 }}
+            onFocus={e => (e.currentTarget.style.borderColor = T.gold)}
+            onBlur={e => (e.currentTarget.style.borderColor = T.border)}
+          />
+        </div>
+
+        {/* Photo */}
+        <div style={{ padding:"20px 24px", borderBottom:`1px solid ${T.border}` }}>
+          <Label>Photo</Label>
+          <div style={{ display:"flex", alignItems:"center", gap:12, flexWrap:"wrap" as const }}>
+            <button onClick={() => fileRef.current?.click()}
+              style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.16em", textTransform:"uppercase" as const, padding:"6px 16px", border:`1px solid ${T.borderHard}`, borderRadius:3, background:T.panel, color:T.textSub, cursor:"pointer" }}>
+              + Add Photo
+            </button>
+            <span style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted }}>
+              {photo ? photo.name : "No file selected"}
+            </span>
+            <input ref={fileRef} type="file" accept="image/*" onChange={handlePhoto} style={{ display:"none" }}/>
+          </div>
+          {photoUrl && (
+            <div style={{ marginTop:12, position:"relative", display:"inline-block" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={photoUrl} alt="Issue photo" style={{ maxWidth:220, maxHeight:140, borderRadius:3, border:`1px solid ${T.border}`, display:"block" }}/>
+              <button onClick={() => { setPhoto(null); setPhotoUrl(null); if (fileRef.current) fileRef.current.value = ""; }}
+                style={{ position:"absolute", top:4, right:4, width:20, height:20, borderRadius:"50%", background:"rgba(0,0,0,0.55)", border:"none", color:"#fff", cursor:"pointer", fontFamily:"'Share Tech Mono'", fontSize:11, display:"flex", alignItems:"center", justifyContent:"center", lineHeight:1 }}>
+                ×
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Reported By */}
+        <div style={{ padding:"20px 24px", borderBottom:`1px solid ${T.border}` }}>
+          <Label>Reported By <span style={{ fontWeight:400, fontSize:8, letterSpacing:"0.1em" }}>(Optional)</span></Label>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+            <Field mb={0}>
+              <Input value={reporter} onChange={setReporter} placeholder="Full name"/>
+            </Field>
+            <Field mb={0}>
+              <Input value={badge} onChange={setBadge} placeholder="Badge / Crew ID"/>
+            </Field>
+          </div>
+        </div>
+
+        {/* Submit */}
+        <div style={{ padding:"16px 24px", display:"flex", alignItems:"center", justifyContent:"space-between", gap:12 }}>
+          {!canSubmit && (
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, color:T.textMuted, letterSpacing:"0.06em", flex:1 }}>
+              {!station.trim() ? "Station required" : "Issue type required"}
+            </div>
+          )}
+          {canSubmit && <div style={{ flex:1 }}/>}
+          <button onClick={() => canSubmit && setSubmitted(true)} disabled={!canSubmit}
+            style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase" as const, padding:"9px 28px", background: canSubmit ? T.gold : T.border, color: canSubmit ? "#fff" : T.textMuted, border:"none", borderRadius:3, cursor: canSubmit ? "pointer" : "not-allowed", whiteSpace:"nowrap" as const }}>
+            Submit Report
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Intelligence view ─────────────────────────── */
 function IntelligenceView() {
   const autoDisp = AI_DECISIONS.filter(d => d.status === "auto-dispatched").length;
@@ -1541,6 +1919,7 @@ function NavDrawer({ open, onClose, view, setView }: {
 
           <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Field Operations</div>
           {navRow("Inspection","48-item crew checklist · photo upload","inspect",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="1.5" width="10" height="11" rx="1"/><line x1="5" y1="5.5" x2="9" y2="5.5"/><line x1="5" y1="8" x2="9" y2="8"/><line x1="5" y1="10.5" x2="7" y2="10.5"/></svg>)}
+          {navRow("Report Issue","Safety · vandalism · equipment · cleaning","report",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 1.5L1 12.5h12L7 1.5z"/><line x1="7" y1="6" x2="7" y2="9"/><circle cx="7" cy="11" r="0.6" fill="currentColor" stroke="none"/></svg>)}
 
           <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>AI Intelligence</div>
           {navRow("Intelligence Engine","Predictions · anomalies · decisions","intelligence",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 2L8.5 5 12 5.5 9.5 8 10 11.5 7 10 4 11.5 4.5 8 2 5.5 5.5 5z"/></svg>)}
@@ -1655,6 +2034,7 @@ function PermanentSidebar({ view, setView, collapsed, onToggle }: { view: View; 
 
         {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Field Operations</div>}
         {navRow("Inspection","48-item crew checklist · photo upload","inspect",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="1.5" width="10" height="11" rx="1"/><line x1="5" y1="5.5" x2="9" y2="5.5"/><line x1="5" y1="8" x2="9" y2="8"/><line x1="5" y1="10.5" x2="7" y2="10.5"/></svg>)}
+        {navRow("Report Issue","Safety · vandalism · equipment · cleaning","report",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 1.5L1 12.5h12L7 1.5z"/><line x1="7" y1="6" x2="7" y2="9"/><circle cx="7" cy="11" r="0.6" fill="currentColor" stroke="none"/></svg>)}
 
         {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>AI Intelligence</div>}
         {navRow("Intelligence Engine","Predictions · anomalies · decisions","intelligence",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 2L8.5 5 12 5.5 9.5 8 10 11.5 7 10 4 11.5 4.5 8 2 5.5 5.5 5z"/></svg>)}
@@ -2113,6 +2493,11 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
                       style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", padding:"11px 14px", background:"none", border:"none", cursor:"pointer", color: view === "inspect" ? T.text : T.textMuted, transition:"color 0.15s" }}>
                 Inspect
               </button>
+              <button onClick={() => setView("report")}
+                      className={`nav-tab${view === "report" ? " active" : ""}`}
+                      style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", padding:"11px 14px", background:"none", border:"none", cursor:"pointer", color: view === "report" ? T.text : T.textMuted, transition:"color 0.15s" }}>
+                Report
+              </button>
               <button onClick={() => setView("intelligence")}
                       className={`nav-tab${view === "intelligence" ? " active" : ""}`}
                       style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.22em", textTransform:"uppercase", padding:"11px 14px", background:"none", border:"none", cursor:"pointer", color: view === "intelligence" ? T.text : T.textMuted, transition:"color 0.15s", display:"inline-flex", alignItems:"center", gap:5 }}>
@@ -2131,6 +2516,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
             {view === "command"           && <CommandCenter onDrill={drill}/>}
             {view === "stations"          && <StationView lineId={lineId} selectedId={stationId} onSelect={setStationId}/>}
             {view === "inspect"           && <InspectionView/>}
+            {view === "report"            && <ReportIssueView/>}
             {view === "intelligence"      && <IntelligenceView/>}
             {view === "asset_elevators"   && <AssetDashboardView assetKey="elevators"/>}
             {view === "asset_cameras"     && <AssetDashboardView assetKey="cameras"/>}
