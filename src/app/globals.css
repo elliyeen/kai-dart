@@ -198,6 +198,15 @@ nav, button, input, select, textarea, .font-ui {
   pointer-events: none;
 }
 
+/* ─── Hide scrollbar for filter chip rows ───────────────── */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* ─── Report type button micro-interactions ──────────────── */
 @keyframes type-btn-pop {
   0%   { transform: scale(1); }
