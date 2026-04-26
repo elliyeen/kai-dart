@@ -18,6 +18,13 @@ const LEVEL_ACCENT: Record<string, string> = {
   "at-risk": "#DC2626",
 };
 
+const STATUS_BADGE: Record<string, { label: string; color: string; bg: string }> = {
+  nominal:  { label: "Nominal",     color: "#16A34A", bg: "#F0FDF4" },
+  active:   { label: "In Progress", color: "#2563EB", bg: "#EFF6FF" },
+  alert:    { label: "Open",        color: "#D97706", bg: "#FFFBEB" },
+  critical: { label: "Open",        color: "#DC2626", bg: "#FEF2F2" },
+};
+
 interface Props { station: StationWorldModel }
 
 export default function StationCard({ station }: Props) {
@@ -50,25 +57,24 @@ export default function StationCard({ station }: Props) {
             </div>
           </div>
 
-          {/* Score + agent mini bars */}
+          {/* Score + agent issue statuses */}
           <div className="flex items-center gap-5 mt-4">
             <ReadinessGauge score={station.readinessScore} level={station.readinessLevel} size="sm" showLabel={false} />
-            <div className="flex-1 space-y-1.5">
-              {Object.values(station.agents).map(agent => (
-                <div key={agent.name} className="flex items-center gap-2">
-                  <span className="text-[9px] font-mono text-gray-400 w-14 flex-shrink-0 truncate uppercase">
-                    {agent.label.slice(0, 8)}
-                  </span>
-                  <div className="flex-1 h-0.5 bg-gray-100 rounded-full">
-                    <div className="h-full rounded-full transition-all duration-700"
-                      style={{
-                        width: `${agent.score}%`,
-                        background: agent.score >= 80 ? "#27AE60" : agent.score >= 65 ? "#FF6B35" : "#DC2626",
-                      }} />
+            <div className="flex-1 grid grid-cols-2 gap-x-3 gap-y-1.5">
+              {Object.values(station.agents).map(agent => {
+                const badge = STATUS_BADGE[agent.status];
+                return (
+                  <div key={agent.name} className="flex items-center justify-between gap-2">
+                    <span className="text-[10px] text-gray-500 truncate">{agent.label}</span>
+                    <span
+                      className="text-[9px] font-semibold px-1.5 py-0.5 rounded-sm flex-shrink-0"
+                      style={{ color: badge.color, background: badge.bg }}
+                    >
+                      {badge.label}
+                    </span>
                   </div>
-                  <span className="text-[9px] font-mono text-gray-400 w-6 text-right">{Math.round(agent.score)}</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

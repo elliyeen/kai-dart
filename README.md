@@ -37,7 +37,10 @@ The platform page includes a fully interactive **Live Command Center** — a rea
 ### Dashboard Features
 
 - **Command Center** — Network-wide readiness overview with spark charts per line, critical station table, and AI accuracy metrics
-- **Stations View** — Per-line station list with live scores, issue flags, staff deployment, and closure notices
+- **Line View** — Per-line drill-down with readiness gauge, live feed, and all station cards
+- **Station Detail** — Digital twin per station with real-time sensor simulation and active action queue
+- **Station Intelligence** — Per-station AI agent cards (Safety, Cleanliness, Maintenance, Compliance, Crowd) with confidence scores and ETA tracking
+- **City Dashboards** — City-scoped views showing stations within each municipality's jurisdiction
 - **Asset Dashboards** — Elevator, camera, stairwell, trash can, and bus cover uptime across all stations
 - **Inspection** — 48-point crew checklist with photo upload and section scoring
 - **Intelligence Engine** — AI anomaly detection, predictive alerts, and confidence-scored decisions
@@ -79,6 +82,10 @@ Open [http://localhost:3001](http://localhost:3001) to view the site.
 |---|---|
 | `/` | Home — hero, stats, platform overview |
 | `/platform` | Platform deep-dive + Live Command Center demo |
+| `/dart` | DART live command center — all lines, stations, and agent intelligence |
+| `/dart/line/[lineId]` | Per-line dashboard — station cards, readiness gauge, live feed |
+| `/dart/station/[id]` | Station detail — digital twin, AI agent cards, active action queue |
+| `/cities/[city]` | City-scoped dashboard (dallas, plano, addison, irving, garland, richardson) |
 | `/world-cup-2026` | FIFA 2026 countdown, Dallas match schedule, readiness tracker |
 | `/contact` | Contact / demo request form |
 

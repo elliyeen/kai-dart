@@ -5,6 +5,7 @@ import WorldCupCountdown from "@/components/WorldCupCountdown";
 import FadeUp from "@/components/FadeUp";
 import CountUp from "@/components/CountUp";
 import Nav from "@/components/Nav";
+import FlipText from "@/components/FlipText";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -15,17 +16,20 @@ export default function Home() {
       <Nav />
 
       {/* Hero */}
-      <section className="h-[calc(100vh-80px)] flex flex-col items-center justify-center relative overflow-hidden">
+      <section className="h-[65vh] sm:h-[80vh] lg:h-[calc(100vh-64px)] flex flex-col items-center justify-center relative overflow-hidden">
         <Image
-          src={`${basePath}/images/dart/parkeroad.jpg`}
-          alt="City infrastructure"
+          src={`${basePath}/images/dart/20260314_083035.jpg`}
+          alt="DART Silver Line train at station"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           priority
         />
-        {/* Cinematic gradient — reveals image through the center */}
-        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/10 to-black/70" />
-        <div className="absolute inset-0 bg-linear-to-r from-black/15 via-transparent to-black/15" />
+        {/* Lightened top overlay — enough to read, not enough to bury the image */}
+        <div className="absolute inset-0 bg-linear-to-b from-black/45 via-black/15 to-transparent" />
+        {/* Side vignettes */}
+        <div className="absolute inset-0 bg-linear-to-r from-black/10 via-transparent to-black/10" />
+        {/* Dark-to-light bleed — hero fades into white content below */}
+        <div className="absolute bottom-0 left-0 right-0 h-56 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.55) 60%, white 100%)" }} />
 
         <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
           <p
@@ -35,98 +39,86 @@ export default function Home() {
             KAI
           </p>
           <h1
-            className="hero-animate text-[2.8rem] sm:text-[4rem] lg:text-[5.25rem] xl:text-[6rem] font-semibold leading-[1.0] tracking-[-0.03em] mb-7"
+            className="hero-animate text-[2.2rem] sm:text-[3.5rem] lg:text-[5.5rem] xl:text-[6.5rem] font-bold leading-[1.05] tracking-[-0.03em] mb-5 sm:mb-7 text-white"
             style={{ animationDelay: "160ms" }}
           >
-            The operating system<br />
-            <span className="text-white/60 font-light">for cities.</span>
+            Intelligent Automation<br />
+            <FlipText />
           </h1>
           <p
-            className="hero-animate text-base lg:text-lg text-white/80 mb-12 max-w-xl mx-auto leading-relaxed font-light tracking-wide"
-            style={{ animationDelay: "360ms" }}
+            className="hero-animate text-xl sm:text-2xl text-white mb-8 sm:mb-10 font-light tracking-wide"
+            style={{ animationDelay: "320ms" }}
           >
-            Data, operations, and intelligence — unified.
+            Connect, update, and deploy Kai.
           </p>
           <div
             className="hero-animate flex flex-col sm:flex-row gap-3 justify-center"
-            style={{ animationDelay: "520ms" }}
+            style={{ animationDelay: "400ms" }}
           >
             <Link
               href="/platform?tab=demo"
-              className="bg-white text-black px-8 py-3 text-[13px] font-medium tracking-[0.05em] hover:bg-white/90 transition-all duration-300"
+              className="font-ui px-8 py-3 text-[13px] font-bold tracking-[0.05em] text-white transition-all duration-200 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-xl active:scale-95 active:translate-y-0"
+              style={{ background: "#0057A8" }}
             >
               Explore the platform
             </Link>
             <Link
               href="/contact"
-              className="border border-white/25 px-8 py-3 text-[13px] font-medium tracking-[0.05em] hover:border-white/55 hover:bg-white/[0.05] transition-all duration-300 inline-flex items-center justify-center gap-2"
+              className="font-ui bg-white text-gray-900 px-8 py-3 text-[13px] font-bold tracking-[0.05em] transition-all duration-200 hover:bg-white/90 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-xl active:scale-95 active:translate-y-0 inline-flex items-center justify-center gap-2"
             >
               Request a demo <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
         </div>
 
-        {/* Scroll line */}
-        <div
-          className="hero-animate absolute bottom-10 left-1/2 -translate-x-1/2"
-          style={{ animationDelay: "900ms" }}
-        >
-          <div className="w-px h-14 bg-linear-to-b from-white/25 to-transparent mx-auto" />
-        </div>
       </section>
 
-      {/* Cities ticker */}
-      <div className="bg-white border-b border-gray-100 py-6 overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
-        <div className="animate-marquee whitespace-nowrap">
-          {[
-            { name: "Dallas",          weight: "font-bold" },
-            { name: "Plano",           weight: "font-light" },
-            { name: "Irving",          weight: "font-semibold" },
-            { name: "Garland",         weight: "font-medium" },
-            { name: "Richardson",      weight: "font-thin" },
-            { name: "Carrollton",      weight: "font-bold" },
-            { name: "Addison",         weight: "font-light" },
-            { name: "Farmers Branch",  weight: "font-semibold" },
-            { name: "Glenn Heights",   weight: "font-medium" },
-            { name: "Rowlett",         weight: "font-thin" },
-            { name: "University Park", weight: "font-bold" },
-            { name: "Highland Park",   weight: "font-light" },
-            { name: "DFW Airport",     weight: "font-semibold" },
-          ].concat([
-            { name: "Dallas",          weight: "font-bold" },
-            { name: "Plano",           weight: "font-light" },
-            { name: "Irving",          weight: "font-semibold" },
-            { name: "Garland",         weight: "font-medium" },
-            { name: "Richardson",      weight: "font-thin" },
-            { name: "Carrollton",      weight: "font-bold" },
-            { name: "Addison",         weight: "font-light" },
-            { name: "Farmers Branch",  weight: "font-semibold" },
-            { name: "Glenn Heights",   weight: "font-medium" },
-            { name: "Rowlett",         weight: "font-thin" },
-            { name: "University Park", weight: "font-bold" },
-            { name: "Highland Park",   weight: "font-light" },
-            { name: "DFW Airport",     weight: "font-semibold" },
-          ]).map((city, i) => (
-            <span key={i} className="inline-flex items-center">
-              <span className={`text-[1.35rem] tracking-tight text-black ${city.weight} px-8`}>{city.name}</span>
-              <span className="text-gray-300 text-lg">·</span>
-            </span>
-          ))}
+      {/* Used by Businesses and Cities — logo marquee */}
+      <div className="bg-[#F8F7F4] border-b border-gray-200 py-10 overflow-hidden">
+        <p className="text-center text-[10px] font-medium tracking-[0.3em] text-gray-400 uppercase mb-8">
+          Used by Businesses and Cities
+        </p>
+        <div className="overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
+          <div className="animate-marquee flex items-baseline whitespace-nowrap">
+            {(() => {
+              const logos = [
+                { name: "Dallas",          cls: "font-black text-[1.85rem] tracking-tight text-black/80" },
+                { name: "Carrollton",      cls: "font-thin text-[1.5rem] text-black/25" },
+                { name: "Plano",           cls: "font-black text-[1.7rem] text-black/70" },
+                { name: "DFW Airport",     cls: "font-thin text-[1.3rem] tracking-[0.18em] uppercase text-black/22" },
+                { name: "Irving",          cls: "font-semibold text-[1.5rem] text-black/55" },
+                { name: "Addison",         cls: "font-light text-[1.4rem] text-black/30" },
+                { name: "University Park", cls: "font-bold text-[1.6rem] text-black/72" },
+                { name: "Highland Park",   cls: "font-extralight text-[1.55rem] tracking-widest text-black/18" },
+                { name: "Farmers Branch",  cls: "font-semibold text-[1.4rem] text-black/45" },
+                { name: "Richardson",      cls: "font-thin text-[1.5rem] text-black/22" },
+                { name: "Garland",         cls: "font-medium text-[1.5rem] text-black/50" },
+              ];
+              return [...logos, ...logos].map((logo, i) => (
+                <span key={i} className="inline-flex items-center">
+                  <span className={`${logo.cls} px-10`}>
+                    {logo.name}
+                  </span>
+                  <span className="text-gray-200 text-sm select-none">·</span>
+                </span>
+              ));
+            })()}
+          </div>
         </div>
       </div>
 
       {/* The Kai Fabric */}
-      <section className="py-36 bg-white text-black">
+      <section className="py-16 sm:py-24 lg:py-36 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-20 items-end mb-20">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-end mb-10 lg:mb-20">
             <FadeUp>
-              <p className="text-[11px] font-medium tracking-[0.3em] text-gray-400 mb-6 uppercase">How It Works</p>
-              <h2 className="text-5xl lg:text-6xl font-thin leading-tight tracking-[-0.02em]">
+              <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-6 uppercase">How It Works</p>
+              <h2 className="text-3xl sm:text-4xl lg:text-6xl font-thin leading-tight tracking-[-0.02em] text-black">
                 Three layers.<br />One unified truth.
               </h2>
             </FadeUp>
             <FadeUp delay={160}>
-              <p className="text-xl text-gray-500 leading-relaxed font-light">
+              <p className="text-xl text-gray-800 leading-relaxed font-light">
                 Most organizations manage data, operations, and intelligence in silos.
                 Kai dissolves those silos — connecting every source, every person,
                 and every decision into a single living operating picture.
@@ -196,12 +188,12 @@ export default function Home() {
       </section>
 
       {/* Proof in Action */}
-      <section className="py-36 bg-[#111318]">
+      <section className="py-16 sm:py-24 lg:py-36 bg-[#111318]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-20 items-start mb-24">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-start mb-12 lg:mb-24">
             <FadeUp>
               <p className="text-[11px] font-medium tracking-[0.3em] text-white/50 mb-6 uppercase">Live Deployment</p>
-              <h2 className="text-5xl lg:text-6xl font-thin leading-tight tracking-[-0.02em]">
+              <h2 className="text-3xl sm:text-4xl lg:text-6xl font-thin leading-tight tracking-[-0.02em]">
                 Kai is live across<br />65 DART stations<br />today.
               </h2>
             </FadeUp>
@@ -228,19 +220,19 @@ export default function Home() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 border-t border-white/10 pt-20">
               <div>
                 <div className="text-[11px] font-medium text-white/50 tracking-[0.2em] uppercase mb-3">DART Stations</div>
-                <div className="text-[3.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={65} /></div>
+                <div className="text-[2.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={65} /></div>
               </div>
               <div>
                 <div className="text-[11px] font-medium text-white/50 tracking-[0.2em] uppercase mb-3">Inspection Points</div>
-                <div className="text-[3.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={16055} /></div>
+                <div className="text-[2.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={16055} /></div>
               </div>
               <div>
                 <div className="text-[11px] font-medium text-white/50 tracking-[0.2em] uppercase mb-3">AI Accuracy</div>
-                <div className="text-[3.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={94.2} decimals={1} suffix="%" /></div>
+                <div className="text-[2.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={94.2} decimals={1} suffix="%" /></div>
               </div>
               <div>
                 <div className="text-[11px] font-medium text-white/50 tracking-[0.2em] uppercase mb-3">Alert-to-Action</div>
-                <div className="text-[3.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]">&lt;30s</div>
+                <div className="text-[2.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]">&lt;30s</div>
               </div>
             </div>
           </FadeUp>
@@ -282,7 +274,7 @@ export default function Home() {
           <FadeUp>
             <div className="mb-20">
               <p className="text-[11px] font-medium tracking-[0.3em] text-white/50 mb-6 uppercase">Capabilities</p>
-              <h2 className="text-5xl lg:text-6xl font-thin tracking-[-0.02em]">Six modules. One platform.</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-6xl font-thin tracking-[-0.02em]">Six modules. One platform.</h2>
             </div>
           </FadeUp>
           <div className="grid lg:grid-cols-3 gap-16">
@@ -319,10 +311,10 @@ export default function Home() {
       {/* About */}
       <section id="about" className="py-36 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-20 mb-24">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 mb-12 lg:mb-24">
             <FadeUp>
               <p className="text-[11px] font-medium tracking-[0.3em] text-gray-400 mb-6 uppercase">About Kai</p>
-              <h2 className="text-5xl lg:text-6xl font-thin leading-tight tracking-[-0.02em]">
+              <h2 className="text-3xl sm:text-4xl lg:text-6xl font-thin leading-tight tracking-[-0.02em]">
                 The organic<br />improvement of<br />the spaces we share.
               </h2>
             </FadeUp>
@@ -366,30 +358,37 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 sm:py-44 bg-[#111318] border-t border-white/[0.06]">
+      <section className="relative py-20 sm:py-52 overflow-hidden">
+        <Image
+          src={`${basePath}/images/dart/20260227_124144.jpg`}
+          alt="Park Lane DART Station"
+          fill
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-[#111318]/75" />
         <FadeUp>
-          <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+          <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
             <p className="text-[11px] font-medium tracking-[0.4em] text-white/50 mb-10 uppercase">Get Started</p>
             <h2 className="text-4xl sm:text-5xl lg:text-7xl xl:text-[6rem] font-thin mb-8 leading-none tracking-[-0.03em]">
               See Kai in action.
             </h2>
             <p className="text-xl text-white/60 mb-16 max-w-2xl mx-auto leading-relaxed font-light">
-              A 5-minute live demo — command center walkthrough, AI prediction
-              simulation, and a FIFA 2026 surge-event scenario.
+              A 5-minute live demo — command center walkthrough and AI prediction
+              simulation.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/contact"
-                className="bg-white text-black px-12 py-4 text-sm font-medium tracking-wide hover:bg-white/90 transition-all duration-300"
-              >
-                Request a live demo
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href="/platform?tab=demo"
-                className="border border-white/20 px-12 py-4 text-sm font-medium tracking-wide hover:border-white/50 transition-all duration-300 inline-flex items-center justify-center gap-2"
+                className="font-ui px-8 py-3 text-[13px] font-bold tracking-[0.05em] text-white transition-all duration-200 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-xl active:scale-95 active:translate-y-0"
+                style={{ background: "#0057A8" }}
               >
-                Explore platform
-                <ArrowRight className="w-3.5 h-3.5" />
+                Explore the platform
+              </Link>
+              <Link
+                href="/contact"
+                className="font-ui bg-white text-gray-900 px-8 py-3 text-[13px] font-bold tracking-[0.05em] transition-all duration-200 hover:bg-white/90 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-xl active:scale-95 active:translate-y-0 inline-flex items-center justify-center gap-2"
+              >
+                Request a demo <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
           </div>

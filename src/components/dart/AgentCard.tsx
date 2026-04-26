@@ -1,7 +1,7 @@
 "use client";
 // ─── Agent Card — individual sub-agent status, brand-compliant ───────────────
 
-import type { AgentState } from "@/lib/dart/types";
+import type { AgentState, ActiveAction } from "@/lib/dart/types";
 
 const STATUS_STYLES = {
   nominal:  { dot: "#27AE60", border: "#D1FAE5", bg: "#F0FDF4", label: "Nominal" },
@@ -23,8 +23,23 @@ function timeAgo(date: Date): string {
   return `${Math.floor(diffMin / 60)}h ago`;
 }
 
+function formatETA(action: ActiveAction): string {
+  const elapsedMs = Date.now() - new Date(action.startedAt).getTime();
+  const elapsedMin = elapsedMs / 60000;
+  const remaining = action.etaMinutes - elapsedMin;
+
+  if (remaining <= 0) return "Overdue";
+  if (remaining < 1) return "< 1 min";
+  if (remaining < 60) return `~${Math.round(remaining)} min`;
+  const hrs = Math.floor(remaining / 60);
+  const mins = Math.round(remaining % 60);
+  if (mins === 0) return `~${hrs}h`;
+  return `~${hrs}h ${mins}m`;
+}
+
 export default function AgentCard({ agent, compact = false }: Props) {
   const s = STATUS_STYLES[agent.status];
+  const hasActiveAction = !!agent.activeAction;
 
   return (
     <div className="rounded-sm border p-4 transition-all duration-500" style={{ borderColor: s.border, background: s.bg }}>
@@ -71,6 +86,26 @@ export default function AgentCard({ agent, compact = false }: Props) {
               </span>
             )}
           </div>
+
+          {/* Active action + ETA */}
+          {hasActiveAction && agent.activeAction && (
+            <div className="mt-3 pt-3 border-t flex items-start justify-between gap-2"
+              style={{ borderColor: s.border }}>
+              <div className="flex items-center gap-1.5 min-w-0">
+                <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse" style={{ background: s.dot }} />
+                <span className="text-[11px] text-gray-600 leading-tight truncate">
+                  {agent.activeAction.description}
+                </span>
+              </div>
+              <span className="text-[10px] font-mono font-semibold flex-shrink-0 px-1.5 py-0.5 rounded-sm"
+                style={{
+                  color: formatETA(agent.activeAction) === "Overdue" ? "#DC2626" : s.dot,
+                  background: s.border,
+                }}>
+                {formatETA(agent.activeAction)}
+              </span>
+            </div>
+          )}
         </>
       )}
     </div>

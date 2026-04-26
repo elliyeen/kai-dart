@@ -40,11 +40,12 @@ const steps = [
   },
 ];
 
+const BLUE = "#0057A8";
+
 export default function WizardOverlay({ onClose }: WizardOverlayProps) {
   const [step, setStep] = useState(0);
   const [visible, setVisible] = useState(false);
 
-  // Trigger entrance animation after mount
   useEffect(() => {
     const t = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(t);
@@ -69,15 +70,15 @@ export default function WizardOverlay({ onClose }: WizardOverlayProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
       onClick={(e) => {
         if (e.target === e.currentTarget) handleClose();
       }}
     >
       <div
-        className="relative max-w-lg w-full mx-4 border border-white/10 shadow-2xl transition-all duration-200"
+        className="relative max-w-lg w-full mx-4 shadow-2xl transition-all duration-200 border border-gray-100"
         style={{
-          background: "#111318",
+          background: "#ffffff",
           opacity: visible ? 1 : 0,
           transform: visible ? "translateY(0)" : "translateY(12px)",
         }}
@@ -85,7 +86,7 @@ export default function WizardOverlay({ onClose }: WizardOverlayProps) {
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-5 right-5 text-white/30 hover:text-white/70 transition-colors"
+          className="absolute top-5 right-5 text-gray-400 hover:text-gray-700 transition-colors"
           aria-label="Close tour"
         >
           <X className="w-4 h-4" />
@@ -103,11 +104,11 @@ export default function WizardOverlay({ onClose }: WizardOverlayProps) {
                 width: i === step ? "20px" : "6px",
                 height: "6px",
                 borderRadius: "3px",
-                background: i === step ? "#FF6B35" : "rgba(255,255,255,0.15)",
+                background: i === step ? BLUE : "#E5E7EB",
               }}
             />
           ))}
-          <span className="ml-auto text-[10px] tracking-widest uppercase text-white/25 font-medium">
+          <span className="ml-auto text-[10px] tracking-widest uppercase text-gray-400 font-medium">
             {step + 1} / {steps.length}
           </span>
         </div>
@@ -117,54 +118,45 @@ export default function WizardOverlay({ onClose }: WizardOverlayProps) {
           {/* Icon */}
           <div
             className="w-11 h-11 border flex items-center justify-center mb-6"
-            style={{ borderColor: "rgba(255,107,53,0.4)", color: "#FF6B35" }}
+            style={{ borderColor: `${BLUE}40`, color: BLUE }}
           >
             <Icon className="w-5 h-5" />
           </div>
 
           {/* Label */}
-          <p className="text-[10px] font-medium tracking-widest uppercase mb-2" style={{ color: "#FF6B35" }}>
+          <p className="text-[10px] font-semibold tracking-widest uppercase mb-2" style={{ color: BLUE }}>
             {current.label}
           </p>
 
           {/* Title */}
-          <h2 className="text-2xl font-light tracking-tight text-white mb-4">
+          <h2 className="text-2xl font-semibold tracking-tight text-gray-900 mb-4">
             {current.title}
           </h2>
 
           {/* Body */}
-          <p className="text-sm font-light leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
+          <p className="text-sm font-normal leading-relaxed text-gray-600">
             {current.body}
           </p>
         </div>
 
         {/* Divider */}
-        <div className="border-t border-white/10 mx-8" />
+        <div className="border-t border-gray-100 mx-8" />
 
         {/* Navigation */}
         <div className="flex items-center justify-between px-8 py-5">
           <button
             onClick={() => (step > 0 ? goTo(step - 1) : handleClose())}
-            className="text-xs tracking-widest uppercase font-medium transition-colors"
-            style={{ color: "rgba(255,255,255,0.3)" }}
-            onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.7)")}
-            onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.3)")}
+            className="text-xs tracking-widest uppercase font-medium text-gray-400 hover:text-gray-700 transition-colors"
           >
             {step === 0 ? "Skip" : "Back"}
           </button>
 
           <button
             onClick={() => (isLast ? handleClose() : goTo(step + 1))}
-            className="flex items-center gap-2 px-5 py-2.5 text-xs tracking-widest uppercase font-medium transition-colors"
-            style={{ background: isLast ? "#FF6B35" : "rgba(255,255,255,0.06)", color: isLast ? "#fff" : "rgba(255,255,255,0.85)" }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget;
-              el.style.background = isLast ? "#e85d2a" : "rgba(255,255,255,0.1)";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget;
-              el.style.background = isLast ? "#FF6B35" : "rgba(255,255,255,0.06)";
-            }}
+            className="flex items-center gap-2 px-5 py-2.5 text-xs tracking-widest uppercase font-semibold text-white transition-colors"
+            style={{ background: BLUE }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#004a8f"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = BLUE; }}
           >
             {isLast ? (
               <>Start Exploring <ArrowRight className="w-3 h-3" /></>

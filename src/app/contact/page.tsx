@@ -69,7 +69,7 @@ export default function ContactPage() {
             Contact
           </p>
           <h1
-            className="hero-animate text-[3.5rem] sm:text-[5rem] lg:text-[7rem] font-thin leading-[0.93] tracking-[-0.03em] mb-10"
+            className="hero-animate text-[2.2rem] sm:text-[3.5rem] lg:text-[6rem] font-thin leading-[0.93] tracking-[-0.03em] mb-10"
             style={{ animationDelay: "160ms" }}
           >
             Let&apos;s talk.
@@ -86,8 +86,8 @@ export default function ContactPage() {
 
       {/* Main Content */}
       <section className="bg-white text-black">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-24">
-          <div className="grid lg:grid-cols-2 gap-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-24">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-20">
 
             {/* Form */}
             <div>

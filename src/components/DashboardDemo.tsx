@@ -7,11 +7,11 @@ const StationMapGL = dynamic(() => import("./StationMapGL"), { ssr: false });
 
 /* ─── Types ──────────────────────────────────────── */
 type Status  = "good" | "warning" | "critical" | "deploying" | "closed";
-type View    = "command" | "stations" | "inspect" | "report" | "asset_elevators" | "asset_cameras" | "asset_stairwells" | "asset_trash_cans" | "asset_bus_covers" | "intelligence";
+type View    = "command" | "stations" | "inspect" | "report" | "ticket" | "issues" | "asset_elevators" | "asset_cameras" | "asset_stairwells" | "asset_trash_cans" | "asset_bus_covers" | "intelligence";
 type AssetKey = "elevators" | "cameras" | "stairwells" | "trash_cans" | "bus_covers";
 type InspVal = "pass" | "fail" | "na" | null;
 
-interface Issue { key: string; label: string; icon: string; priority: "critical"|"high"|"standard"; }
+interface Issue { key: string; label: string; icon: string; priority: "critical"|"high"|"routine"; status: "open"|"in_progress"|"hold"; }
 interface StaffMember { name: string; role: string; status: "On Task"|"En Route"|"Available"; detail: string; }
 interface AssetEntry { elevators: number; elevators_ok: number; cameras: number; cameras_ok: number; stairwells: number; stairwells_ok: number; trash_cans: number; trash_cans_ok: number; bus_covers: number; bus_covers_ok: number; }
 interface Station {
@@ -21,7 +21,13 @@ interface Station {
   city: string; closure?: string;
 }
 interface Line { name: string; sub: string; color: string; stations: Station[]; }
-interface InspItem    { id: string; name: string; desc: string; priority: "critical"|"high"|"standard"; }
+interface SubmittedReport {
+  refNumber: string; station: string; lineName: string; issueType: string; issueLabel: string;
+  priority: "critical"|"high"|"routine"; notes: string;
+  reporter: string; reporterType: string;
+  submittedAt: Date; status: "open"|"inprogress"|"done"|"cancelled";
+}
+interface InspItem    { id: string; name: string; desc: string; priority: "critical"|"high"|"routine"; }
 interface InspSection { id: string; title: string; items: InspItem[]; }
 
 /* ─── Design tokens ─────────────────────────────── */
@@ -33,28 +39,45 @@ const T = {
   text:       "#111827",
   textSub:    "#374151",
   textMuted:  "#6B7280",
-  gold:       "#C9A84C",
-  goldLight:  "#F0D98A",
+  gold:       "#0057A8",
+  goldLight:  "#D6E8F9",
   shadow:     "0 1px 3px rgba(0,0,0,0.07)",
   shadowMd:   "0 2px 8px rgba(0,0,0,0.09)",
 };
 
 /* ─── Issue definitions ─────────────────────────── */
 const ISSUES: Record<string, Issue> = {
-  cleaning_overdue: { key:"cleaning_overdue", label:"Cleaning Overdue",       icon:"CLN", priority:"high"     },
-  restroom_closed:  { key:"restroom_closed",  label:"Restroom Out of Service", icon:"RST", priority:"critical" },
-  elevator_down:    { key:"elevator_down",    label:"Elevator Down",           icon:"ELV", priority:"critical" },
-  graffiti:         { key:"graffiti",         label:"Graffiti/Vandalism",      icon:"GRF", priority:"high"     },
-  lighting_fault:   { key:"lighting_fault",   label:"Lighting Fault",          icon:"LGT", priority:"high"     },
-  escalator_maint:  { key:"escalator_maint",  label:"Escalator Maintenance",   icon:"ESC", priority:"standard" },
-  debris:           { key:"debris",           label:"Debris on Platform",      icon:"DEB", priority:"standard" },
-  crew_delayed:     { key:"crew_delayed",     label:"Crew Deployment Delayed", icon:"DLY", priority:"high"     },
-  camera_offline:   { key:"camera_offline",   label:"Camera Offline",          icon:"CAM", priority:"critical" },
-  safety:           { key:"safety",           label:"Safety Concern",          icon:"SFY", priority:"critical" },
-  smell:            { key:"smell",            label:"Odor/Sanitation",          icon:"SNL", priority:"high"     },
-  litter:           { key:"litter",           label:"Litter on Platform",       icon:"LIT", priority:"standard" },
-  vandalism:        { key:"vandalism",        label:"Vandalism",                icon:"VND", priority:"high"     },
-  lighting:         { key:"lighting",         label:"Lighting Issue",           icon:"LGT", priority:"high"     },
+  cleaning_overdue: { key:"cleaning_overdue", label:"Cleaning Overdue",       icon:"CLN", priority:"high",     status:"open"        },
+  restroom_closed:  { key:"restroom_closed",  label:"Restroom Out of Service", icon:"RST", priority:"critical", status:"in_progress" },
+  elevator_down:    { key:"elevator_down",    label:"Elevator Down",           icon:"ELV", priority:"critical", status:"in_progress" },
+  graffiti:         { key:"graffiti",         label:"Graffiti/Vandalism",      icon:"GRF", priority:"high",     status:"open"        },
+  lighting_fault:   { key:"lighting_fault",   label:"Lighting Fault",          icon:"LGT", priority:"high",     status:"open"        },
+  escalator_maint:  { key:"escalator_maint",  label:"Escalator Maintenance",   icon:"ESC", priority:"routine",  status:"hold"        },
+  debris:           { key:"debris",           label:"Debris on Platform",      icon:"DEB", priority:"routine",  status:"in_progress" },
+  crew_delayed:     { key:"crew_delayed",     label:"Crew Deployment Delayed", icon:"DLY", priority:"high",     status:"open"        },
+  camera_offline:   { key:"camera_offline",   label:"Camera Offline",          icon:"CAM", priority:"critical", status:"in_progress" },
+  safety:           { key:"safety",           label:"Safety Concern",          icon:"SFY", priority:"critical", status:"in_progress" },
+  smell:            { key:"smell",            label:"Odor/Sanitation",          icon:"SNL", priority:"high",     status:"open"        },
+  litter:           { key:"litter",           label:"Litter on Platform",       icon:"LIT", priority:"routine",  status:"hold"        },
+  vandalism:        { key:"vandalism",        label:"Vandalism",                icon:"VND", priority:"high",     status:"open"        },
+  lighting:         { key:"lighting",         label:"Lighting Issue",           icon:"LGT", priority:"high",     status:"hold"        },
+};
+
+const ISSUE_NOTES: Record<string, string> = {
+  cleaning_overdue: "Platform cleaning cycle overdue by 3+ hours. Auto-flagged by schedule monitor.",
+  restroom_closed:  "Restroom B temporarily out of service. Maintenance team has been notified.",
+  elevator_down:    "Elevator A vibration index exceeded threshold (74). Predictive maintenance triggered.",
+  graffiti:         "Graffiti reported on north platform wall near NW stairwell. Photo documentation required.",
+  lighting_fault:   "Platform lighting circuit fault detected on east concourse. 3 units affected.",
+  escalator_maint:  "Escalator unit 2 due for scheduled maintenance. Parts on order.",
+  debris:           "Debris accumulation on platform B detected by vision sensor. Crew dispatch pending.",
+  crew_delayed:     "Crew deployment delayed — staffing coverage gap on overnight shift.",
+  camera_offline:   "Security camera unit 3 offline. Network connectivity error since 06:42.",
+  safety:           "Safety concern flagged at platform entrance. DART PD notified.",
+  smell:            "Odor/sanitation issue reported at south entrance by field engineer.",
+  litter:           "Litter accumulation on platform beyond auto-threshold. Crew alerted.",
+  vandalism:        "Vandalism incident on south bench. DART PD notified. Evidence photographed.",
+  lighting:         "Lighting issue in tunnel section — 2 fixtures out on eastbound platform.",
 };
 
 /* ─── Asset data ────────────────────────────────── */
@@ -403,7 +426,7 @@ const ANOMALIES: AnomalyAlert[] = [
 interface AIDecision {
   id: string; station: string; lineColor: string;
   action: string; assignedTo: string; role: string;
-  priority: "critical" | "high" | "standard";
+  priority: "critical" | "high" | "routine";
   status: "auto-dispatched" | "pending" | "acknowledged";
   generatedAt: string; reason: string;
 }
@@ -414,7 +437,7 @@ const AI_DECISIONS: AIDecision[] = [
   { id:"d4", station:"Las Colinas",      lineColor:"#F77F00", action:"Increase security coverage — camera blind spot identified",  assignedTo:"Unassigned", role:"—",           priority:"high",     status:"pending",         generatedAt:"15 min ago", reason:"Historical incident correlation · 84% confidence" },
   { id:"d5", station:"West End",         lineColor:"#00A84F", action:"Deploy sanitation — trash overflow predicted in 65 min",    assignedTo:"Tina L.",    role:"Maintenance", priority:"high",     status:"pending",         generatedAt:"22 min ago", reason:"91% confidence · fill-rate model v2.1" },
   { id:"d6", station:"Walnut Hill",      lineColor:"#00A84F", action:"Schedule elevator inspection — degradation pattern rising",  assignedTo:"Tina L.",    role:"Maintenance", priority:"high",     status:"acknowledged",    generatedAt:"28 min ago", reason:"Lighting + elevator correlation · 79% confidence" },
-  { id:"d7", station:"Kiest",            lineColor:"#0076CE", action:"Add cleaning pass — ridership-demand mismatch flagged",     assignedTo:"Unassigned", role:"—",           priority:"standard", status:"pending",         generatedAt:"35 min ago", reason:"Demand model override · surge threshold crossed" },
+  { id:"d7", station:"Kiest",            lineColor:"#0076CE", action:"Add cleaning pass — ridership-demand mismatch flagged",     assignedTo:"Unassigned", role:"—",           priority:"routine", status:"pending",         generatedAt:"35 min ago", reason:"Demand model override · surge threshold crossed" },
 ];
 
 /* ─── Helpers ────────────────────────────────────── */
@@ -448,8 +471,8 @@ const INSP_SECTIONS: InspSection[] = [
       { id:"elev-2", name:"Interior lighting functional", desc:"All interior lights working properly", priority:"high" },
       { id:"elev-3", name:"Emergency phone/intercom working", desc:"Emergency call button connects to dispatch", priority:"critical" },
       { id:"elev-4", name:"Certificate posted & current", desc:"Inspection certificate visible and not expired", priority:"high" },
-      { id:"elev-5", name:"Interior cleanliness", desc:"No debris, graffiti, or biohazard material present", priority:"standard" },
-      { id:"elev-6", name:"Floor indicators working", desc:"Digital/mechanical floor display functioning", priority:"standard" },
+      { id:"elev-5", name:"Interior cleanliness", desc:"No debris, graffiti, or biohazard material present", priority:"routine" },
+      { id:"elev-6", name:"Floor indicators working", desc:"Digital/mechanical floor display functioning", priority:"routine" },
       { id:"elev-7", name:"Door sensors functional", desc:"Safety sensors prevent door close on obstruction", priority:"critical" },
     ],
   },
@@ -461,7 +484,7 @@ const INSP_SECTIONS: InspSection[] = [
       { id:"cam-3", name:"Platform coverage complete", desc:"Full platform visible, no blind spots", priority:"critical" },
       { id:"cam-4", name:"Stairwell cameras operational", desc:"Stairwell entry/exit points covered", priority:"high" },
       { id:"cam-5", name:"Entrance/exit cameras working", desc:"All entry points monitored", priority:"critical" },
-      { id:"cam-6", name:"Mounting hardware secure", desc:"No loose, tilted, or misaligned camera mounts", priority:"standard" },
+      { id:"cam-6", name:"Mounting hardware secure", desc:"No loose, tilted, or misaligned camera mounts", priority:"routine" },
       { id:"cam-7", name:"Recording indicator active", desc:"Camera status LEDs or feed timestamps current", priority:"high" },
     ],
   },
@@ -471,32 +494,32 @@ const INSP_SECTIONS: InspSection[] = [
       { id:"stair-1", name:"Handrails secure", desc:"Both rails firmly mounted, no wobble", priority:"critical" },
       { id:"stair-2", name:"Lighting adequate", desc:"All stairwell lights functional, no dark areas", priority:"high" },
       { id:"stair-3", name:"Steps free of debris", desc:"No litter, standing water, or slip hazards on steps", priority:"high" },
-      { id:"stair-4", name:"Graffiti absent", desc:"No graffiti or vandalism on walls or handrails", priority:"standard" },
+      { id:"stair-4", name:"Graffiti absent", desc:"No graffiti or vandalism on walls or handrails", priority:"routine" },
       { id:"stair-5", name:"Non-slip surfaces intact", desc:"Anti-slip tape or treads intact and not peeling", priority:"high" },
       { id:"stair-6", name:"Emergency lighting functional", desc:"Backup lighting activates on power loss", priority:"critical" },
-      { id:"stair-7", name:"Drainage clear", desc:"Floor drains not clogged; no pooling water", priority:"standard" },
+      { id:"stair-7", name:"Drainage clear", desc:"Floor drains not clogged; no pooling water", priority:"routine" },
     ],
   },
   {
     id:"trash_cans", title:"Trash Cans & Waste Stations",
     items:[
-      { id:"trash-1", name:"All receptacles in place", desc:"No missing or overturned waste bins", priority:"standard" },
+      { id:"trash-1", name:"All receptacles in place", desc:"No missing or overturned waste bins", priority:"routine" },
       { id:"trash-2", name:"Receptacles not overflowing", desc:"Less than 75% full; no overflow onto platform", priority:"high" },
-      { id:"trash-3", name:"Recycling bins labeled", desc:"Recycling bins clearly labeled and separate from trash", priority:"standard" },
+      { id:"trash-3", name:"Recycling bins labeled", desc:"Recycling bins clearly labeled and separate from trash", priority:"routine" },
       { id:"trash-4", name:"No biohazard material", desc:"No syringes, blood, or medical waste present", priority:"critical" },
-      { id:"trash-5", name:"Lids/covers intact", desc:"Bin lids functional and properly covering contents", priority:"standard" },
-      { id:"trash-6", name:"Surrounding area clean", desc:"No loose debris around or under waste bins", priority:"standard" },
+      { id:"trash-5", name:"Lids/covers intact", desc:"Bin lids functional and properly covering contents", priority:"routine" },
+      { id:"trash-6", name:"Surrounding area clean", desc:"No loose debris around or under waste bins", priority:"routine" },
     ],
   },
   {
     id:"bus_covers", title:"Bus Covers & Shelters",
     items:[
       { id:"bus-1", name:"Roof/canopy structurally sound", desc:"No sagging, cracks, or loose panels", priority:"critical" },
-      { id:"bus-2", name:"Seating clean and intact", desc:"No broken, vandalized, or missing bench sections", priority:"standard" },
+      { id:"bus-2", name:"Seating clean and intact", desc:"No broken, vandalized, or missing bench sections", priority:"routine" },
       { id:"bus-3", name:"Lighting operational", desc:"All shelter lights working", priority:"high" },
-      { id:"bus-4", name:"Schedule/route info posted", desc:"Current schedule and route maps displayed", priority:"standard" },
-      { id:"bus-5", name:"No graffiti or vandalism", desc:"Panels, glass, and seating free of graffiti", priority:"standard" },
-      { id:"bus-6", name:"Drainage functional", desc:"No water pooling under or around shelter", priority:"standard" },
+      { id:"bus-4", name:"Schedule/route info posted", desc:"Current schedule and route maps displayed", priority:"routine" },
+      { id:"bus-5", name:"No graffiti or vandalism", desc:"Panels, glass, and seating free of graffiti", priority:"routine" },
+      { id:"bus-6", name:"Drainage functional", desc:"No water pooling under or around shelter", priority:"routine" },
       { id:"bus-7", name:"Glass panels intact", desc:"No cracked, broken, or missing glass panels", priority:"high" },
       { id:"bus-8", name:"ADA accessibility clear", desc:"Curb cut and ramp to shelter unobstructed", priority:"critical" },
     ],
@@ -513,7 +536,7 @@ const INSP_SECTIONS: InspSection[] = [
       { id:"gen-7",  name:"Platform edge markings visible", desc:"Yellow tactile strip and edge line clear and unpeeled", priority:"critical" },
       { id:"gen-8",  name:"Emergency exits unlocked", desc:"All emergency exit doors operable and unobstructed", priority:"critical" },
       { id:"gen-9",  name:"Fire extinguishers present", desc:"Extinguishers in place, pressure in green zone, tagged current", priority:"critical" },
-      { id:"gen-10", name:"Overall cleanliness acceptable", desc:"Platform, walls, and ceilings meet cleanliness standard", priority:"standard" },
+      { id:"gen-10", name:"Overall cleanliness acceptable", desc:"Platform, walls, and ceilings meet cleanliness standard", priority:"routine" },
     ],
   },
 ];
@@ -586,16 +609,16 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
           { label:"Asset Uptime",      val:`${uptime}%`,sub:`${no} of ${nt} assets`,   color:scoreColor(uptime) },
           { label:"AI Accuracy",       val:"94.2%",     sub:"Model v2.1 · Live",        color:T.gold },
         ].map(k => (
-          <div key={k.label} className="dash-cell" style={{ background:T.panel, padding:"14px 18px", cursor:"default" }}>
-            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", color:T.textMuted, marginBottom:5 }}>{k.label}</div>
+          <div key={k.label} className="dash-cell" style={{ background:T.panel, padding:"18px 20px", cursor:"default" }}>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:600, letterSpacing:"0.18em", textTransform:"uppercase", color:T.textMuted, marginBottom:7 }}>{k.label}</div>
             <div className="dash-cell-value summary-num" style={{ fontFamily:"'Share Tech Mono'", fontSize:28, color:k.color, lineHeight:1 }}>{k.val}</div>
-            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:4, letterSpacing:"0.04em" }}>{k.sub}</div>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, marginTop:6, letterSpacing:"0.03em" }}>{k.sub}</div>
           </div>
         ))}
       </div>
 
       {/* Line cards */}
-      <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.28em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>
+      <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", color:T.textMuted, marginBottom:12 }}>
         LINES — READINESS OVERVIEW · Click to drill down
       </div>
       <div className="kd-grid-lines" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
@@ -610,13 +633,16 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
           const topIssues = Object.entries(issueCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
           return (
             <div key={lid} onClick={() => onDrill(lid)}
-                 style={{ background:T.panel, padding:"18px 20px", cursor:"pointer", borderLeft:`3px solid ${line.color}`, transition:"background 0.15s", boxShadow:T.shadow }}
+                 style={{ background:T.panel, padding:"18px 20px", cursor:"pointer", transition:"background 0.15s", boxShadow:T.shadow }}
                  onMouseEnter={e => (e.currentTarget.style.background = "#F9FAFB")}
                  onMouseLeave={e => (e.currentTarget.style.background = T.panel)}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:10 }}>
                 <div>
-                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:15, fontWeight:700, letterSpacing:"0.05em", color:line.color }}>{line.name}</div>
-                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, letterSpacing:"0.06em", marginTop:1 }}>{line.sub}</div>
+                  <div style={{ display:"flex", alignItems:"center", gap:7 }}>
+                    <span style={{ width:8, height:8, borderRadius:"50%", background:line.color, flexShrink:0, display:"inline-block" }}/>
+                    <span style={{ fontFamily:"'Barlow Condensed'", fontSize:15, fontWeight:700, letterSpacing:"0.05em", color:T.text }}>{line.name}</span>
+                  </div>
+                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, letterSpacing:"0.04em", marginTop:3, paddingLeft:15 }}>{line.sub}</div>
                 </div>
                 <div style={{ textAlign:"right" }}>
                   <div style={{ fontFamily:"'Share Tech Mono'", fontSize:22, color:scoreColor(lavg), lineHeight:1 }}>{lavg}</div>
@@ -632,13 +658,11 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
                 ].map(d => (
                   <div key={d.l}>
                     <div style={{ fontFamily:"'Share Tech Mono'", fontSize:12, color:d.c }}>{d.v}</div>
-                    <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, color:T.textMuted, letterSpacing:"0.1em", marginTop:1 }}>{d.l}</div>
+                    <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, letterSpacing:"0.08em", marginTop:2 }}>{d.l}</div>
                   </div>
                 ))}
               </div>
               <div style={{ display:"flex", gap:4, marginTop:8, flexWrap:"wrap" }}>
-                {lc > 0 && <span style={{ fontFamily:"'Share Tech Mono'", fontSize:9, fontWeight:700, padding:"2px 7px", borderRadius:2, background:"#FFEBEE", color:"#C62828" }}>{lc} CRITICAL</span>}
-                {lw > 0 && <span style={{ fontFamily:"'Share Tech Mono'", fontSize:9, fontWeight:700, padding:"2px 7px", borderRadius:2, background:"#FFF3E0", color:"#E65100" }}>{lw} ATTENTION</span>}
                 {lc === 0 && lw === 0 && <span style={{ fontFamily:"'Share Tech Mono'", fontSize:9, fontWeight:700, padding:"2px 7px", borderRadius:2, background:"#E8F5E9", color:"#2E7D32" }}>ALL CLEAR</span>}
               </div>
               {topIssues.length > 0 && (
@@ -659,14 +683,14 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
       </div>
 
       {/* 10 worst */}
-      <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.28em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>
-        10 LOWEST READINESS — NETWORK-WIDE
+      <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", color:T.textSub, marginBottom:10 }}>
+        10 Lowest Readiness — Network-Wide
       </div>
       <div className="kd-table-wrap"><table className="tufte-table" style={{ width:"100%", borderCollapse:"collapse", background:T.panel, border:`1px solid ${T.border}`, boxShadow:T.shadow }}>
         <thead>
           <tr style={{ background:"#F9FAFB" }}>
             {["Station","Line","Score","Readiness","Issues","Status"].map((h, i) => (
-              <th key={h} style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.2em", textTransform:"uppercase", color:T.textMuted, padding:"8px 14px", textAlign: i >= 2 && i <= 3 ? "right" : "left", borderBottom:`1px solid ${T.border}`, whiteSpace:"nowrap" }}>{h}</th>
+              <th key={h} style={{ fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:600, letterSpacing:"0.15em", textTransform:"uppercase", color:T.textMuted, padding:"10px 14px", textAlign: i >= 2 && i <= 3 ? "right" : "left", borderBottom:`1px solid ${T.border}`, whiteSpace:"nowrap" }}>{h}</th>
             ))}
           </tr>
         </thead>
@@ -736,7 +760,16 @@ function StationMap({ station, lineColor }: { station: Station; lineColor: strin
 }
 
 /* ─── Station view ───────────────────────────────── */
-function StationView({ lineId, selectedId, onSelect, onReport }: { lineId:string; selectedId:string|null; onSelect:(id:string)=>void; onReport:(name:string)=>void; }) {
+const ISSUE_TO_REPORT_TYPE: Record<string, string> = {
+  cleaning_overdue: "cleaning", restroom_closed: "cleaning",  smell:    "cleaning",
+  litter:           "trash_can", debris:         "trash_can",
+  elevator_down:    "equipment", escalator_maint:"equipment", lighting_fault:"equipment",
+  camera_offline:   "equipment", crew_delayed:   "equipment", lighting: "equipment",
+  graffiti:         "vandalism", vandalism:       "vandalism",
+  safety:           "safety",
+};
+
+function StationView({ lineId, selectedId, onSelect, onReport, onViewTicket }: { lineId:string; selectedId:string|null; onSelect:(id:string)=>void; onReport:(name:string, issueType?:string)=>void; onViewTicket:(stationName:string, stationId:string, issueKey:string)=>void; }) {
   const line = LINES[lineId];
   const selected = line.stations.find(s => s.id === selectedId) ?? line.stations[0];
   const style = statusStyle(selected.status);
@@ -758,7 +791,7 @@ function StationView({ lineId, selectedId, onSelect, onReport }: { lineId:string
         <div style={{ padding:"10px 14px", borderBottom:`1px solid ${T.border}`, display:"flex", alignItems:"center", justifyContent:"space-between", background:"#F9FAFB", flexShrink:0 }}>
           <div style={{ display:"flex", alignItems:"center", gap:7 }}>
             <div style={{ width:9, height:9, borderRadius:"50%", background:line.color }}/>
-            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:15, fontWeight:700, letterSpacing:"0.05em", color:line.color }}>{line.name}</div>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:15, fontWeight:700, letterSpacing:"0.05em", color:T.text }}>{line.name}</div>
           </div>
           <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, color:T.textMuted }}>{line.stations.length} STA</div>
         </div>
@@ -780,7 +813,7 @@ function StationView({ lineId, selectedId, onSelect, onReport }: { lineId:string
                 <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, fontWeight:600, letterSpacing:"0.02em", color:T.text }}>{st.name}</div>
                 <div style={{ fontFamily:"'Share Tech Mono'", fontSize:11, color:st.status === "closed" ? "#BDBDBD" : scoreColor(st.score) }}>{st.status === "closed" ? "—" : `${st.score}%`}</div>
               </div>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:1 }}>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, marginTop:2 }}>
                 {st.issues.length > 0 ? `${st.issues.length} issue${st.issues.length > 1 ? "s" : ""}` : "Clear"} · {st.lastInspected}
               </div>
             </div>
@@ -804,7 +837,7 @@ function StationView({ lineId, selectedId, onSelect, onReport }: { lineId:string
               <div style={{ fontFamily:"'Barlow Condensed'", fontSize:22, fontWeight:900, letterSpacing:"0.04em", color:"#9E9E9E", textDecoration:"line-through", lineHeight:1.1 }}>{selected.name}</div>
               <div style={{ display:"flex", alignItems:"center", gap:5, marginTop:4 }}>
                 <div style={{ width:7, height:7, borderRadius:"50%", background:line.color }}/>
-                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, letterSpacing:"0.1em" }}>
+                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:12, color:T.textMuted, letterSpacing:"0.06em" }}>
                   {selected.city} · {line.name} · Station {line.stations.indexOf(selected) + 1} of {line.stations.length}
                 </div>
               </div>
@@ -870,7 +903,7 @@ function StationView({ lineId, selectedId, onSelect, onReport }: { lineId:string
               <div style={{ fontFamily:"'Barlow Condensed'", fontSize:22, fontWeight:900, letterSpacing:"0.04em", color:T.text, lineHeight:1.1 }}>{selected.name}</div>
               <div style={{ display:"flex", alignItems:"center", gap:5, marginTop:4 }}>
                 <div style={{ width:7, height:7, borderRadius:"50%", background:line.color }}/>
-                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, letterSpacing:"0.1em" }}>
+                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:12, color:T.textMuted, letterSpacing:"0.06em" }}>
                   {selected.city} · {line.name} · Station {line.stations.indexOf(selected) + 1} of {line.stations.length}
                 </div>
               </div>
@@ -896,7 +929,7 @@ function StationView({ lineId, selectedId, onSelect, onReport }: { lineId:string
                     display:"inline-flex", alignItems:"center", gap:6,
                     fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.18em", textTransform:"uppercase",
                     padding:"5px 12px", borderRadius:2, cursor:"pointer",
-                    background:"#2C3E50", color:"#FFFFFF", textDecoration:"none",
+                    background:"#0057A8", color:"#FFFFFF", textDecoration:"none",
                     border:"none",
                   }}>
                   <span style={{ width:5, height:5, borderRadius:"50%", background:"#27AE60", flexShrink:0 }}/>
@@ -911,7 +944,7 @@ function StationView({ lineId, selectedId, onSelect, onReport }: { lineId:string
                 <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.25em", textTransform:"uppercase", color:T.textMuted }}>Open Issues</div>
                 <button
                   onClick={() => onReport(selected.name)}
-                  style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.15em", textTransform:"uppercase", padding:"5px 10px", borderRadius:2, border:"none", cursor:"pointer", background:"#111827", color:"#FFFFFF", minWidth:148, textAlign:"center" }}>
+                  style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.15em", textTransform:"uppercase", padding:"5px 10px", borderRadius:2, border:"none", cursor:"pointer", background:"#0057A8", color:"#FFFFFF", minWidth:148, textAlign:"center" }}>
                   REPORT ISSUE
                 </button>
               </div>
@@ -920,16 +953,31 @@ function StationView({ lineId, selectedId, onSelect, onReport }: { lineId:string
                 : selected.issues.map((key, i) => {
                     const issue = ISSUES[key];
                     const pc = issue?.priority === "critical" ? "#D32F2F" : issue?.priority === "high" ? "#F57C00" : "#2E7D32";
+                    const reportType = ISSUE_TO_REPORT_TYPE[key];
                     return (
-                      <div key={i} style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"7px 0", borderBottom:`1px solid #F4F5F7` }}>
+                      <div key={i}
+                        onClick={() => onViewTicket(selected.name, selected.id, key)}
+                        style={{ display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:`1px solid #F4F5F7`, cursor:"pointer", borderRadius:2, margin:"0 -4px", padding:"7px 4px" }}
+                        onMouseEnter={e => { e.currentTarget.style.background = "#F9FAFB"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                      >
                         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-                          <div style={{ width:32, height:26, borderRadius:4, background:T.bg, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"'Share Tech Mono'", fontSize:9, fontWeight:700, letterSpacing:"0.04em", color:T.textMuted, flexShrink:0 }}>{issue?.icon ?? "!!"}</div>
+                          {(() => {
+                            const st = issue?.status ?? "open";
+                            const stColor = st === "in_progress" ? "#0057A8" : st === "hold" ? "#757575" : "#E65100";
+                            const stBg   = st === "in_progress" ? "#E3F2FD"  : st === "hold" ? "#F0F0F0"  : "#FFF3E0";
+                            const stLabel = st === "in_progress" ? "In Progress" : st === "hold" ? "Hold" : "Open";
+                            return <div style={{ height:22, borderRadius:3, background:stBg, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", color:stColor, flexShrink:0, padding:"0 7px", whiteSpace:"nowrap" }}>{stLabel}</div>;
+                          })()}
                           <div>
                             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, fontWeight:600, color:T.text }}>{issue?.label ?? key}</div>
                             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, marginTop:1 }}>{selected.lastInspected}</div>
                           </div>
                         </div>
-                        <span style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, padding:"2px 7px", borderRadius:2, background:`${pc}18`, color:pc, textTransform:"uppercase", letterSpacing:"0.05em" }}>{issue?.priority ?? "high"}</span>
+                        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                          <span style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, padding:"2px 7px", borderRadius:2, background:`${pc}18`, color:pc, textTransform:"uppercase", letterSpacing:"0.05em" }}>{issue?.priority ?? "high"}</span>
+                          <span style={{ fontFamily:"'Barlow Condensed'", fontSize:9, color:T.textMuted, letterSpacing:"0.05em" }}>→</span>
+                        </div>
                       </div>
                     );
                   })
@@ -949,10 +997,10 @@ function StationView({ lineId, selectedId, onSelect, onReport }: { lineId:string
                     fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.15em", textTransform:"uppercase",
                     padding:"5px 10px", borderRadius:2, border:"none", minWidth:148, textAlign:"center",
                     cursor: ds === "idle" ? "pointer" : "default",
-                    background: ds === "deployed" ? "#14532D" : ds === "deploying" ? "#374151" : deployHovered ? "#C9A84C" : "#111827",
-                    color: ds === "deployed" ? "#86EFAC" : ds === "deploying" ? "#D1D5DB" : deployHovered ? "#111827" : "#FFFFFF",
+                    background: ds === "deployed" ? "#14532D" : ds === "deploying" ? "#374151" : deployHovered ? "#004A94" : "#0057A8",
+                    color: ds === "deployed" ? "#86EFAC" : ds === "deploying" ? "#D1D5DB" : "#FFFFFF",
                     transform: ds === "idle" && deployHovered ? "translateY(-1px)" : "none",
-                    boxShadow: ds === "idle" && deployHovered ? "0 4px 14px rgba(201,168,76,0.4)" : "none",
+                    boxShadow: ds === "idle" && deployHovered ? "0 4px 14px rgba(0,87,168,0.4)" : "none",
                     transition:"background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s",
                   }}>
                   {ds === "deployed" ? "✓ CREW DISPATCHED" : ds === "deploying" ? "DISPATCHING..." : "DEPLOY STATION CREW"}
@@ -1328,7 +1376,7 @@ function InspectionView() {
                         <td style={{ padding:"9px 8px" }}>
                           <button onClick={() => toggleNote(it.id)}
                             className="btn-sm"
-                            style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.08em", padding:"3px 8px", borderRadius:2, border:`1px solid ${openNotes.has(it.id) ? T.gold : savedNotes.has(it.id) ? "#A5D6A7" : T.border}`, background: openNotes.has(it.id) ? "#FFFDE7" : savedNotes.has(it.id) ? "#E8F5E9" : "transparent", color: openNotes.has(it.id) ? "#8B6914" : savedNotes.has(it.id) ? "#2E7D32" : T.textMuted, cursor:"pointer", whiteSpace:"nowrap", display:"flex", alignItems:"center", gap:4 }}>
+                            style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.08em", padding:"3px 8px", borderRadius:2, border:`1px solid ${openNotes.has(it.id) ? T.gold : savedNotes.has(it.id) ? "#A5D6A7" : T.border}`, background: openNotes.has(it.id) ? "#EEF4FB" : savedNotes.has(it.id) ? "#E8F5E9" : "transparent", color: openNotes.has(it.id) ? "#0057A8" : savedNotes.has(it.id) ? "#2E7D32" : T.textMuted, cursor:"pointer", whiteSpace:"nowrap", display:"flex", alignItems:"center", gap:4 }}>
                             {savedNotes.has(it.id) && <span style={{ width:5, height:5, borderRadius:"50%", background:"#4CAF50", display:"inline-block", flexShrink:0 }}/>}
                             {inspNotes[it.id] ? "Note ✓" : "Add note"}
                           </button>
@@ -1448,8 +1496,11 @@ function AssetDashboardView({ assetKey }: { assetKey: AssetKey }) {
       <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.28em", textTransform:"uppercase", color:T.textMuted, marginBottom:10 }}>BY LINE</div>
       <div className="kd-asset-grid-5 kd-grid-5col" style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:1, background:T.border, border:`1px solid ${T.border}`, marginBottom:24 }}>
         {lineBreakdown.map(({ lid, line, total, ok, down, pct }) => (
-          <div key={lid} style={{ background:T.panel, padding:"14px 18px", borderLeft:`3px solid ${line.color}` }}>
-            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, fontWeight:700, color:line.color, marginBottom:6 }}>{line.name}</div>
+          <div key={lid} style={{ background:T.panel, padding:"14px 18px" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
+              <span style={{ width:7, height:7, borderRadius:"50%", background:line.color, flexShrink:0, display:"inline-block" }}/>
+              <span style={{ fontFamily:"'Barlow Condensed'", fontSize:13, fontWeight:700, color:T.text }}>{line.name}</span>
+            </div>
             <div style={{ fontFamily:"'Share Tech Mono'", fontSize:20, color:scoreColor(pct), lineHeight:1 }}>{pct}%</div>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, color:T.textMuted, marginTop:3 }}>{ok}/{total} · {down > 0 ? `${down} DOWN` : "All OK"}</div>
             <div style={{ height:3, background:T.border, borderRadius:1, marginTop:8, overflow:"hidden" }}>
@@ -1511,31 +1562,199 @@ function AssetDashboardView({ assetKey }: { assetKey: AssetKey }) {
 }
 
 /* ─── Report Issue view ──────────────────────────── */
-const REPORT_TYPES: { key: string; label: string; code: string; priority: "critical"|"high"|"standard" }[] = [
+const REPORT_TYPES: { key: string; label: string; code: string; priority: "critical"|"high"|"routine" }[] = [
   { key:"safety",    label:"Safety",    code:"SFY", priority:"critical" },
   { key:"security",  label:"Security",  code:"SEC", priority:"critical" },
   { key:"vandalism", label:"Vandalism", code:"VND", priority:"high"     },
   { key:"cleaning",  label:"Cleaning",  code:"CLN", priority:"high"     },
   { key:"equipment", label:"Equipment", code:"EQP", priority:"high"     },
-  { key:"trash_can", label:"Trash Can", code:"TRS", priority:"standard" },
-  { key:"bench",     label:"Bench",     code:"BCH", priority:"standard" },
+  { key:"trash_can", label:"Trash Can", code:"TRS", priority:"routine" },
+  { key:"bench",     label:"Bench",     code:"BCH", priority:"routine" },
 ];
 
-function ReportIssueView({ initialStation = "" }: { initialStation?: string }) {
-  const [station,    setStation]    = useState(initialStation);
-  const [stationOpen,setStationOpen]= useState(false);
+const REPORTER_TYPES = [
+  { key: "commuter",       label: "Commuter",       idLabel: "Contact Info" },
+  { key: "field-engineer", label: "Field Engineer", idLabel: "Badge / Crew ID" },
+  { key: "city-staff",     label: "City Staff",     idLabel: "Staff ID" },
+  { key: "dart-operator",  label: "DART Operator",  idLabel: "Operator ID" },
+] as const;
+
+type ReporterTypeKey = typeof REPORTER_TYPES[number]["key"];
+
+const STATUS_CONFIG = {
+  open:       { label: "OPEN",        bg: "#E3F2FD", color: "#1565C0" },
+  inprogress: { label: "IN PROGRESS", bg: "#FFF3E0", color: "#E65100" },
+  done:       { label: "DONE",        bg: "#E8F5E9", color: "#2E7D32" },
+  cancelled:  { label: "CANCELLED",   bg: "#FAFAFA", color: "#9E9E9E" },
+};
+
+/* ─── Ticket detail view (existing reported issues) ── */
+function TicketView({ stationName, stationId, issueKey, onBack }: {
+  stationName: string;
+  stationId:   string;
+  issueKey:    string;
+  onBack:      () => void;
+}) {
+  const issue      = ISSUES[issueKey];
+  const reportType = ISSUE_TO_REPORT_TYPE[issueKey];
+  const rt         = REPORT_TYPES.find(r => r.key === reportType);
+  const [status, setStatus]   = useState<keyof typeof STATUS_CONFIG>("open");
+  const [closedAt, setClosedAt] = useState<Date|null>(null);
+
+  // Deterministic ref number + reported-at from station + issue key
+  const stationCode = stationId.replace(/[^A-Za-z]/g, "").slice(0, 3).toUpperCase().padEnd(3, "X");
+  const seed        = issueKey.split("").reduce((n, c) => n + c.charCodeAt(0), 0);
+  const refNumber   = stationCode + String(1_774_000_000_000 + seed * 7_919).padStart(13, "0");
+  const hoursAgo    = (seed % 47) + 1;
+  const reportedAt  = new Date(Date.now() - hoursAgo * 60 * 60 * 1000);
+  const dateStr     = reportedAt.toLocaleDateString("en-US", { weekday:"short", year:"numeric", month:"short", day:"numeric" });
+  const timeStr     = reportedAt.toLocaleTimeString("en-US", { hour:"2-digit", minute:"2-digit", second:"2-digit" });
+
+  const priority    = issue?.priority ?? "high";
+  const priorityColor = priority === "critical" ? "#C62828" : priority === "high" ? "#E65100" : "#5D7A8A";
+  const priorityBg    = priority === "critical" ? "#FFEBEE" : priority === "high" ? "#FFF3E0" : "#EEF2F4";
+  const notes         = ISSUE_NOTES[issueKey] ?? "Issue flagged by monitoring system.";
+  const sc            = STATUS_CONFIG[status];
+
+  return (
+    <div className="kd-scroll" style={{ flex:1, overflowY:"auto", background:T.bg, display:"flex", alignItems:"flex-start", justifyContent:"center", padding:32 }}>
+      <div style={{ background:T.panel, border:`1px solid ${T.border}`, borderRadius:4, padding:"36px 44px", maxWidth:520, width:"100%", boxShadow:T.shadowMd }}>
+
+        {/* Back */}
+        <button onClick={onBack}
+          style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.18em", textTransform:"uppercase", color:T.textMuted, background:"none", border:"none", cursor:"pointer", padding:"0 0 18px", display:"flex", alignItems:"center", gap:6 }}
+          onMouseEnter={e => e.currentTarget.style.color = T.text}
+          onMouseLeave={e => e.currentTarget.style.color = T.textMuted}
+        >
+          ← Back to Station
+        </button>
+
+        {/* Header */}
+        <div style={{ fontFamily:"'Share Tech Mono'", fontSize:11, letterSpacing:"0.3em", color:T.gold, marginBottom:16 }}>OPEN TICKET</div>
+
+        {/* Ref number */}
+        <div style={{ fontFamily:"'Share Tech Mono'", fontSize:13, color:T.text, letterSpacing:"0.1em", marginBottom:4, wordBreak:"break-all" as const }}>
+          REF# {refNumber}
+        </div>
+
+        {/* Timestamp */}
+        <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, letterSpacing:"0.06em", marginBottom:22 }}>
+          {dateStr} &nbsp;·&nbsp; {timeStr}
+        </div>
+
+        {/* Station + type */}
+        <div style={{ borderTop:`1px solid ${T.border}`, borderBottom:`1px solid ${T.border}`, padding:"14px 0", marginBottom:22 }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:12 }}>
+            <div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:3 }}>Station</div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:15, color:T.text }}>{stationName}</div>
+            </div>
+            <div style={{ textAlign:"right" as const }}>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:3 }}>Issue Type</div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:15, color:T.text }}>{issue?.label ?? issueKey}</div>
+            </div>
+          </div>
+          <div style={{ marginTop:10, display:"flex", alignItems:"center", gap:8 }}>
+            <span style={{ fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.14em", padding:"3px 10px", borderRadius:2, background:priorityBg, color:priorityColor }}>
+              {priority.toUpperCase()}
+            </span>
+            {rt && (
+              <span style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted, letterSpacing:"0.06em" }}>
+                {rt.label} category
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Notes */}
+        <div style={{ marginBottom:22 }}>
+          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:6 }}>Issue Notes</div>
+          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, color:T.textSub, lineHeight:1.5, background:T.bg, border:`1px solid ${T.border}`, borderRadius:3, padding:"10px 12px" }}>
+            {notes}
+          </div>
+        </div>
+
+        {/* Dates strip */}
+        <div style={{ display:"flex", gap:24, marginBottom:22 }}>
+          <div>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:3 }}>Reported</div>
+            <div style={{ fontFamily:"'Share Tech Mono'", fontSize:11, color:T.text }}>{dateStr}</div>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted }}>{timeStr}</div>
+          </div>
+          <div>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:3 }}>Closed</div>
+            {closedAt ? (
+              <>
+                <div style={{ fontFamily:"'Share Tech Mono'", fontSize:11, color:"#2E7D32" }}>
+                  {closedAt.toLocaleDateString("en-US", { weekday:"short", month:"short", day:"numeric", year:"numeric" })}
+                </div>
+                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted }}>
+                  {closedAt.toLocaleTimeString("en-US", { hour:"2-digit", minute:"2-digit", second:"2-digit" })}
+                </div>
+              </>
+            ) : (
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, fontStyle:"italic" }}>Open</div>
+            )}
+          </div>
+        </div>
+
+        {/* Status tracker */}
+        <div style={{ marginBottom:8 }}>
+          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:8 }}>Track Status</div>
+          <div style={{ display:"flex", gap:6, flexWrap:"wrap" as const }}>
+            {(["open","inprogress","done","cancelled"] as const).map(s => {
+              const cfg    = STATUS_CONFIG[s];
+              const active = status === s;
+              return (
+                <button key={s} onClick={() => {
+                  setStatus(s);
+                  if ((s === "done" || s === "cancelled") && !closedAt) setClosedAt(new Date());
+                  if (s === "open" || s === "inprogress") setClosedAt(null);
+                }}
+                  style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.16em", textTransform:"uppercase" as const, padding:"5px 14px", border:`1px solid ${active ? cfg.color : T.border}`, borderRadius:3, background: active ? cfg.bg : T.panel, color: active ? cfg.color : T.textMuted, cursor:"pointer", transition:"all 0.12s" }}>
+                  {cfg.label}
+                </button>
+              );
+            })}
+          </div>
+          <div style={{ marginTop:8, display:"flex", alignItems:"center", gap:8 }}>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, letterSpacing:"0.06em", color:T.textMuted }}>Current:</div>
+            <span style={{ fontFamily:"'Share Tech Mono'", fontSize:10, letterSpacing:"0.14em", padding:"2px 10px", borderRadius:2, background:sc.bg, color:sc.color }}>
+              {sc.label}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Report Issue view ─────────────────────────── */
+function ReportIssueView({ initialStation = "", initialIssueType, onSubmit }: { initialStation?: string; initialIssueType?: string; onSubmit?: (r: SubmittedReport) => void }) {
+  const [station,      setStation]      = useState(initialStation);
+  const [stationOpen,  setStationOpen]  = useState(false);
+  const [selectedLineName, setSelectedLineName] = useState("");
   const stationMatches = ALL_STATIONS.filter(s =>
     !station.trim() || s.name.toLowerCase().includes(station.toLowerCase())
   );
-  const [issueType,  setIssueType]  = useState<string|null>(null);
-  const [priority,   setPriority]   = useState<"critical"|"high"|"standard"|null>(null);
-  const [notes,      setNotes]      = useState("");
-  const [photo,      setPhoto]      = useState<File|null>(null);
-  const [photoUrl,   setPhotoUrl]   = useState<string|null>(null);
-  const [reporter,   setReporter]   = useState("");
-  const [badge,      setBadge]      = useState("");
-  const [hoveredType, setHoveredType] = useState<string|null>(null);
-  const [submitted,  setSubmitted]  = useState(false);
+  const _initType = initialIssueType ? REPORT_TYPES.find(r => r.key === initialIssueType) ?? null : null;
+  const [issueType,    setIssueType]    = useState<string|null>(_initType?.key ?? null);
+  const [priority,     setPriority]     = useState<"critical"|"high"|"routine"|null>(_initType?.priority ?? null);
+  const [notes,        setNotes]        = useState("");
+  const [photo,        setPhoto]        = useState<File|null>(null);
+  const [photoUrl,     setPhotoUrl]     = useState<string|null>(null);
+  const [reporter,     setReporter]     = useState("");
+  const [reporterId,   setReporterId]   = useState("");
+  const [reporterType, setReporterType] = useState<ReporterTypeKey|null>(null);
+  const [hoveredType,  setHoveredType]  = useState<string|null>(null);
+  const [submitted,       setSubmitted]       = useState(false);
+  const [submittedAt,     setSubmittedAt]     = useState<Date|null>(null);
+  const [refNumber,       setRefNumber]       = useState<string>("");
+  const [reportStatus,    setReportStatus]    = useState<keyof typeof STATUS_CONFIG>("open");
+  const [closedAt,        setClosedAt]        = useState<Date|null>(null);
+  const [resolverCompany, setResolverCompany] = useState("");
+  const [resolverName,    setResolverName]    = useState("");
+  const [resolutionNotes, setResolutionNotes] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const handleType = (key: string) => {
@@ -1553,17 +1772,41 @@ function ReportIssueView({ initialStation = "" }: { initialStation?: string }) {
 
   const canSubmit = station.trim() !== "" && issueType !== null;
 
+  const handleSubmit = () => {
+    if (!canSubmit) return;
+    const now = new Date();
+    const lineCode = (selectedLineName || "UNK").replace(/\s*line\s*/i, "").replace(/[^A-Za-z]/g, "").slice(0, 3).toUpperCase().padEnd(3, "X");
+    const stationCode = station.replace(/[^A-Za-z]/g, "").slice(0, 3).toUpperCase().padEnd(3, "X");
+    const ts = now.getTime().toString(); // 13 digits
+    const ref = lineCode + stationCode + ts;
+    setRefNumber(ref);
+    setSubmittedAt(now);
+    setReportStatus("open");
+    setSubmitted(true);
+    const t = REPORT_TYPES.find(r => r.key === issueType);
+    onSubmit?.({
+      refNumber: ref, station, lineName: selectedLineName, issueType: issueType ?? "",
+      issueLabel: t?.label ?? issueType ?? "",
+      priority: (priority ?? "routine"),
+      notes, reporter, reporterType: reporterType ?? "",
+      submittedAt: now, status: "open",
+    });
+  };
+
   const reset = () => {
     setStation(""); setIssueType(null); setPriority(null);
     setNotes(""); setPhoto(null); setPhotoUrl(null);
-    setReporter(""); setBadge(""); setSubmitted(false);
+    setReporter(""); setReporterId(""); setReporterType(null);
+    setSubmitted(false); setSubmittedAt(null); setRefNumber(""); setReportStatus("open");
+    setSelectedLineName("");
+    setClosedAt(null); setResolverCompany(""); setResolverName(""); setResolutionNotes("");
     if (fileRef.current) fileRef.current.value = "";
   };
 
-  const priorityColor = (p: "critical"|"high"|"standard") =>
-    p === "critical" ? "#C62828" : p === "high" ? "#E65100" : T.textMuted;
-  const priorityBg    = (p: "critical"|"high"|"standard") =>
-    p === "critical" ? "#FFEBEE" : p === "high" ? "#FFF3E0" : T.bg;
+  const priorityColor = (p: "critical"|"high"|"routine") =>
+    p === "critical" ? "#C62828" : p === "high" ? "#E65100" : "#5D7A8A";
+  const priorityBg    = (p: "critical"|"high"|"routine") =>
+    p === "critical" ? "#FFEBEE" : p === "high" ? "#FFF3E0" : "#EEF2F4";
 
   /* ── Label helper ── */
   const Label = ({ children }: { children: React.ReactNode }) => (
@@ -1586,24 +1829,155 @@ function ReportIssueView({ initialStation = "" }: { initialStation?: string }) {
     />
   );
 
-  if (submitted) {
+  if (submitted && submittedAt) {
     const t = REPORT_TYPES.find(r => r.key === issueType)!;
+    const sc = STATUS_CONFIG[reportStatus];
+    const dateStr = submittedAt.toLocaleDateString("en-US", { weekday:"short", year:"numeric", month:"short", day:"numeric" });
+    const timeStr = submittedAt.toLocaleTimeString("en-US", { hour:"2-digit", minute:"2-digit", second:"2-digit" });
     return (
-      <div className="kd-scroll" style={{ flex:1, overflowY:"auto", background:T.bg, display:"flex", alignItems:"center", justifyContent:"center", padding:32 }}>
-        <div style={{ background:T.panel, border:`1px solid ${T.border}`, borderRadius:4, padding:"40px 48px", maxWidth:480, width:"100%", textAlign:"center", boxShadow:T.shadowMd }}>
-          <div style={{ fontFamily:"'Share Tech Mono'", fontSize:11, letterSpacing:"0.3em", color:T.gold, marginBottom:10 }}>REPORT SUBMITTED</div>
-          <div style={{ fontFamily:"'Share Tech Mono'", fontSize:28, color:T.text, marginBottom:6 }}>#{Math.floor(Math.random()*9000+1000)}</div>
-          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:13, color:T.textSub, marginBottom:4 }}>{station} · {t.label}</div>
-          {priority && (
-            <div style={{ display:"inline-block", fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.14em", padding:"3px 10px", borderRadius:2, background:priorityBg(priority), color:priorityColor(priority), marginBottom:20 }}>
-              {priority.toUpperCase()}
+      <div className="kd-scroll" style={{ flex:1, overflowY:"auto", background:T.bg, display:"flex", alignItems:"flex-start", justifyContent:"center", padding:32 }}>
+        <div style={{ background:T.panel, border:`1px solid ${T.border}`, borderRadius:4, padding:"36px 44px", maxWidth:520, width:"100%", boxShadow:T.shadowMd }}>
+
+          {/* Header */}
+          <div style={{ fontFamily:"'Share Tech Mono'", fontSize:11, letterSpacing:"0.3em", color:T.gold, marginBottom:16 }}>REPORT SUBMITTED</div>
+
+          {/* Ref number */}
+          <div style={{ fontFamily:"'Share Tech Mono'", fontSize:13, color:T.text, letterSpacing:"0.1em", marginBottom:4, wordBreak:"break-all" as const }}>
+            REF# {refNumber}
+          </div>
+
+          {/* Timestamp */}
+          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, letterSpacing:"0.06em", marginBottom:22 }}>
+            {dateStr} &nbsp;·&nbsp; {timeStr}
+          </div>
+
+          {/* Station + type */}
+          <div style={{ borderTop:`1px solid ${T.border}`, borderBottom:`1px solid ${T.border}`, padding:"14px 0", marginBottom:22 }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:12 }}>
+              <div>
+                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:3 }}>Station</div>
+                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:15, color:T.text }}>{station}</div>
+              </div>
+              <div style={{ textAlign:"right" as const }}>
+                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:3 }}>Issue Type</div>
+                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:15, color:T.text }}>{t.label}</div>
+              </div>
+            </div>
+            {priority && (
+              <div style={{ marginTop:10 }}>
+                <span style={{ fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.14em", padding:"3px 10px", borderRadius:2, background:priorityBg(priority), color:priorityColor(priority) }}>
+                  {priority.toUpperCase()}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Dates strip */}
+          <div style={{ display:"flex", gap:24, marginBottom:22 }}>
+            <div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:3 }}>Reported</div>
+              <div style={{ fontFamily:"'Share Tech Mono'", fontSize:11, color:T.text }}>{dateStr}</div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted }}>{timeStr}</div>
+            </div>
+            <div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:3 }}>Closed</div>
+              {closedAt ? (
+                <>
+                  <div style={{ fontFamily:"'Share Tech Mono'", fontSize:11, color:"#2E7D32" }}>
+                    {closedAt.toLocaleDateString("en-US", { weekday:"short", month:"short", day:"numeric", year:"numeric" })}
+                  </div>
+                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted }}>
+                    {closedAt.toLocaleTimeString("en-US", { hour:"2-digit", minute:"2-digit", second:"2-digit" })}
+                  </div>
+                </>
+              ) : (
+                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, fontStyle:"italic" }}>Open</div>
+              )}
+            </div>
+          </div>
+
+          {/* Status tracker */}
+          <div style={{ marginBottom:22 }}>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:8 }}>Track Status</div>
+            <div style={{ display:"flex", gap:6, flexWrap:"wrap" as const }}>
+              {(["open","inprogress","done","cancelled"] as const).map(s => {
+                const cfg = STATUS_CONFIG[s];
+                const active = reportStatus === s;
+                return (
+                  <button key={s} onClick={() => {
+                    setReportStatus(s);
+                    if ((s === "done" || s === "cancelled") && !closedAt) {
+                      setClosedAt(new Date());
+                    }
+                    if (s === "open" || s === "inprogress") {
+                      setClosedAt(null);
+                    }
+                  }}
+                    style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.16em", textTransform:"uppercase" as const, padding:"5px 14px", border:`1px solid ${active ? cfg.color : T.border}`, borderRadius:3, background: active ? cfg.bg : T.panel, color: active ? cfg.color : T.textMuted, cursor:"pointer", transition:"all 0.12s" }}>
+                    {cfg.label}
+                  </button>
+                );
+              })}
+            </div>
+            <div style={{ marginTop:8, display:"flex", alignItems:"center", gap:8 }}>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, letterSpacing:"0.06em", color:T.textMuted }}>Current:</div>
+              <span style={{ fontFamily:"'Share Tech Mono'", fontSize:10, letterSpacing:"0.14em", padding:"2px 10px", borderRadius:2, background:sc.bg, color:sc.color }}>
+                {sc.label}
+              </span>
+            </div>
+          </div>
+
+          {/* Resolution / Closure section — shown when done or cancelled */}
+          {(reportStatus === "done" || reportStatus === "cancelled") && (
+            <div style={{ background:T.bg, border:`1px solid ${T.border}`, borderRadius:3, padding:"16px 18px", marginBottom:22 }}>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:12 }}>Closure Details</div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:8 }}>
+                <div>
+                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:600, letterSpacing:"0.18em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:4 }}>Company / Contractor</div>
+                  <input value={resolverCompany} onChange={e => setResolverCompany(e.target.value)}
+                    placeholder="e.g. DART Maintenance"
+                    style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:12, padding:"5px 9px", border:`1px solid ${T.border}`, borderRadius:3, background:T.panel, color:T.text, outline:"none", boxSizing:"border-box" as const }}
+                    onFocus={e => (e.currentTarget.style.borderColor = T.gold)}
+                    onBlur={e => (e.currentTarget.style.borderColor = T.border)}
+                  />
+                </div>
+                <div>
+                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:600, letterSpacing:"0.18em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:4 }}>Technician / Individual</div>
+                  <input value={resolverName} onChange={e => setResolverName(e.target.value)}
+                    placeholder="Full name"
+                    style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:12, padding:"5px 9px", border:`1px solid ${T.border}`, borderRadius:3, background:T.panel, color:T.text, outline:"none", boxSizing:"border-box" as const }}
+                    onFocus={e => (e.currentTarget.style.borderColor = T.gold)}
+                    onBlur={e => (e.currentTarget.style.borderColor = T.border)}
+                  />
+                </div>
+              </div>
+              <div>
+                <div style={{ fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:600, letterSpacing:"0.18em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:4 }}>What Was Done</div>
+                <textarea value={resolutionNotes} onChange={e => setResolutionNotes(e.target.value)}
+                  placeholder="Describe the resolution and any actions taken…"
+                  rows={3}
+                  style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:12, padding:"5px 9px", border:`1px solid ${T.border}`, borderRadius:3, background:T.panel, color:T.text, outline:"none", resize:"vertical" as const, boxSizing:"border-box" as const, lineHeight:1.5 }}
+                  onFocus={e => (e.currentTarget.style.borderColor = T.gold)}
+                  onBlur={e => (e.currentTarget.style.borderColor = T.border)}
+                />
+              </div>
             </div>
           )}
-          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, marginBottom:28 }}>
+
+          {/* Notes */}
+          {notes.trim() && (
+            <div style={{ background:T.bg, border:`1px solid ${T.border}`, borderRadius:3, padding:"12px 14px", marginBottom:18 }}>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:T.textMuted, marginBottom:6 }}>Notes</div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:12, color:T.textSub, lineHeight:1.5, whiteSpace:"pre-wrap" as const }}>{notes}</div>
+            </div>
+          )}
+          {/* Footer note */}
+          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, marginBottom:24 }}>
             Report logged and routed to the operations queue.
           </div>
+
           <button onClick={reset}
-            style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", padding:"9px 28px", background:T.gold, color:"#fff", border:"none", borderRadius:3, cursor:"pointer" }}>
+            style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase" as const, padding:"9px 28px", background:T.gold, color:"#fff", border:"none", borderRadius:3, cursor:"pointer" }}>
             New Report
           </button>
         </div>
@@ -1641,7 +2015,7 @@ function ReportIssueView({ initialStation = "" }: { initialStation?: string }) {
               <div style={{ position:"absolute", top:"100%", left:0, right:0, background:T.panel, border:`1px solid ${T.borderHard}`, borderRadius:3, boxShadow:T.shadowMd, zIndex:200, maxHeight:180, overflowY:"auto" }}>
                 {stationMatches.map(s => (
                   <div key={`${s.id}-${s.lineId}`}
-                    onMouseDown={() => { setStation(s.name); setStationOpen(false); }}
+                    onMouseDown={() => { setStation(s.name); setSelectedLineName(s.lineName); setStationOpen(false); }}
                     style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 10px", fontFamily:"'Barlow Condensed'", fontSize:12, color:T.text, cursor:"pointer", borderBottom:`1px solid ${T.border}` }}
                     onMouseEnter={e => (e.currentTarget.style.background = T.bg)}
                     onMouseLeave={e => (e.currentTarget.style.background = T.panel)}
@@ -1687,7 +2061,7 @@ function ReportIssueView({ initialStation = "" }: { initialStation?: string }) {
         <div style={{ padding:"20px 24px", borderBottom:`1px solid ${T.border}` }}>
           <Label>Priority</Label>
           <div style={{ display:"flex", gap:6 }}>
-            {(["critical","high","standard"] as const).map(p => {
+            {(["critical","high","routine"] as const).map(p => {
               const active = priority === p;
               return (
                 <button key={p} onClick={() => setPriority(p)}
@@ -1706,7 +2080,7 @@ function ReportIssueView({ initialStation = "" }: { initialStation?: string }) {
 
         {/* Notes */}
         <div style={{ padding:"20px 24px", borderBottom:`1px solid ${T.border}` }}>
-          <Label>Location / Notes</Label>
+          <Label>Notes</Label>
           <textarea value={notes} onChange={e => setNotes(e.target.value)}
             placeholder="Describe the issue and its exact location…"
             rows={4}
@@ -1744,12 +2118,25 @@ function ReportIssueView({ initialStation = "" }: { initialStation?: string }) {
         {/* Reported By */}
         <div style={{ padding:"20px 24px", borderBottom:`1px solid ${T.border}` }}>
           <Label>Reported By <span style={{ fontWeight:400, fontSize:8, letterSpacing:"0.1em" }}>(Optional)</span></Label>
+          {/* Reporter type pills */}
+          <div style={{ display:"flex", flexWrap:"wrap" as const, gap:5, marginBottom:10 }}>
+            {REPORTER_TYPES.map(rt => {
+              const active = reporterType === rt.key;
+              return (
+                <button key={rt.key} onClick={() => setReporterType(active ? null : rt.key)}
+                  style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.14em", textTransform:"uppercase" as const, padding:"4px 12px", borderRadius:3, cursor:"pointer", border:`1px solid ${active ? T.gold : T.border}`, background: active ? T.gold : T.panel, color: active ? "#fff" : T.textMuted, transition:"all 0.12s" }}>
+                  {rt.label}
+                </button>
+              );
+            })}
+          </div>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
             <Field mb={0}>
               <Input value={reporter} onChange={setReporter} placeholder="Full name"/>
             </Field>
             <Field mb={0}>
-              <Input value={badge} onChange={setBadge} placeholder="Badge / Crew ID"/>
+              <Input value={reporterId} onChange={setReporterId}
+                placeholder={REPORTER_TYPES.find(r => r.key === reporterType)?.idLabel ?? "ID / Contact"}/>
             </Field>
           </div>
         </div>
@@ -1762,7 +2149,7 @@ function ReportIssueView({ initialStation = "" }: { initialStation?: string }) {
             </div>
           )}
           {canSubmit && <div style={{ flex:1 }}/>}
-          <button onClick={() => canSubmit && setSubmitted(true)} disabled={!canSubmit}
+          <button onClick={handleSubmit} disabled={!canSubmit}
             style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase" as const, padding:"9px 28px", background: canSubmit ? T.gold : T.border, color: canSubmit ? "#fff" : T.textMuted, border:"none", borderRadius:3, cursor: canSubmit ? "pointer" : "not-allowed", whiteSpace:"nowrap" as const }}>
             Submit Report
           </button>
@@ -1966,6 +2353,7 @@ function NavDrawer({ open, onClose, view, setView }: {
   open: boolean; onClose: () => void; view: View; setView: (v: View) => void;
 }) {
   const assetKeys: AssetKey[] = ["elevators","cameras","stairwells","trash_cans","bus_covers"];
+  const [searchQuery, setSearchQuery] = useState("");
 
   const downCounts = assetKeys.reduce((acc, key) => {
     const okKey = `${key}_ok` as keyof AssetEntry;
@@ -1993,7 +2381,7 @@ function NavDrawer({ open, onClose, view, setView }: {
              display:"flex", alignItems:"center", gap:10, transition:"background 0.12s" }}
            onMouseEnter={e => { if (!active) e.currentTarget.style.background = "#F9FAFB"; }}
            onMouseLeave={e => { e.currentTarget.style.background = active ? "#FFFDE7" : "transparent"; }}>
-        <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(201,168,76,0.15)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted }}>
+        <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(0,87,168,0.12)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted }}>
           {icon}
         </span>
         <div>
@@ -2018,21 +2406,40 @@ function NavDrawer({ open, onClose, view, setView }: {
         {/* Drawer header */}
         <div style={{ padding:"14px 18px", borderBottom:`2px solid ${T.gold}`, display:"flex", alignItems:"center", justifyContent:"space-between", flexShrink:0 }}>
           <div>
-            <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:900, fontSize:20, letterSpacing:"0.15em", color:T.text }}>KAI</div>
+            <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:500, fontSize:16, letterSpacing:"0.3em", color:T.text }}>KAI</div>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:8, letterSpacing:"0.3em", color:T.gold, textTransform:"uppercase", marginTop:1 }}>DART STATION READINESS</div>
           </div>
           <button onClick={onClose} style={{ width:26, height:26, border:`1px solid ${T.border}`, borderRadius:4, background:"transparent", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, color:T.textMuted }}>✕</button>
         </div>
 
+        {/* Search */}
+        <div style={{ padding:"10px 14px", borderBottom:`1px solid ${T.border}`, flexShrink:0 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:8, background:"#F4F5F7", borderRadius:5, padding:"7px 11px", border:`1px solid ${T.border}` }}>
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke={T.textMuted} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="5.5" cy="5.5" r="4.5"/><line x1="9.5" y1="9.5" x2="12.5" y2="12.5"/>
+            </svg>
+            <input
+              type="text"
+              placeholder="Search stations…"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              style={{ background:"none", border:"none", outline:"none", fontFamily:"'Barlow Condensed'", fontSize:13, color:T.text, width:"100%", letterSpacing:"0.02em" }}
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery("")} style={{ background:"none", border:"none", cursor:"pointer", color:T.textMuted, fontSize:12, padding:0, lineHeight:1, flexShrink:0 }}>✕</button>
+            )}
+          </div>
+        </div>
+
         {/* Nav items */}
         <div className="kd-scroll" style={{ flex:1, overflowY:"auto" }}>
-          <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted }}>Command</div>
+          <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:700, letterSpacing:"0.25em", textTransform:"uppercase", color:T.text }}>Command</div>
           {navRow("Command Center","Network overview & spark charts","command",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="1" width="5" height="5" rx="0.75"/><rect x="8" y="1" width="5" height="5" rx="0.75"/><rect x="1" y="8" width="5" height="5" rx="0.75"/><rect x="8" y="8" width="5" height="5" rx="0.75"/></svg>)}
 
-          <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Station Operations</div>
+          <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:700, letterSpacing:"0.25em", textTransform:"uppercase", color:T.text, marginTop:4 }}>Station Operations</div>
           {navRow("Stations","All lines · select to inspect","stations",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 1.5C5.07 1.5 3.5 3.07 3.5 5c0 2.8 3.5 7 3.5 7s3.5-4.2 3.5-7c0-1.93-1.57-3.5-3.5-3.5z"/><circle cx="7" cy="5" r="1.25"/></svg>)}
 
-          <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Asset Dashboards</div>
+          <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:700, letterSpacing:"0.25em", textTransform:"uppercase", color:T.text, marginTop:4 }}>Asset Dashboards</div>
           {assetKeys.map(key => {
             const assetView = `asset_${key}` as View;
             const active = view === assetView;
@@ -2047,7 +2454,7 @@ function NavDrawer({ open, onClose, view, setView }: {
                    onMouseEnter={e => { if (!active) e.currentTarget.style.background = "#F9FAFB"; }}
                    onMouseLeave={e => { e.currentTarget.style.background = active ? "#FFFDE7" : "transparent"; }}>
                 <div style={{ display:"flex", gap:10, alignItems:"center" }}>
-                  <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(201,168,76,0.15)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted }}>
+                  <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(0,87,168,0.12)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted }}>
                     {ASSET_ICONS[key]}
                   </span>
                   <div>
@@ -2062,11 +2469,12 @@ function NavDrawer({ open, onClose, view, setView }: {
             );
           })}
 
-          <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Field Operations</div>
+          <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:700, letterSpacing:"0.25em", textTransform:"uppercase", color:T.text, marginTop:4 }}>Field Operations</div>
           {navRow("Inspection","48-item crew checklist · photo upload","inspect",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="1.5" width="10" height="11" rx="1"/><line x1="5" y1="5.5" x2="9" y2="5.5"/><line x1="5" y1="8" x2="9" y2="8"/><line x1="5" y1="10.5" x2="7" y2="10.5"/></svg>)}
           {navRow("Report Issue","Safety · vandalism · equipment · cleaning","report",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 1.5L1 12.5h12L7 1.5z"/><line x1="7" y1="6" x2="7" y2="9"/><circle cx="7" cy="11" r="0.6" fill="currentColor" stroke="none"/></svg>)}
+          {navRow("Issues Log","View & track submitted reports","issues",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1.5" y="2" width="11" height="10" rx="1"/><line x1="4" y1="5.5" x2="10" y2="5.5"/><line x1="4" y1="8" x2="10" y2="8"/><line x1="4" y1="10.5" x2="7" y2="10.5"/></svg>)}
 
-          <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>AI Intelligence</div>
+          <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:700, letterSpacing:"0.25em", textTransform:"uppercase", color:T.text, marginTop:4 }}>AI Intelligence</div>
           {navRow("Intelligence Engine","Predictions · anomalies · decisions","intelligence",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 2L8.5 5 12 5.5 9.5 8 10 11.5 7 10 4 11.5 4.5 8 2 5.5 5.5 5z"/></svg>)}
         </div>
 
@@ -2081,8 +2489,11 @@ function NavDrawer({ open, onClose, view, setView }: {
 }
 
 /* ─── Permanent sidebar ──────────────────────────── */
-function PermanentSidebar({ view, setView, collapsed, onToggle }: { view: View; setView: (v: View) => void; collapsed: boolean; onToggle: () => void }) {
+function PermanentSidebar({ view, setView, collapsed, onToggle, onDrillLine, activeLineId }: { view: View; setView: (v: View) => void; collapsed: boolean; onToggle: () => void; onDrillLine: (id: string) => void; activeLineId: string }) {
   const assetKeys: AssetKey[] = ["elevators","cameras","stairwells","trash_cans","bus_covers"];
+  const [linesOpen, setLinesOpen] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
 
   const downCounts = assetKeys.reduce((acc, key) => {
     const okKey = `${key}_ok` as keyof AssetEntry;
@@ -2110,7 +2521,7 @@ function PermanentSidebar({ view, setView, collapsed, onToggle }: { view: View; 
              display:"flex", alignItems:"center", justifyContent: collapsed ? "center" : "flex-start", gap:10, transition:"background 0.12s" }}
            onMouseEnter={e => { if (!active) e.currentTarget.style.background = "#F9FAFB"; }}
            onMouseLeave={e => { e.currentTarget.style.background = active ? "#FFFDE7" : "transparent"; }}>
-        <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(201,168,76,0.15)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted }}>
+        <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(0,87,168,0.12)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted }}>
           {icon}
         </span>
         {!collapsed && (
@@ -2130,21 +2541,98 @@ function PermanentSidebar({ view, setView, collapsed, onToggle }: { view: View; 
         {collapsed
           ? <svg width="22" height="22" viewBox="0 0 100 100" fill="none" style={{ opacity:.85 }}><ellipse cx="50" cy="62" rx="22" ry="14" fill={T.gold}/><circle cx="50" cy="38" r="14" fill={T.gold}/></svg>
           : <div>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:900, fontSize:20, letterSpacing:"0.15em", color:T.text }}>KAI</div>
+              <div style={{ fontFamily:"'Barlow Condensed'", fontWeight:500, fontSize:16, letterSpacing:"0.3em", color:T.text }}>KAI</div>
               <div style={{ fontFamily:"'Barlow Condensed'", fontSize:8, letterSpacing:"0.3em", color:T.gold, textTransform:"uppercase", marginTop:1 }}>DART STATION READINESS</div>
             </div>
         }
       </div>
 
+      {/* Search bar */}
+      <div style={{ padding: collapsed ? "8px 6px" : "10px 12px", borderBottom:`1px solid ${T.border}`, flexShrink:0 }}>
+        {collapsed ? (
+          <div title="Search" style={{ width:36, height:32, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"center", background:"#F4F5F7", borderRadius:5, border:`1px solid ${T.border}`, cursor:"pointer" }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={T.textMuted} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="6" cy="6" r="4.5"/><line x1="10" y1="10" x2="13" y2="13"/>
+            </svg>
+          </div>
+        ) : (
+          <div style={{ display:"flex", alignItems:"center", gap:8, background: searchFocused ? "#FFFFFF" : "#F4F5F7", borderRadius:5, padding:"7px 11px", border:`1px solid ${searchFocused ? T.gold : T.border}`, transition:"border-color 0.15s, background 0.15s" }}>
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke={searchFocused ? T.gold : T.textMuted} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0, transition:"stroke 0.15s" }}>
+              <circle cx="5.5" cy="5.5" r="4.5"/><line x1="9.5" y1="9.5" x2="12.5" y2="12.5"/>
+            </svg>
+            <input
+              type="text"
+              placeholder="Search stations…"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setSearchFocused(false)}
+              style={{ background:"none", border:"none", outline:"none", fontFamily:"'Barlow Condensed'", fontSize:13, color:T.text, width:"100%", letterSpacing:"0.02em" }}
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery("")} style={{ background:"none", border:"none", cursor:"pointer", color:T.textMuted, fontSize:12, padding:0, lineHeight:1, flexShrink:0 }}>✕</button>
+            )}
+          </div>
+        )}
+      </div>
+
       {/* Nav items */}
       <div className="kd-scroll" style={{ flex:1, overflowY:"auto" }}>
-        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted }}>Command</div>}
+        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:700, letterSpacing:"0.25em", textTransform:"uppercase", color:T.text }}>Command</div>}
         {navRow("Command Center","Network overview & spark charts","command",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="1" width="5" height="5" rx="0.75"/><rect x="8" y="1" width="5" height="5" rx="0.75"/><rect x="1" y="8" width="5" height="5" rx="0.75"/><rect x="8" y="8" width="5" height="5" rx="0.75"/></svg>)}
 
-        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Station Operations</div>}
-        {navRow("Stations","All lines · select to inspect","stations",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 1.5C5.07 1.5 3.5 3.07 3.5 5c0 2.8 3.5 7 3.5 7s3.5-4.2 3.5-7c0-1.93-1.57-3.5-3.5-3.5z"/><circle cx="7" cy="5" r="1.25"/></svg>)}
+        {/* ── DART Lines accordion ── */}
+        {!collapsed ? (
+          <>
+            <div
+              onClick={() => setLinesOpen(o => !o)}
+              style={{ padding:"10px 18px 6px", fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:700, letterSpacing:"0.25em", textTransform:"uppercase", color:T.textMuted, marginTop:4, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"space-between", userSelect:"none" }}
+              onMouseEnter={e => e.currentTarget.style.color = T.text}
+              onMouseLeave={e => e.currentTarget.style.color = T.textMuted}
+            >
+              <span>DART Lines</span>
+              <span style={{ fontSize:10, transition:"transform 0.2s", display:"inline-block", transform: linesOpen ? "rotate(0deg)" : "rotate(-90deg)" }}>▾</span>
+            </div>
+            {linesOpen && Object.entries(LINES)
+              .filter(([, line]) => !searchQuery || line.name.toLowerCase().includes(searchQuery.toLowerCase()) || line.stations.some(s => s.name.toLowerCase().includes(searchQuery.toLowerCase())))
+              .map(([id, line]) => {
+              const isActive = view === "stations" && activeLineId === id;
+              return (
+                <div key={id} onClick={() => onDrillLine(id)}
+                  style={{ padding:"10px 14px", margin:"2px 8px", cursor:"pointer", borderRadius:3, display:"flex", alignItems:"center", gap:12,
+                    background: isActive ? "#FFFDE7" : "transparent",
+                    border:`1px solid ${isActive ? T.gold : "transparent"}`,
+                    transition:"background 0.12s" }}
+                  onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "#F9FAFB"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = isActive ? "#FFFDE7" : "transparent"; }}>
+                  <span style={{ width:13, height:13, borderRadius:"50%", background:line.color, flexShrink:0, boxShadow: isActive ? `0 0 0 4px ${line.color}33` : "none", transition:"box-shadow 0.15s" }}/>
+                  <div>
+                    <div style={{ fontFamily:"'Barlow Condensed'", fontSize:16, fontWeight:700, letterSpacing:"0.04em", color: isActive ? line.color : T.text }}>{line.name}</div>
+                    <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textMuted, marginTop:2 }}>{line.sub}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </>
+        ) : (
+          /* Collapsed — show color dots stacked */
+          <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6, padding:"8px 0" }}>
+            {Object.entries(LINES).map(([id, line]) => {
+              const isActive = view === "stations" && activeLineId === id;
+              return (
+                <div key={id} onClick={() => onDrillLine(id)} title={line.name}
+                  style={{ width:28, height:28, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer",
+                    background: isActive ? "#FFFDE7" : "transparent", border:`1px solid ${isActive ? T.gold : "transparent"}`, transition:"background 0.12s" }}
+                  onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "#F9FAFB"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = isActive ? "#FFFDE7" : "transparent"; }}>
+                  <span style={{ width:10, height:10, borderRadius:"50%", background:line.color }}/>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
-        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Asset Dashboards</div>}
+        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:700, letterSpacing:"0.25em", textTransform:"uppercase", color:T.text, marginTop:4 }}>Asset Dashboards</div>}
         {assetKeys.map(key => {
           const assetView = `asset_${key}` as View;
           const active = view === assetView;
@@ -2159,7 +2647,7 @@ function PermanentSidebar({ view, setView, collapsed, onToggle }: { view: View; 
                  onMouseEnter={e => { if (!active) e.currentTarget.style.background = "#F9FAFB"; }}
                  onMouseLeave={e => { e.currentTarget.style.background = active ? "#FFFDE7" : "transparent"; }}>
               <div style={{ display:"flex", gap:10, alignItems:"center" }}>
-                <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(201,168,76,0.15)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted, position:"relative" }}>
+                <span style={{ width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", background: active ? "rgba(0,87,168,0.12)" : "#EDEEF0", borderRadius:4, flexShrink:0, color: active ? T.gold : T.textMuted, position:"relative" }}>
                   {ASSET_ICONS[key]}
                   {collapsed && down > 0 && <span style={{ position:"absolute", top:-3, right:-3, width:7, height:7, borderRadius:"50%", background:"#DC2626", border:"1px solid white" }}/>}
                 </span>
@@ -2177,11 +2665,12 @@ function PermanentSidebar({ view, setView, collapsed, onToggle }: { view: View; 
           );
         })}
 
-        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>Field Operations</div>}
+        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:700, letterSpacing:"0.25em", textTransform:"uppercase", color:T.text, marginTop:4 }}>Field Operations</div>}
         {navRow("Inspection","48-item crew checklist · photo upload","inspect",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="1.5" width="10" height="11" rx="1"/><line x1="5" y1="5.5" x2="9" y2="5.5"/><line x1="5" y1="8" x2="9" y2="8"/><line x1="5" y1="10.5" x2="7" y2="10.5"/></svg>)}
         {navRow("Report Issue","Safety · vandalism · equipment · cleaning","report",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 1.5L1 12.5h12L7 1.5z"/><line x1="7" y1="6" x2="7" y2="9"/><circle cx="7" cy="11" r="0.6" fill="currentColor" stroke="none"/></svg>)}
+        {navRow("Issues Log","View & track submitted reports","issues",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1.5" y="2" width="11" height="10" rx="1"/><line x1="4" y1="5.5" x2="10" y2="5.5"/><line x1="4" y1="8" x2="10" y2="8"/><line x1="4" y1="10.5" x2="7" y2="10.5"/></svg>)}
 
-        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginTop:4 }}>AI Intelligence</div>}
+        {!collapsed && <div style={{ padding:"10px 18px 4px", fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:700, letterSpacing:"0.25em", textTransform:"uppercase", color:T.text, marginTop:4 }}>AI Intelligence</div>}
         {navRow("Intelligence Engine","Predictions · anomalies · decisions","intelligence",<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 2L8.5 5 12 5.5 9.5 8 10 11.5 7 10 4 11.5 4.5 8 2 5.5 5.5 5z"/></svg>)}
       </div>
 
@@ -2190,6 +2679,101 @@ function PermanentSidebar({ view, setView, collapsed, onToggle }: { view: View; 
         <div style={{ padding:"10px 16px", borderTop:`1px solid ${T.border}`, flexShrink:0 }}>
           <div style={{ fontFamily:"'Barlow Condensed'", fontSize:8, letterSpacing:"0.15em", color:T.textMuted, textTransform:"uppercase" }}>KAI Facilities Management · DART Network</div>
           <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, color:T.textMuted, marginTop:2 }}>{new Date().toLocaleTimeString()}</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── Issues Log view ───────────────────────────── */
+function IssuesLogView({ reports, onGoReport }: { reports: SubmittedReport[]; onGoReport: () => void }) {
+  const STATUS_LABELS: Record<string, string> = {
+    open: "OPEN", inprogress: "IN PROGRESS", done: "DONE", cancelled: "CANCELLED",
+  };
+  const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
+    open:       { bg: "#E3F2FD", color: "#1565C0" },
+    inprogress: { bg: "#FFF3E0", color: "#E65100" },
+    done:       { bg: "#E8F5E9", color: "#2E7D32" },
+    cancelled:  { bg: "#FAFAFA", color: "#9E9E9E" },
+  };
+  const priorityColor = (p: string) =>
+    p === "critical" ? "#C62828" : p === "high" ? "#E65100" : "#5D7A8A";
+  const priorityBg = (p: string) =>
+    p === "critical" ? "#FFEBEE" : p === "high" ? "#FFF3E0" : "#EEF2F4";
+
+  const open = reports.filter(r => r.status === "open" || r.status === "inprogress");
+
+  return (
+    <div className="kd-scroll" style={{ flex:1, overflowY:"auto", background:T.bg, padding:"24px 28px" }}>
+      <div style={{ marginBottom:20 }}>
+        <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.3em", textTransform:"uppercase", color:T.textMuted, marginBottom:3 }}>
+          KAI Facilities Management · DART Rail Network
+        </div>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+          <div style={{ fontFamily:"'Share Tech Mono'", fontSize:22, color:T.text, lineHeight:1.15 }}>Issues Log</div>
+          <div style={{ display:"flex", gap:12, alignItems:"center" }}>
+            {open.length > 0 && (
+              <span style={{ fontFamily:"'Share Tech Mono'", fontSize:10, letterSpacing:"0.14em", padding:"3px 10px", borderRadius:2, background:"#E3F2FD", color:"#1565C0" }}>
+                {open.length} OPEN
+              </span>
+            )}
+            <button onClick={onGoReport}
+              style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", padding:"7px 20px", background:T.gold, color:"#fff", border:"none", borderRadius:3, cursor:"pointer" }}>
+              + New Report
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {reports.length === 0 ? (
+        <div style={{ background:T.panel, border:`1px solid ${T.border}`, borderRadius:4, padding:"48px 32px", textAlign:"center" }}>
+          <div style={{ fontFamily:"'Share Tech Mono'", fontSize:13, color:T.textMuted, marginBottom:8 }}>NO REPORTS YET</div>
+          <div style={{ fontFamily:"'Barlow Condensed'", fontSize:12, color:T.textMuted, marginBottom:20 }}>Submitted reports will appear here.</div>
+          <button onClick={onGoReport}
+            style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", padding:"8px 24px", background:T.gold, color:"#fff", border:"none", borderRadius:3, cursor:"pointer" }}>
+            Submit First Report
+          </button>
+        </div>
+      ) : (
+        <div style={{ display:"flex", flexDirection:"column" as const, gap:1 }}>
+          {/* Header row */}
+          <div style={{ display:"grid", gridTemplateColumns:"190px 1fr 100px 90px 90px", gap:0, background:T.border }}>
+            {["REF #","Station · Issue","Priority","Reporter","Status"].map(h => (
+              <div key={h} style={{ fontFamily:"'Barlow Condensed'", fontSize:8, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:T.textMuted, padding:"7px 12px", background:T.panel, borderRight:`1px solid ${T.border}` }}>{h}</div>
+            ))}
+          </div>
+          {reports.map((r, i) => {
+            const sc = STATUS_COLORS[r.status] ?? STATUS_COLORS.open;
+            return (
+              <div key={i} style={{ display:"grid", gridTemplateColumns:"190px 1fr 100px 90px 90px", background:T.panel, borderBottom:`1px solid ${T.border}` }}>
+                <div style={{ padding:"10px 12px", borderRight:`1px solid ${T.border}` }}>
+                  <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, color:T.text, letterSpacing:"0.06em", wordBreak:"break-all" as const }}>{r.refNumber}</div>
+                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, color:T.textMuted, marginTop:2 }}>
+                    {r.submittedAt.toLocaleDateString("en-US", { month:"short", day:"numeric" })} · {r.submittedAt.toLocaleTimeString("en-US", { hour:"2-digit", minute:"2-digit" })}
+                  </div>
+                </div>
+                <div style={{ padding:"10px 12px", borderRight:`1px solid ${T.border}` }}>
+                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:12, color:T.text }}>{r.station}</div>
+                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:T.textMuted }}>{r.issueLabel}{r.lineName ? ` · ${r.lineName}` : ""}</div>
+                  {r.notes && <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, color:T.textMuted, marginTop:3, fontStyle:"italic", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" as const, maxWidth:240 }}>{r.notes}</div>}
+                </div>
+                <div style={{ padding:"10px 12px", borderRight:`1px solid ${T.border}`, display:"flex", alignItems:"flex-start" }}>
+                  <span style={{ fontFamily:"'Share Tech Mono'", fontSize:8, letterSpacing:"0.1em", padding:"2px 8px", borderRadius:2, background:priorityBg(r.priority), color:priorityColor(r.priority) }}>
+                    {r.priority.toUpperCase()}
+                  </span>
+                </div>
+                <div style={{ padding:"10px 12px", borderRight:`1px solid ${T.border}` }}>
+                  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, color:T.textSub }}>{r.reporter || "—"}</div>
+                  {r.reporterType && <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, color:T.textMuted }}>{r.reporterType}</div>}
+                </div>
+                <div style={{ padding:"10px 12px", display:"flex", alignItems:"flex-start" }}>
+                  <span style={{ fontFamily:"'Share Tech Mono'", fontSize:8, letterSpacing:"0.1em", padding:"2px 8px", borderRadius:2, background:sc.bg, color:sc.color }}>
+                    {STATUS_LABELS[r.status]}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
@@ -2205,7 +2789,10 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
   }, [initialView]);
   const [lineId,      setLineId]    = useState("red");
   const [stationId,   setStationId] = useState<string>("cityplace-up");
-  const [preReportStation, setPreReportStation] = useState("");
+  const [preReportStation,   setPreReportStation]   = useState("");
+  const [reports, setReports] = useState<SubmittedReport[]>([]);
+  const [preReportIssueType, setPreReportIssueType] = useState<string|undefined>(undefined);
+  const [selectedTicket,     setSelectedTicket]     = useState<{ stationName:string; stationId:string; issueKey:string }|null>(null);
   const [time,        setTime]      = useState("");
   const [drawerOpen,       setDrawerOpen]      = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -2236,7 +2823,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap');
-        :root { --kai-gold: #C9A84C; --kai-gold-light: #F0D98A; }
+        :root { --kai-gold: #0057A8; --kai-gold-light: #D6E8F9; }
         .kd-scroll::-webkit-scrollbar { width: 3px; }
         .kd-scroll::-webkit-scrollbar-track { background: transparent; }
         .kd-scroll::-webkit-scrollbar-thumb { background: #C4C8CF; border-radius: 2px; }
@@ -2340,7 +2927,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
         .drawer-divider { height:1px; background:#F3F4F6; margin:6px 20px; }
 
         .drawer-footer {
-          padding:12px 20px; border-top:1px solid rgba(201,168,76,0.12);
+          padding:12px 20px; border-top:1px solid rgba(0,87,168,0.10);
           flex-shrink:0; position:relative; z-index:1;
         }
         .drawer-footer-text { font-family:'Share Tech Mono',monospace; font-size:9px; color:#9CA3AF; letter-spacing:0.1em; }
@@ -2365,7 +2952,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
         .nav-tab { position:relative; overflow:hidden; }
         .nav-tab::after { content:''; position:absolute; bottom:0; left:50%; right:50%; height:2px; background:var(--kai-gold); transition:left 0.25s cubic-bezier(0.4,0,0.2,1), right 0.25s cubic-bezier(0.4,0,0.2,1); }
         .nav-tab.active::after { left:0; right:0; }
-        .nav-tab::before { content:''; position:absolute; inset:0; background:rgba(201,168,76,0.07); transform:scaleX(0); transform-origin:center; transition:transform 0.2s ease; }
+        .nav-tab::before { content:''; position:absolute; inset:0; background:rgba(0,87,168,0.06); transform:scaleX(0); transform-origin:center; transition:transform 0.2s ease; }
         .nav-tab:hover::before { transform:scaleX(1); }
 
         /* Line button active slide */
@@ -2382,7 +2969,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
         .station-node.critical { animation:nodePulse 2s ease-in-out infinite; }
         @keyframes nodePulse { 0%,100% { box-shadow:0 0 0 0 rgba(211,47,47,0.45); } 60% { box-shadow:0 0 0 6px rgba(211,47,47,0); } }
         .station-node { transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease; }
-        .station-row.selected .station-node { box-shadow:0 0 0 3px rgba(201,168,76,0.35); }
+        .station-row.selected .station-node { box-shadow:0 0 0 3px rgba(0,87,168,0.30); }
 
         /* Score bar entrance */
         .score-fill { animation:scoreReveal 0.55s cubic-bezier(0.4,0,0.2,1) both; }
@@ -2500,20 +3087,18 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
 
         /* ── RESPONSIVE / MOBILE ────────────────────────────────────────────────── */
 
-        /* Desktop: hide hamburger, show sidebar toggle */
-        .kd-hamburger { display:none; }
+        /* Desktop: show sidebar toggle */
         .kd-sidebar-toggle { display:flex; }
 
-        /* Mobile: show hamburger, hide sidebar toggle */
+        /* Mobile: hide sidebar toggle */
         @media (max-width: 768px) {
-          .kd-hamburger { display:flex !important; }
           .kd-sidebar-toggle { display:none !important; }
         }
 
         /* Hide permanent sidebar on mobile — use drawer instead */
         @media (max-width: 768px) {
           .kd-permanent-sidebar { display:none !important; }
-          .kd-nav-tabs { overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+          .kd-nav-tabs { display:flex !important; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
           .kd-nav-tabs::-webkit-scrollbar { display:none; }
           .kd-main-header { padding: 0 10px 0 6px !important; }
           .kd-content-area { padding: 14px 12px !important; }
@@ -2546,7 +3131,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
       <div style={{ background:T.bg, borderRadius:8, overflow:"hidden", border:`1px solid ${T.border}`, display:"flex", flexDirection:"row", minHeight:700, fontFamily:"'Barlow',sans-serif", boxShadow:T.shadowMd, position:"relative" }}>
 
         {/* Permanent sidebar — always visible */}
-        <PermanentSidebar view={view} setView={setView} collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(c => !c)} />
+        <PermanentSidebar view={view} setView={setView} collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(c => !c)} onDrillLine={drill} activeLineId={lineId} />
 
         {/* Sidebar pull-tab — gold handle on sidebar edge, desktop only */}
         <div className="kd-sidebar-toggle" style={{ position:"relative", width:0, flexShrink:0, zIndex:30 }}>
@@ -2570,33 +3155,8 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
 
           {/* Header */}
           <div style={{ background:T.panel, borderBottom:`2px solid ${T.gold}`, padding:"0 20px 0 10px", height:60, display:"flex", alignItems:"center", gap:12, flexShrink:0, boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
-            {/* Hamburger — mobile only */}
-            <button onClick={() => setDrawerOpen(o => !o)} title="Open navigation"
-                    className="kd-hamburger"
-                    style={{ width:32, height:32, border:`1px solid ${T.border}`, borderRadius:4, background:"transparent", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:4, flexShrink:0, transition:"background 0.15s" }}
-                    onMouseEnter={e => (e.currentTarget.style.background = T.bg)}
-                    onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-              <div style={{ width:13, height:1.5, background:T.text, borderRadius:1 }}/>
-              <div style={{ width:13, height:1.5, background:T.text, borderRadius:1 }}/>
-              <div style={{ width:13, height:1.5, background:T.text, borderRadius:1 }}/>
-            </button>
-            {/* Sidebar toggle — desktop only */}
-            <button onClick={() => setSidebarCollapsed(c => !c)} title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-                    className="kd-sidebar-toggle"
-                    style={{ width:36, height:36, border:`2px solid ${T.gold}`, borderRadius:5, background:"rgba(201,168,76,0.10)", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"background 0.15s, border-color 0.15s", color:T.gold }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(201,168,76,0.22)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(201,168,76,0.10)"; }}>
-              <svg width="16" height="16" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                {sidebarCollapsed
-                  ? <><rect x="1" y="1" width="4" height="13" rx="1"/><line x1="8" y1="4.5" x2="14" y2="4.5"/><line x1="8" y1="7.5" x2="14" y2="7.5"/><line x1="8" y1="10.5" x2="14" y2="10.5"/></>
-                  : <><rect x="1" y="1" width="4" height="13" rx="1"/><polyline points="9,5 11,7.5 9,10"/></>
-                }
-              </svg>
-            </button>
             <div style={{ flex:1 }}/>
             <div className="kd-header-chips" style={{ display:"flex", alignItems:"center", gap:10 }}>
-              {crit > 0 && <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.06em", color:"#C62828", background:"#FFEBEE", padding:"3px 10px", borderRadius:2, fontWeight:700 }}>{crit} CRITICAL</div>}
-              {warn > 0 && <div style={{ fontFamily:"'Share Tech Mono'", fontSize:9, letterSpacing:"0.06em", color:"#E65100", background:"#FFF3E0", padding:"3px 10px", borderRadius:2 }}>{warn} ATTENTION</div>}
               <div style={{ display:"flex", alignItems:"center", gap:5, fontFamily:"'Share Tech Mono'", fontSize:9, color:T.textMuted, letterSpacing:"0.08em", background:T.bg, padding:"3px 8px", borderRadius:2 }}>
                 <div className="live-dot" style={{ width:6, height:6, borderRadius:"50%", flexShrink:0 }}/>
                 LIVE
@@ -2606,7 +3166,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
           </div>
 
           {/* Nav tabs */}
-          <div className="kd-nav-tabs" style={{ background:T.panel, borderBottom:`1px solid ${T.border}`, display:"flex", justifyContent:"space-between", flexShrink:0 }}>
+          <div className="kd-nav-tabs" style={{ background:T.panel, borderBottom:`1px solid ${T.border}`, display: sidebarCollapsed ? "flex" : "none", justifyContent:"space-between", flexShrink:0 }}>
             <div style={{ display:"flex", alignItems:"stretch" }}>
               {/* Command Center tab */}
               <button onClick={() => setView("command")}
@@ -2614,22 +3174,6 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
                       style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:700, letterSpacing:"0.22em", textTransform:"uppercase", padding:"11px 16px", background:"none", border:"none", cursor:"pointer", color: view === "command" ? T.text : T.textMuted, transition:"color 0.15s", whiteSpace:"nowrap" }}>
                 Command Center
               </button>
-
-              {/* Thin separator */}
-              <div style={{ width:1, background:T.border, margin:"8px 4px", flexShrink:0 }}/>
-
-              {/* Line tabs — each with a persistent color-coded dot */}
-              {Object.entries(LINES).map(([id, l]) => {
-                const isActive = view === "stations" && lineId === id;
-                return (
-                  <button key={id} onClick={() => drill(id)}
-                          className={`nav-tab${isActive ? " active" : ""}`}
-                          style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.16em", textTransform:"uppercase", padding:"11px 12px", background:"none", border:"none", cursor:"pointer", color: isActive ? l.color : T.textMuted, transition:"color 0.15s", "--kai-gold": l.color, display:"inline-flex", alignItems:"center", gap:5 } as React.CSSProperties}>
-                    <span style={{ width:7, height:7, borderRadius:"50%", background:l.color, flexShrink:0, opacity: isActive ? 1 : 0.45, transition:"opacity 0.15s, transform 0.15s", transform: isActive ? "scale(1.2)" : "scale(1)" }}/>
-                    {l.name.replace(" Line", "")}
-                  </button>
-                );
-              })}
 
               {/* Thin separator */}
               <div style={{ width:1, background:T.border, margin:"8px 4px", flexShrink:0 }}/>
@@ -2643,6 +3187,16 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
                       className={`nav-tab${view === "report" ? " active" : ""}`}
                       style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", padding:"11px 14px", background:"none", border:"none", cursor:"pointer", color: view === "report" ? T.text : T.textMuted, transition:"color 0.15s" }}>
                 Report
+              </button>
+              <button onClick={() => setView("issues")}
+                      className={`nav-tab${view === "issues" ? " active" : ""}`}
+                      style={{ fontFamily:"'Barlow Condensed'", fontSize:10, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", padding:"11px 14px", background:"none", border:"none", cursor:"pointer", color: view === "issues" ? T.text : T.textMuted, transition:"color 0.15s", position:"relative" as const, display:"inline-flex", alignItems:"center", gap:5 }}>
+                Issues
+                {reports.filter(r => r.status === "open").length > 0 && (
+                  <span style={{ fontFamily:"'Share Tech Mono'", fontSize:8, background:"#0057A8", color:"#fff", borderRadius:8, padding:"1px 5px", lineHeight:1.4 }}>
+                    {reports.filter(r => r.status === "open").length}
+                  </span>
+                )}
               </button>
               <button onClick={() => setView("intelligence")}
                       className={`nav-tab${view === "intelligence" ? " active" : ""}`}
@@ -2660,9 +3214,11 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
           {/* Content */}
           <div className="kd-scroll" style={{ flex:1, overflow:"hidden", display:"flex", flexDirection:"column" }}>
             {view === "command"           && <CommandCenter onDrill={drill}/>}
-            {view === "stations"          && <StationView lineId={lineId} selectedId={stationId} onSelect={setStationId} onReport={(name) => { setPreReportStation(name); setView("report"); }}/>}
+            {view === "stations"          && <StationView lineId={lineId} selectedId={stationId} onSelect={setStationId} onReport={(name, issueType) => { setPreReportStation(name); setPreReportIssueType(issueType); setView("report"); }} onViewTicket={(sName, sId, issueKey) => { setSelectedTicket({ stationName:sName, stationId:sId, issueKey }); setView("ticket"); }}/>}
+            {view === "ticket"            && selectedTicket && <TicketView stationName={selectedTicket.stationName} stationId={selectedTicket.stationId} issueKey={selectedTicket.issueKey} onBack={() => setView("stations")}/>}
             {view === "inspect"           && <InspectionView/>}
-            {view === "report"            && <ReportIssueView initialStation={preReportStation}/>}
+            {view === "report"            && <ReportIssueView initialStation={preReportStation} initialIssueType={preReportIssueType} onSubmit={(r) => setReports(prev => [r, ...prev])}/>}
+            {view === "issues"            && <IssuesLogView reports={reports} onGoReport={() => { setPreReportStation(""); setView("report"); }}/>}
             {view === "intelligence"      && <IntelligenceView/>}
             {view === "asset_elevators"   && <AssetDashboardView assetKey="elevators"/>}
             {view === "asset_cameras"     && <AssetDashboardView assetKey="cameras"/>}

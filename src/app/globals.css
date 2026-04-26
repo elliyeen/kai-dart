@@ -7,10 +7,10 @@
   --kai-secondary: #2C3E50;
   --kai-secondary-light: #34495E;
   --kai-accent: #27AE60;
-  --kai-bg: #F8F9FA;
+  --kai-bg: #F1F1F1;
   --kai-text: #212529;
   --kai-text-muted: #6C757D;
-  --background: #ffffff;
+  --background: #F1F1F1;
   --foreground: #212529;
 }
 
@@ -22,8 +22,10 @@
   --color-kai-secondary: var(--kai-secondary);
   --color-kai-secondary-light: var(--kai-secondary-light);
   --color-kai-accent: var(--kai-accent);
+  --color-white: #F1F1F1;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-instrument-serif);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -40,9 +42,50 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-instrument-serif), 'Instrument Serif', Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Instrument Serif headings ─────────────────────────── */
+h1, h2, h3 {
+  font-family: var(--font-instrument-serif), 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Geist Sans for UI chrome — nav, buttons, inputs ───── */
+nav, button, input, select, textarea, .font-ui {
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ─── Hero ghost button — white border, fills white on hover ─ */
+.hero-btn-ghost {
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.08);
+}
+.hero-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* ─── Scroll-up text animation (Shopify style) ───────────── */
+@keyframes slide-up-out {
+  from { transform: translateY(0%);    opacity: 1; }
+  to   { transform: translateY(-110%); opacity: 0; }
+}
+
+@keyframes slide-up-in {
+  from { transform: translateY(110%);  opacity: 0; }
+  to   { transform: translateY(0%);    opacity: 1; }
+}
+
+.flip-out {
+  animation: slide-up-out 0.38s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.flip-in {
+  animation: slide-up-in 0.38s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
 /* ─── Hero entrance animation ────────────────────────────── */

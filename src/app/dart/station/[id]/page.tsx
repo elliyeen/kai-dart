@@ -10,13 +10,14 @@ import LiveFeed from "@/components/dart/LiveFeed";
 import StationDigitalTwin from "@/components/dart/StationDigitalTwin";
 import { useStationEngine } from "@/lib/dart/useStationEngine";
 import type { AgentName } from "@/lib/dart/types";
+import { getLine } from "@/lib/dart/lines";
 
 const AGENT_ORDER: AgentName[] = ["safety", "cleanliness", "equipment", "revenue", "parking", "community"];
 
 function KpiCard({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) {
   return (
     <div className="bg-white border border-gray-200 rounded-sm px-4 py-3.5 shadow-xs">
-      <p className="text-[10px] font-semibold tracking-[0.2em] text-gray-400 uppercase">{label}</p>
+      <p className="text-xs font-semibold tracking-[0.15em] text-gray-400 uppercase">{label}</p>
       <p className="text-xl font-light mt-1 text-gray-900" style={color ? { color } : {}}>
         {value}
       </p>
@@ -36,7 +37,7 @@ function Bar({ value, max, color }: { value: number; max: number; color: string 
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[11px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-3">
+    <p className="text-xs font-semibold tracking-[0.2em] text-gray-400 uppercase mb-3">
       {children}
     </p>
   );
@@ -90,11 +91,28 @@ export default function StationDetailPage({ params }: { params: Promise<{ id: st
       <div className="pt-16 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5">
           {/* Breadcrumb */}
-          <Link href="/dart"
-            className="inline-flex items-center gap-1.5 text-[11px] font-medium text-gray-400 hover:text-gray-700 transition-colors mb-4">
-            <ArrowLeft className="w-3 h-3" />
-            DART Network
-          </Link>
+          {(() => {
+            const primaryLineId = station.lineIds[0];
+            const primaryLine = primaryLineId ? getLine(primaryLineId) : undefined;
+            return (
+              <div className="flex items-center gap-2 text-[11px] font-medium mb-4">
+                <Link href="/dart" className="text-gray-400 hover:text-gray-700 transition-colors flex items-center gap-1.5">
+                  <ArrowLeft className="w-3 h-3" />
+                  DART Network
+                </Link>
+                {primaryLine && (
+                  <>
+                    <span className="text-gray-300">/</span>
+                    <Link href={`/dart/line/${primaryLine.id}`}
+                      className="hover:text-gray-700 transition-colors"
+                      style={{ color: primaryLine.color }}>
+                      {primaryLine.name}
+                    </Link>
+                  </>
+                )}
+              </div>
+            );
+          })()}
 
           <div className="flex items-start justify-between flex-wrap gap-6">
             <div className="flex items-start gap-5">
@@ -195,7 +213,7 @@ export default function StationDetailPage({ params }: { params: Promise<{ id: st
             {/* Equipment */}
             <Panel>
               <PanelHeader>
-                <p className="text-[11px] font-semibold tracking-[0.2em] text-gray-400 uppercase">Equipment</p>
+                <p className="text-xs font-semibold tracking-[0.15em] text-gray-400 uppercase">Equipment</p>
                 <span className="text-[11px] font-mono text-gray-400">
                   {agents.equipment.escalatorsUp}/{agents.equipment.escalatorsTotal} escalators operational
                 </span>
@@ -251,7 +269,7 @@ export default function StationDetailPage({ params }: { params: Promise<{ id: st
             {/* Parking */}
             <Panel>
               <PanelHeader>
-                <p className="text-[11px] font-semibold tracking-[0.2em] text-gray-400 uppercase">Parking</p>
+                <p className="text-xs font-semibold tracking-[0.15em] text-gray-400 uppercase">Parking</p>
                 <span className="text-[11px] font-mono text-gray-400">
                   {agents.parking.parkAndRide ? "Park & Ride" : "Daily"} ·{" "}
                   {agents.parking.totalOccupied}/{agents.parking.totalCapacity}
@@ -286,7 +304,7 @@ export default function StationDetailPage({ params }: { params: Promise<{ id: st
             {/* Bins */}
             <Panel>
               <PanelHeader>
-                <p className="text-[11px] font-semibold tracking-[0.2em] text-gray-400 uppercase">
+                <p className="text-xs font-semibold tracking-[0.15em] text-gray-400 uppercase">
                   Bin Sensors
                 </p>
                 <span className="text-[11px] font-mono text-gray-500">
@@ -326,7 +344,7 @@ export default function StationDetailPage({ params }: { params: Promise<{ id: st
             {/* Safety */}
             <Panel>
               <PanelHeader>
-                <p className="text-[11px] font-semibold tracking-[0.2em] text-gray-400 uppercase">Safety</p>
+                <p className="text-xs font-semibold tracking-[0.15em] text-gray-400 uppercase">Safety</p>
               </PanelHeader>
               <div className="p-5 grid grid-cols-2 gap-4">
                 {[
@@ -352,7 +370,7 @@ export default function StationDetailPage({ params }: { params: Promise<{ id: st
             {/* Community */}
             <Panel>
               <PanelHeader>
-                <p className="text-[11px] font-semibold tracking-[0.2em] text-gray-400 uppercase">Community</p>
+                <p className="text-xs font-semibold tracking-[0.15em] text-gray-400 uppercase">Community</p>
               </PanelHeader>
               <div className="p-5">
                 <div className="grid grid-cols-2 gap-4 mb-4">
@@ -383,7 +401,7 @@ export default function StationDetailPage({ params }: { params: Promise<{ id: st
             {/* City ROI */}
             <Panel>
               <PanelHeader>
-                <p className="text-[11px] font-semibold tracking-[0.2em] text-gray-400 uppercase">City ROI</p>
+                <p className="text-xs font-semibold tracking-[0.15em] text-gray-400 uppercase">City ROI</p>
               </PanelHeader>
               <div className="p-5">
                 {[

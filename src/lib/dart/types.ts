@@ -40,6 +40,12 @@ export interface WeatherData {
 }
 
 // ─── Agent States ─────────────────────────────────────────────────────────────
+export interface ActiveAction {
+  description: string;  // what the agent is doing right now
+  etaMinutes: number;   // estimated time to resolution from startedAt
+  startedAt: Date;
+}
+
 export interface AgentState {
   name: AgentName;
   label: string;
@@ -49,6 +55,7 @@ export interface AgentState {
   lastAction: string;
   lastActionTime: Date;
   activeIssues: number;
+  activeAction?: ActiveAction; // in-progress action with ETA
 }
 
 export interface SafetyAgentState extends AgentState {
@@ -124,6 +131,7 @@ export interface AgentEvent {
   timestamp: Date;
   resolved: boolean;
   resolvedAt?: Date;
+  etaMinutes?: number; // expected resolution time from timestamp
 }
 
 // ─── Station World Model ──────────────────────────────────────────────────────
@@ -131,7 +139,8 @@ export interface StationWorldModel {
   id: string;
   name: string;
   shortName: string;
-  line: string;
+  line: string;      // display string e.g. "Red / Blue Line"
+  lineIds: string[]; // normalized ids e.g. ["red", "blue"]
   city: string;
   politicalStatus: "stable" | "at-risk" | "voting"; // DART political context
   politicalNote: string;

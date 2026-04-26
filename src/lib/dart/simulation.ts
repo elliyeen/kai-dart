@@ -47,18 +47,21 @@ function tickSafety(station: StationWorldModel, events: AgentEvent[]): StationWo
 
   // Random incident
   if (chance(0.04)) {
+    const location = ["north entrance", "platform B", "parking zone", "tunnel"][Math.floor(Math.random() * 4)];
+    const eta = Math.round(8 + Math.random() * 12);
     s.incidentsToday += 1;
     s.homelessFlags = Math.min(s.homelessFlags + 1, 5);
     s.pdAlertsSent += 1;
     s.activeIssues = Math.min(s.activeIssues + 1, 6);
     s.status = "critical";
-    s.lastAction = `Alert sent — incident at ${["north entrance", "platform B", "parking zone", "tunnel"][Math.floor(Math.random() * 4)]}`;
+    s.lastAction = `Alert sent — incident at ${location}`;
     s.lastActionTime = new Date();
+    s.activeAction = { description: `PD unit dispatched to ${location}`, etaMinutes: eta, startedAt: new Date() };
     events.push({
       id: uid(), agentName: "safety", severity: "critical",
       title: "New incident detected",
       detail: `Incident logged. PD notified. Response time tracking.`,
-      timestamp: new Date(), resolved: false,
+      timestamp: new Date(), resolved: false, etaMinutes: eta,
     });
   }
 
@@ -69,6 +72,7 @@ function tickSafety(station: StationWorldModel, events: AgentEvent[]): StationWo
     s.status = s.activeIssues > 0 ? "alert" : "nominal";
     s.lastAction = "Issue resolved — PD confirmed clear";
     s.lastActionTime = new Date();
+    if (s.activeIssues === 0) s.activeAction = undefined;
     events.push({
       id: uid(), agentName: "safety", severity: "resolved",
       title: "Situation cleared",
@@ -90,15 +94,17 @@ function tickCleanliness(station: StationWorldModel, events: AgentEvent[]): Stat
 
   const overflowBin = bins.find(b => b.fillLevel > 85);
   if (overflowBin && chance(0.4)) {
+    const eta = Math.round(15 + Math.random() * 15);
     c.crewsDispatched += 1;
     c.status = "active";
     c.lastAction = `Crew dispatched — bin at ${overflowBin.location} (${Math.round(overflowBin.fillLevel)}%)`;
     c.lastActionTime = new Date();
+    c.activeAction = { description: `Crew en route — ${overflowBin.location} bin service`, etaMinutes: eta, startedAt: new Date() };
     events.push({
       id: uid(), agentName: "cleanliness", severity: "warning",
       title: `Bin near capacity — ${overflowBin.location}`,
       detail: `${Math.round(overflowBin.fillLevel)}% full. Crew dispatched.`,
-      timestamp: new Date(), resolved: false,
+      timestamp: new Date(), resolved: false, etaMinutes: eta,
     });
   }
 
@@ -119,6 +125,7 @@ function tickCleanliness(station: StationWorldModel, events: AgentEvent[]): Stat
   c.platformGrade = grade;
   c.status = avgFill > 80 ? "alert" : avgFill > 60 ? "active" : "nominal";
   c.activeIssues = updatedBins.filter(b => b.fillLevel > 80).length;
+  if (c.activeIssues === 0 && c.activeAction) c.activeAction = undefined;
 
   return { ...station, agents: { ...station.agents, cleanliness: c } };
 }
@@ -133,15 +140,17 @@ function tickEquipment(station: StationWorldModel, events: AgentEvent[]): Statio
 
   const riskElevator = elevators.find(el => el.vibrationIndex > 72 && el.operational);
   if (riskElevator && chance(0.05)) {
+    const eta = Math.round(120 + Math.random() * 360);
     e.ticketsOpen += 1;
     e.status = "alert";
     e.lastAction = `PM ordered — ${riskElevator.name} vibration ${Math.round(riskElevator.vibrationIndex)}`;
     e.lastActionTime = new Date();
+    e.activeAction = { description: `Maintenance scheduled — ${riskElevator.name}`, etaMinutes: eta, startedAt: new Date() };
     events.push({
       id: uid(), agentName: "equipment", severity: "warning",
       title: `Equipment anomaly — ${riskElevator.name}`,
       detail: `Vibration index ${Math.round(riskElevator.vibrationIndex)}. Maintenance ticket created.`,
-      timestamp: new Date(), resolved: false,
+      timestamp: new Date(), resolved: false, etaMinutes: eta,
     });
   }
 
@@ -151,6 +160,7 @@ function tickEquipment(station: StationWorldModel, events: AgentEvent[]): Statio
     e.status = e.ticketsOpen === 0 ? "nominal" : "alert";
     e.lastAction = "Maintenance complete — ticket closed";
     e.lastActionTime = new Date();
+    if (e.ticketsOpen === 0) e.activeAction = undefined;
     events.push({
       id: uid(), agentName: "equipment", severity: "resolved",
       title: "Maintenance resolved",
@@ -183,13 +193,17 @@ function tickRevenue(station: StationWorldModel, events: AgentEvent[]): StationW
     r.pricingAdjustments += 1;
     r.lastAction = "Dynamic pricing adjusted — below target, rate optimized";
     r.lastActionTime = new Date();
+    r.activeAction = { description: "Dynamic pricing optimization active", etaMinutes: 60, startedAt: new Date() };
     events.push({
       id: uid(), agentName: "revenue", severity: "warning",
       title: "Revenue behind target",
       detail: `$${r.dailyRevenue.toLocaleString()} vs $${r.dailyTarget.toLocaleString()} target. Pricing adjusted.`,
-      timestamp: new Date(), resolved: false,
+      timestamp: new Date(), resolved: false, etaMinutes: 60,
     });
   }
+
+  // Clear activeAction when revenue recovers
+  if (r.status === "nominal" && r.activeAction) r.activeAction = undefined;
 
   const pct = r.dailyRevenue / r.dailyTarget;
   const target = pct > 1 ? 92 : pct > 0.8 ? 82 : pct > 0.6 ? 70 : 55;

@@ -29,10 +29,10 @@ export default function WorldCup2026Page() {
             FIFA World Cup 2026 · 9 Match Days · AT&T Stadium · Arlington, Texas
           </p>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light leading-[1.1] mb-6 max-w-5xl">
+          <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl font-light leading-[1.1] mb-4 sm:mb-6 max-w-5xl">
             9 matches at AT&T Stadium, Arlington —
           </h1>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light leading-[1.1] text-white/65 mb-20 max-w-5xl">
+          <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl font-light leading-[1.1] text-white/65 mb-10 sm:mb-20 max-w-5xl">
             is DART prepared for the largest surge in transit demand in history?
           </h1>
 
@@ -60,12 +60,12 @@ export default function WorldCup2026Page() {
       </section>
 
       {/* The Challenge */}
-      <section id="challenge" className="py-24 bg-white text-black">
+      <section id="challenge" className="py-12 sm:py-20 lg:py-24 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-20">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-20">
             <div>
               <p className="text-sm font-light tracking-[0.3em] text-gray-400 mb-6 uppercase">The Challenge</p>
-              <h2 className="text-5xl font-light leading-tight">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-light leading-tight">
                 The largest surge in transit demand Dallas has ever seen.
               </h2>
             </div>
@@ -89,11 +89,11 @@ export default function WorldCup2026Page() {
       </section>
 
       {/* Match Schedule */}
-      <section className="py-24 bg-white text-black">
+      <section className="py-12 sm:py-20 lg:py-24 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="mb-20">
             <p className="text-sm font-light tracking-[0.3em] text-gray-400 mb-6 uppercase">AT&T Stadium · Arlington, Texas</p>
-            <h2 className="text-5xl font-light">9 matches.<br />One city. World stage.</h2>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-light">9 matches.<br />One city. World stage.</h2>
           </div>
 
           <div className="border-t border-gray-200">
@@ -136,7 +136,7 @@ export default function WorldCup2026Page() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="mb-20">
             <p className="text-sm font-light tracking-[0.3em] text-white/50 mb-6 uppercase">KAI Solution</p>
-            <h2 className="text-5xl font-light">Built for World Cup scale.</h2>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-light">Built for World Cup scale.</h2>
           </div>
           <div className="grid lg:grid-cols-3 gap-16">
             {[
@@ -174,12 +174,12 @@ export default function WorldCup2026Page() {
       </section>
 
       {/* Roadmap */}
-      <section className="py-24 bg-white text-black">
+      <section className="py-12 sm:py-20 lg:py-24 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-20 mb-20">
             <div>
               <p className="text-sm font-light tracking-[0.3em] text-gray-400 mb-6 uppercase">Roadmap</p>
-              <h2 className="text-5xl font-light leading-tight">Four phases.<br />One goal.</h2>
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-light leading-tight">Four phases.<br />One goal.</h2>
             </div>
             <div className="flex items-end">
               <p className="text-xl font-light text-gray-500 leading-relaxed">

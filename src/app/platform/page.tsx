@@ -13,7 +13,7 @@ import WizardOverlay from "@/components/WizardOverlay";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export default function PlatformPage() {
-  const [tab, setTab] = useState<"overview" | "demo">("overview");
+  const [tab, setTab] = useState<"overview" | "demo">("demo");
   const [demoView, setDemoView] = useState<string>("command");
   const [wizardOpen, setWizardOpen] = useState(false);
 
@@ -33,28 +33,6 @@ export default function PlatformPage() {
 
       <Nav />
 
-      {/* Tab bar */}
-      <div className="sticky top-16 z-40 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex">
-          <button
-            onClick={() => setTab("overview")}
-            className={`px-4 sm:px-8 py-4 text-[10px] sm:text-[11px] font-medium tracking-[0.2em] sm:tracking-[0.25em] uppercase border-b-2 transition-all duration-200 whitespace-nowrap ${
-              tab === "overview" ? "border-black text-black" : "border-transparent text-gray-400 hover:text-black"
-            }`}
-          >
-            Platform Overview
-          </button>
-          <button
-            onClick={() => switchToDemo()}
-            className={`px-4 sm:px-8 py-4 text-[10px] sm:text-[11px] font-medium tracking-[0.2em] sm:tracking-[0.25em] uppercase border-b-2 transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
-              tab === "demo" ? "border-[#FF6B35] text-black" : "border-transparent text-gray-400 hover:text-black"
-            }`}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            Live Command Center
-          </button>
-        </div>
-      </div>
 
       {/* Demo tab */}
       {tab === "demo" && (
@@ -62,7 +40,7 @@ export default function PlatformPage() {
           {/* Tour trigger — fixed so it stays visible below the sticky tab bar */}
           <button
             onClick={() => setWizardOpen(true)}
-            className="fixed top-[120px] right-6 z-50 flex items-center gap-2 text-xs tracking-widest uppercase bg-[#111318] text-white px-4 py-2.5 hover:bg-[#1a1d24] transition-colors"
+            className="font-ui fixed top-[120px] right-6 z-50 flex items-center gap-2 text-sm font-semibold tracking-wider uppercase bg-[#0057A8] text-white px-5 py-2.5 hover:bg-[#004A94] transition-colors"
           >
             <BookOpen className="w-3.5 h-3.5" />
             Take a tour
@@ -78,61 +56,53 @@ export default function PlatformPage() {
       {/* Hero */}
       <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
         <Image
-          src={`${basePath}/images/dart/20260223_191335.jpg`}
-          alt="DART Platform operations"
+          src={`${basePath}/images/dart/20260304_135142.jpg`}
+          alt="DART train on elevated track"
           fill
-          className="object-cover"
+          className="object-cover object-[center_35%]"
           priority
         />
-        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/10 to-black/70" />
-        <div className="absolute inset-0 bg-linear-to-r from-black/15 via-transparent to-black/15" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/55 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/10 via-transparent to-black/10" />
+        <div className="absolute bottom-0 left-0 right-0 h-56 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.55) 60%, white 100%)" }} />
 
         <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
           <p
             className="hero-animate text-[10px] font-medium tracking-[0.6em] text-white/35 mb-6 uppercase"
             style={{ animationDelay: "0ms" }}
           >
-            KAI Platform
+            transit
           </p>
           <h1
-            className="hero-animate text-[2.8rem] sm:text-[4rem] lg:text-[5.25rem] xl:text-[6rem] font-semibold leading-[1.0] tracking-[-0.03em] mb-7"
+            className="hero-animate text-[2rem] sm:text-[3.2rem] lg:text-[5rem] xl:text-[6.5rem] font-semibold leading-[1.05] tracking-[-0.03em] mb-5 sm:mb-7 text-white"
             style={{ animationDelay: "160ms" }}
           >
-            The operating system<br />
-            <span className="text-white/85 font-light">for cities.</span>
+            Intelligent Automation<br />for your city.
           </h1>
           <p
-            className="hero-animate text-base lg:text-lg text-white/80 mb-12 max-w-xl mx-auto leading-relaxed font-light tracking-wide"
+            className="hero-animate text-base sm:text-xl lg:text-2xl text-white mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed font-light tracking-wide"
             style={{ animationDelay: "360ms" }}
           >
-            Kai unifies data, operations, and intelligence into a single platform —
-            turning complexity into clarity, at any scale.
+            Intelligent operation and automation for your city.
           </p>
           <div
             className="hero-animate flex flex-col sm:flex-row gap-3 justify-center"
             style={{ animationDelay: "520ms" }}
           >
-            <Link
-              href="/contact"
-              className="bg-white text-black px-6 py-2 text-[12px] font-medium tracking-[0.05em] hover:bg-white/90 transition-all duration-300"
-            >
-              Request a demo
-            </Link>
             <button
               onClick={() => switchToDemo()}
-              className="border border-white/25 px-6 py-2 text-[12px] font-medium tracking-[0.05em] hover:border-white/55 hover:bg-white/[0.05] transition-all duration-300 inline-flex items-center justify-center gap-2"
+              className="font-ui min-w-[200px] px-8 py-3 text-[13px] font-bold tracking-[0.05em] text-white transition-all duration-200 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-xl active:scale-95 active:translate-y-0 inline-flex items-center justify-center gap-2"
+              style={{ background: "#0057A8" }}
             >
               Explore the platform <ArrowRight className="w-3 h-3" />
             </button>
+            <Link
+              href="/contact"
+              className="font-ui min-w-[200px] bg-white text-gray-900 px-8 py-3 text-[13px] font-bold tracking-[0.05em] transition-all duration-200 hover:bg-white/90 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-xl active:scale-95 active:translate-y-0 inline-flex items-center justify-center gap-2"
+            >
+              Request a demo
+            </Link>
           </div>
-        </div>
-
-        {/* Scroll line */}
-        <div
-          className="hero-animate absolute bottom-10 left-1/2 -translate-x-1/2"
-          style={{ animationDelay: "900ms" }}
-        >
-          <div className="w-px h-14 bg-linear-to-b from-white/25 to-transparent mx-auto" />
         </div>
       </section>
 
@@ -169,8 +139,8 @@ export default function PlatformPage() {
             { name: "DFW Airport",     weight: "font-semibold" },
           ]).map((city, i) => (
             <span key={i} className="inline-flex items-center">
-              <span className={`text-[1.35rem] tracking-tight text-black ${city.weight} px-8`}>{city.name}</span>
-              <span className="text-gray-300 text-lg">·</span>
+              <span className={`text-[1.35rem] tracking-tight ${city.weight} px-8`} style={{ color: "#0057A8" }}>{city.name}</span>
+              <span className="text-lg" style={{ color: "#93B8DE" }}>·</span>
             </span>
           ))}
         </div>
