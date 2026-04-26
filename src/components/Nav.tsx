@@ -101,7 +101,7 @@ export default function Nav({ hideLinks = false }: NavProps) {
                 <div className="hidden md:flex items-center gap-2">
                   <Link
                     href="/contact"
-                    className="text-[12px] font-medium px-4 py-1.5 bg-[#FF6B35] text-white hover:bg-[#E85A27] transition-colors rounded-sm"
+                    className="inline-flex items-center justify-center text-[12px] font-medium px-4 py-2 min-h-[38px] bg-[#FF6B35] text-white hover:bg-[#E85A27] transition-colors rounded-sm"
                   >
                     Request Demo
                   </Link>
@@ -109,7 +109,7 @@ export default function Nav({ hideLinks = false }: NavProps) {
 
                 {/* Mobile hamburger */}
                 <button
-                  className="md:hidden p-1 text-black/50 hover:text-black transition-colors"
+                  className="md:hidden p-2.5 -mr-2.5 text-black/50 hover:text-black transition-colors"
                   onClick={() => setOpen(!open)}
                   aria-label="Toggle menu"
                 >
@@ -141,12 +141,12 @@ export default function Nav({ hideLinks = false }: NavProps) {
                 <div className="flex items-center gap-3">
                   <Link
                     href="/contact"
-                    className="hidden md:inline-flex text-[13px] border border-black/20 text-black px-5 py-2 hover:bg-black hover:text-white hover:border-black transition-all duration-300"
+                    className="hidden md:inline-flex items-center justify-center text-[13px] border border-black/20 text-black px-5 py-2 min-h-[38px] hover:bg-black hover:text-white hover:border-black transition-all duration-300"
                   >
                     Contact
                   </Link>
                   <button
-                    className="md:hidden p-1 text-black/50 hover:text-black transition-colors"
+                    className="md:hidden p-2.5 -mr-2.5 text-black/50 hover:text-black transition-colors"
                     onClick={() => setOpen(!open)}
                     aria-label="Toggle menu"
                   >

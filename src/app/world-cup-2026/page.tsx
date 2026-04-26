@@ -91,7 +91,7 @@ export default function WorldCup2026Page() {
       {/* Match Schedule */}
       <section className="py-12 sm:py-20 lg:py-24 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="mb-20">
+          <div className="mb-10 lg:mb-20">
             <p className="text-sm font-light tracking-[0.3em] text-gray-400 mb-6 uppercase">AT&T Stadium · Arlington, Texas</p>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-light">9 matches.<br />One city. World stage.</h2>
           </div>
@@ -138,7 +138,7 @@ export default function WorldCup2026Page() {
             <p className="text-sm font-light tracking-[0.3em] text-white/50 mb-6 uppercase">KAI Solution</p>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-light">Built for World Cup scale.</h2>
           </div>
-          <div className="grid lg:grid-cols-3 gap-16">
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-16">
             {[
               {
                 num: "01",
@@ -160,7 +160,7 @@ export default function WorldCup2026Page() {
               },
             ].map((item) => (
               <div key={item.num}>
-                <div className="text-7xl font-light text-white/30 mb-4">{item.num}</div>
+                <div className="text-5xl sm:text-7xl font-light text-white/30 mb-4">{item.num}</div>
                 <h3 className="text-2xl font-light mb-4">{item.title}</h3>
                 <p className="font-light text-white/70 leading-relaxed">{item.desc}</p>
                 <div className="mt-8 pt-6 border-t border-white/15">
@@ -176,7 +176,7 @@ export default function WorldCup2026Page() {
       {/* Roadmap */}
       <section className="py-12 sm:py-20 lg:py-24 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-20 mb-20">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 mb-10 lg:mb-20">
             <div>
               <p className="text-sm font-light tracking-[0.3em] text-gray-400 mb-6 uppercase">Roadmap</p>
               <h2 className="text-2xl sm:text-4xl lg:text-5xl font-light leading-tight">Four phases.<br />One goal.</h2>
@@ -236,13 +236,13 @@ export default function WorldCup2026Page() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="inline-block bg-white text-black px-12 py-5 text-sm font-light tracking-wide hover:bg-white/90 transition"
+              className="inline-block bg-white text-black px-8 sm:px-12 py-4 sm:py-5 text-sm font-light tracking-wide hover:bg-white/90 transition"
             >
               REQUEST PILOT PROGRAM
             </Link>
             <Link
               href="/platform"
-              className="inline-flex items-center justify-center border border-white/20 px-12 py-5 text-sm font-light tracking-wide hover:border-white/60 transition gap-2"
+              className="inline-flex items-center justify-center border border-white/20 px-8 sm:px-12 py-4 sm:py-5 text-sm font-light tracking-wide hover:border-white/60 transition gap-2"
             >
               VIEW PLATFORM
               <ArrowRight className="w-4 h-4" />

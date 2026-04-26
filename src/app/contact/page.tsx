@@ -60,7 +60,7 @@ export default function ContactPage() {
       <Nav />
 
       {/* Hero */}
-      <section className="pt-28 sm:pt-48 pb-16 sm:pb-20 px-6">
+      <section className="pt-24 sm:pt-36 lg:pt-48 pb-12 sm:pb-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <p
             className="hero-animate text-[11px] font-medium tracking-[0.4em] text-white/30 mb-10 uppercase"
@@ -94,7 +94,7 @@ export default function ContactPage() {
               {!submitted ? (
                 <>
                   <p className="text-[11px] font-medium tracking-[0.3em] text-gray-400 mb-10 uppercase">Send a Message</p>
-                  <form onSubmit={handleSubmit} className="space-y-10">
+                  <form onSubmit={handleSubmit} className="space-y-7 sm:space-y-10">
 
                     <div className="grid md:grid-cols-2 gap-8">
                       <div>
@@ -260,7 +260,7 @@ export default function ContactPage() {
             </div>
 
             {/* Right column */}
-            <div className="space-y-16 lg:pt-14">
+            <div className="space-y-10 sm:space-y-16 lg:pt-14">
 
               {/* Contact info */}
               <div>
@@ -314,10 +314,10 @@ export default function ContactPage() {
               </div>
 
               {/* FIFA 2026 note */}
-              <div className="bg-black text-white p-10">
+              <div className="bg-black text-white p-6 sm:p-10">
                 <Trophy className="w-4 h-4 text-white/40 mb-8" />
                 <div className="text-[10px] font-medium tracking-[0.35em] text-white/30 mb-4 uppercase">FIFA World Cup 2026</div>
-                <div className="text-[3rem] font-thin leading-none tracking-[-0.02em] mb-4">{daysUntil} days.</div>
+                <div className="text-[2.25rem] sm:text-[3rem] font-thin leading-none tracking-[-0.02em] mb-4">{daysUntil} days.</div>
                 <p className="text-sm text-white/50 leading-relaxed mb-8 font-light">
                   The window to prepare DART for a 286% ridership surge is closing.
                   June 11 – July 19, 2026. 9 matches. AT&T Stadium, Arlington.

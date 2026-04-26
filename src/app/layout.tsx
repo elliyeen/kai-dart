@@ -27,6 +27,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  // Resize viewport around the virtual keyboard rather than scrolling
+  interactiveWidget: "resizes-visual",
 };
 
 export default function RootLayout({

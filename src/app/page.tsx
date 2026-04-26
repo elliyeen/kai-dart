@@ -96,7 +96,7 @@ export default function Home() {
               ];
               return [...logos, ...logos].map((logo, i) => (
                 <span key={i} className="inline-flex items-center">
-                  <span className={`${logo.cls} px-10`}>
+                  <span className={`${logo.cls} px-5 sm:px-10`}>
                     {logo.name}
                   </span>
                   <span className="text-gray-200 text-sm select-none">·</span>
@@ -108,7 +108,7 @@ export default function Home() {
       </div>
 
       {/* The Kai Fabric */}
-      <section className="py-16 sm:py-24 lg:py-36 bg-white text-black">
+      <section className="py-12 sm:py-20 lg:py-36 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-end mb-10 lg:mb-20">
             <FadeUp>
@@ -136,7 +136,7 @@ export default function Home() {
           <div className="grid lg:grid-cols-3 gap-1">
             <FadeUp className="h-full">
               <Link href="/platform?tab=demo" className="block h-full group cursor-pointer">
-                <div className="bg-black text-white p-10 h-full relative transition-all duration-300 group-hover:bg-[#0d0d0d] group-hover:ring-1 group-hover:ring-white/20">
+                <div className="bg-black text-white p-6 sm:p-10 h-full relative transition-all duration-300 group-hover:bg-[#0d0d0d] group-hover:ring-1 group-hover:ring-white/20">
                   <div className="w-10 h-10 border border-white/20 flex items-center justify-center mb-8 transition-all duration-300 group-hover:border-white/50 group-hover:scale-110">
                     <Database className="w-4 h-4 text-white/40 transition-colors duration-300 group-hover:text-white/80" />
                   </div>
@@ -154,7 +154,7 @@ export default function Home() {
             </FadeUp>
             <FadeUp delay={120} className="h-full">
               <Link href="/platform?tab=demo" className="block h-full group cursor-pointer">
-                <div className="bg-[#FF6B35] text-white p-10 h-full relative transition-all duration-300 group-hover:bg-[#e85e2a] group-hover:ring-1 group-hover:ring-white/30">
+                <div className="bg-[#FF6B35] text-white p-6 sm:p-10 h-full relative transition-all duration-300 group-hover:bg-[#e85e2a] group-hover:ring-1 group-hover:ring-white/30">
                   <div className="w-10 h-10 border border-white/30 flex items-center justify-center mb-8 transition-all duration-300 group-hover:border-white/70 group-hover:scale-110">
                     <Workflow className="w-4 h-4 text-white/60 transition-colors duration-300 group-hover:text-white" />
                   </div>
@@ -171,7 +171,7 @@ export default function Home() {
               </Link>
             </FadeUp>
             <FadeUp delay={240} className="h-full">
-              <div className="bg-[#2C3E50] text-white p-10 h-full">
+              <div className="bg-[#2C3E50] text-white p-6 sm:p-10 h-full">
                 <div className="w-10 h-10 border border-white/20 flex items-center justify-center mb-8">
                   <Cpu className="w-4 h-4 text-white/40" />
                 </div>
@@ -217,7 +217,7 @@ export default function Home() {
 
           {/* Stats */}
           <FadeUp>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 border-t border-white/10 pt-20">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12 border-t border-white/10 pt-12 lg:pt-20">
               <div>
                 <div className="text-[11px] font-medium text-white/50 tracking-[0.2em] uppercase mb-3">DART Stations</div>
                 <div className="text-[2.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={65} /></div>
@@ -239,7 +239,7 @@ export default function Home() {
 
           {/* Match day data */}
           <FadeUp delay={200}>
-            <div className="border-t border-white/[0.08] pt-16 mt-20 grid lg:grid-cols-2 gap-x-20">
+            <div className="border-t border-white/[0.08] pt-10 mt-12 lg:pt-16 lg:mt-20 grid lg:grid-cols-2 gap-x-20">
               {[
                 { label: "Normal daily ridership",  value: "35,000" },
                 { label: "Match day demand",         value: "100,000+" },
@@ -262,7 +262,7 @@ export default function Home() {
       <WorldCupCountdown />
 
       {/* Platform — Image backed */}
-      <section className="relative py-36 bg-[#111318] overflow-hidden">
+      <section className="relative py-16 sm:py-24 lg:py-36 bg-[#111318] overflow-hidden">
         <Image
           src={`${basePath}/images/dart/20260223_191335.jpg`}
           alt="DART Platform operations"
@@ -277,7 +277,7 @@ export default function Home() {
               <h2 className="text-3xl sm:text-4xl lg:text-6xl font-thin tracking-[-0.02em]">Six modules. One platform.</h2>
             </div>
           </FadeUp>
-          <div className="grid lg:grid-cols-3 gap-16">
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-16">
             {[
               { num: "01", title: "Predictive AI Engine",     stat: "94.2%", label: "Accuracy",   desc: "ML models forecast demand up to 4 hours ahead — maintenance, staffing, and resource allocation, automatically." },
               { num: "02", title: "Real-Time Command Center", stat: "<30s",  label: "Response",   desc: "Live dashboard across every asset and team member. GPS tracking, IoT sensors, and instant incident alerting." },
@@ -309,7 +309,7 @@ export default function Home() {
       </section>
 
       {/* About */}
-      <section id="about" className="py-36 bg-white text-black">
+      <section id="about" className="py-16 sm:py-24 lg:py-36 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 mb-12 lg:mb-24">
             <FadeUp>
@@ -329,7 +329,7 @@ export default function Home() {
             </FadeUp>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-16 pt-20 border-t border-gray-100">
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-16 pt-12 lg:pt-20 border-t border-gray-100">
             {[
               {
                 num: "01",
@@ -358,7 +358,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="relative py-20 sm:py-52 overflow-hidden">
+      <section className="relative py-16 sm:py-28 lg:py-52 overflow-hidden">
         <Image
           src={`${basePath}/images/dart/20260227_124144.jpg`}
           alt="Park Lane DART Station"
@@ -372,7 +372,7 @@ export default function Home() {
             <h2 className="text-4xl sm:text-5xl lg:text-7xl xl:text-[6rem] font-thin mb-8 leading-none tracking-[-0.03em]">
               See Kai in action.
             </h2>
-            <p className="text-xl text-white/60 mb-16 max-w-2xl mx-auto leading-relaxed font-light">
+            <p className="text-xl text-white/60 mb-10 sm:mb-16 max-w-2xl mx-auto leading-relaxed font-light">
               A 5-minute live demo — command center walkthrough and AI prediction
               simulation.
             </p>

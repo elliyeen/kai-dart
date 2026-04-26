@@ -147,9 +147,9 @@ export default function PlatformPage() {
       </div>
 
       {/* The Kai Fabric — Three Layers */}
-      <section className="py-36 bg-white text-black" id="platform">
+      <section className="py-16 sm:py-24 lg:py-36 bg-white text-black" id="platform">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-20 items-start mb-24">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-start mb-12 lg:mb-24">
             <FadeUp>
               <p className="text-[11px] font-medium tracking-[0.3em] text-gray-400 mb-6 uppercase">The Kai Fabric</p>
               <h2 className="text-5xl lg:text-6xl font-thin leading-tight tracking-[-0.02em]">
@@ -173,7 +173,7 @@ export default function PlatformPage() {
                 onClick={() => switchToDemo()}
                 className="block h-full w-full text-left group cursor-pointer"
               >
-                <div className="bg-black text-white p-12 h-full relative transition-all duration-300 group-hover:bg-[#0d0d0d] group-hover:ring-1 group-hover:ring-white/20">
+                <div className="bg-black text-white p-6 sm:p-8 lg:p-12 h-full relative transition-all duration-300 group-hover:bg-[#0d0d0d] group-hover:ring-1 group-hover:ring-white/20">
                   <div className="w-12 h-12 border border-white/20 flex items-center justify-center mb-8 transition-all duration-300 group-hover:border-white/50 group-hover:scale-110">
                     <Database className="w-5 h-5 text-white/50 transition-colors duration-300 group-hover:text-white/90" />
                   </div>
@@ -204,7 +204,7 @@ export default function PlatformPage() {
                 onClick={() => switchToDemo()}
                 className="block h-full w-full text-left group cursor-pointer"
               >
-                <div className="bg-[#FF6B35] text-white p-12 h-full relative transition-all duration-300 group-hover:bg-[#e85e2a] group-hover:ring-1 group-hover:ring-white/30">
+                <div className="bg-[#FF6B35] text-white p-6 sm:p-8 lg:p-12 h-full relative transition-all duration-300 group-hover:bg-[#e85e2a] group-hover:ring-1 group-hover:ring-white/30">
                   <div className="w-12 h-12 border border-white/30 flex items-center justify-center mb-8 transition-all duration-300 group-hover:border-white/70 group-hover:scale-110">
                     <Workflow className="w-5 h-5 text-white/70 transition-colors duration-300 group-hover:text-white" />
                   </div>
@@ -235,7 +235,7 @@ export default function PlatformPage() {
                 onClick={() => switchToDemo("intelligence")}
                 className="block h-full w-full text-left group cursor-pointer"
               >
-                <div className="bg-[#2C3E50] text-white p-12 h-full relative transition-all duration-300 group-hover:bg-[#243342] group-hover:ring-1 group-hover:ring-white/15">
+                <div className="bg-[#2C3E50] text-white p-6 sm:p-8 lg:p-12 h-full relative transition-all duration-300 group-hover:bg-[#243342] group-hover:ring-1 group-hover:ring-white/15">
                   <div className="w-12 h-12 border border-white/20 flex items-center justify-center mb-8 transition-all duration-300 group-hover:border-[#4fc3f7]/60 group-hover:scale-110">
                     <Cpu className="w-5 h-5 text-white/50 transition-colors duration-300 group-hover:text-[#4fc3f7]/90" />
                   </div>
@@ -265,10 +265,10 @@ export default function PlatformPage() {
       </section>
 
       {/* Platform Modules */}
-      <section className="py-36 bg-[#111318]">
+      <section className="py-16 sm:py-24 lg:py-36 bg-[#111318]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <FadeUp>
-            <div className="mb-20 border-b border-white/[0.08] pb-20">
+            <div className="mb-10 lg:mb-20 border-b border-white/[0.08] pb-10 lg:pb-20">
               <p className="text-[11px] font-medium tracking-[0.3em] text-white/50 mb-6 uppercase">Capabilities</p>
               <div className="grid lg:grid-cols-2 gap-12 items-end">
                 <h2 className="text-5xl lg:text-6xl font-thin tracking-[-0.02em]">Six modules.<br />One platform.</h2>
@@ -280,7 +280,7 @@ export default function PlatformPage() {
             </div>
           </FadeUp>
 
-          <div className="grid lg:grid-cols-3 gap-16">
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-16">
             {[
               {
                 num: "01",
@@ -353,9 +353,9 @@ export default function PlatformPage() {
       </section>
 
       {/* Industries */}
-      <section className="py-36 bg-white text-black">
+      <section className="py-16 sm:py-24 lg:py-36 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-20 mb-20">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 mb-10 lg:mb-20">
             <FadeUp>
               <p className="text-[11px] font-medium tracking-[0.3em] text-gray-400 mb-6 uppercase">Where Kai Operates</p>
               <h2 className="text-5xl lg:text-6xl font-thin leading-tight tracking-[-0.02em]">Built for the world&apos;s most complex environments.</h2>
@@ -404,9 +404,9 @@ export default function PlatformPage() {
       </section>
 
       {/* How Kai Works */}
-      <section className="py-36 bg-[#111318]">
+      <section className="py-16 sm:py-24 lg:py-36 bg-[#111318]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-20 items-start">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-start">
             <div className="lg:sticky lg:top-24">
               <FadeUp>
                 <p className="text-[11px] font-medium tracking-[0.3em] text-white/50 mb-6 uppercase">The Feedback Loop</p>
@@ -474,7 +474,7 @@ export default function PlatformPage() {
       </section>
 
       {/* Performance Numbers */}
-      <section className="py-36 bg-white text-black">
+      <section className="py-16 sm:py-24 lg:py-36 bg-white text-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <FadeUp>
             <div className="mb-20">
@@ -483,7 +483,7 @@ export default function PlatformPage() {
             </div>
           </FadeUp>
           <FadeUp delay={100}>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-24">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12 mb-12 lg:mb-24">
               <div>
                 <div className="text-[11px] font-medium text-gray-400 tracking-[0.2em] uppercase mb-3">AI prediction accuracy</div>
                 <div className="text-[3.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={94.2} decimals={1} suffix="%" /></div>
@@ -523,9 +523,9 @@ export default function PlatformPage() {
       </section>
 
       {/* Architecture */}
-      <section className="py-36 bg-[#111318]">
+      <section className="py-16 sm:py-24 lg:py-36 bg-[#111318]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-20">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-20">
             <FadeUp>
               <p className="text-[11px] font-medium tracking-[0.3em] text-white/50 mb-6 uppercase">Technical Foundation</p>
               <h2 className="text-5xl font-thin mb-8 tracking-[-0.02em]">Enterprise-grade.<br />Day-one ready.</h2>
@@ -583,13 +583,13 @@ export default function PlatformPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/contact"
-                className="bg-white text-black px-12 py-4 text-sm font-medium tracking-wide hover:bg-white/90 transition-all duration-300"
+                className="bg-white text-black px-8 sm:px-12 py-4 text-sm font-medium tracking-wide hover:bg-white/90 transition-all duration-300"
               >
                 Request a live demo
               </Link>
               <Link
                 href="/world-cup-2026"
-                className="border border-white/20 px-12 py-4 text-sm font-medium tracking-wide hover:border-white/50 transition-all duration-300 inline-flex items-center justify-center gap-2"
+                className="border border-white/20 px-8 sm:px-12 py-4 text-sm font-medium tracking-wide hover:border-white/50 transition-all duration-300 inline-flex items-center justify-center gap-2"
               >
                 FIFA 2026 deployment
                 <ArrowRight className="w-3.5 h-3.5" />

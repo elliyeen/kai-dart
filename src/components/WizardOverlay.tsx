@@ -83,10 +83,10 @@ export default function WizardOverlay({ onClose }: WizardOverlayProps) {
           transform: visible ? "translateY(0)" : "translateY(12px)",
         }}
       >
-        {/* Close button */}
+        {/* Close button — 44×44 tap target */}
         <button
           onClick={handleClose}
-          className="absolute top-5 right-5 text-gray-400 hover:text-gray-700 transition-colors"
+          className="absolute top-3 right-3 flex items-center justify-center w-11 h-11 text-gray-400 hover:text-gray-700 transition-colors"
           aria-label="Close tour"
         >
           <X className="w-4 h-4" />
@@ -99,14 +99,22 @@ export default function WizardOverlay({ onClose }: WizardOverlayProps) {
               key={i}
               onClick={() => goTo(i)}
               aria-label={`Go to step ${i + 1}`}
-              className="transition-all duration-200"
+              className="transition-all duration-200 flex items-center justify-center"
               style={{
-                width: i === step ? "20px" : "6px",
-                height: "6px",
-                borderRadius: "3px",
-                background: i === step ? BLUE : "#E5E7EB",
+                padding: "10px 4px",
+                background: "transparent",
+                border: "none",
               }}
-            />
+            >
+              <span style={{
+                display: "block",
+                width: i === step ? "20px" : "8px",
+                height: "8px",
+                borderRadius: "4px",
+                background: i === step ? BLUE : "#E5E7EB",
+                transition: "width 0.2s, background 0.2s",
+              }} />
+            </button>
           ))}
           <span className="ml-auto text-[10px] tracking-widest uppercase text-gray-400 font-medium">
             {step + 1} / {steps.length}
@@ -153,7 +161,7 @@ export default function WizardOverlay({ onClose }: WizardOverlayProps) {
 
           <button
             onClick={() => (isLast ? handleClose() : goTo(step + 1))}
-            className="flex items-center gap-2 px-5 py-2.5 text-xs tracking-widest uppercase font-semibold text-white transition-colors"
+            className="flex items-center gap-2 px-5 py-3 min-h-[44px] text-xs tracking-widest uppercase font-semibold text-white transition-colors"
             style={{ background: BLUE }}
             onMouseEnter={(e) => { e.currentTarget.style.background = "#004a8f"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = BLUE; }}
