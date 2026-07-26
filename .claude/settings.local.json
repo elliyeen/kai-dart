@@ -5,7 +5,10 @@
       "Bash(lsof:*)",
       "Bash(npm run build:*)",
       "Bash(xargs kill:*)",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(git commit:*)",
+      "Bash(git add:*)",
+      "Bash(curl:*)"
     ]
   }
 }
