@@ -23,7 +23,7 @@ export default function NetworkOverview({ line, onSelect }: { line: LineId | nul
   return (
     <section aria-labelledby="net-h" className="space-y-6 p-4 lg:p-8" data-testid="network-overview">
       <div className="flex flex-wrap items-center gap-3 justify-between">
-        <div><h1 id="net-h" className="text-3xl font-light tracking-[-0.01em]">Network overview</h1>
+        <div><h1 id="net-h" className="text-4xl text-gray-900" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>Network overview</h1>
           <p className="text-sm text-gray-700">Viewing as {persona.label} — {persona.blurb}</p></div>
         <DemoBadge />
       </div>
@@ -38,7 +38,7 @@ export default function NetworkOverview({ line, onSelect }: { line: LineId | nul
         <ol className="border border-gray-200 rounded-xl divide-y divide-gray-100" data-testid="priority-queue">
           {queue.map(({ s, e }) => (
             <li key={s.key} className="flex items-center justify-between gap-3 px-4 min-h-14 py-2">
-              <Link href={`/stations/${s.key}`} onClick={(ev) => { if (window.matchMedia("(min-width: 1024px)").matches) { ev.preventDefault(); onSelect(s.key); } }} className="text-[15px] underline-offset-2 hover:underline min-h-11 inline-flex items-center">{s.name}</Link>
+              <Link href={`/stations/${s.key}`} className="text-[15px] underline-offset-2 hover:underline min-h-11 inline-flex items-center">{s.name}</Link>
               <StatusIndicator status={e} size="sm" />
             </li>
           ))}

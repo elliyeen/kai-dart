@@ -6,7 +6,8 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Transit for Everyone");
   expect(await page.locator("body").innerText()).not.toMatch(/fifa|world cup|at&t stadium|arlington/i);
   await expect(page.getByTestId("hero-metric")).toHaveText("75");
-  await expect(page.getByText("Transit for North Texas")).toBeVisible();
+  await expect(page.getByText("DART clean for all of North Texas")).toBeVisible();
+  await expect(page.getByText("Transit for North Texas")).toHaveCount(0);
   await expect(page.getByText("Transit for All", { exact: true })).toHaveCount(0);
   await expect(page.getByText("We’re changing public transportation to make it clean, safe and more intelligent than ever.")).toBeVisible();
   await expect(page.getByText("This is the new DART standard.")).toBeVisible();

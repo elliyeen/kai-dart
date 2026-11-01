@@ -241,3 +241,8 @@ nav, button, input, select, textarea, .font-ui {
 .landing-sans { font-family: var(--font-geist-sans), system-ui, sans-serif; }
 .landing-sans .bg-white { background-color: #ffffff; }
 .landing-sans .bg-white\/95 { background-color: rgb(255 255 255 / 0.95); }
+
+/* Transparent nav over the landing hero (white text on the photo). Solid again after scrolling or when the menu is open. */
+.nav-shell[data-transparent="true"] { background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0)); backdrop-filter: none; border-bottom-width: 0; }
+.nav-shell[data-transparent="true"] a, .nav-shell[data-transparent="true"] button { color: #fff; }
+.nav-shell[data-transparent="true"] a[href="/contact"], .nav-shell[data-transparent="true"] a[href$="/contact"] { border-color: rgba(255,255,255,0.7); }

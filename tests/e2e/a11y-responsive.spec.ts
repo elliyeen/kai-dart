@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { noHorizontalOverflow } from "./helpers";
 
-const PAGES = ["", "stations", "stations/akard", "stations/work", "stations/convention-blue", "contact"];
+const PAGES = ["", "stations", "stations/akard", "stations/inspections", "stations/assets", "stations/readiness", "stations/convention-blue", "contact"];
 
 for (const path of PAGES) {
   test(`axe WCAG 2.x A/AA: /${path}`, async ({ page }) => {
@@ -18,13 +18,13 @@ for (const path of PAGES) {
   });
 }
 
-test("mobile bottom navigation reaches Work and back", async ({ page }) => {
+test("mobile bottom navigation reaches Inspections and back", async ({ page }) => {
   test.skip((page.viewportSize()?.width ?? 0) >= 1024, "bottom nav is below 1024px");
   await page.goto("stations");
   const nav = page.getByRole("navigation", { name: "Primary mobile" });
-  await nav.getByRole("link", { name: "Work", exact: true }).click();
-  await expect(page).toHaveURL(/stations\/work/);
-  await nav.getByRole("link", { name: "Network", exact: true }).click();
+  await nav.getByRole("link", { name: "Inspections", exact: true }).click();
+  await expect(page).toHaveURL(/stations\/inspections/);
+  await nav.getByRole("link", { name: "Stations", exact: true }).click();
   await expect(page).toHaveURL(/stations\/?$/);
 });
 

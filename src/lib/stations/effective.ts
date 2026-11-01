@@ -1,7 +1,7 @@
 import type { Station } from "./types";
 import type { DemoState } from "@/lib/demo/workflow";
 
-export type Eff = "critical" | "closed" | "deploying" | "warning" | "good" | "assigned" | "awaiting" | "verified";
+export type Eff = "critical" | "closed" | "deploying" | "warning" | "good" | "assigned" | "awaiting" | "verified" | "unknown";
 
 /** Station status for display. Only the demo station (Akard) reacts to the demo work order. All values are SYNTHETIC DEMO. */
 export function effectiveStatus(s: Station, demo: DemoState): Eff {
@@ -17,6 +17,6 @@ export function effectiveStatus(s: Station, demo: DemoState): Eff {
 
 export const EFF_LABEL: Record<Eff, string> = {
   critical: "Critical", closed: "Closed", deploying: "Crew deploying", warning: "Needs attention", good: "No open issue",
-  assigned: "Assigned", awaiting: "Awaiting verification", verified: "Verified resolved",
+  assigned: "Assigned", awaiting: "Awaiting verification", verified: "Verified resolved", unknown: "Not inspected",
 };
-export const EFF_RANK: Record<Eff, number> = { critical: 0, closed: 1, awaiting: 2, deploying: 3, assigned: 4, warning: 5, good: 6, verified: 7 };
+export const EFF_RANK: Record<Eff, number> = { critical: 0, closed: 1, awaiting: 2, deploying: 3, assigned: 4, warning: 5, good: 6, verified: 7, unknown: 8 };

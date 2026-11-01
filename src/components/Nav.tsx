@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Menu, X } from "lucide-react";
 
 const websiteLinks = [
@@ -20,18 +20,25 @@ const LINE_LINKS = [
 
 interface NavProps {
   hideLinks?: boolean;
+  /** Transparent nav over a full-bleed hero; becomes solid once the page scrolls. */
+  overlay?: boolean;
 }
 
-export default function Nav({ hideLinks = false }: NavProps) {
+const subscribeScroll = (cb: () => void) => { window.addEventListener("scroll", cb, { passive: true }); return () => window.removeEventListener("scroll", cb); };
+const atTop = () => window.scrollY < 8;
+
+export default function Nav({ hideLinks = false, overlay = false }: NavProps) {
+  const top = useSyncExternalStore(subscribeScroll, atTop, () => true);
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   const isDashboard = pathname.startsWith("/dart") || hideLinks;
   const isPlatform  = pathname.startsWith("/platform");
+  const transparent = overlay && top && !open;
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100">
+      <nav data-transparent={transparent ? "true" : undefined} className="nav-shell fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
 
