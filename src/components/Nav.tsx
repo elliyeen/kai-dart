@@ -7,7 +7,6 @@ import { Menu, X } from "lucide-react";
 
 const websiteLinks = [
   { href: "/platform", label: "Platform" },
-  { href: "/#capabilities", label: "Capabilities" },
   { href: "/#how-it-works", label: "How It Works" },
   { href: "/#about", label: "About" },
 ];

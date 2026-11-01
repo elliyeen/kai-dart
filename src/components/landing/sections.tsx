@@ -25,13 +25,12 @@ export function CinematicHero() {
       <Image src={img(IMAGES.hero.file)} alt={IMAGES.hero.alt} fill priority sizes="100vw" className="object-cover object-[62%_center]" />
       <div className="absolute inset-0 bg-linear-to-b from-black/75 via-black/40 to-black/80" />
 
-      <div className="relative z-10 flex-1 flex flex-col items-center text-center px-6 pt-28 sm:pt-32">
-        <p className="hero-animate text-[11px] sm:text-xs font-medium tracking-[0.35em] uppercase text-white/90 mb-5">Transit for All</p>
+      <div className="relative z-10 flex-1 flex flex-col items-center text-center px-6 pt-32 sm:pt-40">
         <h1 className="hero-animate font-sans text-[2.5rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-light leading-[1.04] tracking-[-0.03em] max-w-4xl" style={{ animationDelay: "120ms", fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
           Transit for Everyone<br />and Every Ride
         </h1>
-        <p className="hero-animate mt-6 text-base sm:text-xl font-light text-white/95 max-w-2xl leading-relaxed" style={{ animationDelay: "240ms" }}>
-          We&rsquo;re changing public transportation to make it clean, safe and more intelligent than ever.<sup className="text-[0.6em] ml-0.5"><a href="#hero-note" aria-label="Footnote 1" className="underline underline-offset-2">1</a></sup>
+        <p className="hero-animate mt-5 sm:mt-6 text-2xl sm:text-3xl lg:text-4xl font-light tracking-[-0.01em] text-white/95" style={{ animationDelay: "240ms", fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+          Transit for North Texas
         </p>
         <div className="hero-animate mt-8 w-full max-w-md sm:max-w-none" style={{ animationDelay: "340ms" }}>
           <CTAButtons dark />
@@ -41,9 +40,6 @@ export function CinematicHero() {
       <div className="relative z-10 px-6 pb-8 sm:pb-10 text-center">
         <p className="hero-animate text-6xl sm:text-7xl lg:text-8xl font-thin tracking-[-0.03em] leading-none" style={{ animationDelay: "460ms" }} data-testid="hero-metric">75</p>
         <p className="hero-animate mt-2 text-sm sm:text-base font-light text-white/95" style={{ animationDelay: "520ms" }}>Rail Stations in the DART Network</p>
-        <p id="hero-note" className="mt-6 mx-auto max-w-3xl text-[11px] sm:text-xs leading-relaxed text-white/85">
-          1. Station count from DART&rsquo;s published GTFS schedule data (feed V755-218-220, effective Oct 29, 2026): unique rail stations including the Silver Line. The KAI demo directory lists DFW Airport Terminals A and B separately (76 entries). KAI is an Elliyeen demonstration and proposed pilot, not a DART-approved system.
-        </p>
       </div>
     </section>
   );
@@ -58,6 +54,7 @@ export function ProofSection() {
             This is the new DART standard.<br />
             <span className="text-gray-600">Enjoy your ride in North Texas.</span>
           </h2>
+          <p className="mt-8 text-lg sm:text-xl font-light text-gray-800 max-w-2xl mx-auto leading-relaxed">We&rsquo;re changing public transportation to make it clean, safe and more intelligent than ever.</p>
         </FadeUp>
         <FadeUp delay={120}>
           <div className="mt-14 max-w-2xl mx-auto text-left"><EvidencePanel /></div>

@@ -6,6 +6,9 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Transit for Everyone");
   expect(await page.locator("body").innerText()).not.toMatch(/fifa|world cup|at&t stadium|arlington/i);
   await expect(page.getByTestId("hero-metric")).toHaveText("75");
+  await expect(page.getByText("Transit for North Texas")).toBeVisible();
+  await expect(page.getByText("Transit for All", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("We’re changing public transportation to make it clean, safe and more intelligent than ever.")).toBeVisible();
   await expect(page.getByText("This is the new DART standard.")).toBeVisible();
   await expect(page.getByText("Enjoy your ride in North Texas.")).toBeVisible();
   await expect(page.getByText("Mission", { exact: true })).toHaveCount(0);
@@ -15,10 +18,8 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await page.getByRole("tab", { name: "Verified" }).press("ArrowLeft");
   await expect(page.getByRole("tab", { name: "Intelligent" })).toHaveAttribute("aria-selected", "true");
   await expect(page.locator("#panel-intelligent")).toBeVisible();
-  // capability lineup
-  await page.getByRole("tab", { name: /Operations Layer/ }).click();
-  await expect(page.getByRole("tab", { name: /Operations Layer/ })).toHaveAttribute("aria-selected", "true");
-  await expect(page.locator("#cap-panel-ops")).toBeVisible();
+  await expect(page.getByText("Capabilities", { exact: true })).toHaveCount(0);
+  await expect(page.locator("#hero-note")).toHaveCount(0);
   await noHorizontalOverflow(page);
   await page.getByRole("link", { name: /Explore Station Intelligence/ }).first().click();
   await expect(page).toHaveURL(/\/stations\/?$/);
