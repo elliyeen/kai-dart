@@ -13,12 +13,12 @@ export default function ArchitecturePage() {
     <div className="landing-sans min-h-screen bg-white text-black">
       <Nav />
       <main id="main" className="bg-white pt-28 pb-20 relative overflow-hidden">
-        <div aria-hidden="true" className="hidden lg:block absolute right-0 top-24 w-[320px] h-[180px] bg-[#FFC72C]/90 [clip-path:polygon(35%_0,100%_0,100%_100%,0_100%)]" />
+        <div aria-hidden="true" className="hidden lg:block absolute right-0 top-24 w-[300px] h-[170px] bg-[#FFD21F] [clip-path:polygon(35%_0,100%_0,100%_100%,0_100%)]" />
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-[11px] font-medium tracking-[0.3em] text-gray-700 uppercase">Technical architecture</p>
-          <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.02em] leading-[1.05] text-[#0B1F33]">KAI Super Intelligence</h1>
-          <div aria-hidden="true" className="mt-5 h-1 w-14 rounded bg-[#FFC72C]" />
-          <p className="mt-5 text-xl text-gray-700 font-light max-w-2xl">Turn station data into the right action, at the right time.</p>
+          <p className="text-[11px] font-medium tracking-[0.3em] text-[#3B4A5C] uppercase">Technical architecture</p>
+          <h1 style={{ fontWeight: 700 }} className="mt-3 text-4xl sm:text-5xl lg:text-6xl tracking-[-0.02em] leading-[1.05] text-[#0B1F33]">DART Super Intelligence</h1>
+          <div aria-hidden="true" className="mt-5 h-1 w-14 rounded bg-[#FFD21F]" />
+          <p className="mt-5 text-xl text-[#3B4A5C] font-normal max-w-2xl">Turn transit data into a clean, safe experience for all</p>
           <div className="mt-10"><ArchitectureMap /></div>
         </div>
       </main>
