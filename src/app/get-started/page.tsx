@@ -20,7 +20,7 @@ export default function GetStartedPage() {
   return (
     <div className="landing-sans min-h-screen bg-white text-black">
       <Nav />
-      <main id="main" className="pt-28 pb-20">
+      <main id="main" className="bg-white pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-4 uppercase">Get started</p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-[-0.02em] leading-[1.05] max-w-3xl">From first conversation to a verified pilot</h1>
