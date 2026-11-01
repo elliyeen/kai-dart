@@ -1,0 +1,2941 @@
+{
+ "sources": {
+  "gtfsUrl": "https://www.dart.org/transitdata/latest/google_transit.zip",
+  "gtfsInfo": "feed_info.txt + info.txt inside zip",
+  "archiveUrl": "https://www.dart.org/transitdata/archive/V755-218-220-20261029.ZIP (from info.txt, not downloaded)",
+  "retrievalDate": "2026-10-31 (server date header 2026-11-01T00:52Z)",
+  "feedVersion": "V755-218-220-20261029",
+  "feedStart": "2026-10-29",
+  "feedEnd": "2026-12-06",
+  "rawZipBytes": 8420769,
+  "localCopy": "scratchpad/gtfs/dart (outside repo)"
+ },
+ "routesInFeed": {
+  "27510": "Blue (type 0)",
+  "27511": "Green (type 0)",
+  "27512": "Orange (type 0)",
+  "27513": "Red (type 0)",
+  "27514": "Silver Line (route_type 2, DART-operated, 212 trips at sampled stops)",
+  "27516": "TRE (type 2, excluded)",
+  "27346/27502": "trolley/streetcar (type 5, excluded)"
+ },
+ "counts": {
+  "baselineRecords": 115,
+  "baselineUniquePhysicalStations": 75,
+  "baselineUniqueNote": "unique by lat/lng rounded to 4 dp; dfw-a/dfw-b share coords so they count once",
+  "officialUniqueRailStationsIncludingSilver": 75,
+  "officialUniqueRailStationsExcludingSilverOnly": 66,
+  "officialStationLineMembershipsIncludingSilver": 123,
+  "officialStationLineMembershipsExcludingSilver": 113,
+  "officialTreOnlyStopsExcluded": 8,
+  "baselineRecordsMatchedWithin250m": 115,
+  "baselineRecordsLineConfirmed": 114,
+  "coveragePctRecords": 99.1,
+  "officialMembershipsMissingFromBaseline": 9
+ },
+ "records": [
+  {
+   "id": "westmoreland",
+   "name": "Westmoreland",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "15913",
+    "name": "WESTMORELAND STATION",
+    "lat": 32.719758,
+    "lng": -96.871727,
+    "officialLines": [
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "hampton",
+   "name": "Hampton",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "21210",
+    "name": "HAMPTON STATION",
+    "lat": 32.726333,
+    "lng": -96.855532,
+    "officialLines": [
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "tyler-vernon",
+   "name": "Tyler/Vernon",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "22730",
+    "name": "TYLER VERNON STATION",
+    "lat": 32.73314,
+    "lng": -96.83839,
+    "officialLines": [
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "zoo",
+   "name": "Zoo",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "13659",
+    "name": "ZOO STATION",
+    "lat": 32.740771,
+    "lng": -96.812896,
+    "officialLines": [
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "8th-corinth-r",
+   "name": "8th & Corinth",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "15262",
+    "name": "8TH & CORINTH STATION",
+    "lat": 32.748082,
+    "lng": -96.798474,
+    "officialLines": [
+     "blue",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "cedars-r",
+   "name": "Cedars",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "22729",
+    "name": "CEDARS STATION",
+    "lat": 32.768574,
+    "lng": -96.793253,
+    "officialLines": [
+     "blue",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "convention-r",
+   "name": "Convention Center",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "22747",
+    "name": "CONVENTION CENTER STATION",
+    "lat": 32.772481,
+    "lng": -96.802992,
+    "officialLines": [
+     "blue",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "union-r",
+   "name": "EBJ Union Station",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "22748",
+    "name": "EBJ UNION STATION",
+    "lat": 32.776208,
+    "lng": -96.808201,
+    "officialLines": [
+     "blue",
+     "red",
+     "tre"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "west-end-r",
+   "name": "West End",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "22749",
+    "name": "WEST END STATION",
+    "lat": 32.780915,
+    "lng": -96.805443,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "akard",
+   "name": "Akard",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "22750",
+    "name": "AKARD STATION",
+    "lat": 32.781893,
+    "lng": -96.800633,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "st-paul",
+   "name": "St. Paul",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "22751",
+    "name": "ST PAUL STATION",
+    "lat": 32.784296,
+    "lng": -96.797026,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "pearl",
+   "name": "Pearl/Arts District",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "22752",
+    "name": "PEARL/ARTS DISTRICT STATION",
+    "lat": 32.786618,
+    "lng": -96.79431,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "cityplace-up",
+   "name": "CityPlace/Uptown",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "26420",
+    "name": "CITYPLACE/UPTOWN STATION",
+    "lat": 32.805424,
+    "lng": -96.793176,
+    "officialLines": [
+     "blue",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "smu",
+   "name": "SMU/Mockingbird",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "22938",
+    "name": "SMU/MOCKINGBIRD STATION",
+    "lat": 32.837828,
+    "lng": -96.774939,
+    "officialLines": [
+     "blue",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "lovers-lane",
+   "name": "Lovers Lane",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "22984",
+    "name": "LOVERS LANE STATION",
+    "lat": 32.848601,
+    "lng": -96.771758,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "park-lane",
+   "name": "Park Lane",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "28755",
+    "name": "PARK LANE STATION",
+    "lat": 32.872513,
+    "lng": -96.765899,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "walnut-hill-r",
+   "name": "Walnut Hill",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "26669",
+    "name": "WALNUT HILL STATION",
+    "lat": 32.88265,
+    "lng": -96.764931,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "forest-lane",
+   "name": "Forest Lane",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "26671",
+    "name": "FOREST LN STATION",
+    "lat": 32.908604,
+    "lng": -96.76168,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "name variant: baseline 'Forest Lane' vs official 'FOREST LN STATION'"
+  },
+  {
+   "id": "lbj-central",
+   "name": "LBJ/Central",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "26670",
+    "name": "LBJ / CENTRAL STATION",
+    "lat": 32.918254,
+    "lng": -96.752235,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "spring-valley",
+   "name": "Spring Valley",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "26672",
+    "name": "SPRING VALLEY STATION",
+    "lat": 32.940852,
+    "lng": -96.737424,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "arapaho-center",
+   "name": "Arapaho Center",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "26673",
+    "name": "ARAPAHO CENTER STATION",
+    "lat": 32.963447,
+    "lng": -96.722981,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "galatyn-park",
+   "name": "Galatyn Park",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "26674",
+    "name": "GALATYN PARK STATION",
+    "lat": 32.985226,
+    "lng": -96.710953,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "cityline-bush",
+   "name": "CityLine/Bush",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "26895",
+    "name": "CITYLINE/BUSH STATION",
+    "lat": 33.002166,
+    "lng": -96.703144,
+    "officialLines": [
+     "orange",
+     "red",
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "12th-street",
+   "name": "12th Street",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "33599",
+    "name": "12TH STREET STATION",
+    "lat": 33.01436,
+    "lng": -96.701066,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "downtown-plano",
+   "name": "Downtown Plano",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "26896",
+    "name": "DOWNTOWN PLANO STATION",
+    "lat": 33.020856,
+    "lng": -96.700898,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "parker-road",
+   "name": "Parker Road",
+   "lineId": "red",
+   "matchedOfficialStop": {
+    "stopId": "26897",
+    "name": "PARKER ROAD STATION",
+    "lat": 33.033454,
+    "lng": -96.700736,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "buckner",
+   "name": "Buckner",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29834",
+    "name": "BUCKNER STATION",
+    "lat": 32.718478,
+    "lng": -96.685108,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "lake-june",
+   "name": "Lake June",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29833",
+    "name": "LAKE JUNE STATION",
+    "lat": 32.732335,
+    "lng": -96.709432,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "lawnview",
+   "name": "Lawnview",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29832",
+    "name": "LAWNVIEW STATION",
+    "lat": 32.765606,
+    "lng": -96.720388,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "hatcher",
+   "name": "Hatcher",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29831",
+    "name": "HATCHER STATION",
+    "lat": 32.766323,
+    "lng": -96.742471,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "mlk",
+   "name": "MLK Jr.",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "32040",
+    "name": "MLK STATION",
+    "lat": 32.773757,
+    "lng": -96.764576,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "fair-park",
+   "name": "Fair Park",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "32041",
+    "name": "FAIR PARK STATION",
+    "lat": 32.782058,
+    "lng": -96.765928,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "baylor",
+   "name": "Baylor University Med Ctr",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "32042",
+    "name": "BAYLOR STATION",
+    "lat": 32.786495,
+    "lng": -96.782132,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "deep-ellum",
+   "name": "Deep Ellum",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "32043",
+    "name": "DEEP ELLUM STATION",
+    "lat": 32.785866,
+    "lng": -96.788532,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "pearl-g",
+   "name": "Pearl/Arts District",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "22752",
+    "name": "PEARL/ARTS DISTRICT STATION",
+    "lat": 32.786618,
+    "lng": -96.79431,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "st-paul-g",
+   "name": "St. Paul",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "22751",
+    "name": "ST PAUL STATION",
+    "lat": 32.784296,
+    "lng": -96.797026,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "akard-g",
+   "name": "Akard",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "22750",
+    "name": "AKARD STATION",
+    "lat": 32.781893,
+    "lng": -96.800633,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "west-end-g",
+   "name": "West End",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "22749",
+    "name": "WEST END STATION",
+    "lat": 32.780915,
+    "lng": -96.805443,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "victory-g",
+   "name": "Victory",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "28264",
+    "name": "VICTORY STATION",
+    "lat": 32.789607,
+    "lng": -96.812513,
+    "officialLines": [
+     "green",
+     "orange",
+     "tre"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "market-center-g",
+   "name": "Market Center",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29825",
+    "name": "MARKET CENTER STATION",
+    "lat": 32.804635,
+    "lng": -96.823713,
+    "officialLines": [
+     "green",
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "sw-medical",
+   "name": "SW Medical District/Parkland",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29826",
+    "name": "SOUTHWEST MEDICAL DISTRICT/PARKLAND",
+    "lat": 32.813602,
+    "lng": -96.833204,
+    "officialLines": [
+     "green",
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "name variant: baseline 'SW Medical District/Parkland' vs official 'SOUTHWEST MEDICAL DISTRICT/PARKLAND'"
+  },
+  {
+   "id": "inwood-g",
+   "name": "Inwood/Love Field",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29824",
+    "name": "INWOOD/LOVE FIELD STATION",
+    "lat": 32.822243,
+    "lng": -96.833361,
+    "officialLines": [
+     "green",
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "burbank",
+   "name": "Burbank",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29822",
+    "name": "BURBANK STATION",
+    "lat": 32.842971,
+    "lng": -96.862176,
+    "officialLines": [
+     "green",
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "bachman-g",
+   "name": "Bachman",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29821",
+    "name": "BACHMAN STATION",
+    "lat": 32.853778,
+    "lng": -96.877344,
+    "officialLines": [
+     "green",
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "walnut-hill",
+   "name": "Walnut Hill/Denton",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29820",
+    "name": "WALNUT HILL/DENTON STATION",
+    "lat": 32.88212,
+    "lng": -96.883811,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "royal-lane",
+   "name": "Royal Lane",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29819",
+    "name": "ROYAL LANE STATION",
+    "lat": 32.896055,
+    "lng": -96.88811,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "farmers-branch",
+   "name": "Farmers Branch",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29818",
+    "name": "FARMERS BRANCH STATION",
+    "lat": 32.921962,
+    "lng": -96.896238,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "downtown-carrollton",
+   "name": "Downtown Carrollton",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29817",
+    "name": "DOWNTOWN CARROLLTON STATION",
+    "lat": 32.954443,
+    "lng": -96.908277,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "trinity-mills",
+   "name": "Trinity Mills",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29816",
+    "name": "TRINITY MILLS RAIL STATION",
+    "lat": 32.980876,
+    "lng": -96.926476,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "north-carrollton-frank",
+   "name": "N. Carrollton/Frankford",
+   "lineId": "green",
+   "matchedOfficialStop": {
+    "stopId": "29815",
+    "name": "NORTH CARROLLTON/FRANKFORD STATION",
+    "lat": 32.991611,
+    "lng": -96.936753,
+    "officialLines": [
+     "green"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "name variant: baseline 'N. Carrollton/Frankford' vs official 'NORTH CARROLLTON/FRANKFORD STATION'"
+  },
+  {
+   "id": "unt-dallas",
+   "name": "UNT Dallas",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "33087",
+    "name": "UNT DALLAS STATION",
+    "lat": 32.654057,
+    "lng": -96.801091,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "camp-wisdom",
+   "name": "Camp Wisdom",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "33086",
+    "name": "CAMP WISDOM STATION",
+    "lat": 32.666638,
+    "lng": -96.7881,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "ledbetter",
+   "name": "Ledbetter",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "23320",
+    "name": "LEDBETTER STATION",
+    "lat": 32.683394,
+    "lng": -96.788812,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "va-medical",
+   "name": "VA Medical Center",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "23391",
+    "name": "VA MEDICAL CENTER STATION",
+    "lat": 32.693641,
+    "lng": -96.792986,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "kiest",
+   "name": "Kiest",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "23390",
+    "name": "KIEST STATION",
+    "lat": 32.707113,
+    "lng": -96.801175,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "illinois-tc",
+   "name": "Illinois TC",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "21030",
+    "name": "ILLINOIS TC/STATION",
+    "lat": 32.723302,
+    "lng": -96.805162,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "morrell",
+   "name": "Morrell",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "16083",
+    "name": "MORRELL STATION",
+    "lat": 32.73986,
+    "lng": -96.802604,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "eight-blue",
+   "name": "8th & Corinth",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "15262",
+    "name": "8TH & CORINTH STATION",
+    "lat": 32.748082,
+    "lng": -96.798474,
+    "officialLines": [
+     "blue",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "cedars-blue",
+   "name": "Cedars",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "22729",
+    "name": "CEDARS STATION",
+    "lat": 32.768574,
+    "lng": -96.793253,
+    "officialLines": [
+     "blue",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "convention-blue",
+   "name": "Convention Center",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "22747",
+    "name": "CONVENTION CENTER STATION",
+    "lat": 32.772481,
+    "lng": -96.802992,
+    "officialLines": [
+     "blue",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "baseline marks closed; official feed still schedules this stop (492 trips on 22747 for Blue+Red in feed V755 dates 2026-10-29..12-06) - closure NOT confirmed by feed"
+  },
+  {
+   "id": "union-blue",
+   "name": "EBJ Union Station",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "22748",
+    "name": "EBJ UNION STATION",
+    "lat": 32.776208,
+    "lng": -96.808201,
+    "officialLines": [
+     "blue",
+     "red",
+     "tre"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "west-end-blue",
+   "name": "West End",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "22749",
+    "name": "WEST END STATION",
+    "lat": 32.780915,
+    "lng": -96.805443,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "akard-blue",
+   "name": "Akard",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "22750",
+    "name": "AKARD STATION",
+    "lat": 32.781893,
+    "lng": -96.800633,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "st-paul-blue",
+   "name": "St. Paul",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "22751",
+    "name": "ST PAUL STATION",
+    "lat": 32.784296,
+    "lng": -96.797026,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "pearl-blue",
+   "name": "Pearl/Arts District",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "22752",
+    "name": "PEARL/ARTS DISTRICT STATION",
+    "lat": 32.786618,
+    "lng": -96.79431,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "cityplace-blue",
+   "name": "CityPlace/Uptown",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "26420",
+    "name": "CITYPLACE/UPTOWN STATION",
+    "lat": 32.805424,
+    "lng": -96.793176,
+    "officialLines": [
+     "blue",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "mockingbird-blue",
+   "name": "SMU/Mockingbird",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "22938",
+    "name": "SMU/MOCKINGBIRD STATION",
+    "lat": 32.837828,
+    "lng": -96.774939,
+    "officialLines": [
+     "blue",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "white-rock",
+   "name": "White Rock",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "26652",
+    "name": "WHITE ROCK STATION",
+    "lat": 32.855791,
+    "lng": -96.732732,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "lake-highlands",
+   "name": "Lake Highlands",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "32049",
+    "name": "LAKE HIGHLANDS STATION",
+    "lat": 32.879487,
+    "lng": -96.730452,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "lbj-skillman",
+   "name": "LBJ/Skillman",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "26668",
+    "name": "LBJ / SKILLMAN STATION",
+    "lat": 32.897924,
+    "lng": -96.712139,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "forest-jupiter",
+   "name": "Forest/Jupiter",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "26690",
+    "name": "FOREST / JUPITER STATION",
+    "lat": 32.908056,
+    "lng": -96.679457,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "downtown-garland",
+   "name": "Downtown Garland",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "26691",
+    "name": "DOWNTOWN GARLAND STATION",
+    "lat": 32.916319,
+    "lng": -96.635369,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "downtown-rowlett",
+   "name": "Downtown Rowlett",
+   "lineId": "blue",
+   "matchedOfficialStop": {
+    "stopId": "32562",
+    "name": "DOWNTOWN ROWLETT STATION",
+    "lat": 32.904111,
+    "lng": -96.563388,
+    "officialLines": [
+     "blue"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "parker-road-o",
+   "name": "Parker Road",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "26897",
+    "name": "PARKER ROAD STATION",
+    "lat": 33.033454,
+    "lng": -96.700736,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "downtown-plano-o",
+   "name": "Downtown Plano",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "26896",
+    "name": "DOWNTOWN PLANO STATION",
+    "lat": 33.020856,
+    "lng": -96.700898,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "12th-street-o",
+   "name": "12th Street",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "33599",
+    "name": "12TH STREET STATION",
+    "lat": 33.01436,
+    "lng": -96.701066,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "cityline-bush-o",
+   "name": "Cityline/Bush",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "26895",
+    "name": "CITYLINE/BUSH STATION",
+    "lat": 33.002166,
+    "lng": -96.703144,
+    "officialLines": [
+     "orange",
+     "red",
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "galatyn-park-o",
+   "name": "Galatyn Park",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "26674",
+    "name": "GALATYN PARK STATION",
+    "lat": 32.985226,
+    "lng": -96.710953,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "arapaho-center-o",
+   "name": "Arapaho Center",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "26673",
+    "name": "ARAPAHO CENTER STATION",
+    "lat": 32.963447,
+    "lng": -96.722981,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "spring-valley-o",
+   "name": "Spring Valley",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "26672",
+    "name": "SPRING VALLEY STATION",
+    "lat": 32.940852,
+    "lng": -96.737424,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "lbj-central-o",
+   "name": "LBJ/Central",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "26670",
+    "name": "LBJ / CENTRAL STATION",
+    "lat": 32.918254,
+    "lng": -96.752235,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "forest-ln-o",
+   "name": "Forest Lane",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "26671",
+    "name": "FOREST LN STATION",
+    "lat": 32.908604,
+    "lng": -96.76168,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "name variant: baseline 'Forest Lane' vs official 'FOREST LN STATION'"
+  },
+  {
+   "id": "walnut-hill-o",
+   "name": "Walnut Hill",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "26669",
+    "name": "WALNUT HILL STATION",
+    "lat": 32.88265,
+    "lng": -96.764931,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "park-lane-o",
+   "name": "Park Lane",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "28755",
+    "name": "PARK LANE STATION",
+    "lat": 32.872513,
+    "lng": -96.765899,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "lovers-lane-o",
+   "name": "Lovers Lane",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "22984",
+    "name": "LOVERS LANE STATION",
+    "lat": 32.848601,
+    "lng": -96.771758,
+    "officialLines": [
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "smu-o",
+   "name": "SMU/Mockingbird",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "22938",
+    "name": "SMU/MOCKINGBIRD STATION",
+    "lat": 32.837828,
+    "lng": -96.774939,
+    "officialLines": [
+     "blue",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "cityplace-o",
+   "name": "Cityplace/Uptown",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "26420",
+    "name": "CITYPLACE/UPTOWN STATION",
+    "lat": 32.805424,
+    "lng": -96.793176,
+    "officialLines": [
+     "blue",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "pearl-o",
+   "name": "Pearl/Arts District",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "22752",
+    "name": "PEARL/ARTS DISTRICT STATION",
+    "lat": 32.786618,
+    "lng": -96.79431,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "st-paul-o",
+   "name": "St. Paul",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "22751",
+    "name": "ST PAUL STATION",
+    "lat": 32.784296,
+    "lng": -96.797026,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "akard-o",
+   "name": "Akard",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "22750",
+    "name": "AKARD STATION",
+    "lat": 32.781893,
+    "lng": -96.800633,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "west-end-o",
+   "name": "West End",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "22749",
+    "name": "WEST END STATION",
+    "lat": 32.780915,
+    "lng": -96.805443,
+    "officialLines": [
+     "blue",
+     "green",
+     "orange",
+     "red"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "victory-o",
+   "name": "Victory",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "28264",
+    "name": "VICTORY STATION",
+    "lat": 32.789607,
+    "lng": -96.812513,
+    "officialLines": [
+     "green",
+     "orange",
+     "tre"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "market-center-o",
+   "name": "Market Center",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "29825",
+    "name": "MARKET CENTER STATION",
+    "lat": 32.804635,
+    "lng": -96.823713,
+    "officialLines": [
+     "green",
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "sw-medical-o",
+   "name": "SW Medical District/Parkland",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "29826",
+    "name": "SOUTHWEST MEDICAL DISTRICT/PARKLAND",
+    "lat": 32.813602,
+    "lng": -96.833204,
+    "officialLines": [
+     "green",
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "name variant: baseline 'SW Medical District/Parkland' vs official 'SOUTHWEST MEDICAL DISTRICT/PARKLAND'"
+  },
+  {
+   "id": "love-o",
+   "name": "Inwood/Love Field",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "29824",
+    "name": "INWOOD/LOVE FIELD STATION",
+    "lat": 32.822243,
+    "lng": -96.833361,
+    "officialLines": [
+     "green",
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "burbank-o",
+   "name": "Burbank",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "29822",
+    "name": "BURBANK STATION",
+    "lat": 32.842971,
+    "lng": -96.862176,
+    "officialLines": [
+     "green",
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "bachman",
+   "name": "Bachman",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "29821",
+    "name": "BACHMAN STATION",
+    "lat": 32.853778,
+    "lng": -96.877344,
+    "officialLines": [
+     "green",
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "univ-dallas",
+   "name": "University of Dallas",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "31084",
+    "name": "UNIVERSITY OF DALLAS STATION",
+    "lat": 32.849085,
+    "lng": -96.915006,
+    "officialLines": [
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "las-colinas",
+   "name": "Las Colinas Urban Ctr",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "32337",
+    "name": "LAS COLINAS URBAN CENTER STATION",
+    "lat": 32.868572,
+    "lng": -96.933574,
+    "officialLines": [
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "irving",
+   "name": "Irving Convention Ctr",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "32338",
+    "name": "IRVING CONVENTION CENTER STATION",
+    "lat": 32.876891,
+    "lng": -96.938558,
+    "officialLines": [
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "hidden-ridge",
+   "name": "Hidden Ridge",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "33566",
+    "name": "HIDDEN RIDGE STATION",
+    "lat": 32.882109,
+    "lng": -96.955159,
+    "officialLines": [
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "north-lake",
+   "name": "Dallas College Northlake Campus",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "31088",
+    "name": "DALLAS COLLEGE NORTHLAKE CAMPUS STATION",
+    "lat": 32.875197,
+    "lng": -96.967119,
+    "officialLines": [
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "belt-line",
+   "name": "Belt Line",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "31089",
+    "name": "BELT LINE STATION",
+    "lat": 32.888023,
+    "lng": -96.986505,
+    "officialLines": [
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "dfw-a",
+   "name": "DFW Airport T-A",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "32553",
+    "name": "DFW AIRPORT STATION",
+    "lat": 32.907386,
+    "lng": -97.039504,
+    "officialLines": [
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "dfw-a and dfw-b share identical coordinates in baseline; official has a single DFW Airport Station (Orange) at the terminal A area; DFW Terminal B is Silver-only in the feed"
+  },
+  {
+   "id": "dfw-b",
+   "name": "DFW Airport T-B",
+   "lineId": "orange",
+   "matchedOfficialStop": {
+    "stopId": "32553",
+    "name": "DFW AIRPORT STATION",
+    "lat": 32.907386,
+    "lng": -97.039504,
+    "officialLines": [
+     "orange"
+    ]
+   },
+   "lineMembershipConfirmed": false,
+   "distanceM": 0,
+   "note": "dfw-a and dfw-b share identical coordinates in baseline; official has a single DFW Airport Station (Orange) at the terminal A area; DFW Terminal B is Silver-only in the feed; orange membership of Terminal B not confirmed (official Terminal B stop is Silver only)"
+  },
+  {
+   "id": "shiloh-sl",
+   "name": "Shiloh Rd",
+   "lineId": "silver",
+   "matchedOfficialStop": {
+    "stopId": "33600",
+    "name": "SHILOH RD STATION",
+    "lat": 33.012603,
+    "lng": -96.665722,
+    "officialLines": [
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "12th-street-sl",
+   "name": "12th Street",
+   "lineId": "silver",
+   "matchedOfficialStop": {
+    "stopId": "34293",
+    "name": "12TH STREET SILVER LINE STATION",
+    "lat": 33.015407,
+    "lng": -96.698598,
+    "officialLines": [
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "cityline-bush-sl",
+   "name": "Cityline/Bush",
+   "lineId": "silver",
+   "matchedOfficialStop": {
+    "stopId": "26895",
+    "name": "CITYLINE/BUSH STATION",
+    "lat": 33.002166,
+    "lng": -96.703144,
+    "officialLines": [
+     "orange",
+     "red",
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "ut-dallas-sl",
+   "name": "UT Dallas",
+   "lineId": "silver",
+   "matchedOfficialStop": {
+    "stopId": "33598",
+    "name": "UT DALLAS STATION",
+    "lat": 32.996459,
+    "lng": -96.750008,
+    "officialLines": [
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "knoll-trail",
+   "name": "Knoll Trail",
+   "lineId": "silver",
+   "matchedOfficialStop": {
+    "stopId": "33597",
+    "name": "KNOLL TRAIL STATION",
+    "lat": 32.962884,
+    "lng": -96.817617,
+    "officialLines": [
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "addison-sl",
+   "name": "Addison",
+   "lineId": "silver",
+   "matchedOfficialStop": {
+    "stopId": "33596",
+    "name": "ADDISON STATION",
+    "lat": 32.958982,
+    "lng": -96.828258,
+    "officialLines": [
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "downtown-carrollton-sl",
+   "name": "Downtown Carrollton",
+   "lineId": "silver",
+   "matchedOfficialStop": {
+    "stopId": "34292",
+    "name": "DOWNTOWN CARROLLTON SILVER LINE STATION",
+    "lat": 32.95567,
+    "lng": -96.908107,
+    "officialLines": [
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "cypress-waters",
+   "name": "Cypress Waters",
+   "lineId": "silver",
+   "matchedOfficialStop": {
+    "stopId": "33595",
+    "name": "CYPRESS WATERS STATION",
+    "lat": 32.950699,
+    "lng": -96.983242,
+    "officialLines": [
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "dfw-north-sl",
+   "name": "DFW North",
+   "lineId": "silver",
+   "matchedOfficialStop": {
+    "stopId": "33474",
+    "name": "DFW NORTH STATION",
+    "lat": 32.933913,
+    "lng": -97.054193,
+    "officialLines": [
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  },
+  {
+   "id": "dfw-terminal-b-sl",
+   "name": "DFW Terminal B",
+   "lineId": "silver",
+   "matchedOfficialStop": {
+    "stopId": "33473",
+    "name": "DFW TERMINAL B",
+    "lat": 32.906306,
+    "lng": -97.041243,
+    "officialLines": [
+     "silver"
+    ]
+   },
+   "lineMembershipConfirmed": true,
+   "distanceM": 0,
+   "note": "ok"
+  }
+ ],
+ "officialStopsNotInBaseline": [],
+ "officialMembershipsNotInBaseline": [
+  {
+   "stopId": "32043",
+   "name": "DEEP ELLUM STATION",
+   "line": "blue"
+  },
+  {
+   "stopId": "32043",
+   "name": "DEEP ELLUM STATION",
+   "line": "orange"
+  },
+  {
+   "stopId": "32043",
+   "name": "DEEP ELLUM STATION",
+   "line": "red"
+  },
+  {
+   "stopId": "32042",
+   "name": "BAYLOR STATION",
+   "line": "blue"
+  },
+  {
+   "stopId": "32042",
+   "name": "BAYLOR STATION",
+   "line": "orange"
+  },
+  {
+   "stopId": "32042",
+   "name": "BAYLOR STATION",
+   "line": "red"
+  },
+  {
+   "stopId": "32041",
+   "name": "FAIR PARK STATION",
+   "line": "blue"
+  },
+  {
+   "stopId": "32041",
+   "name": "FAIR PARK STATION",
+   "line": "orange"
+  },
+  {
+   "stopId": "32041",
+   "name": "FAIR PARK STATION",
+   "line": "red"
+  }
+ ],
+ "treOnlyStopsExcluded": [
+  "CENTREPORT STATION",
+  "BELL STATION",
+  "TRINITY LAKES STATION",
+  "FORT WORTH CENTRAL STATION",
+  "T&P STATION",
+  "MEDICAL/MARKET CTR STATION",
+  "DOWNTOWN IRVING/HERITAGE CROSSING STATION",
+  "WEST IRVING STATION"
+ ],
+ "officialStations": [
+  {
+   "stopId": "34293",
+   "name": "12TH STREET SILVER LINE STATION",
+   "lat": 33.015407,
+   "lng": -96.698598,
+   "lines": [
+    "silver"
+   ]
+  },
+  {
+   "stopId": "33599",
+   "name": "12TH STREET STATION",
+   "lat": 33.01436,
+   "lng": -96.701066,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "15262",
+   "name": "8TH & CORINTH STATION",
+   "lat": 32.748082,
+   "lng": -96.798474,
+   "lines": [
+    "blue",
+    "red"
+   ]
+  },
+  {
+   "stopId": "33596",
+   "name": "ADDISON STATION",
+   "lat": 32.958982,
+   "lng": -96.828258,
+   "lines": [
+    "silver"
+   ]
+  },
+  {
+   "stopId": "22750",
+   "name": "AKARD STATION",
+   "lat": 32.781893,
+   "lng": -96.800633,
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "26673",
+   "name": "ARAPAHO CENTER STATION",
+   "lat": 32.963447,
+   "lng": -96.722981,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "29821",
+   "name": "BACHMAN STATION",
+   "lat": 32.853778,
+   "lng": -96.877344,
+   "lines": [
+    "green",
+    "orange"
+   ]
+  },
+  {
+   "stopId": "32042",
+   "name": "BAYLOR STATION",
+   "lat": 32.786495,
+   "lng": -96.782132,
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "31089",
+   "name": "BELT LINE STATION",
+   "lat": 32.888023,
+   "lng": -96.986505,
+   "lines": [
+    "orange"
+   ]
+  },
+  {
+   "stopId": "29834",
+   "name": "BUCKNER STATION",
+   "lat": 32.718478,
+   "lng": -96.685108,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "29822",
+   "name": "BURBANK STATION",
+   "lat": 32.842971,
+   "lng": -96.862176,
+   "lines": [
+    "green",
+    "orange"
+   ]
+  },
+  {
+   "stopId": "33086",
+   "name": "CAMP WISDOM STATION",
+   "lat": 32.666638,
+   "lng": -96.7881,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "22729",
+   "name": "CEDARS STATION",
+   "lat": 32.768574,
+   "lng": -96.793253,
+   "lines": [
+    "blue",
+    "red"
+   ]
+  },
+  {
+   "stopId": "26895",
+   "name": "CITYLINE/BUSH STATION",
+   "lat": 33.002166,
+   "lng": -96.703144,
+   "lines": [
+    "orange",
+    "red",
+    "silver"
+   ]
+  },
+  {
+   "stopId": "26420",
+   "name": "CITYPLACE/UPTOWN STATION",
+   "lat": 32.805424,
+   "lng": -96.793176,
+   "lines": [
+    "blue",
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "22747",
+   "name": "CONVENTION CENTER STATION",
+   "lat": 32.772481,
+   "lng": -96.802992,
+   "lines": [
+    "blue",
+    "red"
+   ]
+  },
+  {
+   "stopId": "33595",
+   "name": "CYPRESS WATERS STATION",
+   "lat": 32.950699,
+   "lng": -96.983242,
+   "lines": [
+    "silver"
+   ]
+  },
+  {
+   "stopId": "31088",
+   "name": "DALLAS COLLEGE NORTHLAKE CAMPUS STATION",
+   "lat": 32.875197,
+   "lng": -96.967119,
+   "lines": [
+    "orange"
+   ]
+  },
+  {
+   "stopId": "32043",
+   "name": "DEEP ELLUM STATION",
+   "lat": 32.785866,
+   "lng": -96.788532,
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "32553",
+   "name": "DFW AIRPORT STATION",
+   "lat": 32.907386,
+   "lng": -97.039504,
+   "lines": [
+    "orange"
+   ]
+  },
+  {
+   "stopId": "33474",
+   "name": "DFW NORTH STATION",
+   "lat": 32.933913,
+   "lng": -97.054193,
+   "lines": [
+    "silver"
+   ]
+  },
+  {
+   "stopId": "33473",
+   "name": "DFW TERMINAL B",
+   "lat": 32.906306,
+   "lng": -97.041243,
+   "lines": [
+    "silver"
+   ]
+  },
+  {
+   "stopId": "34292",
+   "name": "DOWNTOWN CARROLLTON SILVER LINE STATION",
+   "lat": 32.95567,
+   "lng": -96.908107,
+   "lines": [
+    "silver"
+   ]
+  },
+  {
+   "stopId": "29817",
+   "name": "DOWNTOWN CARROLLTON STATION",
+   "lat": 32.954443,
+   "lng": -96.908277,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "26691",
+   "name": "DOWNTOWN GARLAND STATION",
+   "lat": 32.916319,
+   "lng": -96.635369,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "26896",
+   "name": "DOWNTOWN PLANO STATION",
+   "lat": 33.020856,
+   "lng": -96.700898,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "32562",
+   "name": "DOWNTOWN ROWLETT STATION",
+   "lat": 32.904111,
+   "lng": -96.563388,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "22748",
+   "name": "EBJ UNION STATION",
+   "lat": 32.776208,
+   "lng": -96.808201,
+   "lines": [
+    "blue",
+    "red",
+    "tre"
+   ]
+  },
+  {
+   "stopId": "32041",
+   "name": "FAIR PARK STATION",
+   "lat": 32.782058,
+   "lng": -96.765928,
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "29818",
+   "name": "FARMERS BRANCH STATION",
+   "lat": 32.921962,
+   "lng": -96.896238,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "26690",
+   "name": "FOREST / JUPITER STATION",
+   "lat": 32.908056,
+   "lng": -96.679457,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "26671",
+   "name": "FOREST LN STATION",
+   "lat": 32.908604,
+   "lng": -96.76168,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "26674",
+   "name": "GALATYN PARK STATION",
+   "lat": 32.985226,
+   "lng": -96.710953,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "21210",
+   "name": "HAMPTON STATION",
+   "lat": 32.726333,
+   "lng": -96.855532,
+   "lines": [
+    "red"
+   ]
+  },
+  {
+   "stopId": "29831",
+   "name": "HATCHER STATION",
+   "lat": 32.766323,
+   "lng": -96.742471,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "33566",
+   "name": "HIDDEN RIDGE STATION",
+   "lat": 32.882109,
+   "lng": -96.955159,
+   "lines": [
+    "orange"
+   ]
+  },
+  {
+   "stopId": "21030",
+   "name": "ILLINOIS TC/STATION",
+   "lat": 32.723302,
+   "lng": -96.805162,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "29824",
+   "name": "INWOOD/LOVE FIELD STATION",
+   "lat": 32.822243,
+   "lng": -96.833361,
+   "lines": [
+    "green",
+    "orange"
+   ]
+  },
+  {
+   "stopId": "32338",
+   "name": "IRVING CONVENTION CENTER STATION",
+   "lat": 32.876891,
+   "lng": -96.938558,
+   "lines": [
+    "orange"
+   ]
+  },
+  {
+   "stopId": "23390",
+   "name": "KIEST STATION",
+   "lat": 32.707113,
+   "lng": -96.801175,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "33597",
+   "name": "KNOLL TRAIL STATION",
+   "lat": 32.962884,
+   "lng": -96.817617,
+   "lines": [
+    "silver"
+   ]
+  },
+  {
+   "stopId": "32049",
+   "name": "LAKE HIGHLANDS STATION",
+   "lat": 32.879487,
+   "lng": -96.730452,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "29833",
+   "name": "LAKE JUNE STATION",
+   "lat": 32.732335,
+   "lng": -96.709432,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "32337",
+   "name": "LAS COLINAS URBAN CENTER STATION",
+   "lat": 32.868572,
+   "lng": -96.933574,
+   "lines": [
+    "orange"
+   ]
+  },
+  {
+   "stopId": "29832",
+   "name": "LAWNVIEW STATION",
+   "lat": 32.765606,
+   "lng": -96.720388,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "26670",
+   "name": "LBJ / CENTRAL STATION",
+   "lat": 32.918254,
+   "lng": -96.752235,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "26668",
+   "name": "LBJ / SKILLMAN STATION",
+   "lat": 32.897924,
+   "lng": -96.712139,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "23320",
+   "name": "LEDBETTER STATION",
+   "lat": 32.683394,
+   "lng": -96.788812,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "22984",
+   "name": "LOVERS LANE STATION",
+   "lat": 32.848601,
+   "lng": -96.771758,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "29825",
+   "name": "MARKET CENTER STATION",
+   "lat": 32.804635,
+   "lng": -96.823713,
+   "lines": [
+    "green",
+    "orange"
+   ]
+  },
+  {
+   "stopId": "32040",
+   "name": "MLK STATION",
+   "lat": 32.773757,
+   "lng": -96.764576,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "16083",
+   "name": "MORRELL STATION",
+   "lat": 32.73986,
+   "lng": -96.802604,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "29815",
+   "name": "NORTH CARROLLTON/FRANKFORD STATION",
+   "lat": 32.991611,
+   "lng": -96.936753,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "28755",
+   "name": "PARK LANE STATION",
+   "lat": 32.872513,
+   "lng": -96.765899,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "26897",
+   "name": "PARKER ROAD STATION",
+   "lat": 33.033454,
+   "lng": -96.700736,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "22752",
+   "name": "PEARL/ARTS DISTRICT STATION",
+   "lat": 32.786618,
+   "lng": -96.79431,
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "29819",
+   "name": "ROYAL LANE STATION",
+   "lat": 32.896055,
+   "lng": -96.88811,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "33600",
+   "name": "SHILOH RD STATION",
+   "lat": 33.012603,
+   "lng": -96.665722,
+   "lines": [
+    "silver"
+   ]
+  },
+  {
+   "stopId": "22938",
+   "name": "SMU/MOCKINGBIRD STATION",
+   "lat": 32.837828,
+   "lng": -96.774939,
+   "lines": [
+    "blue",
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "29826",
+   "name": "SOUTHWEST MEDICAL DISTRICT/PARKLAND",
+   "lat": 32.813602,
+   "lng": -96.833204,
+   "lines": [
+    "green",
+    "orange"
+   ]
+  },
+  {
+   "stopId": "26672",
+   "name": "SPRING VALLEY STATION",
+   "lat": 32.940852,
+   "lng": -96.737424,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "22751",
+   "name": "ST PAUL STATION",
+   "lat": 32.784296,
+   "lng": -96.797026,
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "29816",
+   "name": "TRINITY MILLS RAIL STATION",
+   "lat": 32.980876,
+   "lng": -96.926476,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "22730",
+   "name": "TYLER VERNON STATION",
+   "lat": 32.73314,
+   "lng": -96.83839,
+   "lines": [
+    "red"
+   ]
+  },
+  {
+   "stopId": "31084",
+   "name": "UNIVERSITY OF DALLAS STATION",
+   "lat": 32.849085,
+   "lng": -96.915006,
+   "lines": [
+    "orange"
+   ]
+  },
+  {
+   "stopId": "33087",
+   "name": "UNT DALLAS STATION",
+   "lat": 32.654057,
+   "lng": -96.801091,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "33598",
+   "name": "UT DALLAS STATION",
+   "lat": 32.996459,
+   "lng": -96.750008,
+   "lines": [
+    "silver"
+   ]
+  },
+  {
+   "stopId": "23391",
+   "name": "VA MEDICAL CENTER STATION",
+   "lat": 32.693641,
+   "lng": -96.792986,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "28264",
+   "name": "VICTORY STATION",
+   "lat": 32.789607,
+   "lng": -96.812513,
+   "lines": [
+    "green",
+    "orange",
+    "tre"
+   ]
+  },
+  {
+   "stopId": "26669",
+   "name": "WALNUT HILL STATION",
+   "lat": 32.88265,
+   "lng": -96.764931,
+   "lines": [
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "29820",
+   "name": "WALNUT HILL/DENTON STATION",
+   "lat": 32.88212,
+   "lng": -96.883811,
+   "lines": [
+    "green"
+   ]
+  },
+  {
+   "stopId": "22749",
+   "name": "WEST END STATION",
+   "lat": 32.780915,
+   "lng": -96.805443,
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ]
+  },
+  {
+   "stopId": "15913",
+   "name": "WESTMORELAND STATION",
+   "lat": 32.719758,
+   "lng": -96.871727,
+   "lines": [
+    "red"
+   ]
+  },
+  {
+   "stopId": "26652",
+   "name": "WHITE ROCK STATION",
+   "lat": 32.855791,
+   "lng": -96.732732,
+   "lines": [
+    "blue"
+   ]
+  },
+  {
+   "stopId": "13659",
+   "name": "ZOO STATION",
+   "lat": 32.740771,
+   "lng": -96.812896,
+   "lines": [
+    "red"
+   ]
+  }
+ ],
+ "exceptions": [
+  {
+   "item": "Convention Center (convention-blue; convention-r also exists)",
+   "type": "closure",
+   "detail": "Baseline marks Blue record closed Jan 5 2026 (KBHCC redevelopment). Feed V755 (effective 2026-10-29..2026-12-06) still has stop 22747 with 123 trips per service day-type on both Blue and Red (492 total). Closure is NOT confirmed by the feed; not verified against a DART service alert. Note convention-r (Red) carries no closure flag in baseline."
+  },
+  {
+   "item": "dfw-a / dfw-b (orange)",
+   "type": "duplicate-coords",
+   "detail": "Identical coordinates in baseline. Official: one Orange stop DFW AIRPORT STATION (32553); DFW TERMINAL B (33473) is Silver-only. dfw-b orange membership unconfirmed."
+  },
+  {
+   "item": "Deep Ellum, Baylor, Fair Park",
+   "type": "membership-gap",
+   "detail": "Baseline lists Green only. Feed also has a few trips per day-type on Blue (3), Orange (8-9), Red (1-2) at these stops (vs 120 Green): likely special/limited service (e.g., event or pull-in/out); not verified. 9 official memberships thus absent from baseline."
+  },
+  {
+   "item": "Name variants",
+   "type": "name",
+   "detail": "Forest Lane vs FOREST LN; SW Medical District/Parkland vs SOUTHWEST MEDICAL DISTRICT/PARKLAND; N. Carrollton/Frankford vs NORTH CARROLLTON; MLK Jr. vs MLK; Illinois TC vs ILLINOIS TC/STATION; Baylor University Med Ctr vs BAYLOR; Cityline/Cityplace capitalization; Tyler/Vernon vs TYLER VERNON."
+  },
+  {
+   "item": "Silver Line",
+   "type": "line-status",
+   "detail": "Present in feed as route 27514 SILVER LINE with route_type 2 (not 0), 10 stops, 212 trips at sampled stops. Counts reported with and without Silver. Silver stops 12th Street and Downtown Carrollton are separate stops from the Red/Orange and Green stops of the same name."
+  },
+  {
+   "item": "Coordinate independence",
+   "type": "caveat",
+   "detail": "All 115 baseline records match official stop coordinates at exactly 0 m, so the baseline appears derived from this feed (or an equivalent); distance matching gives no independent check."
+  },
+  {
+   "item": "TRE and streetcar",
+   "type": "excluded",
+   "detail": "TRE-only stops (8) and McKinney Ave trolley / Dallas Streetcar excluded. EBJ Union and Victory are shared with TRE; TRE membership excluded."
+  },
+  {
+   "item": "Excluded non-stations",
+   "type": "excluded",
+   "detail": "SHERMAN POCKET TRACK and EAST/WEST TEX YARD LIMIT are not passenger stations."
+  }
+ ]
+}
