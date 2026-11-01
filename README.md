@@ -1,112 +1,46 @@
-# KAI — The Operating System for Cities
+# KAI × DART — Station Intelligence
 
-**[Live Site →](https://elliyeen.github.io/kai-dart/)**
+**[Live site →](https://elliyeen.github.io/kai-dart/)** · Repo `elliyeen/kai-dart` · Author: [Abdullah@elliyeen.com](mailto:Abdullah@elliyeen.com)
 
-**Author:** [Abdullah@elliyeen.com](mailto:Abdullah@elliyeen.com)
+KAI (Elliyeen) is a proposed Infrastructure Service Intelligence layer for DART stations: station and shelter quality, contractor accountability and independently verified outcomes. It is meant to complement DART's existing systems (including Maximo), not replace them.
 
-KAI unifies data, operations, and intelligence into a single platform — turning complexity into clarity, at any scale. Built initially for DART (Dallas Area Rapid Transit), KAI is purpose-built to handle the real-world demands of large-scale infrastructure, including high-attendance event surges.
+> **This site is a static demonstration with synthetic data.** No station is connected to live DART data, there is no DART endorsement or integration, and role switching is a simulation, not access control. Terms shown for a pilot are Elliyeen proposals, not DART-approved. See [`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) for what is and is not done.
 
----
+## What is in the app
 
-## Platform
+| Area | Routes | What it does |
+|---|---|---|
+| Marketing | `/`, `/faq`, `/get-started`, `/checkout`, `/architecture`, `/contact` | Landing page, 14-answer FAQ, getting started, non-binding proposal checkout (nothing is submitted or sent), the "DART Super Intelligence" architecture page |
+| Station platform | `/stations`, `/stations/[id]` | All 115 original station-line records (76 physical stations) with search and the five line filters (Red 26, Green 24, Blue 23, Orange 32, Silver 10). Each station page has **Report an issue**, **Deploy crew** (simulated, Operations role only) and its own **Autonomous demo** |
+| Tools | `/stations/report`, `issues`, `ticket`, `checklist`, `intelligence`, `inventory`, `audit`, `loop`, `scenarios`, `contractors`, `assets`, `inspections`, `readiness` | Report form and ticket tracking, issues log, 45-item inspection checklist, rules-based intelligence view, inventory, audit log, auto demo, test scenarios, contractors |
+| Legacy | `/platform`, `/dart/*`, `/cities/*` | Earlier dashboard demo, kept unchanged |
 
-KAI is built on three layers — the **Kai Fabric**:
+### Guided demo (seven steps)
+Network → open Akard → **Inspector runs the checklist and the KAI loop opens work orders** → Operations assigns → contractor submits proof → a different inspector verifies → executive view updates → Reset.
 
-| Layer | Description |
-|---|---|
-| **Data Fabric** | Connects every sensor, system, and record across stations into a unified real-time picture |
-| **Operations Intelligence** | Predictive AI forecasts maintenance needs up to 4 hours ahead |
-| **Workflow Automation** | AI-driven task routing and rapid-response team deployment in under 5 minutes |
+### KAI loop
+After an inspection is submitted: **Observe** (score the answers) → **Decide** (group failures into work orders by section) → **Act** (assign the contract holder) → **Verify** (independent re-inspection by a different inspector) → **Learn** (shorter re-inspection interval). It is plain rules, not a machine-learning model, and everything stays in the browser (localStorage).
 
----
-
-## Live Command Center Demo
-
-The platform page includes a fully interactive **Live Command Center** — a real-time station readiness dashboard covering all five DART lines.
-
-### DART Lines
-
-| Line | Terminals | Stations | Status |
-|---|---|---|---|
-| **Red** | Westmoreland → Parker Rd | 26 | Active |
-| **Green** | Buckner → N. Carrollton/Frankford | 28 | Active |
-| **Blue** | UNT Dallas → Downtown Rowlett | 23 | Active — 1 Closure |
-| **Orange** | Parker Road → DFW Airport | 13 | Active |
-| **Silver** | Shiloh Rd → DFW Terminal B | 10 | Active |
-
-### Dashboard Features
-
-- **Command Center** — Network-wide readiness overview with spark charts per line, critical station table, and AI accuracy metrics
-- **Line View** — Per-line drill-down with readiness gauge, live feed, and all station cards
-- **Station Detail** — Digital twin per station with real-time sensor simulation and active action queue
-- **Station Intelligence** — Per-station AI agent cards (Safety, Cleanliness, Maintenance, Compliance, Crowd) with confidence scores and ETA tracking
-- **City Dashboards** — City-scoped views showing stations within each municipality's jurisdiction
-- **Asset Dashboards** — Elevator, camera, stairwell, trash can, and bus cover uptime across all stations
-- **Inspection** — 48-point crew checklist with photo upload and section scoring
-- **Intelligence Engine** — AI anomaly detection, predictive alerts, and confidence-scored decisions
-
-### Notable Station Data
-
-- **Convention Center (Blue Line)** — Closed Jan 5 2026 for KBHCC redevelopment. Est. reopening 2029.
-- **Cedars (Blue Line)** — Score: 42, Critical (safety, smell, vandalism, litter, lighting)
-- **Forest/Jupiter (Blue Line)** — Score: 42, Critical
-- **St. Paul (Blue Line)** — Score: 48, Critical
-
----
-
-## Tech Stack
-
-- [Next.js](https://nextjs.org) 16 (App Router, Turbopack)
-- React 19 + TypeScript
-- Tailwind CSS v4
-- CI/CD — GitHub Actions → GitHub Pages
-
----
-
-## Getting Started
+## Develop
 
 ```bash
 npm install
-npm run dev -- --port 3001
+npm run dev -- --port 3001        # http://localhost:3001
+npm run lint && npm run typecheck && npm run test:unit
+GITHUB_PAGES=true npm run build   # static export under /kai-dart
+node scripts/serve-out.mjs        # serve out/ at http://localhost:4173/kai-dart/
+npx playwright install chromium firefox webkit
+npm run test:e2e                  # 540 tests: 5 Chromium viewports + Firefox, WebKit, iPhone, iPad, Pixel
 ```
 
-Open [http://localhost:3001](http://localhost:3001) to view the site.
+Stack: Next.js 16 (App Router, static export), React 19, TypeScript, Tailwind CSS v4, Playwright + axe, Vitest.
 
-> Port 3001 is used because port 3000 is reserved for another local project.
-
----
-
-## Pages
-
-| Route | Description |
-|---|---|
-| `/` | Home — hero, stats, platform overview |
-| `/platform` | Platform deep-dive + Live Command Center demo |
-| `/dart` | DART live command center — all lines, stations, and agent intelligence |
-| `/dart/line/[lineId]` | Per-line dashboard — station cards, readiness gauge, live feed |
-| `/dart/station/[id]` | Station detail — digital twin, AI agent cards, active action queue |
-| `/cities/[city]` | City-scoped dashboard (dallas, plano, addison, irving, garland, richardson) |
-| `/contact` | Contact / demo request form |
-
----
-
-## Key Stats
-
-| Metric | Value |
-|---|---|
-| DART Stations | 65 |
-| Inspection Points / Station | 247 |
-| Total Inspection Points | 16,055 |
-
----
+## Process and versions
+- Work happens on a feature branch per task and lands through a pull request; CI (`.github/workflows/ci.yml`) runs lint, typecheck, unit, build, E2E on all browsers and `npm audit`. Pushes to `main` deploy to GitHub Pages (`pages.yml`).
+- Version history is in [`CHANGELOG.md`](CHANGELOG.md); release, preview and rollback steps are in [`docs/RELEASE.md`](docs/RELEASE.md); design fidelity rules are in [`docs/DESIGN_TO_PRODUCTION_FIDELITY.md`](docs/DESIGN_TO_PRODUCTION_FIDELITY.md).
+- Project rules for contributors and agents are in [`CLAUDE.md`](CLAUDE.md): never fabricate data, endorsements, live status, metrics or certifications; production deploys, credentials and security changes need explicit approval.
 
 ## Infrastructure
+GitHub Actions → GitHub Pages at `/kai-dart`. A Cloudflare Pages build target exists (`EXPORT_TARGET=cloudflare`) but has **not** been deployed; it needs credentials and approval.
 
-- **CI/CD**: GitHub Actions — lint/build on PR, deploy to GitHub Pages on push to `main`
-- **Live URL**: https://elliyeen.github.io/kai-dart/
-- **Repo**: `elliyeen/kai-dart`
-- **Base path**: `/kai-dart` (configured in `next.config.ts`)
-
----
-
-© 2026 KAI. The Operating System for Cities.
+© 2026 Elliyeen. KAI.
