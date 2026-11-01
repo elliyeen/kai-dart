@@ -3,8 +3,9 @@ import { noHorizontalOverflow } from "./helpers";
 
 test("landing: no tournament content, CTAs reach the platform, tabs and accordion work", async ({ page }) => {
   await page.goto("");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Every station");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Transit for Everyone");
   expect(await page.locator("body").innerText()).not.toMatch(/fifa|world cup|at&t stadium|arlington/i);
+  await expect(page.getByTestId("hero-metric")).toHaveText("75");
   await page.getByRole("tab", { name: "Verify" }).click();
   await expect(page.getByRole("tab", { name: "Verify" })).toHaveAttribute("aria-selected", "true");
   await page.getByRole("tab", { name: "Verify" }).press("ArrowLeft");
