@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Database, Workflow, Cpu } from "lucide-react";
-import WorldCupCountdown from "@/components/WorldCupCountdown";
 import FadeUp from "@/components/FadeUp";
 import CountUp from "@/components/CountUp";
 import Nav from "@/components/Nav";
@@ -201,14 +200,13 @@ export default function Home() {
               <div className="lg:pt-16">
                 <p className="text-xl text-white/65 leading-relaxed mb-8 font-light">
                   The Dallas Area Rapid Transit network is our proving ground.
-                  16,055 inspection points across 93 miles of light rail, and the world&apos;s
-                  biggest sporting event bearing down in {Math.ceil((new Date("2026-06-11").getTime() - Date.now()) / (1000 * 60 * 60 * 24))} days.
+                  16,055 inspection points across 93 miles of light rail — where station condition meets ownership, action, and verification.
                 </p>
                 <Link
-                  href="/world-cup-2026"
+                  href="/platform"
                   className="inline-flex items-center text-sm font-medium border-b border-white pb-1 hover:border-white/40 transition-colors duration-200 gap-2"
                 >
-                  FIFA 2026 deployment
+                  Explore the platform
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -237,13 +235,11 @@ export default function Home() {
             </div>
           </FadeUp>
 
-          {/* Match day data */}
+          {/* Operating metrics */}
           <FadeUp delay={200}>
             <div className="border-t border-white/[0.08] pt-10 mt-12 lg:pt-16 lg:mt-20 grid lg:grid-cols-2 gap-x-20">
               {[
                 { label: "Normal daily ridership",  value: "35,000" },
-                { label: "Match day demand",         value: "100,000+" },
-                { label: "Surge capacity",           value: "+286%" },
                 { label: "Staff deployment time",    value: "<5 min" },
                 { label: "Report generation",        value: "<2 min" },
                 { label: "Platform uptime SLA",      value: "99.9%" },
@@ -257,9 +253,6 @@ export default function Home() {
           </FadeUp>
         </div>
       </section>
-
-      {/* World Cup Countdown */}
-      <WorldCupCountdown />
 
       {/* Platform — Image backed */}
       <section className="relative py-16 sm:py-24 lg:py-36 bg-[#111318] overflow-hidden">
@@ -404,7 +397,6 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
               <Link href="/platform" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">Platform</Link>
-              <Link href="/world-cup-2026" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">FIFA 2026</Link>
               <Link href="/#about" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">About</Link>
               <Link href="/contact" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">Contact</Link>
             </div>

@@ -374,7 +374,7 @@ export default function PlatformPage() {
             <div className="border-t border-gray-100">
               {[
                 { num: "01", industry: "Transit & Cities",      desc: "Rail networks, bus systems, and urban transit — unified operational management across every station, vehicle, and crew.", proof: "65 DART stations live" },
-                { num: "02", industry: "Stadiums & Events",     desc: "From daily operations to 100,000-person surge events. FIFA 2026 World Cup deployment across 9 Dallas match days.", proof: "FIFA 2026 ready" },
+                { num: "02", industry: "Stadiums & Events",     desc: "From daily operations to high-attendance surge events — coordinated inspection, response, and verification for large venues.", proof: "Event operations" },
                 { num: "03", industry: "Enterprise Facilities", desc: "Large-scale facility portfolios — corporate campuses, convention centers, mixed-use real estate — all in one operating picture.", proof: "Enterprise-grade" },
                 { num: "04", industry: "Healthcare",            desc: "Hospital environments where compliance, cleanliness, and response time are mission-critical. Continuous inspection and accountability.", proof: "HIPAA-compatible" },
                 { num: "05", industry: "Energy & Utilities",    desc: "Maintenance scheduling, asset inspection, and predictive failure detection for critical infrastructure.", proof: "Critical infrastructure" },
@@ -578,7 +578,7 @@ export default function PlatformPage() {
             </h2>
             <p className="text-xl text-white/65 mb-16 max-w-2xl mx-auto leading-relaxed font-light">
               A 5-minute live demo — command center walkthrough, AI prediction
-              simulation, and a FIFA 2026 surge-event scenario.
+              simulation, and a high-attendance event scenario.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -588,10 +588,10 @@ export default function PlatformPage() {
                 Request a live demo
               </Link>
               <Link
-                href="/world-cup-2026"
+                href="/platform?tab=demo"
                 className="border border-white/20 px-8 sm:px-12 py-4 text-sm font-medium tracking-wide hover:border-white/50 transition-all duration-300 inline-flex items-center justify-center gap-2"
               >
-                FIFA 2026 deployment
+                Explore the platform
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -608,7 +608,6 @@ export default function PlatformPage() {
             </div>
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
               <Link href="/platform" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">Platform</Link>
-              <Link href="/world-cup-2026" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">FIFA 2026</Link>
               <Link href="/#about" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">About</Link>
               <Link href="/contact" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">Contact</Link>
             </div>

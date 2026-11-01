@@ -16,7 +16,7 @@ Kai defines and owns the category of *City Operating Systems*. It is not a tool,
 Transit authorities, municipal governments, stadium operators, enterprise facility owners, and critical infrastructure operators. These are buyers where operational failure is not an option.
 
 **Proof point:**
-Live across 65 DART stations, 16,055 inspection points. Built for FIFA World Cup 2026.
+16,055 inspection points modeled across 65 DART stations (Elliyeen demonstration; not a DART-approved deployment).
 
 ---
 

@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 const INQUIRY_LABELS: Record<string, string> = {
   demo:         "Platform Demo",
-  pilot:        "FIFA 2026 Pilot Program",
+  pilot:        "Pilot Program",
   rfp:          "RFP Response",
   consultation: "Strategic Consultation",
   general:      "General Inquiry",

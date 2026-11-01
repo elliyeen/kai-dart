@@ -1045,13 +1045,6 @@ function StationView({ lineId, selectedId, onSelect, onReport, onViewTicket }: {
 
             {/* Station map */}
             <StationMap station={selected} lineColor={line.color} />
-
-            {/* FIFA callout */}
-            <div style={{ margin:"14px 22px", padding:"12px 14px", background:"#111827", borderRadius:4 }}>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.gold, marginBottom:4 }}>FIFA World Cup 2026</div>
-              <div style={{ fontFamily:"'Share Tech Mono'", fontSize:20, color:"#FFFFFF", lineHeight:1 }}>+286%</div>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:"rgba(255,255,255,0.5)", marginTop:4 }}>Expected surge · 9 match days · AT&T Stadium</div>
-            </div>
           </>
         )}
       </div>
@@ -3205,10 +3198,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
                 Intelligence
               </button>
             </div>
-            <div style={{ display:"flex", alignItems:"center", padding:"0 16px", borderLeft:`1px solid ${T.border}`, gap:6 }}>
-              <span style={{ width:6, height:6, borderRadius:"50%", background:T.gold, opacity:0.7 }}/>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.18em", color:T.gold }}>FIFA 2026 · 9 MATCH DAYS</div>
-            </div>
+
           </div>
 
           {/* Content */}
