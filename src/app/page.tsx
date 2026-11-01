@@ -2,7 +2,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import FadeUp from "@/components/FadeUp";
 import ExperienceTabs from "@/components/landing/ExperienceTabs";
-import CapabilityAccordion from "@/components/landing/CapabilityAccordion";
+import CapabilityLineup from "@/components/landing/CapabilityLineup";
 import { CinematicHero, ProofSection, WorkflowSteps, OperationalIntelligence, FinalCTA } from "@/components/landing/sections";
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
@@ -11,7 +11,7 @@ const Eyebrow = ({ children }: { children: React.ReactNode }) => (
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="landing-sans min-h-screen bg-white text-black">
       <Nav />
       <main id="main">
         <CinematicHero />
@@ -20,11 +20,13 @@ export default function Home() {
         <section id="platform" className="bg-[#F8F7F4] py-16 sm:py-24 lg:py-32">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <FadeUp>
-              <Eyebrow>Platform</Eyebrow>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.02em] mb-10 lg:mb-14">One view from condition to closure.</h2>
+              <div className="text-center">
+                <Eyebrow>The ride</Eyebrow>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.02em] mb-10 lg:mb-14">Clean. Safe. Intelligent. Verified.</h2>
+              </div>
             </FadeUp>
             <ExperienceTabs />
-            <p className="mt-10"><Link href="/stations" className="text-sm font-medium border-b border-black pb-1 hover:border-gray-400">Open the interactive demo (synthetic data)</Link></p>
+            <p className="mt-10 text-center"><Link href="/stations" className="text-sm font-medium border-b border-black pb-1 hover:border-gray-400">Open the interactive demo (synthetic data)</Link></p>
           </div>
         </section>
 
@@ -34,7 +36,7 @@ export default function Home() {
               <Eyebrow>Capabilities</Eyebrow>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.02em] mb-10 lg:mb-14">Three layers. One accountable record.</h2>
             </FadeUp>
-            <CapabilityAccordion />
+            <CapabilityLineup />
           </div>
         </section>
 
