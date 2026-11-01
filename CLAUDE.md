@@ -40,3 +40,6 @@ Target Infrastructure Service Intelligence: station/shelter quality, contractor 
 
 ## First action each session
 Read `CLAUDE.md` and `IMPLEMENTATION_STATUS.md` if present, inspect GitHub/Notion current state, choose the next unfinished acceptance criterion, **implement and test it**, update checkpoint, and continue.
+
+## Mandatory approved-design fidelity gate
+Before any UI work, read [docs/DESIGN_TO_PRODUCTION_FIDELITY.md](docs/DESIGN_TO_PRODUCTION_FIDELITY.md) and the current KAI Notion spec. The approved mockup is a visual contract, not inspiration. Implement with the existing Next.js/React/TypeScript/Tailwind/SVG stack; run screenshot comparison and iterate. Never claim visual completion without the actual approved image, rendered comparison evidence and explicit user sign-off. This gate applies to /architecture, /get-started and /checkout. Do not mark production complete without authorized deployment and live verification.
