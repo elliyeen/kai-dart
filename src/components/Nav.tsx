@@ -12,6 +12,7 @@ const websiteLinks = [
   { href: "/architecture", label: "Architecture" },
   { href: "/faq", label: "FAQ" },
   { href: "/get-started", label: "Get Started" },
+  { href: "/checkout", label: "Checkout" },
 ];
 
 // Line colors for the nav pills
