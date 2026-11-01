@@ -9,21 +9,21 @@ import { StatusIndicator } from "./ui";
 
 const NODE: Record<RecStatus, string> = { good: "#16A34A", warning: "#D97706", critical: "#DC2626", closed: "#9CA3AF", deploying: "#2563EB", assigned: "#2563EB", awaiting: "#4F46E5", verified: "#16A34A" };
 
-/** Lines selector (dot, name, terminals, count) — the "DART Lines" list from the original app. */
+/** Single-row line filter: compact pills (dot, name, count). The grouped list below carries terminals and expand/collapse, so lines are never listed twice. */
 export function LinePicker({ value, onChange }: { value: LineId | null; onChange: (l: LineId | null) => void }) {
-  const row = "w-full text-left min-h-14 px-3 py-2 rounded-lg border flex items-center gap-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]";
+  const pill = "inline-flex items-center gap-2 min-h-11 px-3.5 rounded-full border text-[14px] transition-colors duration-200 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]";
   return (
-    <div role="group" aria-label="Filter by line" className="space-y-1.5" data-testid="line-picker">
-      <button type="button" aria-pressed={value === null} onClick={() => onChange(null)} className={`${row} ${value === null ? "bg-[#0B1F33] text-white border-[#0B1F33]" : "bg-white border-gray-200 hover:bg-gray-50"}`}>
-        <span className="text-sm" style={{ fontWeight: 700 }}>All lines</span><span className={`ml-auto text-xs ${value === null ? "text-white/80" : "text-gray-700"}`}>{STATIONS.length} stations</span>
+    <div role="group" aria-label="Filter by line" className="flex flex-wrap gap-2" data-testid="line-picker">
+      <button type="button" aria-pressed={value === null} onClick={() => onChange(null)} className={`${pill} ${value === null ? "bg-[#0B1F33] text-white border-[#0B1F33]" : "bg-white border-gray-200 text-gray-900 hover:bg-gray-50"}`} style={{ fontWeight: 600 }}>
+        All lines <span className={`text-xs tabular-nums ${value === null ? "text-white/70" : "text-gray-600"}`} style={{ fontWeight: 400 }}>{STATIONS.length}</span>
       </button>
       {LINES.map((l) => {
         const n = STATION_RECORDS.filter((r) => r.lineId === l.id).length, on = value === l.id;
         return (
-          <button key={l.id} type="button" aria-pressed={on} onClick={() => onChange(on ? null : l.id)} className={`${row} ${on ? "bg-amber-50 border-[#0B1F33]" : "bg-white border-gray-200 hover:bg-gray-50"}`}>
-            <span aria-hidden="true" className="w-4 h-4 rounded-full shrink-0" style={{ background: l.color, boxShadow: on ? `0 0 0 4px ${l.color}33` : undefined }} />
-            <span className="min-w-0"><span className="block text-[15px] text-gray-900" style={{ fontWeight: 700 }}>{l.name}</span><span className="block text-xs text-gray-700 truncate">{l.terminals}</span></span>
-            <span className="ml-auto text-xs text-gray-700 shrink-0">{n}</span>
+          <button key={l.id} type="button" aria-pressed={on} onClick={() => onChange(on ? null : l.id)} className={`${pill} ${on ? "bg-[#0B1F33] text-white border-[#0B1F33]" : "bg-white border-gray-200 text-gray-900 hover:bg-gray-50"}`} style={{ fontWeight: 600 }}>
+            <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: l.color, boxShadow: on ? "0 0 0 2px #fff" : undefined }} />
+            {l.name}
+            <span className={`text-xs tabular-nums ${on ? "text-white/70" : "text-gray-600"}`} style={{ fontWeight: 400 }}>{n}</span>
           </button>
         );
       })}
@@ -71,8 +71,9 @@ export default function LineDirectory({ records, line }: { records: StationRecor
           <section key={l.id} aria-labelledby={`grp-${l.id}`} data-testid={`group-${l.id}`}>
             <h3 id={`grp-${l.id}`} className="sticky top-0 z-10 bg-white/95 backdrop-blur border-y border-gray-200 text-sm" style={{ fontWeight: 700 }}>
               <button type="button" aria-expanded={open} aria-controls={`list-${l.id}`} data-testid={`toggle-${l.id}`} onClick={() => toggle(l.id)} className="w-full min-h-11 flex items-center gap-2 px-4 py-2.5 text-left hover:bg-gray-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8]">
-                <span aria-hidden="true" className="w-3 h-3 rounded-full" style={{ background: l.color }} />{LINE_BY_ID[l.id].name}
-                <span className="ml-auto text-xs font-normal text-gray-700">{recs.length} sta</span>
+                <span aria-hidden="true" className="w-3 h-3 rounded-full shrink-0" style={{ background: l.color }} />
+                <span className="min-w-0"><span className="block">{LINE_BY_ID[l.id].name}</span><span className="block text-xs font-normal text-gray-700 truncate">{l.terminals}</span></span>
+                <span className="ml-auto text-xs font-normal text-gray-700 shrink-0">{recs.length} stations</span>
                 <ChevronDown aria-hidden="true" className={`w-4 h-4 text-gray-700 transition-transform duration-200 motion-reduce:transition-none ${open ? "" : "-rotate-90"}`} />
               </button>
             </h3>
