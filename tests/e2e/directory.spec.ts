@@ -132,3 +132,10 @@ test("audit log records sign-in and actions; inventory lists owned assets", asyn
   await expect(page.getByTestId("inv-table")).toContainText("Facilities Maintenance");
   await expect(page.getByTestId("dictionary")).toContainText("audit_log");
 });
+
+test("test case scenarios page shows all four stations with steps", async ({ page }) => {
+  await page.goto("stations/scenarios");
+  for (const id of ["park-lane", "spring-valley", "akard", "smu-mockingbird"]) await expect(page.getByTestId(`scenario-${id}`)).toBeVisible();
+  await expect(page.getByTestId("scenario-akard")).toContainText("Approves moving an officer to Platform B");
+  await expect(page.getByTestId("scenario-akard").getByTestId("scenario-step")).toHaveCount(7);
+});

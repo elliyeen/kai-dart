@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Pause, Play, Train, Camera, Trash2, MoveVertical, Paintbrush, ShieldCheck } from "lucide-react";
 
@@ -121,6 +122,7 @@ export default function LoopDemo() {
           </section>
         </div>
       )}
+      <p className="text-sm"><Link className="underline text-[#0057A8]" href={`/stations/scenarios#${scene.id}`}>See the test case details for {scene.station}</Link></p>
       <p className="text-xs text-gray-700">Timings, scores and the average time to verified are sample values for illustration.</p>
     </div>
   );
