@@ -27,8 +27,8 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await expect(page.getByText("Capabilities", { exact: true })).toHaveCount(0);
   await expect(page.locator("#hero-note")).toHaveCount(0);
   await noHorizontalOverflow(page);
-  await expect(page.getByRole("link", { name: "Get started", exact: true }).first()).toHaveAttribute("href", /get-started/);
-  await page.getByRole("link", { name: "Demo", exact: true }).first().click();
+  await expect(page.getByRole("link", { name: /Get started$/ }).first()).toHaveAttribute("href", /get-started/);
+  await page.getByRole("link", { name: /Demo$/ }).first().click();
   await expect(page).toHaveURL(/\/stations\/?$/);
 });
 
