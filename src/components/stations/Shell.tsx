@@ -52,11 +52,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           <nav aria-label="Primary" className="hidden lg:flex items-center gap-1 ml-4">
             {nav.map((n) => <Link key={n.href} href={n.href} aria-current={n.active ? "page" : undefined} className={`${btn} ${n.active ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>{n.label}</Link>)}
           </nav>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
             <label className="flex items-center gap-2 text-sm">
               <span className="sr-only sm:not-sr-only text-gray-700">Demo role</span>
               <select aria-label="Demo role (simulation only)" data-testid="role-select" value={demo.role} onChange={(e) => dispatch({ type: "setRole", role: e.target.value as Role })}
-                className="min-h-11 border border-gray-300 rounded-md px-2 bg-white text-sm max-w-[10.5rem] sm:max-w-none">
+                className="min-h-11 border border-gray-300 rounded-md px-2 bg-white text-sm max-w-[8.25rem] sm:max-w-none">
                 {PERSONAS.map((p) => <option key={p.role} value={p.role}>{p.label}</option>)}
               </select>
             </label>

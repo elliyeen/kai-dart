@@ -30,8 +30,8 @@ export default function StationsBrowser() {
   const carry = new URLSearchParams(); if (line) carry.set("line", line); if (q) carry.set("q", q);
 
   return (
-    <div className="lg:grid lg:grid-cols-[minmax(320px,380px)_1fr] lg:h-[calc(100vh-7.5rem)]">
-      <section aria-label="Station directory" className="lg:border-r border-gray-200 flex flex-col min-h-0">
+    <div className="flex flex-col lg:grid lg:grid-cols-[minmax(320px,380px)_1fr] lg:h-[calc(100vh-7.5rem)]">
+      <section aria-label="Station directory" className="order-2 lg:order-none lg:border-r border-gray-200 flex flex-col min-h-0">
         <div className="p-4 space-y-3 border-b border-gray-200">
           <h2 className="sr-only">Station directory</h2>
           <div className="relative">
@@ -55,7 +55,7 @@ export default function StationsBrowser() {
       <section aria-label="Detail" className="hidden lg:block overflow-y-auto min-h-0">
         {selected ? <div className="p-8 max-w-3xl"><StationDetail station={selected} /></div> : <NetworkOverview line={line} onSelect={(k) => setParams({ station: k })} />}
       </section>
-      <section aria-label="Network summary" className="lg:hidden border-t border-gray-200"><NetworkOverview line={line} onSelect={() => undefined} /></section>
+      <section aria-label="Network summary" className="order-1 lg:hidden border-b border-gray-200"><NetworkOverview line={line} onSelect={() => undefined} /></section>
     </div>
   );
 }

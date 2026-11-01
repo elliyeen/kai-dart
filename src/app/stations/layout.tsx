@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function StationsLayout({ children }: { children: React.ReactNode }) {
-  return <div className={geist.variable}><Shell>{children}</Shell></div>;
+  return <div className={`${geist.variable} stations-root`} style={{ ["--color-white" as string]: "#ffffff", ["--color-background" as string]: "#ffffff" }}><Shell>{children}</Shell></div>;
 }

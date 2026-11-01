@@ -227,3 +227,11 @@ nav, button, input, select, textarea, .font-ui {
   .animate-marquee { animation: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ─── Station Intelligence platform: Geist Sans throughout, true white surfaces ─── */
+.stations-root, .stations-root :where(h1, h2, h3, h4, button, input, select, summary) { font-family: var(--font-geist), system-ui, sans-serif; }
+.stations-root :where(h1, h2, h3) { font-weight: 300; letter-spacing: -0.01em; }
+.stations-root { background: #ffffff; }
+/* The brand theme maps --color-white to #F1F1F1 (inlined by Tailwind); the platform surfaces must be true white. */
+.stations-root .bg-white { background-color: #ffffff; }
+.stations-root .bg-white\/95 { background-color: rgb(255 255 255 / 0.95); }
