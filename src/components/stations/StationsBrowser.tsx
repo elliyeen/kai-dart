@@ -38,7 +38,6 @@ export default function StationsBrowser() {
             <input id="station-search" type="search" value={q} placeholder="Search stations or cities" onChange={(e) => setParams({ q: e.target.value || null })}
               className="w-full min-h-11 pl-9 pr-3 border border-gray-300 rounded-md text-[15px] focus-visible:outline-2 focus-visible:outline-[#0057A8]" />
           </div>
-          <p className="text-[11px] tracking-[0.2em] uppercase text-gray-700" style={{ fontWeight: 600 }}>DART lines</p>
           <LinePicker value={line} onChange={(l) => setParams({ line: l })} />
           <p className="text-sm text-gray-700" aria-live="polite" data-testid="result-count">{uniq} of {STATIONS.length} stations{line ? ` on the ${line} line` : ""} · {recs.length} line entries</p>
         </div>
