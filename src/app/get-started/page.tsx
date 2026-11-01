@@ -24,8 +24,7 @@ export default function GetStartedPage() {
           <ol className="mt-12 max-w-3xl border-l border-gray-300" data-testid="steps">
             {STEPS.map((s) => (
               <li key={s.n} className="relative pl-8 pb-10 last:pb-0" data-testid="step">
-                <p className="text-xs uppercase tracking-wider text-gray-700">{s.when}</p>
-                <h2 className="mt-2 text-2xl font-normal">{s.title}</h2>
+                <h2 className="text-2xl font-normal">{s.title}</h2>
                 <p className="mt-2 text-base text-gray-800 leading-relaxed">{s.body}</p>
                 <p className="mt-3 text-sm text-gray-800"><span className="font-semibold">What DART gets:</span> {s.out}</p>
               </li>
