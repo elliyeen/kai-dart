@@ -2,6 +2,9 @@
 
 Last updated: 2026-11-01 · Branch `feat/platform-redesign` · Evidence below was produced by the commands shown. Nothing here is a claim about DART operations.
 
+## CI evidence
+PR #4 (https://github.com/elliyeen/kai-dart/pull/4), head `8dc24f7`: GitHub Actions "Lint, Typecheck, Unit, Build, E2E, Audit" **passed** (run 41260247003, 2m57s) — includes the 163 Playwright tests on 5 viewports.
+
 ## Phase status
 | Phase | Status | Evidence |
 |---|---|---|
