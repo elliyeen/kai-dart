@@ -1,0 +1,2539 @@
+{
+ "retrieved": "2026-10-31",
+ "sources": [
+  "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/<slug> (per-station URL in each entry)",
+  "OpenStreetMap Nominatim reverse geocode (county + city cross-check)"
+ ],
+ "stations": {
+  "12th Street": {
+   "recordIds": [
+    "12th-street",
+    "12th-street-o",
+    "12th-street-sl"
+   ],
+   "gtfsStopId": "33599",
+   "baselineCity": [
+    "Plano"
+   ],
+   "lines": [
+    "orange",
+    "red",
+    "silver"
+   ],
+   "lat": 33.01436,
+   "lng": -96.701066,
+   "geocode": {
+    "displayName": "12th Street, 1202, K Avenue, Plano, Collin County, Texas, 75074, United States",
+    "house_number": "1202",
+    "road": "K Avenue",
+    "city": "Plano",
+    "postcode": "75074",
+    "county": "Collin County"
+   },
+   "county": "Collin County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "995 12th Street",
+   "city": "Plano",
+   "state": "TX",
+   "zip": "75074",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/12th-street-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"995 12th Street, Plano 75074\"",
+   "dartPageHeaderText": "Rail Station Detail 12th Street Station Red Line Orange Line local_parking accessible directions_bike swap_horiz 995 12th Street, Plano, TX 75074 (995 12th Street, Plano 75074)",
+   "additionalStops": [
+    {
+     "gtfsStopId": "34293",
+     "officialName": "12TH STREET SILVER LINE STATION",
+     "lat": 33.015407,
+     "lng": -96.698598,
+     "dartPublishedAddress": "1200 K Avenue, Plano 75074",
+     "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/12th-street-station---silver-line"
+    }
+   ]
+  },
+  "8th & Corinth": {
+   "recordIds": [
+    "8th-corinth-r",
+    "eight-blue"
+   ],
+   "gtfsStopId": "15262",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue",
+    "red"
+   ],
+   "lat": 32.748082,
+   "lng": -96.798474,
+   "geocode": {
+    "displayName": "8th & Corinth, Corinth DART Station, Dallas, Dallas County, Texas, 75203, United States",
+    "house_number": null,
+    "road": "Corinth DART Station",
+    "city": "Dallas",
+    "postcode": "75203",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1740 E. 8th St.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75203",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/8th---corinth-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1740 E. 8th St., Dallas 75203\"",
+   "dartPageHeaderText": "Station Detail 8th & Corinth Station Blue Line Red Line local_parking accessible swap_horiz 8th & Corinth streets (1740 E. 8th St., Dallas 75203)"
+  },
+  "Addison": {
+   "recordIds": [
+    "addison-sl"
+   ],
+   "gtfsStopId": "33596",
+   "baselineCity": [
+    "Addison"
+   ],
+   "lines": [
+    "silver"
+   ],
+   "lat": 32.958982,
+   "lng": -96.828258,
+   "geocode": {
+    "displayName": "Addison, 4925, Arapaho Road, Addison, Dallas County, Texas, 75001, United States",
+    "house_number": "4925",
+    "road": "Arapaho Road",
+    "city": "Addison",
+    "postcode": "75001",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "4925 Arapaho Road",
+   "city": "Addison",
+   "state": "TX",
+   "zip": "75001",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/addison-transit-center",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"4925 Arapaho Road, Addison 75001\"",
+   "dartPageHeaderText": "Station Detail Addison Transit Center local_parking accessible directions_bike swap_horiz Arapaho Road at Addison Road 4925 Arapaho Road (4925 Arapaho Road, Addison 75001)"
+  },
+  "Akard": {
+   "recordIds": [
+    "akard",
+    "akard-g",
+    "akard-blue",
+    "akard-o"
+   ],
+   "gtfsStopId": "22750",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ],
+   "lat": 32.781893,
+   "lng": -96.800633,
+   "geocode": {
+    "displayName": "Akard, Pacific Avenue, West End Historic District, Downtown PID, Dallas, Dallas County, Texas, 75270, United States",
+    "house_number": null,
+    "road": "Pacific Avenue",
+    "city": "Dallas",
+    "postcode": "75270",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1400 Pacific Ave.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75202",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/akard-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1400 Pacific Ave., Dallas 75202\"",
+   "dartPageHeaderText": "Rail Station Detail Akard Station Blue Line Green Line Orange Line Red Line accessible swap_horiz Pacific Avenue, between Akard and Field streets (1400 Pacific Ave., Dallas 75202)"
+  },
+  "Arapaho Center": {
+   "recordIds": [
+    "arapaho-center",
+    "arapaho-center-o"
+   ],
+   "gtfsStopId": "26673",
+   "baselineCity": [
+    "Richardson"
+   ],
+   "lines": [
+    "orange",
+    "red"
+   ],
+   "lat": 32.963447,
+   "lng": -96.722981,
+   "geocode": {
+    "displayName": "Arapaho Center, Central Trail, Richardson, Dallas County, Texas, 75081, United States",
+    "house_number": null,
+    "road": "Central Trail",
+    "city": "Richardson",
+    "postcode": "75081",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1051 N. Greenville Ave.",
+   "city": "Richardson",
+   "state": "TX",
+   "zip": "75081",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/arapaho-center-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1051 N. Greenville Ave., Richardson 75081\"",
+   "dartPageHeaderText": "Rail Station Detail Arapaho Center Station Orange Line Red Line local_parking accessible swap_horiz Greenville Avenue near Arapaho Road in Richardson (1051 N. Greenville Ave., Richardson 75081)"
+  },
+  "Bachman": {
+   "recordIds": [
+    "bachman-g",
+    "bachman"
+   ],
+   "gtfsStopId": "29821",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green",
+    "orange"
+   ],
+   "lat": 32.853778,
+   "lng": -96.877344,
+   "geocode": {
+    "displayName": "Bachman, Cullum Lane, Dallas, Dallas County, Texas, 75220, United States",
+    "house_number": null,
+    "road": "Cullum Lane",
+    "city": "Dallas",
+    "postcode": "75220",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "9739 Denton Dr.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75220",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/bachman-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"9739 Denton Dr., Dallas 75220\"",
+   "dartPageHeaderText": "Rail Station Detail Bachman Station Green Line Orange Line local_parking accessible swap_horiz South of Northwest Hwy. on the west side of Denton Drive (9739 Denton Dr., Dallas 75220)"
+  },
+  "Baylor University Med Ctr": {
+   "recordIds": [
+    "baylor"
+   ],
+   "gtfsStopId": "32042",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.786495,
+   "lng": -96.782132,
+   "geocode": {
+    "displayName": "Baylor University Medical Center, North Malcolm X Boulevard, Deep Ellum PID, Dallas, Dallas County, Texas, 75226, United States",
+    "house_number": null,
+    "road": "North Malcolm X Boulevard",
+    "city": "Dallas",
+    "postcode": "75226",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2900 Junius St.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75226",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/baylor-university-medical-center-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2900 Junius St., Dallas 75226\"",
+   "dartPageHeaderText": "Station Detail Baylor University Medical Center Station Green Line accessible swap_horiz Hall and Junius streets (2900 Junius St., Dallas 75226)"
+  },
+  "Belt Line": {
+   "recordIds": [
+    "belt-line"
+   ],
+   "gtfsStopId": "31089",
+   "baselineCity": [
+    "Irving"
+   ],
+   "lines": [
+    "orange"
+   ],
+   "lat": 32.888023,
+   "lng": -96.986505,
+   "geocode": {
+    "displayName": "Belt Line, Valley View Lane, Irving, Dallas County, Texas, 75038, United States",
+    "house_number": null,
+    "road": "Valley View Lane",
+    "city": "Irving",
+    "postcode": "75038",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "5800 Valley View Ln.",
+   "city": "Irving",
+   "state": "TX",
+   "zip": "75063",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/belt-line-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"5800 Valley View Ln., Irving 75063\"",
+   "dartPageHeaderText": "Rail Station Detail Belt Line Station Orange Line local_parking accessible swap_horiz East of Belt Line Road and west of SH-161 (5800 Valley View Ln., Irving 75063)"
+  },
+  "Buckner": {
+   "recordIds": [
+    "buckner"
+   ],
+   "gtfsStopId": "29834",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.718478,
+   "lng": -96.685108,
+   "geocode": {
+    "displayName": "Buckner, Buckner DART Station, Dallas, Dallas County, Texas, 75217, United States",
+    "house_number": null,
+    "road": "Buckner DART Station",
+    "city": "Dallas",
+    "postcode": "75217",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "8008 Elam Rd.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75217",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/buckner-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"8008 Elam Rd., Dallas 75217\"",
+   "dartPageHeaderText": "Rail Station Detail Buckner Station Green Line local_parking accessible swap_horiz Buckner Boulevard and Elam Road (8008 Elam Rd., Dallas 75217)"
+  },
+  "Burbank": {
+   "recordIds": [
+    "burbank",
+    "burbank-o"
+   ],
+   "gtfsStopId": "29822",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green",
+    "orange"
+   ],
+   "lat": 32.842971,
+   "lng": -96.862176,
+   "geocode": {
+    "displayName": "Burbank, Denton Drive, Dallas, Dallas County, Texas, 75235, United States",
+    "house_number": null,
+    "road": "Denton Drive",
+    "city": "Dallas",
+    "postcode": "75235",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "8851 Denton Dr.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75235",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/burbank-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"8851 Denton Dr., Dallas 75235\"",
+   "dartPageHeaderText": "Rail Station Detail Burbank Station Green Line Orange Line accessible swap_horiz Just north of Burbank Street, west of Denton Drive (8851 Denton Dr., Dallas 75235)"
+  },
+  "Camp Wisdom": {
+   "recordIds": [
+    "camp-wisdom"
+   ],
+   "gtfsStopId": "33086",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.666638,
+   "lng": -96.7881,
+   "geocode": {
+    "displayName": "Camp Wisdom, NPR Trail, Dallas, Dallas County, Texas, 75241, United States",
+    "house_number": null,
+    "road": "NPR Trail",
+    "city": "Dallas",
+    "postcode": "75241",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "6869 Patrol Way",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75241",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/camp-wisdom-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"6869 Patrol Way, Dallas 75241\"",
+   "dartPageHeaderText": "Rail Station Detail Camp Wisdom Station Blue Line local_parking accessible swap_horiz North of Camp Wisdom Road between University Hills Boulevard and Lancaster Road (6869 Patrol Way, Dallas 75241)"
+  },
+  "Cedars": {
+   "recordIds": [
+    "cedars-r",
+    "cedars-blue"
+   ],
+   "gtfsStopId": "22729",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue",
+    "red"
+   ],
+   "lat": 32.768574,
+   "lng": -96.793253,
+   "geocode": {
+    "displayName": "Cedars, Wall Street, South Side PID, Dallas, Dallas County, Texas, 75215, United States",
+    "house_number": null,
+    "road": "Wall Street",
+    "city": "Dallas",
+    "postcode": "75215",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1112 Belleview St.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75215",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/cedars-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1112 Belleview St., Dallas 75215\"",
+   "dartPageHeaderText": "Rail Station Detail Cedars Station Blue Line Red Line accessible swap_horiz Belleview & Wall St. (1112 Belleview St., Dallas 75215)"
+  },
+  "CityLine/Bush": {
+   "recordIds": [
+    "cityline-bush"
+   ],
+   "gtfsStopId": "26895",
+   "baselineCity": [
+    "Richardson"
+   ],
+   "lines": [
+    "red"
+   ],
+   "lat": 33.002166,
+   "lng": -96.703144,
+   "geocode": {
+    "displayName": "CityLine/Bush, 1300, President George Bush Highway, Richardson, Collin County, Texas, 75082, United States",
+    "house_number": "1300",
+    "road": "President George Bush Highway",
+    "city": "Richardson",
+    "postcode": "75082",
+    "county": "Collin County"
+   },
+   "county": "Collin County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1300 E. President George Bush Hwy.",
+   "city": "Richardson",
+   "state": "TX",
+   "zip": "75082",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/cityline-bush-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1300 E. President George Bush Hwy., Richardson 75082\"",
+   "dartPageHeaderText": "Rail Station Detail CityLine/Bush Station Orange Line Red Line Silver Line local_parking accessible directions_bike swap_horiz President George Bush Highway, east of U.S. 75 (1300 E. President George Bush Hwy., Richardson 75082)"
+  },
+  "CityPlace/Uptown": {
+   "recordIds": [
+    "cityplace-up",
+    "cityplace-blue"
+   ],
+   "gtfsStopId": "26420",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue",
+    "red"
+   ],
+   "lat": 32.805424,
+   "lng": -96.793176,
+   "geocode": {
+    "displayName": "North Central Expressway, Dallas, Dallas County, Texas, 75204, United States",
+    "house_number": null,
+    "road": "North Central Expressway",
+    "city": "Dallas",
+    "postcode": "75204",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2711 N. Haskell Ave.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75204",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/cityplace-uptown-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2711 N. Haskell Ave., Dallas 75204\"",
+   "dartPageHeaderText": "Rail Station Detail Cityplace/Uptown Station Blue Line Orange Line Red Line accessible swap_horiz Haskell Ave. & North Central Expressway (2711 N. Haskell Ave., Dallas 75204)"
+  },
+  "Cityline/Bush": {
+   "recordIds": [
+    "cityline-bush-o",
+    "cityline-bush-sl"
+   ],
+   "gtfsStopId": "26895",
+   "baselineCity": [
+    "Richardson"
+   ],
+   "lines": [
+    "orange",
+    "silver"
+   ],
+   "lat": 33.002166,
+   "lng": -96.703144,
+   "geocode": {
+    "displayName": "CityLine/Bush, 1300, President George Bush Highway, Richardson, Collin County, Texas, 75082, United States",
+    "house_number": "1300",
+    "road": "President George Bush Highway",
+    "city": "Richardson",
+    "postcode": "75082",
+    "county": "Collin County"
+   },
+   "county": "Collin County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1300 E. President George Bush Hwy.",
+   "city": "Richardson",
+   "state": "TX",
+   "zip": "75082",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/cityline-bush-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1300 E. President George Bush Hwy., Richardson 75082\"",
+   "dartPageHeaderText": "Rail Station Detail CityLine/Bush Station Orange Line Red Line Silver Line local_parking accessible directions_bike swap_horiz President George Bush Highway, east of U.S. 75 (1300 E. President George Bush Hwy., Richardson 75082)"
+  },
+  "Cityplace/Uptown": {
+   "recordIds": [
+    "cityplace-o"
+   ],
+   "gtfsStopId": "26420",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "orange"
+   ],
+   "lat": 32.805424,
+   "lng": -96.793176,
+   "geocode": {
+    "displayName": "North Central Expressway, Dallas, Dallas County, Texas, 75204, United States",
+    "house_number": null,
+    "road": "North Central Expressway",
+    "city": "Dallas",
+    "postcode": "75204",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2711 N. Haskell Ave.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75204",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/cityplace-uptown-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2711 N. Haskell Ave., Dallas 75204\"",
+   "dartPageHeaderText": "Rail Station Detail Cityplace/Uptown Station Blue Line Orange Line Red Line accessible swap_horiz Haskell Ave. & North Central Expressway (2711 N. Haskell Ave., Dallas 75204)"
+  },
+  "Convention Center": {
+   "recordIds": [
+    "convention-r",
+    "convention-blue"
+   ],
+   "gtfsStopId": "22747",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue",
+    "red"
+   ],
+   "lat": 32.772481,
+   "lng": -96.802992,
+   "geocode": {
+    "displayName": "Kay Bailey Hutchinson Convention Center, 650, South Griffin Street, Dallas, Dallas County, Texas, 75202, United States",
+    "house_number": "650",
+    "road": "South Griffin Street",
+    "city": "Dallas",
+    "postcode": "75202",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "727 S. Lamar St.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75202",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/convention-center-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"727 S. Lamar St., Dallas 75202\"",
+   "dartPageHeaderText": "Rail Station Detail Convention Center Station Blue Line Red Line accessible swap_horiz South Lamar Street & Memorial Drive (727 S. Lamar St., Dallas 75202)"
+  },
+  "Cypress Waters": {
+   "recordIds": [
+    "cypress-waters"
+   ],
+   "gtfsStopId": "33595",
+   "baselineCity": [
+    "Coppell"
+   ],
+   "lines": [
+    "silver"
+   ],
+   "lat": 32.950699,
+   "lng": -96.983242,
+   "geocode": {
+    "displayName": "Cypress Waters, 445, East Belt Line Road, Dallas, Dallas County, Texas, 75019, United States",
+    "house_number": "445",
+    "road": "East Belt Line Road",
+    "city": "Dallas",
+    "postcode": "75019",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "445 East Belt Line Road",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75019",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/cypress-waters-station---silver-line",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"445 East Belt Line Road, Dallas 75019\"",
+   "dartPageHeaderText": "Station Detail Cypress Waters Station - Silver Line Silver Line local_parking accessible directions_bike swap_horiz 445 East Belt Line Road, Dallas Texas 75019 (445 East Belt Line Road, Dallas 75019)"
+  },
+  "DFW Airport T-A": {
+   "recordIds": [
+    "dfw-a"
+   ],
+   "gtfsStopId": "32553",
+   "baselineCity": [
+    "DFW Airport"
+   ],
+   "lines": [
+    "orange"
+   ],
+   "lat": 32.907386,
+   "lng": -97.039504,
+   "geocode": {
+    "displayName": "North Service Road, Grapevine, Tarrant County, Texas, 75261, United States",
+    "house_number": null,
+    "road": "North Service Road",
+    "city": "Grapevine",
+    "postcode": "75261",
+    "county": "Tarrant County"
+   },
+   "county": "Tarrant County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2049 N. Service Rd.",
+   "city": "DFW Airport",
+   "state": "TX",
+   "zip": "75261",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/dfw-airport-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2049 N. Service Rd., DFW 75261\"",
+   "dartPageHeaderText": "Rail Station Detail DFW Airport Station Terminal A Orange Line accessible swap_horiz DFW International Airport, Terminal A (2049 N. Service Rd., DFW 75261)"
+  },
+  "DFW Airport T-B": {
+   "recordIds": [
+    "dfw-b"
+   ],
+   "gtfsStopId": "32553",
+   "baselineCity": [
+    "DFW Airport"
+   ],
+   "lines": [
+    "orange"
+   ],
+   "lat": 32.907386,
+   "lng": -97.039504,
+   "geocode": {
+    "displayName": "North Service Road, Grapevine, Tarrant County, Texas, 75261, United States",
+    "house_number": null,
+    "road": "North Service Road",
+    "city": "Grapevine",
+    "postcode": "75261",
+    "county": "Tarrant County"
+   },
+   "county": "Tarrant County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2049 N. Service Rd.",
+   "city": "DFW Airport",
+   "state": "TX",
+   "zip": "75261",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/dfw-airport-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2049 N. Service Rd., DFW 75261\"",
+   "dartPageHeaderText": "Rail Station Detail DFW Airport Station Terminal A Orange Line accessible swap_horiz DFW International Airport, Terminal A (2049 N. Service Rd., DFW 75261)"
+  },
+  "DFW North": {
+   "recordIds": [
+    "dfw-north-sl"
+   ],
+   "gtfsStopId": "33474",
+   "baselineCity": [
+    "DFW Airport"
+   ],
+   "lines": [
+    "silver"
+   ],
+   "lat": 32.933913,
+   "lng": -97.054193,
+   "geocode": {
+    "displayName": "1867, East Dallas Road, Grapevine, Tarrant County, Texas, 76051, United States",
+    "house_number": "1867",
+    "road": "East Dallas Road",
+    "city": "Grapevine",
+    "postcode": "76051",
+    "county": "Tarrant County"
+   },
+   "county": "Tarrant County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1867 E Dallas Rd",
+   "city": "Grapevine",
+   "state": "TX",
+   "zip": "76051",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/dfw-north-station---silver-line",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1867 E Dallas Rd, Grapevine 76051\"",
+   "dartPageHeaderText": "Station Detail DFW Airport North Station - Silver Line Silver Line local_parking accessible swap_horiz DFW International Airport North 1601 E. Dallas Road, Grapevine, TX 76051 (1867 E Dallas Rd, Grapevine 76051)"
+  },
+  "DFW Terminal B": {
+   "recordIds": [
+    "dfw-terminal-b-sl"
+   ],
+   "gtfsStopId": "33473",
+   "baselineCity": [
+    "DFW Airport"
+   ],
+   "lines": [
+    "silver"
+   ],
+   "lat": 32.906306,
+   "lng": -97.041243,
+   "geocode": {
+    "displayName": "2400, South Service Road, Dallas, Tarrant County, Texas, 75261, United States",
+    "house_number": "2400",
+    "road": "South Service Road",
+    "city": "Dallas",
+    "postcode": "75261",
+    "county": "Tarrant County"
+   },
+   "county": "Tarrant County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2400 Aviation Dr",
+   "city": "DFW Airport",
+   "state": "TX",
+   "zip": "75261",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/dfw-terminal-b-station---silver-line",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2400 Aviation Dr, DFW 75261\"",
+   "dartPageHeaderText": "Station Detail DFW Airport Terminal B Station - Silver Line Silver Line accessible swap_horiz DFW International Airport, Terminal B (2400 Aviation Dr, DFW 75261)"
+  },
+  "Dallas College Northlake Campus": {
+   "recordIds": [
+    "north-lake"
+   ],
+   "gtfsStopId": "31088",
+   "baselineCity": [
+    "Irving"
+   ],
+   "lines": [
+    "orange"
+   ],
+   "lat": 32.875197,
+   "lng": -96.967119,
+   "geocode": {
+    "displayName": "Dallas College North Lake Campus, 1770, West Walnut Hill Lane, Las Colinas, Irving, Dallas County, Texas, 75038, United States",
+    "house_number": "1770",
+    "road": "West Walnut Hill Lane",
+    "city": "Irving",
+    "postcode": "75038",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1770 W. Walnut Hill Ln.",
+   "city": "Irving",
+   "state": "TX",
+   "zip": "75038",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/dallas-college-north-lake-campus-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1770 W. Walnut Hill Ln., Irving 75038\"",
+   "dartPageHeaderText": "Station Detail Dallas College North Lake Campus Station Orange Line local_parking accessible swap_horiz East of Walnut Hill Lane and north of the Dallas College North Lake Campus (1770 W. Walnut Hill Ln., Irving 75038)"
+  },
+  "Deep Ellum": {
+   "recordIds": [
+    "deep-ellum"
+   ],
+   "gtfsStopId": "32043",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.785866,
+   "lng": -96.788532,
+   "geocode": {
+    "displayName": "North Good-Latimer Expressway, Deep Ellum PID, Dallas, Dallas County, Texas, 75204, United States",
+    "house_number": null,
+    "road": "North Good-Latimer Expressway",
+    "city": "Dallas",
+    "postcode": "75204",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "450 N. Good-Latimer Expwy.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75226",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/deep-ellum-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"450 N. Good-Latimer Expwy., Dallas 75226\"",
+   "dartPageHeaderText": "Rail Station Detail Deep Ellum Station Green Line accessible swap_horiz Good-Latimer Expressway and Gaston Avenue (450 N. Good-Latimer Expwy., Dallas 75226)"
+  },
+  "Downtown Carrollton": {
+   "recordIds": [
+    "downtown-carrollton",
+    "downtown-carrollton-sl"
+   ],
+   "gtfsStopId": "29817",
+   "baselineCity": [
+    "Carrollton"
+   ],
+   "lines": [
+    "green",
+    "silver"
+   ],
+   "lat": 32.954443,
+   "lng": -96.908277,
+   "geocode": {
+    "displayName": "1013, North Denton Drive, Carrollton, Dallas County, Texas, 75006, United States",
+    "house_number": "1013",
+    "road": "North Denton Drive",
+    "city": "Carrollton",
+    "postcode": "75006",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1013 N. Denton Dr.",
+   "city": "Carrollton",
+   "state": "TX",
+   "zip": "75006",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/downtown-carrollton-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1013 N. Denton Dr., Carrollton 75006\"",
+   "dartPageHeaderText": "Rail Station Detail Downtown Carrollton Station Green Line local_parking accessible swap_horiz Belt Line Road and Broadway Street (1013 N. Denton Dr., Carrollton 75006)",
+   "additionalStops": [
+    {
+     "gtfsStopId": "34292",
+     "officialName": "DOWNTOWN CARROLLTON SILVER LINE STATION",
+     "lat": 32.95567,
+     "lng": -96.908107,
+     "dartPublishedAddress": "1025 North Denton Drive, Carrollton 75006",
+     "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/downtown-carrollton-station---silver-line"
+    }
+   ]
+  },
+  "Downtown Garland": {
+   "recordIds": [
+    "downtown-garland"
+   ],
+   "gtfsStopId": "26691",
+   "baselineCity": [
+    "Garland"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.916319,
+   "lng": -96.635369,
+   "geocode": {
+    "displayName": "Downtown Garland, West Walnut Street, Garland, Dallas County, Texas, 75040, United States",
+    "house_number": null,
+    "road": "West Walnut Street",
+    "city": "Garland",
+    "postcode": "75040",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "430 W. Walnut St.",
+   "city": "Garland",
+   "state": "TX",
+   "zip": "75040",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/downtown-garland-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"430 W. Walnut St., Garland 75040\"",
+   "dartPageHeaderText": "Rail Station Detail Downtown Garland Station Blue Line local_parking accessible swap_horiz Walnut at Fifth streets (430 W. Walnut St., Garland 75040)"
+  },
+  "Downtown Plano": {
+   "recordIds": [
+    "downtown-plano",
+    "downtown-plano-o"
+   ],
+   "gtfsStopId": "26896",
+   "baselineCity": [
+    "Plano"
+   ],
+   "lines": [
+    "orange",
+    "red"
+   ],
+   "lat": 33.020856,
+   "lng": -96.700898,
+   "geocode": {
+    "displayName": "Downtown Plano, I Avenue, Plano, Collin County, Texas, 75074, United States",
+    "house_number": null,
+    "road": "I Avenue",
+    "city": "Plano",
+    "postcode": "75074",
+    "county": "Collin County"
+   },
+   "county": "Collin County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1001 E. 16th St.",
+   "city": "Plano",
+   "state": "TX",
+   "zip": "75074",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/downtown-plano-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1001 E. 16th St., Plano 75074\"",
+   "dartPageHeaderText": "Rail Station Detail Downtown Plano Station Orange Line Red Line accessible swap_horiz 15th Street and Avenue J (1001 E. 16th St., Plano 75074)"
+  },
+  "Downtown Rowlett": {
+   "recordIds": [
+    "downtown-rowlett"
+   ],
+   "gtfsStopId": "32562",
+   "baselineCity": [
+    "Rowlett"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.904111,
+   "lng": -96.563388,
+   "geocode": {
+    "displayName": "Downtown Rowlett, 5000, Martin Drive, Rowlett, Dallas County, Texas, 75088, United States",
+    "house_number": "5000",
+    "road": "Martin Drive",
+    "city": "Rowlett",
+    "postcode": "75088",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "5000 Martin Dr.",
+   "city": "Rowlett",
+   "state": "TX",
+   "zip": "75088",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/downtown-rowlett-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"5000 Martin Dr., Rowlett 75088\"",
+   "dartPageHeaderText": "Rail Station Detail Downtown Rowlett Station Blue Line local_parking accessible swap_horiz Martin Drive and Industrial Street, south of Lakeview Pkwy. (SH-66) (5000 Martin Dr., Rowlett 75088)"
+  },
+  "EBJ Union Station": {
+   "recordIds": [
+    "union-r",
+    "union-blue"
+   ],
+   "gtfsStopId": "22748",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue",
+    "red"
+   ],
+   "lat": 32.776208,
+   "lng": -96.808201,
+   "geocode": {
+    "displayName": "Reunion Boulevard, West End Historic District, Downtown PID, Dallas, Dallas County, Texas, 75207, United States",
+    "house_number": null,
+    "road": "Reunion Boulevard",
+    "city": "Dallas",
+    "postcode": "75207",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "400 S. Houston St.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75202",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/ebj-union-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"400 S. Houston St., Dallas 75202\"",
+   "dartPageHeaderText": "Rail Station Detail EBJ Union Station Blue Line Red Line TRE accessible swap_horiz Houston Street, between Wood & Young streets (400 S. Houston St., Dallas 75202)"
+  },
+  "Fair Park": {
+   "recordIds": [
+    "fair-park"
+   ],
+   "gtfsStopId": "32041",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.782058,
+   "lng": -96.765928,
+   "geocode": {
+    "displayName": "Parry Avenue, Deep Ellum PID, Dallas, Dallas County, Texas, 75246, United States",
+    "house_number": null,
+    "road": "Parry Avenue",
+    "city": "Dallas",
+    "postcode": "75246",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "3710 Parry Ave.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75226",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/fair-park-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"3710 Parry Ave., Dallas 75226\"",
+   "dartPageHeaderText": "Rail Station Detail Fair Park Station Green Line accessible swap_horiz Parry Avenue and Exposition Avenue (3710 Parry Ave., Dallas 75226)"
+  },
+  "Farmers Branch": {
+   "recordIds": [
+    "farmers-branch"
+   ],
+   "gtfsStopId": "29818",
+   "baselineCity": [
+    "Farmers Branch"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.921962,
+   "lng": -96.896238,
+   "geocode": {
+    "displayName": "Farmers Branch, Bee Street, Farmers Branch, Dallas County, Texas, 75234, United States",
+    "house_number": null,
+    "road": "Bee Street",
+    "city": "Farmers Branch",
+    "postcode": "75234",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "12800 Denton Dr.",
+   "city": "Farmers Branch",
+   "state": "TX",
+   "zip": "75234",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/farmers-branch-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"12800 Denton Dr., Farmers Branch 75234\"",
+   "dartPageHeaderText": "Rail Station Detail Farmers Branch Station Green Line local_parking accessible swap_horiz South of Valley View Lane on the east side of Denton (12800 Denton Dr., Farmers Branch 75234)"
+  },
+  "Forest Lane": {
+   "recordIds": [
+    "forest-lane",
+    "forest-ln-o"
+   ],
+   "gtfsStopId": "26671",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "orange",
+    "red"
+   ],
+   "lat": 32.908604,
+   "lng": -96.76168,
+   "geocode": {
+    "displayName": "Forest Lane, Bouchard, Dallas, Dallas County, Texas, 75251, United States",
+    "house_number": null,
+    "road": "Forest Lane",
+    "city": "Dallas",
+    "postcode": "75251",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "8210 Forest Ln.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75243",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/forest-lane-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"8210 Forest Ln., Dallas 75243\"",
+   "dartPageHeaderText": "Station Detail Forest Lane Station Orange Line Red Line local_parking accessible swap_horiz Forest Lane, east of North Central Expressway (8210 Forest Ln., Dallas 75243)"
+  },
+  "Forest/Jupiter": {
+   "recordIds": [
+    "forest-jupiter"
+   ],
+   "gtfsStopId": "26690",
+   "baselineCity": [
+    "Garland"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.908056,
+   "lng": -96.679457,
+   "geocode": {
+    "displayName": "Forest/Jupiter, Forest Lane, Garland, Dallas County, Texas, 75042, United States",
+    "house_number": null,
+    "road": "Forest Lane",
+    "city": "Garland",
+    "postcode": "75042",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "3232 Forest Ln.",
+   "city": "Garland",
+   "state": "TX",
+   "zip": "75042",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/forest-jupiter-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"3232 Forest Ln., Garland 75042\"",
+   "dartPageHeaderText": "Rail Station Detail Forest/Jupiter Station Blue Line local_parking accessible swap_horiz Near Forest Lane & Jupiter Road in Garland (3232 Forest Ln., Garland 75042)"
+  },
+  "Galatyn Park": {
+   "recordIds": [
+    "galatyn-park",
+    "galatyn-park-o"
+   ],
+   "gtfsStopId": "26674",
+   "baselineCity": [
+    "Richardson"
+   ],
+   "lines": [
+    "orange",
+    "red"
+   ],
+   "lat": 32.985226,
+   "lng": -96.710953,
+   "geocode": {
+    "displayName": "Galatyn Park, Central Trail, Richardson, Collin County, Texas, 75080, United States",
+    "house_number": null,
+    "road": "Central Trail",
+    "city": "Richardson",
+    "postcode": "75080",
+    "county": "Collin County"
+   },
+   "county": "Collin County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2300 N. Central Expwy.",
+   "city": "Richardson",
+   "state": "TX",
+   "zip": "75082",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/galatyn-park-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2300 N. Central Expwy., Richardson 75082\"",
+   "dartPageHeaderText": "Rail Station Detail Galatyn Park Station Orange Line Red Line accessible directions_bike swap_horiz North Central Expressway near Lookout Drive in Richardson (2300 N. Central Expwy., Richardson 75082)"
+  },
+  "Hampton": {
+   "recordIds": [
+    "hampton"
+   ],
+   "gtfsStopId": "21210",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "red"
+   ],
+   "lat": 32.726333,
+   "lng": -96.855532,
+   "geocode": {
+    "displayName": "Hampton, Wright Street, Oak Cliff, Dallas, Dallas County, Texas, 75224, United States",
+    "house_number": null,
+    "road": "Wright Street",
+    "city": "Dallas",
+    "postcode": "75224",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2002 S. Hampton Rd.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75224",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/hampton-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2002 S. Hampton Rd., Dallas 75224\"",
+   "dartPageHeaderText": "Rail Station Detail Hampton Station Red Line local_parking accessible swap_horiz Hampton Road & Wright Street (2002 S. Hampton Rd., Dallas 75224)"
+  },
+  "Hatcher": {
+   "recordIds": [
+    "hatcher"
+   ],
+   "gtfsStopId": "29831",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.766323,
+   "lng": -96.742471,
+   "geocode": {
+    "displayName": "Hatcher, Scyene Road, Dallas, Dallas County, Texas, 75227, United States",
+    "house_number": null,
+    "road": "Scyene Road",
+    "city": "Dallas",
+    "postcode": "75227",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "4003 Elsie Faye Heggins St.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75210",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/hatcher-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"4003 Elsie Faye Heggins St., Dallas 75210\"",
+   "dartPageHeaderText": "Rail Station Detail Hatcher Station Green Line accessible swap_horiz Elsie Faye Heggins Street and Scyene Road (4003 Elsie Faye Heggins St., Dallas 75210)"
+  },
+  "Hidden Ridge": {
+   "recordIds": [
+    "hidden-ridge"
+   ],
+   "gtfsStopId": "33566",
+   "baselineCity": [
+    "Irving"
+   ],
+   "lines": [
+    "orange"
+   ],
+   "lat": 32.882109,
+   "lng": -96.955159,
+   "geocode": {
+    "displayName": "800, Meadow Creek Drive, Las Colinas, Irving, Dallas County, Texas, 75038, United States",
+    "house_number": "800",
+    "road": "Meadow Creek Drive",
+    "city": "Irving",
+    "postcode": "75038",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "700 Meadow Creek Dr.",
+   "city": "Irving",
+   "state": "TX",
+   "zip": "75038",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/hidden-ridge-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"700 Meadow Creek Dr., Irving 75038\"",
+   "dartPageHeaderText": "Rail Station Detail Hidden Ridge Station Orange Line local_parking accessible swap_horiz Meadow Creek Drive, west of Green Park Drive (700 Meadow Creek Dr., Irving 75038)"
+  },
+  "Illinois TC": {
+   "recordIds": [
+    "illinois-tc"
+   ],
+   "gtfsStopId": "21030",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.723302,
+   "lng": -96.805162,
+   "geocode": {
+    "displayName": "Illinois, Officer Brent Thompson Way, Dallas, Dallas County, Texas, 75216, United States",
+    "house_number": null,
+    "road": "Officer Brent Thompson Way",
+    "city": "Dallas",
+    "postcode": "75216",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2111 S. Corinth St. Road",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75203",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/illinois-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2111 S. Corinth St. Road, Dallas 75203\"",
+   "dartPageHeaderText": "Station Detail Illinois Station Blue Line local_parking accessible swap_horiz Denley Drive, north of Illinois Avenue (2111 S. Corinth St. Road, Dallas 75203)"
+  },
+  "Inwood/Love Field": {
+   "recordIds": [
+    "inwood-g",
+    "love-o"
+   ],
+   "gtfsStopId": "29824",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green",
+    "orange"
+   ],
+   "lat": 32.822243,
+   "lng": -96.833361,
+   "geocode": {
+    "displayName": "Trinity Strand Trail, Dallas, Dallas County, Texas, 75390, United States",
+    "house_number": null,
+    "road": "Trinity Strand Trail",
+    "city": "Dallas",
+    "postcode": "75390",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2720 Inwood Rd.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75235",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/inwood-love-field-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2720 Inwood Rd., Dallas 75235\"",
+   "dartPageHeaderText": "Rail Station Detail Inwood/Love Field Station Green Line Orange Line local_parking accessible swap_horiz Southwest corner of Inwood Road and Denton Drive (2720 Inwood Rd., Dallas 75235)"
+  },
+  "Irving Convention Ctr": {
+   "recordIds": [
+    "irving"
+   ],
+   "gtfsStopId": "32338",
+   "baselineCity": [
+    "Irving"
+   ],
+   "lines": [
+    "orange"
+   ],
+   "lat": 32.876891,
+   "lng": -96.938558,
+   "geocode": {
+    "displayName": "Irving Convention Center, 480, Northwest Highway, Las Colinas, Irving, Dallas County, Texas, 75039, United States",
+    "house_number": "480",
+    "road": "Northwest Highway",
+    "city": "Irving",
+    "postcode": "75039",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "480 W. Northwest Hwy.",
+   "city": "Irving",
+   "state": "TX",
+   "zip": "75039",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/irving-convention-center-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"480 W. Northwest Hwy., Irving 75039\"",
+   "dartPageHeaderText": "Rail Station Detail Irving Convention Center Station Orange Line local_parking accessible directions_bike swap_horiz Northwest Hwy., west of Riverside Drive (480 W. Northwest Hwy., Irving 75039)"
+  },
+  "Kiest": {
+   "recordIds": [
+    "kiest"
+   ],
+   "gtfsStopId": "23390",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.707113,
+   "lng": -96.801175,
+   "geocode": {
+    "displayName": "Kiest, South Lancaster Road, Dallas, Dallas County, Texas, 75241, United States",
+    "house_number": null,
+    "road": "South Lancaster Road",
+    "city": "Dallas",
+    "postcode": "75241",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "3300 S. Lancaster Rd.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75216",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/kiest-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"3300 S. Lancaster Rd., Dallas 75216\"",
+   "dartPageHeaderText": "Rail Station Detail Kiest Station Blue Line local_parking accessible swap_horiz Kiest Boulevard & Lancaster Road (3300 S. Lancaster Rd., Dallas 75216)"
+  },
+  "Knoll Trail": {
+   "recordIds": [
+    "knoll-trail"
+   ],
+   "gtfsStopId": "33597",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "silver"
+   ],
+   "lat": 32.962884,
+   "lng": -96.817617,
+   "geocode": {
+    "displayName": "Knoll Trail, 15450, Knoll Trail Drive, Dallas, Dallas County, Texas, 75248, United States",
+    "house_number": "15450",
+    "road": "Knoll Trail Drive",
+    "city": "Dallas",
+    "postcode": "75248",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "15292 Knoll Trail Dr",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75248",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/knoll-trail-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"15292 Knoll Trail Dr, Dallas 75248\"",
+   "dartPageHeaderText": "Rail Station Detail Knoll Trail Station - Silver Line Silver Line accessible directions_bike swap_horiz 15292 Knoll Trail Dr, Dallas, TX 75248 (15292 Knoll Trail Dr, Dallas 75248)"
+  },
+  "LBJ/Central": {
+   "recordIds": [
+    "lbj-central",
+    "lbj-central-o"
+   ],
+   "gtfsStopId": "26670",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "orange",
+    "red"
+   ],
+   "lat": 32.918254,
+   "lng": -96.752235,
+   "geocode": {
+    "displayName": "LBJ/Central, 8901, Markville Drive, Dallas, Dallas County, Texas, 75243, United States",
+    "house_number": "8901",
+    "road": "Markville Drive",
+    "city": "Dallas",
+    "postcode": "75243",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "8901 Markville Dr.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75243",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/lbj-central-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"8901 Markville Dr., Dallas 75243\"",
+   "dartPageHeaderText": "Rail Station Detail LBJ/Central Station Orange Line Red Line local_parking accessible swap_horiz T.I. Boulevard and Markville Drive (8901 Markville Dr., Dallas 75243)"
+  },
+  "LBJ/Skillman": {
+   "recordIds": [
+    "lbj-skillman"
+   ],
+   "gtfsStopId": "26668",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.897924,
+   "lng": -96.712139,
+   "geocode": {
+    "displayName": "LBJ/Skillman, Lyndon B. Johnson Service Road, Lake Highlands, Dallas, Dallas County, Texas, 75243, United States",
+    "house_number": null,
+    "road": "Lyndon B. Johnson Service Road",
+    "city": "Dallas",
+    "postcode": "75243",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "10100 LBJ Fwy.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75243",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/lbj-skillman-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"10100 LBJ Fwy., Dallas 75243\"",
+   "dartPageHeaderText": "Rail Station Detail LBJ/Skillman Station Blue Line local_parking accessible swap_horiz North of Interstate 635 between Skillman Street and Miller Road (10100 LBJ Fwy., Dallas 75243)"
+  },
+  "Lake Highlands": {
+   "recordIds": [
+    "lake-highlands"
+   ],
+   "gtfsStopId": "32049",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.879487,
+   "lng": -96.730452,
+   "geocode": {
+    "displayName": "Lake Highlands, Lake Highlands Trail, Lake Highlands PID, Dallas, Dallas County, Texas, 75238, United States",
+    "house_number": null,
+    "road": "Lake Highlands Trail",
+    "city": "Dallas",
+    "postcode": "75238",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "9393 Whistle Stop Pl.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75231",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/lake-highlands-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"9393 Whistle Stop Pl., Dallas 75231\"",
+   "dartPageHeaderText": "Rail Station Detail Lake Highlands Station Blue Line local_parking accessible swap_horiz Near Walnut Hill Lane and White Rock Trail (9393 Whistle Stop Pl., Dallas 75231)"
+  },
+  "Lake June": {
+   "recordIds": [
+    "lake-june"
+   ],
+   "gtfsStopId": "29833",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.732335,
+   "lng": -96.709432,
+   "geocode": {
+    "displayName": "Lake June, C F Hawn Freeway, Dallas, Dallas County, Texas, 75217, United States",
+    "house_number": null,
+    "road": "C F Hawn Freeway",
+    "city": "Dallas",
+    "postcode": "75217",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "6410 Lake June Rd.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75217",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/lake-june-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"6410 Lake June Rd., Dallas 75217\"",
+   "dartPageHeaderText": "Rail Station Detail Lake June Station Green Line local_parking accessible swap_horiz Lake June Road and Gillette Street, east of U.S. Highway 175 (6410 Lake June Rd., Dallas 75217)"
+  },
+  "Las Colinas Urban Ctr": {
+   "recordIds": [
+    "las-colinas"
+   ],
+   "gtfsStopId": "32337",
+   "baselineCity": [
+    "Irving"
+   ],
+   "lines": [
+    "orange"
+   ],
+   "lat": 32.868572,
+   "lng": -96.933574,
+   "geocode": {
+    "displayName": "Las Colinas Urban Center, Lake Carolyn Parkway, Irving, Dallas County, Texas, 75062, United States",
+    "house_number": null,
+    "road": "Lake Carolyn Parkway",
+    "city": "Irving",
+    "postcode": "75062",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "890 Lake Carolyn Pkwy.",
+   "city": "Irving",
+   "state": "TX",
+   "zip": "75039",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/las-colinas-urban-center-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"890 Lake Carolyn Pkwy., Irving 75039\"",
+   "dartPageHeaderText": "Rail Station Detail Las Colinas Urban Center Station Orange Line accessible swap_horiz Lake Carolyn Parkway, south of O'Connor Blvd. (890 Lake Carolyn Pkwy., Irving 75039)"
+  },
+  "Lawnview": {
+   "recordIds": [
+    "lawnview"
+   ],
+   "gtfsStopId": "29832",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.765606,
+   "lng": -96.720388,
+   "geocode": {
+    "displayName": "Lawnview, Scyene Road, Dallas, Dallas County, Texas, 75227, United States",
+    "house_number": null,
+    "road": "Scyene Road",
+    "city": "Dallas",
+    "postcode": "75227",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "5900 Scyene Rd.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75227",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/lawnview-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"5900 Scyene Rd., Dallas 75227\"",
+   "dartPageHeaderText": "Rail Station Detail Lawnview Station Green Line local_parking accessible swap_horiz Lawnview Avenue and Scyene Road (5900 Scyene Rd., Dallas 75227)"
+  },
+  "Ledbetter": {
+   "recordIds": [
+    "ledbetter"
+   ],
+   "gtfsStopId": "23320",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.683394,
+   "lng": -96.788812,
+   "geocode": {
+    "displayName": "Ledbetter, South Lancaster Road, Dallas, Dallas County, Texas, 75241, United States",
+    "house_number": null,
+    "road": "South Lancaster Road",
+    "city": "Dallas",
+    "postcode": "75241",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2006 E. Ledbetter Dr.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75216",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/ledbetter-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2006 E. Ledbetter Dr., Dallas 75216\"",
+   "dartPageHeaderText": "Rail Station Detail Ledbetter Station Blue Line local_parking accessible swap_horiz Lancaster Road, south of Ledbetter Drive (2006 E. Ledbetter Dr., Dallas 75216)"
+  },
+  "Lovers Lane": {
+   "recordIds": [
+    "lovers-lane",
+    "lovers-lane-o"
+   ],
+   "gtfsStopId": "22984",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "orange",
+    "red"
+   ],
+   "lat": 32.848601,
+   "lng": -96.771758,
+   "geocode": {
+    "displayName": "Milton Street, University Crossing PID, Dallas, Dallas County, Texas, 75206, United States",
+    "house_number": null,
+    "road": "Milton Street",
+    "city": "Dallas",
+    "postcode": "75206",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "5603 Milton St.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75206",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/lovers-lane-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"5603 Milton St., Dallas 75206\"",
+   "dartPageHeaderText": "Rail Station Detail Lovers Lane Station Orange Line Red Line accessible swap_horiz Lovers Lane and North Central Expressway (5603 Milton St., Dallas 75206)"
+  },
+  "MLK Jr.": {
+   "recordIds": [
+    "mlk"
+   ],
+   "gtfsStopId": "32040",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.773757,
+   "lng": -96.764576,
+   "geocode": {
+    "displayName": "South Boulevard, South Dallas-Fair Park PID, Dallas, Dallas County, Texas, 75210, United States",
+    "house_number": null,
+    "road": "South Boulevard",
+    "city": "Dallas",
+    "postcode": "75210",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1412 S. Trunk Ave.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75210",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/mlk--jr--station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1412 S. Trunk Ave., Dallas 75210\"",
+   "dartPageHeaderText": "Station Detail MLK, Jr. Station/J.B. Jackson Jr. Transit Center Green Line local_parking accessible swap_horiz North of Martin Luther King, Jr. Boulevard, near Trunk Avenue and South Boulevard and adjacent to the J.B. Jackson, Jr. Transit Center (1412 S. Trunk Ave., Dallas 75210)"
+  },
+  "Market Center": {
+   "recordIds": [
+    "market-center-g",
+    "market-center-o"
+   ],
+   "gtfsStopId": "29825",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green",
+    "orange"
+   ],
+   "lat": 32.804635,
+   "lng": -96.823713,
+   "geocode": {
+    "displayName": "Market Center, Harry Hines Boulevard, Dallas, Dallas County, Texas, 75291, United States",
+    "house_number": null,
+    "road": "Harry Hines Boulevard",
+    "city": "Dallas",
+    "postcode": "75291",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "4301 Harry Hines Blvd.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75219",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/market-center-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"4301 Harry Hines Blvd., Dallas 75219\"",
+   "dartPageHeaderText": "Rail Station Detail Medical/Market Center Station Green Line Orange Line local_parking accessible swap_horiz Harry Hines Boulevard and Vagas Street (4301 Harry Hines Blvd., Dallas 75219)"
+  },
+  "Morrell": {
+   "recordIds": [
+    "morrell"
+   ],
+   "gtfsStopId": "16083",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.73986,
+   "lng": -96.802604,
+   "geocode": {
+    "displayName": "Morrell, Woodbine Avenue, Oak Cliff, Dallas, Dallas County, Texas, 75203, United States",
+    "house_number": null,
+    "road": "Woodbine Avenue",
+    "city": "Dallas",
+    "postcode": "75203",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1363 Morrell Ave.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75203",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/morrell-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1363 Morrell Ave., Dallas 75203\"",
+   "dartPageHeaderText": "Rail Station Detail Morrell Station Blue Line accessible swap_horiz Morrell & Woodbine avenues (1363 Morrell Ave., Dallas 75203)"
+  },
+  "N. Carrollton/Frankford": {
+   "recordIds": [
+    "north-carrollton-frank"
+   ],
+   "gtfsStopId": "29815",
+   "baselineCity": [
+    "Carrollton"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.991611,
+   "lng": -96.936753,
+   "geocode": {
+    "displayName": "North Carrollton/Frankford, Trade Center Drive, Carrollton, Denton County, Texas, 75007, United States",
+    "house_number": null,
+    "road": "Trade Center Drive",
+    "city": "Carrollton",
+    "postcode": "75007",
+    "county": "Denton County"
+   },
+   "county": "Denton County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1717 W. Frankford Rd.",
+   "city": "Carrollton",
+   "state": "TX",
+   "zip": "75007",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/north-carrollton-frankford-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1717 W. Frankford Rd., Carrollton 75007\"",
+   "dartPageHeaderText": "Rail Station Detail North Carrollton/Frankford Station Green Line local_parking accessible swap_horiz South of Frankford Road and east of I-35E (1717 W. Frankford Rd., Carrollton 75007)"
+  },
+  "Park Lane": {
+   "recordIds": [
+    "park-lane",
+    "park-lane-o"
+   ],
+   "gtfsStopId": "28755",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "orange",
+    "red"
+   ],
+   "lat": 32.872513,
+   "lng": -96.765899,
+   "geocode": {
+    "displayName": "Park Lane, Vickery Meadows PID, Dallas, Dallas County, Texas, 75231, United States",
+    "house_number": null,
+    "road": "Park Lane",
+    "city": "Dallas",
+    "postcode": "75231",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "8169 Park Ln.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75231",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/park-lane-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"8169 Park Ln., Dallas 75231\"",
+   "dartPageHeaderText": "Rail Station Detail Park Lane Station Orange Line Red Line local_parking accessible swap_horiz Park Lane & Greenville Avenue (8169 Park Ln., Dallas 75231)"
+  },
+  "Parker Road": {
+   "recordIds": [
+    "parker-road",
+    "parker-road-o"
+   ],
+   "gtfsStopId": "26897",
+   "baselineCity": [
+    "Plano"
+   ],
+   "lines": [
+    "orange",
+    "red"
+   ],
+   "lat": 33.033454,
+   "lng": -96.700736,
+   "geocode": {
+    "displayName": "Archerwood Street, Plano, Collin County, Texas, 75074, United States",
+    "house_number": null,
+    "road": "Archerwood Street",
+    "city": "Plano",
+    "postcode": "75074",
+    "county": "Collin County"
+   },
+   "county": "Collin County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2600 Archerwood St.",
+   "city": "Plano",
+   "state": "TX",
+   "zip": "75074",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/parker-road-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2600 Archerwood St., Plano 75074\"",
+   "dartPageHeaderText": "Rail Station Detail Parker Road Station Orange Line Red Line local_parking accessible directions_bike swap_horiz Park Boulevard and Archerwood Street near North Central Expressway (2600 Archerwood St., Plano 75074)"
+  },
+  "Pearl/Arts District": {
+   "recordIds": [
+    "pearl",
+    "pearl-g",
+    "pearl-blue",
+    "pearl-o"
+   ],
+   "gtfsStopId": "22752",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ],
+   "lat": 32.786618,
+   "lng": -96.79431,
+   "geocode": {
+    "displayName": "Pearl/Arts District, Bryan Street, Downtown PID, Dallas, Dallas County, Texas, 75201, United States",
+    "house_number": null,
+    "road": "Bryan Street",
+    "city": "Dallas",
+    "postcode": "75201",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2200 Bryan St.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75201",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/pearl-arts-district-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2200 Bryan St., Dallas 75201\"",
+   "dartPageHeaderText": "Rail Station Detail Pearl/Arts District Station Blue Line Green Line Orange Line Red Line accessible swap_horiz Bryan Street, east of Pearl Street (2200 Bryan St., Dallas 75201)"
+  },
+  "Royal Lane": {
+   "recordIds": [
+    "royal-lane"
+   ],
+   "gtfsStopId": "29819",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.896055,
+   "lng": -96.88811,
+   "geocode": {
+    "displayName": "3, Denton Drive, Asian Trade District, Dallas, Dallas County, Texas, 75235, United States",
+    "house_number": null,
+    "road": "Denton Drive",
+    "city": "Dallas",
+    "postcode": "75235",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "11310 Denton Dr.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75229",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/royal-lane-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"11310 Denton Dr., Dallas 75229\"",
+   "dartPageHeaderText": "Rail Station Detail Royal Lane Station Green Line local_parking accessible swap_horiz North of Royal Lane on the east side of Denton Drive (11310 Denton Dr., Dallas 75229)"
+  },
+  "SMU/Mockingbird": {
+   "recordIds": [
+    "smu",
+    "mockingbird-blue",
+    "smu-o"
+   ],
+   "gtfsStopId": "22938",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue",
+    "orange",
+    "red"
+   ],
+   "lat": 32.837828,
+   "lng": -96.774939,
+   "geocode": {
+    "displayName": "5465, East Mockingbird Lane, University Crossing PID, Dallas, Dallas County, Texas, 75206, United States",
+    "house_number": "5465",
+    "road": "East Mockingbird Lane",
+    "city": "Dallas",
+    "postcode": "75206",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "5465 E. Mockingbird Ln.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75206",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/smu-mockingbird-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"5465 E. Mockingbird Ln., Dallas 75206\"",
+   "dartPageHeaderText": "Rail Station Detail SMU/Mockingbird Station Blue Line Orange Line Red Line local_parking accessible swap_horiz Mockingbird Lane and North Central Expwy. (5465 E. Mockingbird Ln., Dallas 75206)"
+  },
+  "SW Medical District/Parkland": {
+   "recordIds": [
+    "sw-medical",
+    "sw-medical-o"
+   ],
+   "gtfsStopId": "29826",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green",
+    "orange"
+   ],
+   "lat": 32.813602,
+   "lng": -96.833204,
+   "geocode": {
+    "displayName": "Trinity Strand Trail, Dallas, Dallas County, Texas, 75390, United States",
+    "house_number": null,
+    "road": "Trinity Strand Trail",
+    "city": "Dallas",
+    "postcode": "75390",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2101 Medical District Dr.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75235",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/southwestern-medical-district-parkland-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2101 Medical District Dr., Dallas 75235\"",
+   "dartPageHeaderText": "Station Detail Southwestern Medical District/Parkland Station Green Line Orange Line accessible swap_horiz North of Medical District Drive, east of Harry Hines Boulevard (2101 Medical District Dr., Dallas 75235)"
+  },
+  "Shiloh Rd": {
+   "recordIds": [
+    "shiloh-sl"
+   ],
+   "gtfsStopId": "33600",
+   "baselineCity": [
+    "Plano"
+   ],
+   "lines": [
+    "silver"
+   ],
+   "lat": 33.012603,
+   "lng": -96.665722,
+   "geocode": {
+    "displayName": "1101, Shiloh Road, Plano, Collin County, Texas, 75074, United States",
+    "house_number": "1101",
+    "road": "Shiloh Road",
+    "city": "Plano",
+    "postcode": "75074",
+    "county": "Collin County"
+   },
+   "county": "Collin County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1001 Shiloh Road",
+   "city": "Plano",
+   "state": "TX",
+   "zip": "75074",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/shiloh-road-station---silver-line",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1001 Shiloh Road, Plano 75074\"",
+   "dartPageHeaderText": "Station Detail Shiloh Road Station - Silver Line Silver Line local_parking accessible swap_horiz 1001 Shiloh Rd, Plano, TX 75074 (1001 Shiloh Road, Plano 75074)"
+  },
+  "Spring Valley": {
+   "recordIds": [
+    "spring-valley",
+    "spring-valley-o"
+   ],
+   "gtfsStopId": "26672",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "orange",
+    "red"
+   ],
+   "lat": 32.940852,
+   "lng": -96.737424,
+   "geocode": {
+    "displayName": "Spring Valley, Central Trail, Richardson, Dallas County, Texas, 75081, United States",
+    "house_number": null,
+    "road": "Central Trail",
+    "city": "Richardson",
+    "postcode": "75081",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "100 W. Spring Valley Rd.",
+   "city": "Richardson",
+   "state": "TX",
+   "zip": "75081",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/spring-valley-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"100 W. Spring Valley Rd., Richardson 75081\"",
+   "dartPageHeaderText": "Rail Station Detail Spring Valley Station Orange Line Red Line local_parking accessible swap_horiz Spring Valley Road (near the intersection of W. Spring Valley Road and Lingco Drive), east of North Central Expressway in Richardson (100 W. Spring Valley Rd., Richardson 75081)"
+  },
+  "St. Paul": {
+   "recordIds": [
+    "st-paul",
+    "st-paul-g",
+    "st-paul-blue",
+    "st-paul-o"
+   ],
+   "gtfsStopId": "22751",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ],
+   "lat": 32.784296,
+   "lng": -96.797026,
+   "geocode": {
+    "displayName": "Saint Paul, Bryan Street, Downtown PID, Dallas, Dallas County, Texas, 75201, United States",
+    "house_number": null,
+    "road": "Bryan Street",
+    "city": "Dallas",
+    "postcode": "75201",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1900 Bryan St.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75201",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/st--paul-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1900 Bryan St., Dallas 75201\"",
+   "dartPageHeaderText": "Station Detail St. Paul Station Blue Line Green Line Orange Line Red Line accessible swap_horiz Bryan Street, between St. Paul and Harwood streets (1900 Bryan St., Dallas 75201)"
+  },
+  "Trinity Mills": {
+   "recordIds": [
+    "trinity-mills"
+   ],
+   "gtfsStopId": "29816",
+   "baselineCity": [
+    "Carrollton"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.980876,
+   "lng": -96.926476,
+   "geocode": {
+    "displayName": "Trinity Mills, 2525, Blanton Drive, Trinity Mills, Carrollton, Dallas County, Texas, 75006, United States",
+    "house_number": "2525",
+    "road": "Blanton Drive",
+    "city": "Carrollton",
+    "postcode": "75006",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2525 Blanton Dr.",
+   "city": "Carrollton",
+   "state": "TX",
+   "zip": "75006",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/trinity-mills-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2525 Blanton Dr., Carrollton 75006\"",
+   "dartPageHeaderText": "Rail Station Detail Trinity Mills Station Green Line local_parking accessible directions_bike swap_horiz Trinity Mills Road and Broadway Street (2525 Blanton Dr., Carrollton 75006)"
+  },
+  "Tyler/Vernon": {
+   "recordIds": [
+    "tyler-vernon"
+   ],
+   "gtfsStopId": "22730",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "red"
+   ],
+   "lat": 32.73314,
+   "lng": -96.83839,
+   "geocode": {
+    "displayName": "2, Lebanon Avenue, Dallas, Dallas County, Texas, 75208, United States",
+    "house_number": null,
+    "road": "Lebanon Avenue",
+    "city": "Dallas",
+    "postcode": "75208",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1225 S. Tyler St.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75208",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/tyler-vernon-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1225 S. Tyler St., Dallas 75208\"",
+   "dartPageHeaderText": "Rail Station Detail Tyler/Vernon Station Red Line accessible swap_horiz Tyler Street & Vernon Avenue (1225 S. Tyler St., Dallas 75208)"
+  },
+  "UNT Dallas": {
+   "recordIds": [
+    "unt-dallas"
+   ],
+   "gtfsStopId": "33087",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.654057,
+   "lng": -96.801091,
+   "geocode": {
+    "displayName": "UNT Dallas Walkpath, Dallas, Dallas County, Texas, 75241, United States",
+    "house_number": null,
+    "road": "UNT Dallas Walkpath",
+    "city": "Dallas",
+    "postcode": "75241",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1500 E. Kirnwood Dr.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75241",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/unt-dallas-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1500 E. Kirnwood Dr., Dallas 75241\"",
+   "dartPageHeaderText": "Rail Station Detail UNT Dallas Station Blue Line local_parking accessible swap_horiz South of the UNT Dallas Campus between Camp Wisdom Road and IH-20 (1500 E. Kirnwood Dr., Dallas 75241)"
+  },
+  "UT Dallas": {
+   "recordIds": [
+    "ut-dallas-sl"
+   ],
+   "gtfsStopId": "33598",
+   "baselineCity": [
+    "Richardson"
+   ],
+   "lines": [
+    "silver"
+   ],
+   "lat": 32.996459,
+   "lng": -96.750008,
+   "geocode": {
+    "displayName": "UT Dallas, 3416, Waterview Parkway, Richardson, Collin County, Texas, 75080, United States",
+    "house_number": "3416",
+    "road": "Waterview Parkway",
+    "city": "Richardson",
+    "postcode": "75080",
+    "county": "Collin County"
+   },
+   "county": "Collin County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "3416 Waterview Pkwy",
+   "city": "Richardson",
+   "state": "TX",
+   "zip": "75080",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/ut-dallas-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"3416 Waterview Pkwy, Richardson 75080\"",
+   "dartPageHeaderText": "Rail Station Detail UT Dallas Station - Silver Line Silver Line local_parking accessible directions_bike swap_horiz North of Synergy Park Boulevard and south of Waterview Parkway (3416 Waterview Pkwy, Richardson 75080)"
+  },
+  "University of Dallas": {
+   "recordIds": [
+    "univ-dallas"
+   ],
+   "gtfsStopId": "31084",
+   "baselineCity": [
+    "Irving"
+   ],
+   "lines": [
+    "orange"
+   ],
+   "lat": 32.849085,
+   "lng": -96.915006,
+   "geocode": {
+    "displayName": "University of Dallas, East John W Carpenter Freeway, Irving, Dallas County, Texas, 75220, United States",
+    "house_number": null,
+    "road": "East John W Carpenter Freeway",
+    "city": "Irving",
+    "postcode": "75220",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "1951 E. John Carpenter Fwy.",
+   "city": "Irving",
+   "state": "TX",
+   "zip": "75039",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/university-of-dallas-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"1951 E. John Carpenter Fwy., Irving 75039\"",
+   "dartPageHeaderText": "Rail Station Detail University of Dallas Station Orange Line accessible swap_horiz North of SH 114 and west of Loop 12 (1951 E. John Carpenter Fwy., Irving 75039)"
+  },
+  "VA Medical Center": {
+   "recordIds": [
+    "va-medical"
+   ],
+   "gtfsStopId": "23391",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.693641,
+   "lng": -96.792986,
+   "geocode": {
+    "displayName": "VA Medical Center, South Lancaster Road, Dallas, Dallas County, Texas, 75241, United States",
+    "house_number": null,
+    "road": "South Lancaster Road",
+    "city": "Dallas",
+    "postcode": "75241",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "4510 S. Lancaster Rd.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75216",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/va-medical-center-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"4510 S. Lancaster Rd., Dallas 75216\"",
+   "dartPageHeaderText": "Rail Station Detail VA Medical Center Station Blue Line accessible swap_horiz Lancaster Road & Mentor Avenue (4510 S. Lancaster Rd., Dallas 75216)"
+  },
+  "Victory": {
+   "recordIds": [
+    "victory-g",
+    "victory-o"
+   ],
+   "gtfsStopId": "28264",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green",
+    "orange"
+   ],
+   "lat": 32.789607,
+   "lng": -96.812513,
+   "geocode": {
+    "displayName": "Victory, Trophy Place, Harwood District, Design District, Dallas, Dallas County, Texas, 75207, United States",
+    "house_number": null,
+    "road": "Trophy Place",
+    "city": "Dallas",
+    "postcode": "75207",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2525 Victory Ave.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75219",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/victory-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2525 Victory Ave., Dallas 75219\"",
+   "dartPageHeaderText": "Rail Station Detail Victory Station Green Line Orange Line TRE accessible swap_horiz West side of the American Airlines Center (2525 Victory Ave., Dallas 75219)"
+  },
+  "Walnut Hill": {
+   "recordIds": [
+    "walnut-hill-r",
+    "walnut-hill-o"
+   ],
+   "gtfsStopId": "26669",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "orange",
+    "red"
+   ],
+   "lat": 32.88265,
+   "lng": -96.764931,
+   "geocode": {
+    "displayName": "Walnut Hill, Walnut Hill Lane, Vickery Meadows PID, Dallas, Dallas County, Texas, 75231, United States",
+    "house_number": null,
+    "road": "Walnut Hill Lane",
+    "city": "Dallas",
+    "postcode": "75231",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "8150 Walnut Hill Ln.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75231",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/walnut-hill-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"8150 Walnut Hill Ln., Dallas 75231\"",
+   "dartPageHeaderText": "Rail Station Detail Walnut Hill Station Orange Line Red Line local_parking accessible swap_horiz Walnut Hill Lane and Manderville Lane (8150 Walnut Hill Ln., Dallas 75231)"
+  },
+  "Walnut Hill/Denton": {
+   "recordIds": [
+    "walnut-hill"
+   ],
+   "gtfsStopId": "29820",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "green"
+   ],
+   "lat": 32.88212,
+   "lng": -96.883811,
+   "geocode": {
+    "displayName": "Denton Drive, Oldham, Dallas, Dallas County, Texas, 75235, United States",
+    "house_number": null,
+    "road": "Denton Drive",
+    "city": "Dallas",
+    "postcode": "75235",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2815 Walnut Hill Ln.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75229",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/walnut-hill-denton-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2815 Walnut Hill Ln., Dallas 75229\"",
+   "dartPageHeaderText": "Rail Station Detail Walnut Hill/Denton Station Green Line local_parking accessible swap_horiz North of Walnut Hill Lane on the east side of Denton Drive (2815 Walnut Hill Ln., Dallas 75229)"
+  },
+  "West End": {
+   "recordIds": [
+    "west-end-r",
+    "west-end-g",
+    "west-end-blue",
+    "west-end-o"
+   ],
+   "gtfsStopId": "22749",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue",
+    "green",
+    "orange",
+    "red"
+   ],
+   "lat": 32.780915,
+   "lng": -96.805443,
+   "geocode": {
+    "displayName": "West End, Pacific Avenue, West End Historic District, Downtown PID, Dallas, Dallas County, Texas, 75202, United States",
+    "house_number": null,
+    "road": "Pacific Avenue",
+    "city": "Dallas",
+    "postcode": "75202",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "800 Pacific Ave.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75202",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/west-end-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"800 Pacific Ave., Dallas 75202\"",
+   "dartPageHeaderText": "Rail Station Detail West End Station Blue Line Green Line Orange Line Red Line accessible swap_horiz Pacific Avenue, between Market & Lamar streets (800 Pacific Ave., Dallas 75202)"
+  },
+  "Westmoreland": {
+   "recordIds": [
+    "westmoreland"
+   ],
+   "gtfsStopId": "15913",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "red"
+   ],
+   "lat": 32.719758,
+   "lng": -96.871727,
+   "geocode": {
+    "displayName": "Westmoreland, West Illinois Avenue, Dallas, Dallas County, Texas, 75233, United States",
+    "house_number": null,
+    "road": "West Illinois Avenue",
+    "city": "Dallas",
+    "postcode": "75233",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "2646 S. Westmoreland Rd.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75211",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/westmoreland-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"2646 S. Westmoreland Rd., Dallas 75211\"",
+   "dartPageHeaderText": "Rail Station Detail Westmoreland Station Red Line local_parking accessible swap_horiz Illinois Avenue & Westmoreland Road (2646 S. Westmoreland Rd., Dallas 75211)"
+  },
+  "White Rock": {
+   "recordIds": [
+    "white-rock"
+   ],
+   "gtfsStopId": "26652",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "blue"
+   ],
+   "lat": 32.855791,
+   "lng": -96.732732,
+   "geocode": {
+    "displayName": "7333, East Northwest Highway, Dallas, Dallas County, Texas, 75231, United States",
+    "house_number": "7333",
+    "road": "East Northwest Highway",
+    "city": "Dallas",
+    "postcode": "75231",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "7333 E. Northwest Hwy.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75231",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/white-rock-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"7333 E. Northwest Hwy., Dallas 75231\"",
+   "dartPageHeaderText": "Rail Station Detail White Rock Station Blue Line local_parking accessible swap_horiz 7333 E. Northwest Highway near West Lawther Drive (7333 E. Northwest Hwy., Dallas 75231)"
+  },
+  "Zoo": {
+   "recordIds": [
+    "zoo"
+   ],
+   "gtfsStopId": "13659",
+   "baselineCity": [
+    "Dallas"
+   ],
+   "lines": [
+    "red"
+   ],
+   "lat": 32.740771,
+   "lng": -96.812896,
+   "geocode": {
+    "displayName": "Dallas Zoo, South Ewing Avenue, Oak Cliff, Dallas, Dallas County, Texas, 75216, United States",
+    "house_number": null,
+    "road": "South Ewing Avenue",
+    "city": "Dallas",
+    "postcode": "75216",
+    "county": "Dallas County"
+   },
+   "county": "Dallas County",
+   "county_source": "OpenStreetMap Nominatim reverse geocode of GTFS coordinates",
+   "street": "614 S. Ewing Ave.",
+   "city": "Dallas",
+   "state": "TX",
+   "zip": "75203",
+   "source": "https://www.dart.org/guide/transit-and-use/rail/rail-station-detail/dallas-zoo-station",
+   "confidence": "published-by-DART",
+   "note": "DART station page header address as published: \"614 S. Ewing Ave., Dallas 75203\"",
+   "dartPageHeaderText": "Station Detail Dallas Zoo Station Red Line accessible swap_horiz Ewing Avenue & Clarendon Drive (614 S. Ewing Ave., Dallas 75203)"
+  }
+ }
+}

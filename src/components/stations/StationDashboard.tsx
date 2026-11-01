@@ -2,16 +2,16 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { ISSUE_LABELS, type Station } from "@/lib/stations";
+import { LINE_BY_ID, addressOf, formatCoords, linePositions, type Station } from "@/lib/stations";
 import { effectiveStatus } from "@/lib/stations/effective";
 import { useDemo } from "@/lib/demo/store";
 import { can } from "@/lib/demo/permissions";
 import { PERSONA_BY_ROLE } from "@/lib/demo/roles";
 import type { TwinAsset } from "@/lib/stations/geometry";
 import { DemoBadge, LineChips, StatusIndicator } from "./ui";
-import MapPanel from "./MapPanel";
 import AkardTwin from "./dashboard/AkardTwin";
-import { AssetDrawer, KpiRow, LowerStrip } from "./dashboard/panels";
+import { AssetDrawer, DataSources, IssuesDrawer, KpiRow, LowerStrip } from "./dashboard/panels";
+import StationFocusMap from "./dashboard/StationFocusMap";
 
 export default function StationDashboard({ station }: { station: Station }) {
   const demo = useDemo();
@@ -30,7 +30,15 @@ export default function StationDashboard({ station }: { station: Station }) {
             <div className="space-y-2">
               <p className="text-xs tracking-[0.2em] text-gray-700 uppercase">Infrastructure digital twin</p>
               <h1 id="st-h" className="text-4xl sm:text-5xl text-gray-900" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>{station.name}{station.name === "Akard" ? " Station" : ""}</h1>
-              <p className="text-gray-800">{station.city}, TX · KAI × DART proposed pilot</p>
+              <div className="text-gray-800 space-y-0.5" data-testid="station-meta">
+                {(() => { const a = addressOf(station); return a ? (
+                  <>
+                    <p data-testid="address">{a.street}, {a.city}, {a.state} {a.zip}{a.county ? ` · ${a.county}` : ""}</p>
+                    <p className="text-sm text-gray-700">Coordinates <span data-testid="coords">{formatCoords(station.lat, station.lng)}</span> · official stop ID {a.stopId} · <a className="underline text-[#0057A8]" href={a.source} target="_blank" rel="noopener noreferrer">DART station page</a></p>
+                    {a.additional?.map((x) => <p key={x.stopId} className="text-sm text-gray-700" data-testid="additional-stop">Also served at {x.name} (stop {x.stopId}): {x.address}</p>)}
+                  </>) : <p>{station.city}, TX · <span data-testid="coords">{formatCoords(station.lat, station.lng)}</span></p>; })()}
+                {linePositions(station).map((p) => <p key={p.lineId} className="text-sm text-gray-700" data-testid={`pos-${p.lineId}`}>{LINE_BY_ID[p.lineId].name} · Station {p.index} of {p.total}{p.prev ? <> · previous: <Link className="underline text-[#0057A8]" href={`/stations/${p.prev.id}`}>{p.prev.name}</Link></> : " · line terminus"}{p.next ? <> · next: <Link className="underline text-[#0057A8]" href={`/stations/${p.next.id}`}>{p.next.name}</Link></> : " · line terminus"}</p>)}
+              </div>
               <div className="flex flex-wrap items-center gap-2"><StatusIndicator status={status} /><span className="text-sm text-gray-800">Infrastructure &amp; cleanliness</span><LineChips lineIds={station.lineIds} /></div>
             </div>
             <div className="text-right text-sm text-gray-800 max-w-xs"><p style={{ fontWeight: 700 }} className="text-gray-900">Station readiness</p><p>Demo condition</p><p className="mt-1"><DemoBadge /></p><p className="mt-1">Last verified update: <strong>Not connected</strong></p></div>
@@ -41,24 +49,20 @@ export default function StationDashboard({ station }: { station: Station }) {
             <p className="border border-gray-200 rounded-lg p-4 text-sm text-gray-800">The {persona.label} demo persona has no access to station condition detail. Switch role to continue.</p>
           ) : (
             <>
-              <KpiRow demo={demo} status={status} isDemoStation={isDemo} issueCount={station.demo.issues.length} />
+              <KpiRow demo={demo} status={status} isDemoStation={isDemo} issueCount={station.demo.issues.length} station={station} />
               {isDemo ? <AkardTwin demo={demo} selected={asset} onSelect={setAsset} /> : (
-                <section aria-labelledby="loc-h" className="rounded-2xl border border-gray-200 bg-white shadow-sm p-4 space-y-3">
-                  <h2 id="loc-h" className="text-lg text-gray-900" style={{ fontWeight: 700 }}>Location</h2>
-                  <p className="text-sm text-gray-800">A station digital twin has not been built for this station. Layout and assets are not verified, so none are shown.</p>
-                  <MapPanel selectedKey={station.key} />
+                <section aria-labelledby="loc-h" className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+                  <h2 id="loc-h" className="sr-only">Station location map</h2>
+                  <StationFocusMap station={station} />
+                  <p className="px-4 py-2.5 text-xs text-gray-700 border-t border-gray-100">Real map position from the station&apos;s coordinates. No station layout or asset positions are modeled for this station, so none are drawn.</p>
                 </section>
               )}
-              <LowerStrip demo={demo} isDemoStation={isDemo} issues={station.demo.issues} />
-              {!isDemo && station.demo.issues.length > 0 && (
-                <section aria-labelledby="iss-h" className="rounded-2xl border border-gray-200 bg-white p-4"><h2 id="iss-h" className="text-lg mb-2" style={{ fontWeight: 700 }}>Open issues <span className="text-sm font-normal text-gray-700">(synthetic)</span></h2>
-                  <ul className="divide-y divide-gray-100">{station.demo.issues.map((i) => <li key={i} className="py-2.5 text-sm flex justify-between gap-3"><span>{ISSUE_LABELS[i] ?? i}</span><span className="text-gray-700">Owner: unassigned</span></li>)}</ul>
-                  <p className="text-sm text-gray-700 mt-3">The verification workflow is demonstrated at <Link className="underline text-[#0057A8]" href="/stations/akard">Akard</Link>.</p></section>
-              )}
+              <LowerStrip demo={demo} isDemoStation={isDemo} issues={station.demo.issues} station={station} />
+              <DataSources stationKey={station.key} />
             </>
           )}
         </div>
-        {allowed && isDemo && <div className="xl:sticky xl:top-20"><AssetDrawer demo={demo} assetId={asset} /></div>}
+        {allowed && <div className="xl:sticky xl:top-20">{isDemo ? <AssetDrawer demo={demo} assetId={asset} /> : <IssuesDrawer station={station} />}</div>}
       </div>
     </article>
   );

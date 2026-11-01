@@ -1,9 +1,12 @@
 import { STATION_RECORDS } from "./records.generated";
+import { STATION_ADDRESSES } from "./addresses.generated";
 import { LINES } from "./lines";
 import type { LineId, Station, StationRecord } from "./types";
 
 export * from "./types";
 export * from "./lines";
+export { STATION_ADDRESSES };
+export type { StationAddress } from "./addresses.generated";
 export { STATION_RECORDS };
 
 const lineOrder = (l: LineId) => LINES.findIndex((x) => x.id === l);
@@ -21,7 +24,7 @@ export function buildStations(records: StationRecord[]): Station[] {
     return {
       key: first.id,
       name: first.name,
-      city: first.city,
+      city: STATION_ADDRESSES[first.name]?.city ?? first.city,
       lat: first.lat,
       lng: first.lng,
       closure: sorted.find((r) => r.closure)?.closure,
@@ -37,6 +40,7 @@ export function buildStations(records: StationRecord[]): Station[] {
 }
 
 export const STATIONS: Station[] = buildStations(STATION_RECORDS);
+export const addressOf = (s: Station) => STATION_ADDRESSES[s.name];
 const byRecordId = new Map<string, Station>();
 for (const s of STATIONS) for (const id of s.recordIds) byRecordId.set(id, s);
 
@@ -62,3 +66,23 @@ export const ISSUE_LABELS: Record<string, string> = {
 };
 
 export const STATUS_LABEL = { good: "Good", warning: "Needs attention", critical: "Critical", deploying: "Crew deploying", closed: "Closed" } as const;
+
+/** Priority/status of each synthetic issue type (carried over from the original app). */
+export const ISSUE_META: Record<string, { priority: "critical" | "high" | "routine"; status: "open" | "in_progress" | "hold" }> = {
+  cleaning_overdue: { priority: "high", status: "open" }, restroom_closed: { priority: "critical", status: "in_progress" }, elevator_down: { priority: "critical", status: "in_progress" },
+  graffiti: { priority: "high", status: "open" }, lighting_fault: { priority: "high", status: "open" }, escalator_maint: { priority: "routine", status: "hold" },
+  debris: { priority: "routine", status: "in_progress" }, crew_delayed: { priority: "high", status: "open" }, camera_offline: { priority: "critical", status: "in_progress" },
+  safety: { priority: "critical", status: "in_progress" }, smell: { priority: "high", status: "open" }, litter: { priority: "routine", status: "hold" },
+  vandalism: { priority: "high", status: "open" }, lighting: { priority: "high", status: "hold" },
+};
+
+/** Position of a station on each line it serves, in the original app's line order. */
+export function linePositions(station: Station) {
+  return station.lineIds.map((lineId) => {
+    const recs = STATION_RECORDS.filter((r) => r.lineId === lineId);
+    const idx = recs.findIndex((r) => station.recordIds.includes(r.id));
+    return { lineId, index: idx + 1, total: recs.length, prev: idx > 0 ? recs[idx - 1] : null, next: idx < recs.length - 1 ? recs[idx + 1] : null };
+  });
+}
+
+export const formatCoords = (lat: number, lng: number) => `${Math.abs(lat).toFixed(6)}° ${lat >= 0 ? "N" : "S"}, ${Math.abs(lng).toFixed(6)}° ${lng >= 0 ? "E" : "W"}`;

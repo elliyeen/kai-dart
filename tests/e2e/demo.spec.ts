@@ -88,6 +88,18 @@ test.describe("executive demo and workflow", () => {
     await expect(page.getByText("has no access to station condition detail")).toBeVisible();
   });
 
+  test("every station shows its connected public data source and honest live-data status", async ({ page }) => {
+    await page.goto("stations/akard");
+    await expect(page.getByTestId("ds-public")).toContainText("Matched official stop 22750");
+    await expect(page.getByTestId("data-sources")).toContainText("Not connected");
+    await expect(page.getByTestId("address")).toContainText("1400 Pacific Ave., Dallas, TX 75202");
+    await expect(page.getByTestId("coords")).toContainText("32.781893° N, 96.800633° W");
+    await page.goto("stations/north-lake");
+    await expect(page.getByTestId("address")).toContainText("1770 W. Walnut Hill Ln., Irving, TX 75038");
+    await page.goto("stations/convention-blue");
+    await expect(page.getByTestId("ds-public")).toContainText("closure NOT confirmed");
+  });
+
   test("demo labels persist on every surface", async ({ page }) => {
     for (const path of ["stations", "stations/akard", "stations/inspections"]) {
       await page.goto(path);

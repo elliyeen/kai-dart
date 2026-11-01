@@ -77,10 +77,10 @@ export function StationRow({ station, status, selected, href, onSelect }: {
         <span className="block text-[15px] text-gray-900 truncate">{station.name}</span>
         <span className="flex items-center gap-1 mt-0.5">
           {station.lineIds.map((l) => <LineDot key={l} lineId={l} className="!w-2.5 !h-2.5" />)}
-          <span className="text-xs text-gray-600 ml-1 truncate">{station.city}</span>
+          <span className="text-xs text-gray-600 ml-1 truncate">{station.city} · {station.demo.issues.length ? `${station.demo.issues.length} issue${station.demo.issues.length > 1 ? "s" : ""}` : "Clear"}</span>
         </span>
       </span>
-      <StatusIndicator status={status} size="sm" />
+      <span className="flex items-center gap-2 shrink-0"><span className="text-sm tabular-nums" style={{ fontWeight: 700, color: station.demo.score >= 85 ? "#15803D" : station.demo.score >= 70 ? "#B45309" : "#B91C1C" }} aria-label={`Synthetic readiness ${station.demo.score} percent`}>{station.demo.score}%</span><StatusIndicator status={status} size="sm" /></span>
     </Link>
   );
 }

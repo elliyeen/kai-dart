@@ -26,7 +26,7 @@ export function CinematicHero() {
       <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-black/30" />
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 pb-10 sm:pb-14">
         <p className="hero-animate text-5xl sm:text-6xl lg:text-7xl leading-none" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif", fontWeight: 800, fontStyle: "italic", letterSpacing: "-0.05em" }}>KAI</p>
-        <p className="hero-animate mt-2 text-lg sm:text-xl font-medium" style={{ animationDelay: "120ms" }}>DART clean for all of North Texas</p>
+        <p className="hero-animate mt-2 text-lg sm:text-xl font-medium" style={{ animationDelay: "120ms" }}>Clean Transit for North Texas</p>
         <div className="hero-animate mt-6 max-w-md sm:max-w-none" style={{ animationDelay: "240ms" }}>
           <div className="sm:flex sm:justify-start"><HeroButtons /></div>
         </div>
@@ -52,13 +52,14 @@ export function HeroIntro() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-10 lg:gap-16 items-center">
         <div>
           <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl leading-[1.04] tracking-[-0.03em] text-gray-900" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif", fontWeight: 500 }}>
-            Transit for Everyone<br />and Every Ride
+            Super experience<br />for every ride
           </h1>
           <p className="mt-6 text-lg sm:text-xl font-light text-gray-800 max-w-xl leading-relaxed">We&rsquo;re changing public transportation to make it clean, safe and more intelligent than ever.</p>
         </div>
         <div className="lg:text-right">
-          <p className="text-7xl sm:text-8xl font-light tracking-[-0.03em] leading-none text-gray-900" data-testid="hero-metric">75</p>
-          <p className="mt-2 text-base text-gray-800">Rail Stations in the DART Network</p>
+          <p className="text-6xl sm:text-7xl font-light tracking-[-0.03em] leading-none text-gray-900" data-testid="hero-metric">171,000+</p>
+          <p className="mt-2 text-base text-gray-800">Daily Passenger Trips</p>
+          <p className="mt-1 text-xs text-gray-600">Source: <a className="underline underline-offset-2 hover:text-black" href="https://www.dart.org/about/news-and-events/newsreleases/newsrelease-detail/dallas-area-rapid-transit-releases-point-b-strategic-plan-annual-report-highlighting-major-investments-and-accomplishments" target="_blank" rel="noopener noreferrer">DART</a></p>
         </div>
       </div>
     </section>
@@ -67,16 +68,18 @@ export function HeroIntro() {
 
 export function ProofSection() {
   return (
-    <section id="standard" className="bg-white py-20 sm:py-28 lg:py-36">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+    <section id="standard" className="relative overflow-hidden py-24 sm:py-32 lg:py-44 text-white">
+      <Image src={img(IMAGES.statement.file)} alt={IMAGES.statement.alt} fill sizes="100vw" className="object-cover object-center" />
+      <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/55 to-black/80" />
+      <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
         <FadeUp>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.08] tracking-[-0.03em] text-gray-900" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.08] tracking-[-0.03em]" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
             This is the new DART standard.<br />
-            <span className="text-gray-600">Enjoy your ride in North Texas.</span>
+            <span className="text-white/85">Enjoy your ride in North Texas.</span>
           </h2>
         </FadeUp>
         <FadeUp delay={120}>
-          <div className="mt-14 max-w-2xl mx-auto text-left"><EvidencePanel /></div>
+          <div className="mt-14 max-w-2xl mx-auto text-left text-gray-900"><EvidencePanel /></div>
         </FadeUp>
       </div>
     </section>
@@ -85,7 +88,7 @@ export function ProofSection() {
 
 export function EvidencePanel() {
   return (
-    <figure className="border border-gray-200 p-6">
+    <figure className="border border-gray-200 bg-white p-6 rounded-lg">
       <p className="text-[11px] tracking-[0.2em] uppercase text-gray-600 mb-3">Verified public source</p>
       <blockquote className="text-lg font-light text-gray-900 leading-snug">
         DART&rsquo;s FY2026 customer survey reports record satisfaction, and still names bus reliability, safety, train cleanliness and disruption communication as areas to improve.
@@ -119,43 +122,6 @@ export function WorkflowSteps() {
         </li>
       ))}
     </ol>
-  );
-}
-
-export function OperationalIntelligence() {
-  const rows = [
-    { m: "Station readiness", v: "Not connected", c: "Requires DART data access" },
-    { m: "Cleanliness status", v: "Unknown", c: "No verified inspection feed" },
-    { m: "Open issues", v: "Demo data", c: "Synthetic scenario in the live demo" },
-    { m: "Last verified update", v: "None", c: "Nothing is shown as live" },
-  ];
-  return (
-    <div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
-          <caption className="sr-only">Operational measures and their data status</caption>
-          <thead>
-            <tr className="border-b border-gray-300 text-[11px] tracking-[0.15em] uppercase text-gray-600">
-              <th scope="col" className="py-3 pr-4 font-medium">Measure</th>
-              <th scope="col" className="py-3 pr-4 font-medium">Status</th>
-              <th scope="col" className="py-3 font-medium">Classification</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r.m} className="border-b border-gray-200">
-                <th scope="row" className="py-4 pr-4 font-light text-base">{r.m}</th>
-                <td className="py-4 pr-4 text-base">{r.v}</td>
-                <td className="py-4 text-gray-700 font-light">{r.c}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p className="mt-6 text-sm text-gray-600 max-w-2xl">
-        KAI is an Elliyeen demonstration and proposed pilot. It is not a DART-approved or DART-operated system, and no figure here is DART performance data. Every metric in a pilot would carry its source, observation time and freshness.
-      </p>
-    </div>
   );
 }
 

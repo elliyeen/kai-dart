@@ -61,7 +61,8 @@ function SvgCountyMap({ mode = "network", selectedKey, line, onSelect }: MapProp
       const st: RolloutStatus = rolloutOf(s.key);
       if (st === "demo") return <circle key={s.key} cx={x} cy={y} r={8} fill="#F59E0B" stroke="#0B1F33" strokeWidth={2}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
       if (st === "connected") return <circle key={s.key} cx={x} cy={y} r={6} fill="#0057A8" stroke="#fff" strokeWidth={1.5}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
-      if (st === "pilot-planned") return <circle key={s.key} cx={x} cy={y} r={6} fill="#fff" stroke="#0057A8" strokeWidth={2} strokeDasharray="3 2"><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
+      if (st === "public-data") return <circle key={s.key} cx={x} cy={y} r={4.6} fill="#0E7490" stroke="#fff" strokeWidth={1.4}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
+      if (st === "pilot-planned") return <circle key={s.key} cx={x} cy={y} r={8} fill="#fff" stroke="#0057A8" strokeWidth={3}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
       return <circle key={s.key} cx={x} cy={y} r={3.6} fill="#fff" stroke="#6B7280" strokeWidth={1.4}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
     }
     return (
@@ -82,7 +83,7 @@ function SvgCountyMap({ mode = "network", selectedKey, line, onSelect }: MapProp
           {g.paths.map((p) => <path key={p.id} d={p.d} fill="none" stroke={p.color} strokeWidth={rollout ? 2 : 2.5} opacity={rollout ? 0.3 : !line || line === p.id ? 0.85 : 0.12} strokeLinejoin="round" />)}
           {CITIES.map((c) => { const [x, y] = g.proj(c.lat, c.lng); return <text key={c.name} x={x + c.dx} y={y + c.dy} textAnchor={c.anchor} fontSize="12.5" fontWeight="600" fill="#1F2937" paintOrder="stroke" stroke="#E7EBF0" strokeWidth="4">{c.name}</text>; })}
           {STATIONS.map(dot)}
-          {rollout && (() => { const a = STATIONS.find((s) => rolloutOf(s.key) === "demo"); if (!a) return null; const [x, y] = g.proj(a.lat, a.lng); return <text x={x + 14} y={y + 4} fontSize="13" fontWeight="700" fill="#0B1F33" paintOrder="stroke" stroke="#fff" strokeWidth="4">{a.name} (demo)</text>; })()}
+          {rollout && STATIONS.filter((st) => rolloutOf(st.key) === "pilot-planned").map((a) => { const [x, y] = g.proj(a.lat, a.lng); return <text key={a.key} x={x + 12} y={y + 4} fontSize="13" fontWeight="700" fill="#0B1F33" paintOrder="stroke" stroke="#fff" strokeWidth="4">{a.name}</text>; })}
           {!rollout && sel && (() => { const [x, y] = g.proj(sel.lat, sel.lng); return <text x={Math.min(x + 12, W - 110)} y={y - 10} fontSize="14" fill="#0B1F33" fontWeight="600" paintOrder="stroke" stroke="#fff" strokeWidth="4">{sel.name}</text>; })()}
         </g>
       </svg>

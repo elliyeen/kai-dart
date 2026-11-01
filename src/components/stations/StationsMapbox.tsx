@@ -33,16 +33,16 @@ export default function StationsMapbox({ token, mode, line, selectedKey, onSelec
       map.addLayer({
         id: "stations", type: "circle", source: "stations",
         paint: rollout ? {
-          "circle-radius": ["match", ["get", "rollout"], "demo", 9, "connected", 7, "pilot-planned", 7, 4.5],
-          "circle-color": ["match", ["get", "rollout"], "demo", "#F59E0B", "connected", "#0057A8", "#FFFFFF"],
-          "circle-stroke-color": ["match", ["get", "rollout"], "demo", "#0B1F33", "connected", "#FFFFFF", "pilot-planned", "#0057A8", "#6B7280"],
-          "circle-stroke-width": ["match", ["get", "rollout"], "demo", 2.5, 1.6],
+          "circle-radius": ["match", ["get", "rollout"], "demo", 9, "connected", 7, "pilot-planned", 9, "public-data", 5.5, 4.5],
+          "circle-color": ["match", ["get", "rollout"], "demo", "#F59E0B", "connected", "#0057A8", "public-data", "#0E7490", "#FFFFFF"],
+          "circle-stroke-color": ["match", ["get", "rollout"], "demo", "#0B1F33", "connected", "#FFFFFF", "public-data", "#FFFFFF", "pilot-planned", "#0057A8", "#6B7280"],
+          "circle-stroke-width": ["match", ["get", "rollout"], "demo", 2.5, "pilot-planned", 3.5, 1.6],
         } : { "circle-radius": 4.5, "circle-color": "#FFFFFF", "circle-stroke-color": "#0B1F33", "circle-stroke-width": 1.6 },
       });
       map.addLayer({ id: "selected", type: "circle", source: "stations", filter: ["==", ["get", "key"], ""], paint: { "circle-radius": 9, "circle-color": "#0B1F33", "circle-stroke-color": "#FFFFFF", "circle-stroke-width": 2 } });
       map.addLayer({
-        id: "labels", type: "symbol", source: "stations", filter: rollout ? ["==", ["get", "rollout"], "demo"] : ["==", ["get", "key"], ""],
-        layout: { "text-field": rollout ? ["concat", ["get", "name"], " (demo)"] : ["get", "name"], "text-size": 13, "text-offset": [0, -1.4], "text-anchor": "bottom", "text-font": ["DIN Pro Bold", "Arial Unicode MS Bold"] },
+        id: "labels", type: "symbol", source: "stations", filter: rollout ? ["in", ["get", "rollout"], ["literal", ["demo", "pilot-planned"]]] : ["==", ["get", "key"], ""],
+        layout: { "text-field": ["get", "name"], "text-size": 13, "text-offset": [0, -1.4], "text-anchor": "bottom", "text-font": ["DIN Pro Bold", "Arial Unicode MS Bold"] },
         paint: { "text-color": "#0B1F33", "text-halo-color": "#FFFFFF", "text-halo-width": 2 },
       });
 

@@ -3,17 +3,21 @@ import { noHorizontalOverflow } from "./helpers";
 
 test("landing: no tournament content, CTAs reach the platform, tabs and accordion work", async ({ page }) => {
   await page.goto("");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Transit for Everyone");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Super experience");
   expect(await page.locator("body").innerText()).not.toMatch(/fifa|world cup|at&t stadium|arlington/i);
-  await expect(page.getByTestId("hero-metric")).toHaveText("75");
-  await expect(page.getByText("DART clean for all of North Texas")).toBeVisible();
-  await expect(page.getByText("Transit for North Texas")).toHaveCount(0);
+  await expect(page.getByTestId("hero-metric")).toHaveText("171,000+");
+  await expect(page.getByText("Daily Passenger Trips")).toBeVisible();
+  await expect(page.getByText("Rail Stations in the DART Network")).toHaveCount(0);
+  await expect(page.getByText("Clean Transit for North Texas")).toBeVisible();
+  await expect(page.getByText("Transit for North Texas", { exact: true })).toHaveCount(0);
   await expect(page.getByText("Transit for All", { exact: true })).toHaveCount(0);
   await expect(page.getByText("We’re changing public transportation to make it clean, safe and more intelligent than ever.")).toBeVisible();
   await expect(page.getByText("This is the new DART standard.")).toBeVisible();
   await expect(page.getByText("Enjoy your ride in North Texas.")).toBeVisible();
   await expect(page.getByText("Mission", { exact: true })).toHaveCount(0);
   // segmented rider tabs
+  await expect(page.getByRole("heading", { name: "Clean. Safe. Intelligent." })).toBeVisible();
+  await expect(page.getByText("The ride", { exact: true })).toHaveCount(0);
   await page.getByRole("tab", { name: "Verified" }).click();
   await expect(page.getByRole("tab", { name: "Verified" })).toHaveAttribute("aria-selected", "true");
   await page.getByRole("tab", { name: "Verified" }).press("ArrowLeft");
@@ -26,18 +30,29 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await expect(page).toHaveURL(/\/stations\/?$/);
 });
 
-test("rollout map is honest: nothing connected, Akard is the demo station", async ({ page }) => {
+test("pilot section names the three pilot stations; nothing is shown as live", async ({ page }) => {
   await page.goto("");
-  await expect(page.getByRole("heading", { name: "Bringing stations online." })).toBeVisible();
-  await expect(page.getByTestId("rollout-connected")).toHaveText("0 stations");
+  await expect(page.getByTestId("pilot-title")).toHaveText("Pilot for Park Lane, Akard and Spring Valley Station");
+  await expect(page.getByText("to improve the readiness of each station to set the standard for clean transportation in North Texas.")).toBeVisible();
+  await expect(page.getByText("Bringing stations online.")).toHaveCount(0);
   const legend = page.getByTestId("rollout-legend");
+  await expect(legend).toContainText("Pilot site (proposed) · 3");
   await expect(legend).toContainText("Connected to live data · 0");
-  await expect(legend).toContainText("Demo station (synthetic) · 1");
-  await expect(legend).toContainText("Not yet connected");
-  const map = page.getByTestId("map-rollout");
-  await expect(map.locator("circle")).toHaveCount(76);
-  await expect(map.getByText("Akard (demo)")).toBeVisible();
-  await expect(map.getByText("DALLAS CO.")).toBeVisible();
+  await expect(legend).toContainText("Public schedule data connected · 73");
+  await expect(page.getByTestId("map-rollout").locator("circle")).toHaveCount(76);
+  for (const n of ["Park Lane", "Akard", "Spring Valley"]) await expect(page.getByTestId("map-rollout").getByText(n, { exact: true })).toBeVisible();
+});
+
+test("image-led experience lineup replaces the data table", async ({ page }) => {
+  await page.goto("");
+  await expect(page.getByText("Only what can be sourced.")).toHaveCount(0);
+  const tabs = page.getByRole("tablist", { name: "DART experience" });
+  await expect(tabs.getByRole("tab", { name: /Station/ })).toHaveAttribute("aria-selected", "true");
+  await expect(tabs).toContainText("Coming soon");
+  await tabs.getByRole("tab", { name: /Cab & Car/ }).click();
+  await expect(page.locator("#exp-panel-car")).toBeVisible();
+  await tabs.getByRole("tab", { name: /DART Experience/ }).press("ArrowLeft");
+  await expect(tabs.getByRole("tab", { name: /Cab & Car/ })).toHaveAttribute("aria-selected", "true");
 });
 
 test("old World Cup route is gone", async ({ request }) => {

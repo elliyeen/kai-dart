@@ -7,7 +7,7 @@ describe("Mapbox GeoJSON", () => {
     const g = stationsGeoJSON();
     expect(g.features).toHaveLength(STATIONS.length);
     const akard = g.features.find((f) => f.properties.key === "akard")!;
-    expect(akard.properties.rollout).toBe("demo");
+    expect(akard.properties.rollout).toBe("pilot-planned");
     expect(akard.geometry.coordinates[0]).toBeLessThan(-96); // longitude first
     expect(akard.geometry.coordinates[1]).toBeGreaterThan(32);
     expect(g.features.filter((f) => f.properties.rollout === "connected")).toHaveLength(0);
