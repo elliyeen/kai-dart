@@ -6,6 +6,8 @@ import { EFF_LABEL, type Eff } from "@/lib/stations/effective";
 import { STATUS_COPY, type DemoState } from "@/lib/demo/workflow";
 import { AssignmentCard, EvidencePanel, VerificationTimeline } from "../workflow-ui";
 import { StatusIndicator } from "../ui";
+import { PUBLIC_SOURCE } from "@/lib/stations/publicData.generated";
+import { publicStopFor } from "@/lib/stations/rollout";
 
 export function KpiTile({ Icon, label, value, sub, step, tone = "#16A34A", id }: { Icon: LucideIcon; label: string; value: string; sub: string; step?: number; tone?: string; id: string }) {
   return (
@@ -112,5 +114,24 @@ export function AssetDrawer({ demo, assetId, onClose }: { demo: DemoState; asset
       {hasWo && <><AssignmentCard demo={demo} /><details className="rounded-lg border border-gray-200"><summary className="cursor-pointer min-h-11 px-3 py-2.5 text-sm font-semibold">Timeline and audit trail</summary><div className="p-3"><VerificationTimeline events={demo.wo.events} /></div></details></>}
       <p className="text-xs text-gray-700">Linked from the demo only. <Link href="/stations/inspections" className="underline text-[#0057A8]">Open inspections</Link></p>
     </aside>
+  );
+}
+
+export function DataSources({ stationKey }: { stationKey: string }) {
+  const stop = publicStopFor(stationKey);
+  return (
+    <section aria-labelledby="ds-h" className="rounded-2xl border border-gray-200 bg-white shadow-sm p-4" data-testid="data-sources">
+      <h3 id="ds-h" className="flex items-center gap-2 text-[15px] text-gray-900 mb-3" style={{ fontWeight: 700 }}><Layers className="w-4 h-4 text-gray-700" aria-hidden="true" />Data sources</h3>
+      <ul className="divide-y divide-gray-100 text-sm">
+        <li className="py-2.5 flex flex-wrap items-start justify-between gap-2" data-testid="ds-public">
+          <span><strong>Official schedule data (public)</strong><br /><span className="text-gray-700">{PUBLIC_SOURCE.name} · feed {PUBLIC_SOURCE.feedVersion} · retrieved {PUBLIC_SOURCE.retrieved}</span>
+            {stop && <><br /><span className="text-gray-700">Matched official stop {stop.stopId} “{stop.officialName}” · official lines: {stop.officialLines.join(", ")}{stop.lineConfirmed ? "" : " (a listed line is unconfirmed)"}</span></>}
+            {stop?.note && <><br /><span className="text-amber-900">{stop.note}</span></>}</span>
+          <span className={`inline-flex items-center gap-1.5 text-xs font-medium border rounded-full px-2.5 py-0.5 ${stop ? "bg-cyan-50 text-cyan-900 border-cyan-200" : "bg-gray-50 text-gray-800 border-gray-300"}`}>{stop ? "Connected" : "No match"}</span>
+        </li>
+        <li className="py-2.5 flex items-center justify-between gap-2"><span><strong>Live condition and inspection feed</strong><br /><span className="text-gray-700">Requires written DART authorization</span></span><span className="text-xs font-medium border rounded-full px-2.5 py-0.5 bg-gray-50 text-gray-800 border-gray-300">Not connected</span></li>
+        <li className="py-2.5 flex items-center justify-between gap-2"><span><strong>Asset inventory (e.g. Maximo export)</strong><br /><span className="text-gray-700">Requires written DART authorization</span></span><span className="text-xs font-medium border rounded-full px-2.5 py-0.5 bg-gray-50 text-gray-800 border-gray-300">Not connected</span></li>
+      </ul>
+    </section>
   );
 }

@@ -61,6 +61,7 @@ function SvgCountyMap({ mode = "network", selectedKey, line, onSelect }: MapProp
       const st: RolloutStatus = rolloutOf(s.key);
       if (st === "demo") return <circle key={s.key} cx={x} cy={y} r={8} fill="#F59E0B" stroke="#0B1F33" strokeWidth={2}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
       if (st === "connected") return <circle key={s.key} cx={x} cy={y} r={6} fill="#0057A8" stroke="#fff" strokeWidth={1.5}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
+      if (st === "public-data") return <circle key={s.key} cx={x} cy={y} r={4.6} fill="#0E7490" stroke="#fff" strokeWidth={1.4}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
       if (st === "pilot-planned") return <circle key={s.key} cx={x} cy={y} r={6} fill="#fff" stroke="#0057A8" strokeWidth={2} strokeDasharray="3 2"><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
       return <circle key={s.key} cx={x} cy={y} r={3.6} fill="#fff" stroke="#6B7280" strokeWidth={1.4}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
     }

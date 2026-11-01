@@ -4,12 +4,13 @@ import MapPanel from "@/components/stations/MapPanel";
 import { STATIONS } from "@/lib/stations";
 import { ROLLOUT_LABEL, rolloutOf, type RolloutStatus } from "@/lib/stations/rollout";
 
-const ORDER: RolloutStatus[] = ["connected", "pilot-planned", "demo", "not-connected"];
+const ORDER: RolloutStatus[] = ["connected", "public-data", "pilot-planned", "demo", "not-connected"];
 
 function Swatch({ status }: { status: RolloutStatus }) {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
       {status === "connected" && <circle cx="9" cy="9" r="6" fill="#0057A8" />}
+      {status === "public-data" && <circle cx="9" cy="9" r="5.5" fill="#0E7490" stroke="#fff" strokeWidth="1.5" />}
       {status === "pilot-planned" && <circle cx="9" cy="9" r="6" fill="#fff" stroke="#0057A8" strokeWidth="2" strokeDasharray="3 2" />}
       {status === "demo" && <circle cx="9" cy="9" r="7" fill="#F59E0B" stroke="#0B1F33" strokeWidth="2" />}
       {status === "not-connected" && <circle cx="9" cy="9" r="4" fill="#fff" stroke="#6B7280" strokeWidth="1.5" />}
@@ -25,10 +26,10 @@ export default function RolloutSection() {
         <FadeUp>
           <h2 className="text-4xl sm:text-5xl font-light tracking-[-0.02em] leading-[1.05]">Bringing stations online.</h2>
           <p className="mt-6 text-lg text-gray-800 leading-relaxed font-light">
-            KAI is a proposed pilot. <strong className="font-semibold" data-testid="rollout-connected">{count("connected")} stations</strong> are connected to live DART data today. The demo uses Akard as a synthetic example.
+            Every station on the map is linked to DART&rsquo;s official public schedule data (<strong className="font-semibold" data-testid="rollout-public">{count("public-data") + count("demo")} of {STATIONS.length}</strong>). <strong className="font-semibold" data-testid="rollout-connected">{count("connected")} stations</strong> are connected to live DART condition data today. Akard also runs the synthetic demo.
           </p>
           <p className="mt-4 text-lg text-gray-800 leading-relaxed font-light">
-            As stations are approved and connected, they appear on this map with their data source and last verified time. Nothing is shown as connected without evidence.
+            As stations are approved and connected to live inspection and asset data, they appear on this map with their data source and last verified time. Nothing is shown as live without evidence.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <Link href="/stations" className="font-ui inline-flex items-center justify-center min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] text-white hover:opacity-90" style={{ background: "#0057A8" }}>Explore the stations</Link>

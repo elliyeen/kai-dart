@@ -5,7 +5,9 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await page.goto("");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Transit for Everyone");
   expect(await page.locator("body").innerText()).not.toMatch(/fifa|world cup|at&t stadium|arlington/i);
-  await expect(page.getByTestId("hero-metric")).toHaveText("75");
+  await expect(page.getByTestId("hero-metric")).toHaveText("171,000+");
+  await expect(page.getByText("Daily Passenger Trips")).toBeVisible();
+  await expect(page.getByText("Rail Stations in the DART Network")).toHaveCount(0);
   await expect(page.getByText("DART clean for all of North Texas")).toBeVisible();
   await expect(page.getByText("Transit for North Texas")).toHaveCount(0);
   await expect(page.getByText("Transit for All", { exact: true })).toHaveCount(0);
@@ -32,6 +34,8 @@ test("rollout map is honest: nothing connected, Akard is the demo station", asyn
   await expect(page.getByTestId("rollout-connected")).toHaveText("0 stations");
   const legend = page.getByTestId("rollout-legend");
   await expect(legend).toContainText("Connected to live data · 0");
+  await expect(legend).toContainText("Public schedule data connected · 75");
+  await expect(page.getByTestId("rollout-public")).toHaveText("76 of 76");
   await expect(legend).toContainText("Demo station (synthetic) · 1");
   await expect(legend).toContainText("Not yet connected");
   const map = page.getByTestId("map-rollout");

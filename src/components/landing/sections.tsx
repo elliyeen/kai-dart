@@ -57,8 +57,9 @@ export function HeroIntro() {
           <p className="mt-6 text-lg sm:text-xl font-light text-gray-800 max-w-xl leading-relaxed">We&rsquo;re changing public transportation to make it clean, safe and more intelligent than ever.</p>
         </div>
         <div className="lg:text-right">
-          <p className="text-7xl sm:text-8xl font-light tracking-[-0.03em] leading-none text-gray-900" data-testid="hero-metric">75</p>
-          <p className="mt-2 text-base text-gray-800">Rail Stations in the DART Network</p>
+          <p className="text-6xl sm:text-7xl font-light tracking-[-0.03em] leading-none text-gray-900" data-testid="hero-metric">171,000+</p>
+          <p className="mt-2 text-base text-gray-800">Daily Passenger Trips</p>
+          <p className="mt-1 text-xs text-gray-600">Source: <a className="underline underline-offset-2 hover:text-black" href="https://www.dart.org/about/news-and-events/newsreleases/newsrelease-detail/dallas-area-rapid-transit-releases-point-b-strategic-plan-annual-report-highlighting-major-investments-and-accomplishments" target="_blank" rel="noopener noreferrer">DART</a></p>
         </div>
       </div>
     </section>

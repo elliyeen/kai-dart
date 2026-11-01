@@ -11,7 +11,7 @@ import type { TwinAsset } from "@/lib/stations/geometry";
 import { DemoBadge, LineChips, StatusIndicator } from "./ui";
 import MapPanel from "./MapPanel";
 import AkardTwin from "./dashboard/AkardTwin";
-import { AssetDrawer, KpiRow, LowerStrip } from "./dashboard/panels";
+import { AssetDrawer, DataSources, KpiRow, LowerStrip } from "./dashboard/panels";
 
 export default function StationDashboard({ station }: { station: Station }) {
   const demo = useDemo();
@@ -50,6 +50,7 @@ export default function StationDashboard({ station }: { station: Station }) {
                 </section>
               )}
               <LowerStrip demo={demo} isDemoStation={isDemo} issues={station.demo.issues} />
+              <DataSources stationKey={station.key} />
               {!isDemo && station.demo.issues.length > 0 && (
                 <section aria-labelledby="iss-h" className="rounded-2xl border border-gray-200 bg-white p-4"><h2 id="iss-h" className="text-lg mb-2" style={{ fontWeight: 700 }}>Open issues <span className="text-sm font-normal text-gray-700">(synthetic)</span></h2>
                   <ul className="divide-y divide-gray-100">{station.demo.issues.map((i) => <li key={i} className="py-2.5 text-sm flex justify-between gap-3"><span>{ISSUE_LABELS[i] ?? i}</span><span className="text-gray-700">Owner: unassigned</span></li>)}</ul>
