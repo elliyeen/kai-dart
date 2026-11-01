@@ -8,12 +8,12 @@ import YtdTrips from "./YtdTrips";
 type CtaVariant = "primary" | "light" | "outline";
 
 /** Store-badge style CTA: compact two-line pill (small caption + bold label) with hover lift, arrow slide, shine sweep and press feedback. */
-function CtaBadge({ href, caption, label, variant }: { href: string; caption: string; label: string; variant: CtaVariant }) {
+function CtaBadge({ href, caption, label, variant }: { href: string; caption?: string; label: string; variant: CtaVariant }) {
   return (
     <Link href={href} data-variant={variant} className="cta-badge font-ui">
       <span className="cta-badge-text">
-        <span className="cta-badge-caption">{caption}</span>{" "}
-        <span className="cta-badge-label">{label}</span>
+        {caption && <><span className="cta-badge-caption">{caption}</span>{" "}</>}
+        <span className="cta-badge-label" style={caption ? undefined : { marginTop: 0 }}>{label}</span>
       </span>
       <ArrowRight className="cta-badge-arrow w-4 h-4" aria-hidden="true" />
     </Link>
@@ -23,8 +23,8 @@ function CtaBadge({ href, caption, label, variant }: { href: string; caption: st
 export function CTAButtons({ dark = false }: { dark?: boolean }) {
   return (
     <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-      <CtaBadge href="/stations" caption="Explore" label="Station Intelligence" variant="primary" />
-      <CtaBadge href="/contact" caption="Request a" label="Demo" variant={dark ? "light" : "outline"} />
+      <CtaBadge href="/get-started" label="Get started" variant="primary" />
+      <CtaBadge href="/stations" label="Demo" variant={dark ? "light" : "outline"} />
     </div>
   );
 }
@@ -49,8 +49,8 @@ export function CinematicHero() {
 function HeroButtons() {
   return (
     <div className="flex flex-col sm:flex-row gap-3 items-start">
-      <CtaBadge href="/stations" caption="Explore" label="Station Intelligence" variant="primary" />
-      <CtaBadge href="/contact" caption="Request a" label="Demo" variant="light" />
+      <CtaBadge href="/get-started" label="Get started" variant="primary" />
+      <CtaBadge href="/stations" label="Demo" variant="light" />
     </div>
   );
 }
