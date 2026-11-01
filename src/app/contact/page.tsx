@@ -60,7 +60,7 @@ export default function ContactPage() {
       <section className="pt-24 sm:pt-36 lg:pt-48 pb-12 sm:pb-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <p
-            className="hero-animate text-[11px] font-medium tracking-[0.4em] text-white/30 mb-10 uppercase"
+            className="hero-animate text-[11px] font-medium tracking-[0.4em] text-white/70 mb-10 uppercase"
             style={{ animationDelay: "0ms" }}
           >
             Contact
@@ -72,7 +72,7 @@ export default function ContactPage() {
             Let&apos;s talk.
           </h1>
           <p
-            className="hero-animate text-xl text-white/50 max-w-xl leading-relaxed font-light"
+            className="hero-animate text-xl text-white/75 max-w-xl leading-relaxed font-light"
             style={{ animationDelay: "320ms" }}
           >
             Whether you&apos;re a city, transit authority, or enterprise —
@@ -90,12 +90,12 @@ export default function ContactPage() {
             <div>
               {!submitted ? (
                 <>
-                  <p className="text-[11px] font-medium tracking-[0.3em] text-gray-400 mb-10 uppercase">Send a Message</p>
+                  <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-10 uppercase">Send a Message</p>
                   <form onSubmit={handleSubmit} className="space-y-7 sm:space-y-10">
 
                     <div className="grid md:grid-cols-2 gap-8">
                       <div>
-                        <label htmlFor="name" className="block text-[11px] font-medium tracking-[0.25em] text-gray-400 mb-4 uppercase">
+                        <label htmlFor="name" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
                           Full Name *
                         </label>
                         <input
@@ -105,12 +105,12 @@ export default function ContactPage() {
                           required
                           value={formData.name}
                           onChange={handleChange}
-                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-300"
+                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-500"
                           placeholder="Jane Smith"
                         />
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-[11px] font-medium tracking-[0.25em] text-gray-400 mb-4 uppercase">
+                        <label htmlFor="email" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
                           Email Address *
                         </label>
                         <input
@@ -120,7 +120,7 @@ export default function ContactPage() {
                           required
                           value={formData.email}
                           onChange={handleChange}
-                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-300"
+                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-500"
                           placeholder="jane@city.gov"
                         />
                       </div>
@@ -128,7 +128,7 @@ export default function ContactPage() {
 
                     <div className="grid md:grid-cols-2 gap-8">
                       <div>
-                        <label htmlFor="company" className="block text-[11px] font-medium tracking-[0.25em] text-gray-400 mb-4 uppercase">
+                        <label htmlFor="company" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
                           Organization
                         </label>
                         <input
@@ -137,12 +137,12 @@ export default function ContactPage() {
                           name="company"
                           value={formData.company}
                           onChange={handleChange}
-                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-300"
+                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-500"
                           placeholder="City of Dallas"
                         />
                       </div>
                       <div>
-                        <label htmlFor="phone" className="block text-[11px] font-medium tracking-[0.25em] text-gray-400 mb-4 uppercase">
+                        <label htmlFor="phone" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
                           Phone
                         </label>
                         <input
@@ -151,14 +151,14 @@ export default function ContactPage() {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-300"
+                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-500"
                           placeholder="(214) 555-0100"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label htmlFor="inquiryType" className="block text-[11px] font-medium tracking-[0.25em] text-gray-400 mb-4 uppercase">
+                      <label htmlFor="inquiryType" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
                         I&apos;m interested in *
                       </label>
                       <select
@@ -178,7 +178,7 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-[11px] font-medium tracking-[0.25em] text-gray-400 mb-4 uppercase">
+                      <label htmlFor="message" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
                         Message
                       </label>
                       <textarea
@@ -187,7 +187,7 @@ export default function ContactPage() {
                         rows={5}
                         value={formData.message}
                         onChange={handleChange}
-                        className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent resize-none placeholder:text-gray-300"
+                        className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent resize-none placeholder:text-gray-500"
                         placeholder="Tell us about your environment and timeline..."
                       />
                     </div>
@@ -208,7 +208,7 @@ export default function ContactPage() {
                           </svg>
                         )}
                       </div>
-                      <span className="text-sm font-light text-gray-500 group-hover:text-black transition-colors duration-200">
+                      <span className="text-sm font-light text-gray-700 group-hover:text-black transition-colors duration-200">
                         I am a human
                       </span>
                     </label>
@@ -224,7 +224,7 @@ export default function ContactPage() {
                       {error && (
                         <p className="text-[12px] text-red-500 text-center mt-4">{error}</p>
                       )}
-                      <p className="text-[12px] text-gray-400 text-center mt-5">
+                      <p className="text-[12px] text-gray-600 text-center mt-5">
                         By submitting you agree to our privacy policy.
                       </p>
                     </div>
@@ -235,7 +235,7 @@ export default function ContactPage() {
                 <div className="py-20 space-y-6">
                   <div className="text-5xl font-thin text-[#FF6B35] leading-none">✓</div>
                   <h3 className="text-4xl font-thin tracking-[-0.02em]">Message received.</h3>
-                  <p className="text-gray-500 leading-relaxed font-light">
+                  <p className="text-gray-700 leading-relaxed font-light">
                     We respond within 24 hours.<br />In the meantime, explore the platform.
                   </p>
                   <div className="pt-4 flex flex-col sm:flex-row gap-4">
@@ -247,7 +247,7 @@ export default function ContactPage() {
                     </Link>
                     <button
                       onClick={() => setSubmitted(false)}
-                      className="text-sm font-light text-gray-400 hover:text-black transition-colors duration-200"
+                      className="text-sm font-light text-gray-600 hover:text-black transition-colors duration-200"
                     >
                       Send another message
                     </button>
@@ -261,7 +261,7 @@ export default function ContactPage() {
 
               {/* Contact info */}
               <div>
-                <p className="text-[11px] font-medium tracking-[0.3em] text-gray-400 mb-8 uppercase">Contact</p>
+                <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-8 uppercase">Contact</p>
                 <div className="space-y-0">
                   {[
                     { icon: <MapPin className="w-4 h-4" />, label: "Location", value: "Dallas, Texas", href: null },
@@ -269,8 +269,8 @@ export default function ContactPage() {
                   ].map((item) => (
                     <div key={item.label} className="flex items-center justify-between border-b border-gray-100 py-5">
                       <div className="flex items-center gap-3">
-                        <span className="text-gray-300">{item.icon}</span>
-                        <span className="text-[11px] font-medium text-gray-400 tracking-[0.2em] uppercase">{item.label}</span>
+                        <span className="text-gray-600">{item.icon}</span>
+                        <span className="text-[11px] font-medium text-gray-600 tracking-[0.2em] uppercase">{item.label}</span>
                       </div>
                       {item.href ? (
                         <a
@@ -282,7 +282,7 @@ export default function ContactPage() {
                           {item.value}
                         </a>
                       ) : (
-                        <span className="text-sm font-light text-gray-500">{item.value}</span>
+                        <span className="text-sm font-light text-gray-700">{item.value}</span>
                       )}
                     </div>
                   ))}
@@ -291,7 +291,7 @@ export default function ContactPage() {
 
               {/* What happens next */}
               <div>
-                <p className="text-[11px] font-medium tracking-[0.3em] text-gray-400 mb-8 uppercase">What Happens Next</p>
+                <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-8 uppercase">What Happens Next</p>
                 <div className="space-y-0">
                   {[
                     { step: "01", title: "Initial response",   desc: "We reach out within 24 hours to understand your environment and goals." },
@@ -300,10 +300,10 @@ export default function ContactPage() {
                     { step: "04", title: "Go live",            desc: "From contract to live operations in 30 days. No rip-and-replace required." },
                   ].map((item) => (
                     <div key={item.step} className="grid grid-cols-[48px_1fr] gap-4 border-b border-gray-100 py-6">
-                      <span className="text-[11px] font-medium text-gray-300 tracking-[0.2em] pt-0.5">{item.step}</span>
+                      <span className="text-[11px] font-medium text-gray-600 tracking-[0.2em] pt-0.5">{item.step}</span>
                       <div>
                         <div className="text-sm font-medium mb-1.5">{item.title}</div>
-                        <div className="text-sm font-light text-gray-400 leading-relaxed">{item.desc}</div>
+                        <div className="text-sm font-light text-gray-600 leading-relaxed">{item.desc}</div>
                       </div>
                     </div>
                   ))}
@@ -319,13 +319,13 @@ export default function ContactPage() {
       <footer className="border-t border-white/[0.06] py-12">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6 text-center lg:text-left">
-            <div className="text-[13px] text-white/30">
+            <div className="text-[13px] text-white/70">
               © {new Date().getFullYear()} KAI — The Operating System for Cities and Enterprise.
             </div>
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
-              <Link href="/platform" className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200">Platform</Link>
-              <Link href="/#about" className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200">About</Link>
-              <Link href="/contact" className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200">Contact</Link>
+              <Link href="/platform" className="text-[13px] text-white/70 hover:text-white/70 transition-colors duration-200">Platform</Link>
+              <Link href="/#about" className="text-[13px] text-white/70 hover:text-white/70 transition-colors duration-200">About</Link>
+              <Link href="/contact" className="text-[13px] text-white/70 hover:text-white/70 transition-colors duration-200">Contact</Link>
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ export default function Home() {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.02em] mb-10 lg:mb-14">One view from condition to closure.</h2>
             </FadeUp>
             <ExperienceTabs />
-            <p className="mt-10"><Link href="/platform?tab=demo" className="text-sm font-medium border-b border-black pb-1 hover:border-gray-400">Open the interactive demo (synthetic data)</Link></p>
+            <p className="mt-10"><Link href="/stations" className="text-sm font-medium border-b border-black pb-1 hover:border-gray-400">Open the interactive demo (synthetic data)</Link></p>
           </div>
         </section>
 

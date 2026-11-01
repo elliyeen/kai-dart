@@ -9,8 +9,8 @@ const BLUE = "#0057A8";
 export function CTAButtons({ dark = false }: { dark?: boolean }) {
   return (
     <div className="flex flex-col sm:flex-row gap-3 justify-center">
-      <Link href="/platform?tab=demo" className="font-ui inline-flex items-center justify-center min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] text-white hover:opacity-90 transition-opacity" style={{ background: BLUE }}>
-        Explore Platform
+      <Link href="/stations" className="font-ui inline-flex items-center justify-center min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] text-white hover:opacity-90 transition-opacity" style={{ background: BLUE }}>
+        Explore Station Intelligence
       </Link>
       <Link href="/contact" className={`font-ui inline-flex items-center justify-center gap-2 min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] transition-colors ${dark ? "bg-white text-gray-900 hover:bg-white/90" : "border border-gray-300 text-gray-900 hover:bg-gray-50"}`}>
         Request Demo <ArrowRight className="w-3 h-3" aria-hidden="true" />
@@ -90,7 +90,7 @@ export function WorkflowSteps() {
     <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
       {STEPS.map((s) => (
         <li key={s.n} className="bg-white p-6 sm:p-8">
-          <div className="text-4xl font-thin text-gray-300 mb-4" aria-hidden="true">{s.n}</div>
+          <div className="text-4xl font-thin text-gray-500 mb-4" aria-hidden="true">{s.n}</div>
           <h3 className="text-xl font-light mb-2">{s.t}</h3>
           <p className="text-sm text-gray-700 leading-relaxed font-light">{s.d}</p>
         </li>

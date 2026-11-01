@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "build:pages": "GITHUB_PAGES=true next build",
+    "screenshots": "node scripts/capture-screenshots.mjs"
   },
   "dependencies": {
     "@types/mapbox-gl": "^3.4.1",
