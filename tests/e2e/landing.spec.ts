@@ -24,6 +24,20 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await expect(page).toHaveURL(/\/stations\/?$/);
 });
 
+test("rollout map is honest: nothing connected, Akard is the demo station", async ({ page }) => {
+  await page.goto("");
+  await expect(page.getByRole("heading", { name: "Bringing stations online." })).toBeVisible();
+  await expect(page.getByTestId("rollout-connected")).toHaveText("0 stations");
+  const legend = page.getByTestId("rollout-legend");
+  await expect(legend).toContainText("Connected to live data · 0");
+  await expect(legend).toContainText("Demo station (synthetic) · 1");
+  await expect(legend).toContainText("Not yet connected");
+  const map = page.getByTestId("map-rollout");
+  await expect(map.locator("circle")).toHaveCount(76);
+  await expect(map.getByText("Akard (demo)")).toBeVisible();
+  await expect(map.getByText("DALLAS CO.")).toBeVisible();
+});
+
 test("old World Cup route is gone", async ({ request }) => {
   expect((await request.get("world-cup-2026")).status()).toBe(404);
 });
