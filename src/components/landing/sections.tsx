@@ -4,17 +4,26 @@ import { ArrowRight } from "lucide-react";
 import FadeUp from "@/components/FadeUp";
 import { IMAGES, img } from "./assets";
 
-const BLUE = "#0057A8";
+type CtaVariant = "primary" | "light" | "outline";
+
+/** Store-badge style CTA: compact two-line pill (small caption + bold label) with hover lift, arrow slide, shine sweep and press feedback. */
+function CtaBadge({ href, caption, label, variant }: { href: string; caption: string; label: string; variant: CtaVariant }) {
+  return (
+    <Link href={href} data-variant={variant} className="cta-badge font-ui">
+      <span className="cta-badge-text">
+        <span className="cta-badge-caption">{caption}</span>{" "}
+        <span className="cta-badge-label">{label}</span>
+      </span>
+      <ArrowRight className="cta-badge-arrow w-4 h-4" aria-hidden="true" />
+    </Link>
+  );
+}
 
 export function CTAButtons({ dark = false }: { dark?: boolean }) {
   return (
-    <div className="flex flex-col sm:flex-row gap-3 justify-center">
-      <Link href="/stations" className="font-ui inline-flex items-center justify-center min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] text-white hover:opacity-90 transition-opacity" style={{ background: BLUE }}>
-        Explore Station Intelligence
-      </Link>
-      <Link href="/contact" className={`font-ui inline-flex items-center justify-center gap-2 min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] transition-colors ${dark ? "bg-white text-gray-900 hover:bg-white/90" : "border border-gray-300 text-gray-900 hover:bg-gray-50"}`}>
-        Request Demo <ArrowRight className="w-3 h-3" aria-hidden="true" />
-      </Link>
+    <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+      <CtaBadge href="/stations" caption="Explore" label="Station Intelligence" variant="primary" />
+      <CtaBadge href="/contact" caption="Request a" label="Demo" variant={dark ? "light" : "outline"} />
     </div>
   );
 }
@@ -38,9 +47,9 @@ export function CinematicHero() {
 /** Left-aligned CTA pair for the hero (the shared CTAButtons is centered). */
 function HeroButtons() {
   return (
-    <div className="flex flex-col sm:flex-row gap-3">
-      <Link href="/stations" className="font-ui inline-flex items-center justify-center min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] text-white hover:opacity-90 transition-opacity" style={{ background: BLUE }}>Explore Station Intelligence</Link>
-      <Link href="/contact" className="font-ui inline-flex items-center justify-center gap-2 min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] bg-white text-gray-900 hover:bg-white/90 transition-colors">Request Demo <ArrowRight className="w-3 h-3" aria-hidden="true" /></Link>
+    <div className="flex flex-col sm:flex-row gap-3 items-start">
+      <CtaBadge href="/stations" caption="Explore" label="Station Intelligence" variant="primary" />
+      <CtaBadge href="/contact" caption="Request a" label="Demo" variant="light" />
     </div>
   );
 }
