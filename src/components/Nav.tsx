@@ -26,12 +26,14 @@ interface NavProps {
   hideLinks?: boolean;
   /** Transparent nav over a full-bleed hero; becomes solid once the page scrolls. */
   overlay?: boolean;
+  /** Wider container, for pages laid out on the full width. */
+  wide?: boolean;
 }
 
 const subscribeScroll = (cb: () => void) => { window.addEventListener("scroll", cb, { passive: true }); return () => window.removeEventListener("scroll", cb); };
 const atTop = () => window.scrollY < 8;
 
-export default function Nav({ hideLinks = false, overlay = false }: NavProps) {
+export default function Nav({ hideLinks = false, overlay = false, wide = false }: NavProps) {
   const top = useSyncExternalStore(subscribeScroll, atTop, () => true);
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -43,7 +45,7 @@ export default function Nav({ hideLinks = false, overlay = false }: NavProps) {
   return (
     <>
       <nav data-transparent={transparent ? "true" : undefined} className="nav-shell fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className={`${wide ? "max-w-[1480px] lg:px-12" : "max-w-7xl lg:px-8"} mx-auto px-6`}>
           <div className="flex justify-between items-center h-16">
 
             {/* Logo */}
