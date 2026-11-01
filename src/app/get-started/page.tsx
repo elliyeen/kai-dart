@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import Nav from "@/components/Nav";
 import SiteFooter from "@/components/landing/SiteFooter";
 
@@ -34,11 +32,6 @@ export default function GetStartedPage() {
             ))}
           </ol>
           <p className="mt-6 text-sm text-gray-700 max-w-3xl">The pilot scope is three stations, proposed as Park Lane, Akard and Spring Valley. The interactive demo also shows SMU/Mockingbird as an illustration.</p>
-          <div className="mt-10 flex flex-wrap gap-3 items-center">
-            <Link href="/contact" className="cta-badge font-ui" data-variant="primary"><span className="cta-badge-text"><span className="cta-badge-label" style={{marginTop:0}}>Discuss a Pilot</span></span><ArrowRight className="cta-badge-arrow w-4 h-4" aria-hidden="true" /></Link>
-            <Link href="/faq" className="cta-badge font-ui" data-variant="outline"><span className="cta-badge-text"><span className="cta-badge-label" style={{marginTop:0}}>FAQ</span></span></Link>
-            <Link href="/stations" className="text-sm underline underline-offset-2">Try the interactive demo</Link>
-          </div>
         </div>
       </main>
       <SiteFooter />

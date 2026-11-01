@@ -9,12 +9,10 @@ test("FAQ page has exactly 14 answers and links to Get Started", async ({ page }
   await expect(page).toHaveURL(/get-started/);
 });
 
-test("Get Started page shows four steps and a working Discuss a Pilot link", async ({ page }) => {
+test("Get Started page shows four steps", async ({ page }) => {
   await page.goto("get-started");
   await expect(page.getByTestId("step")).toHaveCount(4);
   await expect(page.getByText("three stations", { exact: false }).first()).toBeVisible();
-  await page.getByRole("link", { name: /Discuss a Pilot/ }).click();
-  await expect(page).toHaveURL(/contact/);
 });
 
 test("landing links to the FAQ and Get Started pages", async ({ page }) => {
