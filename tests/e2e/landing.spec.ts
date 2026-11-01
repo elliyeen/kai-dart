@@ -38,7 +38,7 @@ test("pilot section names the three pilot stations; nothing is shown as live", a
   await expect(page.getByText("Bringing stations online.")).toHaveCount(0);
   const legend = page.getByTestId("rollout-legend");
   await expect(legend).toContainText("Pilot site (proposed) · 3");
-  await expect(legend).toContainText("Connected to live data · 0");
+  await expect(legend).not.toContainText("Connected to live data");
   await expect(legend).toContainText("Public schedule data connected · 73");
   await expect(page.getByTestId("map-rollout").locator("circle")).toHaveCount(76);
   for (const n of ["Park Lane", "Akard", "Spring Valley"]) await expect(page.getByTestId("map-rollout").getByText(n, { exact: true })).toBeVisible();
@@ -64,7 +64,7 @@ test("year-to-date trips is labeled as an estimate, not a DART figure", async ({
   await page.goto("");
   const box = page.getByTestId("ytd-trips");
   await expect(box).toContainText("Estimated trips so far");
-  await expect(box).toContainText("not a DART-reported total");
+  await expect(box).toContainText("Estimated from DART");
   await expect(box).toContainText(/≈ [\d,]+/);
 });
 
@@ -74,5 +74,5 @@ test("FAQ answers ten questions and expands", async ({ page }) => {
   await expect(items).toHaveCount(10);
   await items.first().locator("summary").click();
   await expect(items.first()).toHaveAttribute("open", "");
-  await expect(page.getByTestId("faq")).toContainText("not affiliated with or endorsed by DART");
+  await expect(page.getByTestId("faq")).toContainText("independent");
 });

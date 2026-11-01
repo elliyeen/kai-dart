@@ -28,7 +28,7 @@ export default function Home() {
               </div>
             </FadeUp>
             <ExperienceTabs />
-            <p className="mt-10 text-center"><Link href="/stations" className="text-sm font-medium border-b border-black pb-1 hover:border-gray-400">Open the interactive demo (synthetic data)</Link></p>
+            <p className="mt-10 text-center"><Link href="/stations" className="text-sm font-medium border-b border-black pb-1 hover:border-gray-400">Open the interactive demo</Link></p>
           </div>
         </section>
 
