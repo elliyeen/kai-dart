@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import FadeUp from "@/components/FadeUp";
 import ExperienceTabs from "@/components/landing/ExperienceTabs";
 import CapabilityLineup from "@/components/landing/CapabilityLineup";
+import RolloutSection from "@/components/landing/RolloutSection";
 import { CinematicHero, ProofSection, WorkflowSteps, OperationalIntelligence, FinalCTA } from "@/components/landing/sections";
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
@@ -39,6 +40,8 @@ export default function Home() {
             <CapabilityLineup />
           </div>
         </section>
+
+        <RolloutSection />
 
         <section id="how-it-works" className="bg-[#F8F7F4] py-16 sm:py-24 lg:py-32">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
