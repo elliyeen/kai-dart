@@ -3,17 +3,39 @@ import { noHorizontalOverflow } from "./helpers";
 
 test("landing: no tournament content, CTAs reach the platform, tabs and accordion work", async ({ page }) => {
   await page.goto("");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Every station");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Transit for Everyone");
   expect(await page.locator("body").innerText()).not.toMatch(/fifa|world cup|at&t stadium|arlington/i);
-  await page.getByRole("tab", { name: "Verify" }).click();
-  await expect(page.getByRole("tab", { name: "Verify" })).toHaveAttribute("aria-selected", "true");
-  await page.getByRole("tab", { name: "Verify" }).press("ArrowLeft");
-  await expect(page.getByRole("tab", { name: "Coordinate" })).toHaveAttribute("aria-selected", "true");
-  await page.getByRole("button", { name: "Operations Layer" }).click();
-  await expect(page.getByRole("button", { name: "Operations Layer" })).toHaveAttribute("aria-expanded", "true");
+  await expect(page.getByTestId("hero-metric")).toHaveText("75");
+  await expect(page.getByText("This is the new DART standard.")).toBeVisible();
+  await expect(page.getByText("Enjoy your ride in North Texas.")).toBeVisible();
+  await expect(page.getByText("Mission", { exact: true })).toHaveCount(0);
+  // segmented rider tabs
+  await page.getByRole("tab", { name: "Verified" }).click();
+  await expect(page.getByRole("tab", { name: "Verified" })).toHaveAttribute("aria-selected", "true");
+  await page.getByRole("tab", { name: "Verified" }).press("ArrowLeft");
+  await expect(page.getByRole("tab", { name: "Intelligent" })).toHaveAttribute("aria-selected", "true");
+  await expect(page.locator("#panel-intelligent")).toBeVisible();
+  // capability lineup
+  await page.getByRole("tab", { name: /Operations Layer/ }).click();
+  await expect(page.getByRole("tab", { name: /Operations Layer/ })).toHaveAttribute("aria-selected", "true");
+  await expect(page.locator("#cap-panel-ops")).toBeVisible();
   await noHorizontalOverflow(page);
   await page.getByRole("link", { name: /Explore Station Intelligence/ }).first().click();
   await expect(page).toHaveURL(/\/stations\/?$/);
+});
+
+test("rollout map is honest: nothing connected, Akard is the demo station", async ({ page }) => {
+  await page.goto("");
+  await expect(page.getByRole("heading", { name: "Bringing stations online." })).toBeVisible();
+  await expect(page.getByTestId("rollout-connected")).toHaveText("0 stations");
+  const legend = page.getByTestId("rollout-legend");
+  await expect(legend).toContainText("Connected to live data · 0");
+  await expect(legend).toContainText("Demo station (synthetic) · 1");
+  await expect(legend).toContainText("Not yet connected");
+  const map = page.getByTestId("map-rollout");
+  await expect(map.locator("circle")).toHaveCount(76);
+  await expect(map.getByText("Akard (demo)")).toBeVisible();
+  await expect(map.getByText("DALLAS CO.")).toBeVisible();
 });
 
 test("old World Cup route is gone", async ({ request }) => {

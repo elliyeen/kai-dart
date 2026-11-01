@@ -4,11 +4,12 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { IMAGES, img } from "./assets";
 
+// Rider-facing promises. Each describes what KAI is designed to do in a pilot; none is a measured result.
 const TABS = [
-  { id: "observe", label: "Observe", image: IMAGES.observe, title: "See station condition as it is.", body: "Inspections, rider reports and asset records land in one view, each with a source, an observation time and a status of verified, unknown or demo." },
-  { id: "understand", label: "Understand", image: IMAGES.understand, title: "Know what matters first.", body: "Issues are de-duplicated, matched to the right platform or asset, and ranked, so supervisors see the highest-priority problem instead of a wall of alerts." },
-  { id: "coordinate", label: "Coordinate", image: IMAGES.coordinate, title: "Put every issue in someone's hands.", body: "Each issue is tied to an owner and, where terms exist, the contractor obligation behind it. Assignments need an authorized human approval." },
-  { id: "verify", label: "Verify", image: IMAGES.verify, title: "Close the loop with evidence.", body: "A completion claim is not the finish line. An inspector accepts the evidence before anything is marked resolved, and the full history is kept." },
+  { id: "clean", label: "Clean", image: IMAGES.observe, body: "Cleanliness issues are reported with evidence, matched to the right platform and given a named owner, so nothing stops at \u201creported.\u201d" },
+  { id: "safe", label: "Safe", image: IMAGES.understand, body: "Safety and security concerns are routed to the people authorized to act. KAI surfaces the issue and people decide what to do about it." },
+  { id: "intelligent", label: "Intelligent", image: IMAGES.coordinate, body: "Duplicate reports are merged and the most urgent problems rise to the top, each with a stated source, time and confidence." },
+  { id: "verified", label: "Verified", image: IMAGES.verify, body: "A fix only counts when an independent inspector accepts the evidence. A contractor\u2019s own completion claim is never the final word." },
 ] as const;
 
 export default function ExperienceTabs() {
@@ -29,48 +30,30 @@ export default function ExperienceTabs() {
 
   return (
     <div>
-      <div role="tablist" aria-label="Platform experience" className="flex gap-1 border-b border-gray-200 overflow-x-auto">
+      <div className="relative aspect-[4/3] sm:aspect-[16/9] overflow-hidden rounded-2xl bg-gray-100">
         {TABS.map((t, i) => (
-          <button
-            key={t.id}
-            ref={(el) => { refs.current[i] = el; }}
-            role="tab"
-            id={`tab-${t.id}`}
-            aria-selected={active === i}
-            aria-controls={`panel-${t.id}`}
-            tabIndex={active === i ? 0 : -1}
-            onClick={() => setActive(i)}
-            onKeyDown={(e) => onKeyDown(e, i)}
-            className={`min-h-11 px-5 sm:px-8 text-sm tracking-wide whitespace-nowrap border-b-2 -mb-px transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8] ${
-              active === i ? "border-[#0057A8] text-black font-medium" : "border-transparent text-gray-600 hover:text-black"
-            }`}
-          >
+          <Image key={t.id} src={img(t.image.file)} alt={i === active ? t.image.alt : ""} aria-hidden={i !== active} fill sizes="(min-width:1280px) 1200px, 100vw"
+            className={`object-cover transition-opacity duration-500 motion-reduce:transition-none ${i === active ? "opacity-100" : "opacity-0"}`} />
+        ))}
+        <span className="absolute left-3 bottom-3 bg-white/90 text-[11px] tracking-wide text-gray-800 px-2.5 py-1 rounded">Station photography · illustrative</span>
+      </div>
+
+      {TABS.map((t, i) => (
+        <div key={t.id} role="tabpanel" id={`panel-${t.id}`} aria-labelledby={`tab-${t.id}`} hidden={active !== i}
+          className="mt-8 mx-auto max-w-2xl text-center text-lg sm:text-xl font-light leading-relaxed text-gray-800">
+          {t.body}
+        </div>
+      ))}
+
+      <div role="tablist" aria-label="Rider experience" className="mt-8 mx-auto max-w-3xl grid grid-cols-4 gap-1 rounded-xl bg-gray-100 p-1">
+        {TABS.map((t, i) => (
+          <button key={t.id} ref={(el) => { refs.current[i] = el; }} role="tab" id={`tab-${t.id}`} aria-selected={active === i} aria-controls={`panel-${t.id}`}
+            tabIndex={active === i ? 0 : -1} onClick={() => setActive(i)} onKeyDown={(e) => onKeyDown(e, i)}
+            className={`min-h-11 rounded-lg px-2 text-sm sm:text-[15px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8] ${active === i ? "bg-white text-black font-semibold shadow-sm" : "text-gray-700 hover:text-black"}`}>
             {t.label}
           </button>
         ))}
       </div>
-
-      {TABS.map((t, i) => (
-        <div
-          key={t.id}
-          role="tabpanel"
-          id={`panel-${t.id}`}
-          aria-labelledby={`tab-${t.id}`}
-          hidden={active !== i}
-          className="mt-8 grid lg:grid-cols-[1.6fr_1fr] gap-8 lg:gap-14 items-center"
-        >
-          <div className="relative aspect-[4/3] lg:aspect-[16/10] overflow-hidden bg-gray-100">
-            <Image src={img(t.image.file)} alt={t.image.alt} fill sizes="(min-width:1024px) 60vw, 100vw" className="object-cover tab-fade" />
-            <span className="absolute left-3 bottom-3 bg-white/90 text-[11px] tracking-wide text-gray-800 px-2.5 py-1">
-              Station photography · illustrative of the workflow stage
-            </span>
-          </div>
-          <div>
-            <h3 className="text-2xl sm:text-3xl font-light tracking-[-0.01em] mb-4">{t.title}</h3>
-            <p className="text-gray-700 leading-relaxed font-light">{t.body}</p>
-          </div>
-        </div>
-      ))}
     </div>
   );
 }

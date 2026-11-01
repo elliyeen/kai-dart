@@ -21,19 +21,29 @@ export function CTAButtons({ dark = false }: { dark?: boolean }) {
 
 export function CinematicHero() {
   return (
-    <section className="relative h-[70vh] sm:h-[80vh] lg:h-[calc(100vh-64px)] min-h-[480px] flex items-end overflow-hidden">
+    <section className="relative min-h-[640px] h-[100svh] max-h-[1000px] flex flex-col overflow-hidden text-white font-sans">
       <Image src={img(IMAGES.hero.file)} alt={IMAGES.hero.alt} fill priority sizes="100vw" className="object-cover object-[62%_center]" />
-      <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 pb-14 sm:pb-20 text-white">
-        <h1 className="hero-animate text-[2.4rem] sm:text-6xl lg:text-7xl font-light leading-[1.05] tracking-[-0.03em] max-w-3xl mb-5">
-          Every station,<br />ready for riders.
+      <div className="absolute inset-0 bg-linear-to-b from-black/75 via-black/40 to-black/80" />
+
+      <div className="relative z-10 flex-1 flex flex-col items-center text-center px-6 pt-28 sm:pt-32">
+        <p className="hero-animate text-[11px] sm:text-xs font-medium tracking-[0.35em] uppercase text-white/90 mb-5">Transit for All</p>
+        <h1 className="hero-animate font-sans text-[2.5rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-light leading-[1.04] tracking-[-0.03em] max-w-4xl" style={{ animationDelay: "120ms", fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+          Transit for Everyone<br />and Every Ride
         </h1>
-        <p className="hero-animate text-lg sm:text-xl font-light text-white/90 max-w-xl mb-8" style={{ animationDelay: "160ms" }}>
-          KAI connects what is seen in a station to who owns it, who fixes it and who verifies it.
+        <p className="hero-animate mt-6 text-base sm:text-xl font-light text-white/95 max-w-2xl leading-relaxed" style={{ animationDelay: "240ms" }}>
+          We&rsquo;re changing public transportation to make it clean, safe and more intelligent than ever.<sup className="text-[0.6em] ml-0.5"><a href="#hero-note" aria-label="Footnote 1" className="underline underline-offset-2">1</a></sup>
         </p>
-        <div className="hero-animate max-w-md sm:max-w-none" style={{ animationDelay: "280ms" }}>
-          <div className="sm:flex"><CTAButtons dark /></div>
+        <div className="hero-animate mt-8 w-full max-w-md sm:max-w-none" style={{ animationDelay: "340ms" }}>
+          <CTAButtons dark />
         </div>
+      </div>
+
+      <div className="relative z-10 px-6 pb-8 sm:pb-10 text-center">
+        <p className="hero-animate text-6xl sm:text-7xl lg:text-8xl font-thin tracking-[-0.03em] leading-none" style={{ animationDelay: "460ms" }} data-testid="hero-metric">75</p>
+        <p className="hero-animate mt-2 text-sm sm:text-base font-light text-white/95" style={{ animationDelay: "520ms" }}>Rail Stations in the DART Network</p>
+        <p id="hero-note" className="mt-6 mx-auto max-w-3xl text-[11px] sm:text-xs leading-relaxed text-white/85">
+          1. Station count from DART&rsquo;s published GTFS schedule data (feed V755-218-220, effective Oct 29, 2026): unique rail stations including the Silver Line. The KAI demo directory lists DFW Airport Terminals A and B separately (76 entries). KAI is an Elliyeen demonstration and proposed pilot, not a DART-approved system.
+        </p>
       </div>
     </section>
   );
@@ -41,19 +51,16 @@ export function CinematicHero() {
 
 export function ProofSection() {
   return (
-    <section id="mission" className="bg-white py-16 sm:py-24 lg:py-32">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+    <section id="standard" className="bg-white py-20 sm:py-28 lg:py-36">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
         <FadeUp>
-          <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-6 uppercase">Mission</p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light leading-tight tracking-[-0.02em]">
-            See it. Own it. Solve it. Verify it. Learn from it.
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.08] tracking-[-0.03em] text-gray-900" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+            This is the new DART standard.<br />
+            <span className="text-gray-600">Enjoy your ride in North Texas.</span>
           </h2>
         </FadeUp>
         <FadeUp delay={120}>
-          <p className="text-xl text-gray-700 leading-relaxed font-light mb-8">
-            KAI is an operations and accountability layer for physical station conditions. It does not replace the systems transit teams already run. It connects them so an issue never stops at &ldquo;reported.&rdquo;
-          </p>
-          <EvidencePanel />
+          <div className="mt-14 max-w-2xl mx-auto text-left"><EvidencePanel /></div>
         </FadeUp>
       </div>
     </section>
