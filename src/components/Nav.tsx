@@ -9,6 +9,7 @@ const websiteLinks = [
   { href: "/platform", label: "Platform" },
   { href: "/#how-it-works", label: "How It Works" },
   { href: "/#about", label: "About" },
+  { href: "/architecture", label: "Architecture" },
   { href: "/faq", label: "FAQ" },
   { href: "/get-started", label: "Get Started" },
 ];

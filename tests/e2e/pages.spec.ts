@@ -41,3 +41,18 @@ test("Checkout flow completes to an honest summary that is not marked as sent", 
   await expect(done).toContainText("It has not been sent anywhere yet");
   await expect(done.getByRole("link", { name: "Open in email" })).toHaveAttribute("href", /^mailto:signer%40example\.com/);
 });
+
+test("Architecture page: five steps, security strip, keyboard-selectable details, text fallback", async ({ page }) => {
+  await page.goto("architecture");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Super Intelligence");
+  await expect(page.getByTestId("arch-node")).toHaveCount(5);
+  await expect(page.getByTestId("arch-sec")).toHaveCount(4);
+  await page.getByTestId("arch-node").nth(2).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByTestId("arch-detail")).toContainText("Intelligence");
+  await expect(page.getByTestId("arch-detail")).toContainText("synthetic");
+  await page.getByTestId("arch-sec").nth(1).click();
+  await expect(page.getByTestId("arch-detail")).toContainText("simulation, not access control");
+  await page.getByTestId("arch-text").locator("summary").click();
+  await expect(page.getByTestId("arch-text")).toContainText("Human oversight");
+});
