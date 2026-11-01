@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bell, BarChart3, ClipboardCheck, Home, Layers, PlayCircle, RotateCcw, Search, X, type LucideIcon } from "lucide-react";
 import { PERSONAS, PERSONA_BY_ROLE, type Role } from "@/lib/demo/roles";
 import { dispatch, useDemo } from "@/lib/demo/store";
@@ -41,6 +41,19 @@ export default function Shell({ children }: { children: React.ReactNode }) {
     const p = PERSONA_BY_ROLE[demo.role];
     logAudit({ actor: p.identity, role: p.label, action: "sign_in", entityType: "session", entityId: p.identity, input: `role=${p.label}`, output: "Session started (simulated sign-in)", owner: "Platform Admin" });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // Measure the real header + tools bar so the station browser fills exactly the rest of the viewport (no magic number, no clipping).
+  const rootRef = useRef<HTMLDivElement>(null);
+  const headRef = useRef<HTMLElement>(null);
+  const toolsRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const set = () => rootRef.current?.style.setProperty("--chrome", `${(headRef.current?.offsetHeight ?? 0) + (toolsRef.current?.offsetHeight ?? 0)}px`);
+    set();
+    const ro = new ResizeObserver(set);
+    if (headRef.current) ro.observe(headRef.current);
+    if (toolsRef.current) ro.observe(toolsRef.current);
+    window.addEventListener("resize", set);
+    return () => { ro.disconnect(); window.removeEventListener("resize", set); };
+  }, []);
   const step = demo.guideStep;
   const done = step >= STEPS.length;
   const badge = pending(demo);
@@ -57,9 +70,9 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   const btn = "min-h-11 px-3.5 rounded-full text-sm inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]";
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 pb-20 lg:pb-0 font-[family-name:var(--font-geist)]">
+    <div ref={rootRef} className="min-h-dvh bg-white text-gray-900 pb-20 lg:pb-0 font-[family-name:var(--font-geist)]">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-3">Skip to content</a>
-      <header className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-gray-200">
+      <header ref={headRef} className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-gray-200">
         <div className="max-w-[1600px] mx-auto px-4 lg:px-6 min-h-[68px] flex flex-wrap items-center gap-x-4 gap-y-2 py-2">
           <Link href="/" className="inline-flex items-center gap-3 min-h-11 min-w-11">
             <span className="text-2xl text-gray-900" style={{ fontWeight: 800, fontStyle: "italic", letterSpacing: "-0.04em" }}>KAI</span>
@@ -103,7 +116,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           </section>
         )}
       </header>
-      <ToolsBar path={path} />
+      <div ref={toolsRef}><ToolsBar path={path} /></div>
       <main id="main" tabIndex={-1} className="max-w-[1600px] mx-auto">{children}</main>
       <nav aria-label="Primary mobile" className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-200 grid grid-cols-4 pb-[env(safe-area-inset-bottom)]">
         {NAV.map((n) => { const on = n.match(path); return (
