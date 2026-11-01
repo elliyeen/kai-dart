@@ -24,6 +24,8 @@ export default function PlatformPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    // One-time URL-driven initial scroll; tab already defaults to "demo".
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (params.get("tab") === "demo") switchToDemo();
   }, []);
 
