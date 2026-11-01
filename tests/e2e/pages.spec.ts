@@ -61,10 +61,12 @@ test("Checkout prepopulates the organization only from the DART demo link", asyn
 test("Architecture page: five steps, security strip, keyboard-selectable details, text fallback", async ({ page }) => {
   await page.goto("architecture");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("DART Super Intelligence");
-  await expect(page.getByText("Turn transit data into a clean, safe experience for all")).toBeVisible();
+  await expect(page.getByText("Turn transit data into a clean and safe experience for all.")).toBeVisible();
   await expect(page.getByText("Request a Proposal")).toHaveCount(0);
   await expect(page.getByTestId("arch-flow").getByText("Platform", { exact: true })).toHaveCount(0);
   await expect(page.getByTestId("arch-node")).toHaveCount(5);
+  await expect(page.getByTestId("arch-node").nth(4)).not.toContainText("Work");
+  await expect(page.getByTestId("arch-node").nth(4)).toContainText("A safer, cleaner, more reliable DART");
   await expect(page.getByTestId("arch-sec")).toHaveCount(4);
   await page.getByTestId("arch-node").nth(2).focus();
   await page.keyboard.press("Enter");

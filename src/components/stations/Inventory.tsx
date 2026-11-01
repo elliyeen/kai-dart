@@ -31,8 +31,8 @@ export default function Inventory() {
       <section aria-labelledby="reg" className="space-y-3">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <h2 id="reg" className="text-xl font-semibold">Asset register</h2>
-          <label className="text-sm flex items-center gap-2">Station
-            <select data-testid="inv-station" className="min-h-11 border border-gray-300 rounded-md px-3 bg-white" value={key} onChange={(e) => setKey(e.target.value)}>{sorted.map((s) => <option key={s.key} value={s.key}>{s.name}</option>)}</select></label>
+          <label className="text-sm flex items-center gap-2 max-w-full">Station
+            <select data-testid="inv-station" className="min-h-11 min-w-0 max-w-full border border-gray-300 rounded-md px-3 bg-white" value={key} onChange={(e) => setKey(e.target.value)}>{sorted.map((s) => <option key={s.key} value={s.key}>{s.name}</option>)}</select></label>
         </div>
         <p className="text-sm text-gray-800" data-testid="inv-summary">{units.length} assets · {units.length - down} in service · {down} out of service</p>
         <div tabIndex={0} role="region" aria-label="Asset register table" className="overflow-x-auto border border-gray-200 rounded-lg focus-visible:outline-2 focus-visible:outline-[#0057A8]">

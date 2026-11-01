@@ -28,12 +28,8 @@
   --font-serif: var(--font-instrument-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* The design is light-only. Keep it light in dark-scheme browsers so inherited text never turns pale on a light surface. */
+:root { color-scheme: light; }
 
 html {
   scroll-behavior: smooth;
@@ -251,7 +247,7 @@ nav, button, input, select, textarea, .font-ui {
 .cta-badge {
   position: relative; isolation: isolate; overflow: hidden;
   display: inline-flex; align-items: center; gap: 8px;
-  height: 40px; min-width: 128px; padding: 0 14px 0 10px; border-radius: 8px;
+  height: 40px; width: 156px; justify-content: flex-start; padding: 0 14px 0 12px; border-radius: 8px;
   border: 1px solid #a6a6a6; color: #fff; background: #000;
   text-decoration: none; cursor: pointer;
   transition: transform .22s cubic-bezier(.16,1,.3,1), box-shadow .22s ease, border-color .2s ease;

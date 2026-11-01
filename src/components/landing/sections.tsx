@@ -34,12 +34,11 @@ export function CinematicHero() {
   );
 }
 
-/** Left-aligned CTA pair for the hero (the shared CTAButtons is centered). */
+/** The hero has a single call to action. */
 function HeroButtons() {
   return (
     <div className="flex flex-col sm:flex-row gap-3 items-start">
       <CtaBadge href="/get-started" caption="Start with KAI" label="Get started" icon={START} />
-      <CtaBadge href="/stations" caption="Try the" label="Demo" icon={DEMO} />
     </div>
   );
 }
