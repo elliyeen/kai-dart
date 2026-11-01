@@ -63,3 +63,88 @@ test.describe("station directory", () => {
     await expect(page.getByText("Reported closure (unverified)")).toBeVisible();
   });
 });
+
+test("each line collapses and expands on its own", async ({ page }) => {
+  await page.goto("stations");
+  await page.waitForLoadState("networkidle");
+  const red = page.getByTestId("group-red"), green = page.getByTestId("group-green");
+  const redRows = red.getByTestId("station-row"), greenRows = green.getByTestId("station-row");
+  const before = await redRows.count();
+  expect(before).toBeGreaterThan(0);
+  await page.getByTestId("toggle-red").click();
+  await expect(page.getByTestId("toggle-red")).toHaveAttribute("aria-expanded", "false");
+  await expect(redRows.first()).toBeHidden();
+  await expect(greenRows.first()).toBeVisible();
+  await page.getByTestId("toggle-red").click();
+  await expect(redRows).toHaveCount(before);
+  await expect(redRows.first()).toBeVisible();
+  await page.getByTestId("toggle-all-lines").click();
+  await expect(greenRows.first()).toBeHidden();
+  await page.getByTestId("toggle-all-lines").click();
+  await expect(greenRows.first()).toBeVisible();
+});
+
+test("restored tools: report an issue, track it, log, checklist, intelligence", async ({ page }) => {
+  await page.goto("stations/report");
+  await expect(page.getByTestId("report-submit")).toBeDisabled();
+  await page.getByTestId("type-safety").click();
+  await expect(page.getByTestId("priority-critical")).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("textbox").first().fill("Test note");
+  await page.getByTestId("report-submit").click();
+  const ref = (await page.getByTestId("report-ref").textContent())!;
+  await page.getByRole("link", { name: "Track this ticket" }).click();
+  await expect(page.getByTestId("ticket-current")).toContainText("Open");
+  await page.getByTestId("status-in_progress").click();
+  await expect(page.getByTestId("ticket-current")).toContainText("In progress");
+  await page.goto("stations/issues");
+  await expect(page.getByTestId("issue-row").first()).toContainText(ref);
+  await page.goto("stations/checklist");
+  await page.getByRole("checkbox").first().check();
+  await expect(page.getByTestId("checklist-count")).toContainText("1 of 48");
+  await page.goto("stations/intelligence");
+  await expect(page.getByTestId("intelligence")).toContainText("not machine-learning predictions");
+  await expect(page.getByTestId("tools-bar")).toBeVisible();
+});
+
+test("auto demo loop runs, can be deep-linked and paused", async ({ page }) => {
+  await page.goto("stations/loop#akard");
+  await expect(page.getByTestId("loop-scene")).toHaveAttribute("data-scene", "akard");
+  await expect(page.getByTestId("loop-log")).toContainText("Platform B camera offline");
+  await expect(page.getByTestId("loop-owner")).toContainText("Camera and Security Systems Contractor");
+  await page.getByTestId("loop-toggle").click();
+  await expect(page.getByTestId("loop-toggle")).toContainText("Play");
+  const before = await page.getByTestId("loop-score").textContent();
+  await page.waitForTimeout(600);
+  expect(await page.getByTestId("loop-score").textContent()).toBe(before);
+  await page.getByRole("button", { name: "Park Lane" }).click();
+  await expect(page.getByTestId("loop-scene")).toHaveAttribute("data-scene", "park-lane");
+});
+
+test("audit log records sign-in and actions; inventory lists owned assets", async ({ page }) => {
+  await page.goto("stations");
+  await page.waitForLoadState("networkidle");
+  await page.getByTestId("role-select").selectOption("operations");
+  await page.goto("stations/audit");
+  await expect(page.getByTestId("audit-row").first()).toBeVisible();
+  await expect(page.getByTestId("audit-table")).toContainText("sign_in");
+  await expect(page.getByTestId("audit-table")).toContainText("Platform Admin");
+  await page.goto("stations/inventory");
+  await expect(page.getByTestId("inv-row").first()).toBeVisible();
+  await expect(page.getByTestId("inv-table")).toContainText("Facilities Maintenance");
+  await expect(page.getByTestId("dictionary")).toContainText("audit_log");
+});
+
+test("test case scenarios page shows all four stations with steps", async ({ page }) => {
+  await page.goto("stations/scenarios");
+  for (const id of ["park-lane", "spring-valley", "akard", "smu-mockingbird"]) await expect(page.getByTestId(`scenario-${id}`)).toBeVisible();
+  await expect(page.getByTestId("scenario-akard")).toContainText("Approves moving an officer to Platform B");
+  await expect(page.getByTestId("scenario-akard").getByTestId("scenario-step")).toHaveCount(9);
+});
+
+test("contractors page lists contract holders and personnel; elevator waits on parts in its own color state", async ({ page }) => {
+  await page.goto("stations/contractors");
+  await expect(page.getByTestId("providers")).toContainText("CT-ELV-001");
+  await expect(page.getByTestId("personnel")).toContainText("On site");
+  await page.goto("stations/loop#smu-mockingbird");
+  await expect(page.getByTestId("loop-stage")).toContainText("Waiting on parts", { timeout: 25000 });
+});

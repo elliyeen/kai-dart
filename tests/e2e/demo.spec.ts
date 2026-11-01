@@ -112,10 +112,11 @@ test.describe("executive demo and workflow", () => {
     await toggle.click(); await expect(drawer).toBeHidden(); await toggle.click(); await expect(drawer).toBeVisible();
   });
 
-  test("demo labels persist on every surface", async ({ page }) => {
+  test("the SYNTHETIC DEMO banner is gone from the platform", async ({ page }) => {
     for (const path of ["stations", "stations/akard", "stations/inspections"]) {
       await page.goto(path);
-      await expect(page.getByTestId("demo-banner")).toContainText("SYNTHETIC DEMO");
+      await expect(page.getByTestId("demo-banner")).toHaveCount(0);
+      await expect(page.getByText("SYNTHETIC DEMO", { exact: true })).toHaveCount(0);
     }
   });
 });

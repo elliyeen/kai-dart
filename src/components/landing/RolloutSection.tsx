@@ -35,7 +35,7 @@ export default function RolloutSection() {
         <FadeUp delay={120}>
           <MapPanel mode="rollout" />
           <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-900" aria-label="Map legend" data-testid="rollout-legend">
-            {ORDER.map((s) => (
+            {ORDER.filter((s) => count(s) > 0).map((s) => (
               <li key={s} className="inline-flex items-center gap-2"><Swatch status={s} />{s === "pilot-planned" ? "Pilot site (proposed)" : ROLLOUT_LABEL[s]}<span className="text-gray-600"> · {count(s)}</span></li>
             ))}
           </ul>
