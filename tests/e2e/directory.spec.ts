@@ -105,3 +105,30 @@ test("restored tools: report an issue, track it, log, checklist, intelligence", 
   await expect(page.getByTestId("intelligence")).toContainText("not machine-learning predictions");
   await expect(page.getByTestId("tools-bar")).toBeVisible();
 });
+
+test("auto demo loop runs, can be deep-linked and paused", async ({ page }) => {
+  await page.goto("stations/loop#akard");
+  await expect(page.getByTestId("loop-scene")).toHaveAttribute("data-scene", "akard");
+  await expect(page.getByTestId("loop-log")).toContainText("Platform B camera offline");
+  await page.getByTestId("loop-toggle").click();
+  await expect(page.getByTestId("loop-toggle")).toContainText("Play");
+  const before = await page.getByTestId("loop-score").textContent();
+  await page.waitForTimeout(600);
+  expect(await page.getByTestId("loop-score").textContent()).toBe(before);
+  await page.getByRole("button", { name: "Park Lane" }).click();
+  await expect(page.getByTestId("loop-scene")).toHaveAttribute("data-scene", "park-lane");
+});
+
+test("audit log records sign-in and actions; inventory lists owned assets", async ({ page }) => {
+  await page.goto("stations");
+  await page.waitForLoadState("networkidle");
+  await page.getByTestId("role-select").selectOption("operations");
+  await page.goto("stations/audit");
+  await expect(page.getByTestId("audit-row").first()).toBeVisible();
+  await expect(page.getByTestId("audit-table")).toContainText("sign_in");
+  await expect(page.getByTestId("audit-table")).toContainText("Platform Admin");
+  await page.goto("stations/inventory");
+  await expect(page.getByTestId("inv-row").first()).toBeVisible();
+  await expect(page.getByTestId("inv-table")).toContainText("Facilities Maintenance");
+  await expect(page.getByTestId("dictionary")).toContainText("audit_log");
+});
