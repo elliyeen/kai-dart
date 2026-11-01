@@ -12,6 +12,7 @@ export default function SiteFooter() {
           <Link href="/architecture" className="hover:text-black">Architecture</Link>
           <Link href="/faq" className="hover:text-black">FAQ</Link>
           <Link href="/get-started" className="hover:text-black">Get started</Link>
+          <Link href="/checkout" className="hover:text-black">Checkout</Link>
           <Link href="/#about" className="hover:text-black">About</Link>
           <Link href="/contact" className="hover:text-black">Contact</Link>
         </div>

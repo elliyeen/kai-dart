@@ -28,8 +28,8 @@ export default function StationsBrowser() {
   const uniq = useMemo(() => new Set(recs.map((r) => r.name)).size, [recs]);
 
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-[minmax(340px,400px)_1fr] lg:grid-rows-1 lg:h-[calc(100vh-7.5rem)]">
-      <section aria-label="Station directory" className="order-2 lg:order-none lg:col-start-1 lg:row-start-1 lg:border-r border-gray-200 flex flex-col min-h-0 lg:overflow-y-auto">
+    <div className="flex flex-col lg:grid lg:grid-cols-[minmax(340px,400px)_1fr] lg:grid-rows-1 lg:h-[calc(100dvh-var(--chrome,7.5rem))]">
+      <section aria-label="Station directory" className="relative order-2 lg:order-none lg:col-start-1 lg:row-start-1 lg:border-r border-gray-200 flex flex-col min-h-0 lg:overflow-y-auto">
         <div className="p-4 space-y-3 border-b border-gray-200">
           <h2 className="sr-only">Station directory by line</h2>
           <div className="relative">
@@ -44,7 +44,7 @@ export default function StationsBrowser() {
         </div>
         <div className="grow"><LineDirectory records={recs} line={line} /></div>
       </section>
-      <section aria-label="Network overview" className="order-1 lg:order-none lg:col-start-2 lg:row-start-1 lg:overflow-y-auto min-h-0 border-b border-gray-200 lg:border-b-0">
+      <section aria-label="Network overview" className="relative order-1 lg:order-none lg:col-start-2 lg:row-start-1 lg:overflow-y-auto min-h-0 border-b border-gray-200 lg:border-b-0">
         <NetworkOverview line={line} onSelect={go} />
       </section>
     </div>

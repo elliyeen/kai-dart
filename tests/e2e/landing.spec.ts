@@ -12,8 +12,8 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await expect(page.getByText("Transit for North Texas", { exact: true })).toHaveCount(0);
   await expect(page.getByText("Transit for All", { exact: true })).toHaveCount(0);
   await expect(page.getByText("We’re changing public transportation to make it clean, safe and more intelligent than ever.")).toBeVisible();
-  await expect(page.getByText("This is the new DART standard.")).toBeVisible();
-  await expect(page.getByText("Enjoy your ride in North Texas.")).toBeVisible();
+  await expect(page.getByText("This is the new DART standard.")).toHaveCount(0);
+  await expect(page.getByText("Enjoy your ride in North Texas.")).toHaveCount(0);
   await expect(page.getByText("Mission", { exact: true })).toHaveCount(0);
   await expect(page.getByText("Verified public source")).toHaveCount(0);
   // segmented rider tabs
@@ -27,7 +27,8 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await expect(page.getByText("Capabilities", { exact: true })).toHaveCount(0);
   await expect(page.locator("#hero-note")).toHaveCount(0);
   await noHorizontalOverflow(page);
-  await page.getByRole("link", { name: /Explore Station Intelligence/ }).first().click();
+  await expect(page.getByRole("link", { name: /Get started$/ }).first()).toHaveAttribute("href", /get-started/);
+  await page.getByRole("link", { name: /Demo$/ }).first().click();
   await expect(page).toHaveURL(/\/stations\/?$/);
 });
 

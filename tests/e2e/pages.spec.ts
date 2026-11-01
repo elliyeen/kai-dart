@@ -9,10 +9,13 @@ test("FAQ page has exactly 14 answers and links to Get Started", async ({ page }
   await expect(page).toHaveURL(/get-started/);
 });
 
-test("Get Started page shows four steps", async ({ page }) => {
+test("Get Started page: hero, four steps, proposed terms, and a path to checkout", async ({ page }) => {
   await page.goto("get-started");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("A more intelligent transit network.");
   await expect(page.getByTestId("step")).toHaveCount(4);
-  await expect(page.getByText("three stations", { exact: false }).first()).toBeVisible();
+  await expect(page.getByTestId("deployment-summary")).toContainText("not terms approved by DART");
+  await page.getByRole("link", { name: "Configure your proposal" }).click();
+  await expect(page).toHaveURL(/checkout/);
 });
 
 test("landing links to the FAQ and Get Started pages", async ({ page }) => {
@@ -21,34 +24,49 @@ test("landing links to the FAQ and Get Started pages", async ({ page }) => {
   await expect(page.getByRole("contentinfo").getByRole("link", { name: "Get started" })).toBeVisible();
 });
 
-test("Checkout flow completes to an honest summary that is not marked as sent", async ({ page }) => {
-  await page.goto("get-started");
-  await page.getByRole("link", { name: "Start checkout" }).click();
-  await expect(page).toHaveURL(/get-started\/checkout/);
-  await expect(page.getByRole("button", { name: "Continue" })).toBeDisabled();
+test("Checkout: validation, live summary, no payment, honest next steps", async ({ page }) => {
+  await page.goto("checkout");
+  await expect(page.getByTestId("order-summary")).toContainText("$0.00");
+  await expect(page.getByTestId("order-summary")).toContainText("No payment collected");
+  await expect(page.getByTestId("order-summary")).toContainText("Custom pricing / pending approved quote");
+  await page.getByRole("button", { name: "Review proposal" }).click();
+  await expect(page.getByText("Enter your organization.")).toBeVisible();
+  await expect(page.getByText("Confirm that this is not a binding purchase.")).toBeVisible();
   await page.getByLabel("Organization").fill("Sample Transit Agency");
-  await page.getByLabel("Your name").fill("Sample Person");
-  await page.getByLabel("Work email").fill("person@example.com");
-  await page.getByRole("button", { name: "Continue" }).click();
-  await expect(page.getByLabel("Park Lane")).toBeChecked();
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByLabel("Procurement or sign-off contact").fill("Sample Signer");
-  await page.getByLabel("Their email").fill("signer@example.com");
-  await page.getByRole("button", { name: "Continue" }).click();
-  await expect(page.getByText("Prepared with DART").first()).toBeVisible();
-  await page.getByRole("button", { name: "Create summary" }).click();
-  const done = page.getByTestId("checkout-done");
-  await expect(done).toContainText("It has not been sent anywhere yet");
-  await expect(done.getByRole("link", { name: "Open in email" })).toHaveAttribute("href", /^mailto:signer%40example\.com/);
+  await page.getByLabel("Business email", { exact: true }).fill("person@gmail.com");
+  await page.getByRole("button", { name: "Review proposal" }).click();
+  await expect(page.getByText("Use a business email address.")).toBeVisible();
+  await page.getByLabel("Business email", { exact: true }).fill("person@agency.example.org");
+  await page.getByLabel("Custom or network expansion").check();
+  await expect(page.getByTestId("order-summary")).toContainText("Custom or network expansion");
+  await page.getByLabel("Negotiated custom term").check();
+  await expect(page.getByTestId("order-summary")).toContainText("Negotiated custom term");
+  await page.getByLabel(/I understand this is a request for a proposal/).check();
+  await page.getByRole("button", { name: "Review proposal" }).click();
+  const done = page.getByTestId("next-steps");
+  await expect(done).toContainText("has not been submitted or sent anywhere");
+  await expect(done.getByTestId("proposal-summary")).toContainText("Amount due today: $0.00. No payment collected.");
+  await expect(done.getByTestId("proposal-summary")).not.toContainText("$1");
+  await page.getByRole("button", { name: "Edit configuration" }).click();
+  await expect(page.getByLabel("Organization")).toHaveValue("Sample Transit Agency");
+});
+
+test("Checkout prepopulates the organization only from the DART demo link", async ({ page }) => {
+  await page.goto("checkout");
+  await expect(page.getByLabel("Organization")).toHaveValue("");
+  await page.goto("checkout?demo=dart");
+  await expect(page.getByLabel("Organization")).toHaveValue("Dallas Area Rapid Transit");
 });
 
 test("Architecture page: five steps, security strip, keyboard-selectable details, text fallback", async ({ page }) => {
   await page.goto("architecture");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("DART Super Intelligence");
-  await expect(page.getByText("Turn transit data into a clean, safe experience for all")).toBeVisible();
+  await expect(page.getByText("Turn transit data into a clean and safe experience for all.")).toBeVisible();
   await expect(page.getByText("Request a Proposal")).toHaveCount(0);
   await expect(page.getByTestId("arch-flow").getByText("Platform", { exact: true })).toHaveCount(0);
   await expect(page.getByTestId("arch-node")).toHaveCount(5);
+  await expect(page.getByTestId("arch-node").nth(4)).not.toContainText("Work");
+  await expect(page.getByTestId("arch-node").nth(4)).toContainText("A safer, cleaner, more reliable DART");
   await expect(page.getByTestId("arch-sec")).toHaveCount(4);
   await page.getByTestId("arch-node").nth(2).focus();
   await page.keyboard.press("Enter");
