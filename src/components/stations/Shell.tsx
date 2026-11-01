@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bell, BarChart3, ClipboardCheck, Home, Layers, PlayCircle, RotateCcw, Search, X, type LucideIcon } from "lucide-react";
 import { PERSONAS, PERSONA_BY_ROLE, type Role } from "@/lib/demo/roles";
 import { dispatch, useDemo } from "@/lib/demo/store";
+import { logAudit } from "@/lib/audit";
 import type { Cmd, DemoState } from "@/lib/demo/workflow";
 import ToolsBar from "./ToolsBar";
 
@@ -35,6 +36,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const path = usePathname();
   const [guideOpen, setGuideOpen] = useState(false);
+  useEffect(() => { // one sign-in audit entry per browser session
+    try { if (window.sessionStorage.getItem("kai-signin-logged")) return; window.sessionStorage.setItem("kai-signin-logged", "1"); } catch { /* ignore */ }
+    const p = PERSONA_BY_ROLE[demo.role];
+    logAudit({ actor: p.identity, role: p.label, action: "sign_in", entityType: "session", entityId: p.identity, input: `role=${p.label}`, output: "Session started (simulated sign-in)", owner: "Platform Admin" });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const step = demo.guideStep;
   const done = step >= STEPS.length;
   const badge = pending(demo);
