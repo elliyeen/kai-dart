@@ -13,10 +13,10 @@ export const FAQ: { q: string; a: React.ReactNode }[] = [
   { q: "How do we get started?", a: <>Open the <Link className="underline" href="/stations">interactive demo</Link> and run the two-minute guided walkthrough, then <Link className="underline" href="/contact">request a demo</Link> with the team. KAI is built by Elliyeen, an independent company, and we will scope a pilot and its pricing with you.</> },
 ];
 
-export default function Faq() {
+export default function Faq({ items = FAQ }: { items?: { q: string; a: React.ReactNode }[] }) {
   return (
     <div className="max-w-3xl divide-y divide-gray-200 border-y border-gray-200" data-testid="faq">
-      {FAQ.map(({ q, a }) => (
+      {items.map(({ q, a }) => (
         <details key={q} className="group py-1">
           <summary className="flex items-center justify-between gap-4 min-h-14 py-3 cursor-pointer list-none text-lg font-normal text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8] [&::-webkit-details-marker]:hidden">
             <span>{q}</span>
