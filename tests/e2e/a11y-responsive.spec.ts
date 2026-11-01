@@ -35,3 +35,17 @@ test("touch targets are at least 44px on interactive controls", async ({ page })
     .filter((r) => r.h < 43.5 || r.w < 43.5));
   expect(small).toEqual([]);
 });
+
+for (const [w, h] of [[1282, 860], [1024, 768], [1440, 720], [1920, 1080]] as const) {
+  test(`stations browser fits the viewport without clipping at ${w}x${h}`, async ({ page }) => {
+    await page.setViewportSize({ width: w, height: h });
+    await page.goto("stations");
+    await page.waitForTimeout(300);
+    const m = await page.evaluate(() => ({ doc: document.documentElement.scrollHeight, win: window.innerHeight, sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth }));
+    expect(m.sw).toBeLessThanOrEqual(m.cw);
+    // The page itself must not scroll; the two panels scroll inside the space under the header.
+    expect(m.doc).toBeLessThanOrEqual(m.win + 1);
+    const box = await page.getByLabel("Network overview").boundingBox();
+    expect(box!.y + box!.height).toBeLessThanOrEqual(m.win + 1);
+  });
+}

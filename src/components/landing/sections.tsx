@@ -1,30 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { MonitorPlay, Rocket } from "lucide-react";
+import CtaBadge from "./CtaBadge";
 import FadeUp from "@/components/FadeUp";
 import { IMAGES, img } from "./assets";
 import YtdTrips from "./YtdTrips";
 
-type CtaVariant = "primary" | "light" | "outline";
+const START = <Rocket className="w-[22px] h-[22px]" strokeWidth={1.75} />;
+const DEMO = <MonitorPlay className="w-[22px] h-[22px]" strokeWidth={1.75} />;
 
-/** Store-badge style CTA: compact two-line pill (small caption + bold label) with hover lift, arrow slide, shine sweep and press feedback. */
-function CtaBadge({ href, caption, label, variant }: { href: string; caption?: string; label: string; variant: CtaVariant }) {
-  return (
-    <Link href={href} data-variant={variant} className="cta-badge font-ui">
-      <span className="cta-badge-text">
-        {caption && <><span className="cta-badge-caption">{caption}</span>{" "}</>}
-        <span className="cta-badge-label" style={caption ? undefined : { marginTop: 0 }}>{label}</span>
-      </span>
-      <ArrowRight className="cta-badge-arrow w-4 h-4" aria-hidden="true" />
-    </Link>
-  );
-}
-
-export function CTAButtons({ dark = false }: { dark?: boolean }) {
+export function CTAButtons() {
   return (
     <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-      <CtaBadge href="/get-started" label="Get started" variant="primary" />
-      <CtaBadge href="/stations" label="Demo" variant={dark ? "light" : "outline"} />
+      <CtaBadge href="/get-started" caption="Start with KAI" label="Get started" icon={START} />
+      <CtaBadge href="/stations" caption="Try the" label="Demo" icon={DEMO} />
     </div>
   );
 }
@@ -49,8 +38,8 @@ export function CinematicHero() {
 function HeroButtons() {
   return (
     <div className="flex flex-col sm:flex-row gap-3 items-start">
-      <CtaBadge href="/get-started" label="Get started" variant="primary" />
-      <CtaBadge href="/stations" label="Demo" variant="light" />
+      <CtaBadge href="/get-started" caption="Start with KAI" label="Get started" icon={START} />
+      <CtaBadge href="/stations" caption="Try the" label="Demo" icon={DEMO} />
     </div>
   );
 }
@@ -72,23 +61,6 @@ export function HeroIntro() {
           <p className="mt-1 text-xs text-gray-600">Source: <a className="underline underline-offset-2 hover:text-black" href="https://www.dart.org/about/news-and-events/newsreleases/newsrelease-detail/dallas-area-rapid-transit-releases-point-b-strategic-plan-annual-report-highlighting-major-investments-and-accomplishments" target="_blank" rel="noopener noreferrer">DART</a></p>
           <YtdTrips />
         </div>
-      </div>
-    </section>
-  );
-}
-
-export function ProofSection() {
-  return (
-    <section id="standard" className="relative overflow-hidden py-28 sm:py-40 lg:py-56 text-white">
-      <Image src={img(IMAGES.statement.file)} alt={IMAGES.statement.alt} fill sizes="100vw" className="object-cover object-center" />
-      <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/55 to-black/80" />
-      <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
-        <FadeUp>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.08] tracking-[-0.03em]" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
-            This is the new DART standard.<br />
-            <span className="text-white/85">Enjoy your ride in North Texas.</span>
-          </h2>
-        </FadeUp>
       </div>
     </section>
   );
@@ -122,7 +94,7 @@ export function FinalCTA() {
       <div className="absolute inset-0 bg-[#111318]/70" />
       <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
         <h2 className="text-4xl sm:text-6xl font-light tracking-[-0.03em] mb-8">See KAI in action.</h2>
-        <CTAButtons dark />
+        <CTAButtons />
       </div>
     </section>
   );

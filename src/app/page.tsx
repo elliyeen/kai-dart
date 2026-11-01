@@ -6,7 +6,7 @@ import RolloutSection from "@/components/landing/RolloutSection";
 import Faq from "@/components/landing/Faq";
 import SiteFooter from "@/components/landing/SiteFooter";
 import ExperienceLineup from "@/components/landing/ExperienceLineup";
-import { CinematicHero, HeroIntro, ProofSection, WorkflowSteps, FinalCTA } from "@/components/landing/sections";
+import { CinematicHero, HeroIntro, WorkflowSteps, FinalCTA } from "@/components/landing/sections";
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
   <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-4 uppercase">{children}</p>
@@ -19,7 +19,6 @@ export default function Home() {
       <main id="main">
         <CinematicHero />
         <HeroIntro />
-        <ProofSection />
 
         <section id="platform" className="bg-[#F8F7F4] py-16 sm:py-24 lg:py-32">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
