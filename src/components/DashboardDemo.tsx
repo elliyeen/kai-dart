@@ -1599,7 +1599,8 @@ function TicketView({ stationName, stationId, issueKey, onBack }: {
   const seed        = issueKey.split("").reduce((n, c) => n + c.charCodeAt(0), 0);
   const refNumber   = stationCode + String(1_774_000_000_000 + seed * 7_919).padStart(13, "0");
   const hoursAgo    = (seed % 47) + 1;
-  const reportedAt  = new Date(Date.now() - hoursAgo * 60 * 60 * 1000);
+  const [mountedAt] = useState(() => Date.now());
+  const reportedAt  = new Date(mountedAt - hoursAgo * 60 * 60 * 1000);
   const dateStr     = reportedAt.toLocaleDateString("en-US", { weekday:"short", year:"numeric", month:"short", day:"numeric" });
   const timeStr     = reportedAt.toLocaleTimeString("en-US", { hour:"2-digit", minute:"2-digit", second:"2-digit" });
 
@@ -1722,6 +1723,27 @@ function TicketView({ stationName, stationId, issueKey, onBack }: {
   );
 }
 
+/* ── Label helper ── */
+const Label = ({ children }: { children: React.ReactNode }) => (
+  <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", color:T.textMuted, marginBottom:5 }}>
+    {children}
+  </div>
+);
+
+/* ── Field wrapper ── */
+const Field = ({ children, mb=14 }: { children: React.ReactNode; mb?: number }) => (
+  <div style={{ marginBottom:mb }}>{children}</div>
+);
+
+/* ── Text input ── */
+const Input = ({ value, onChange, placeholder, disabled=false }: { value:string; onChange:(v:string)=>void; placeholder:string; disabled?:boolean }) => (
+  <input value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} disabled={disabled}
+    style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:12, padding:"6px 10px", border:`1px solid ${T.border}`, borderRadius:3, background: disabled ? T.bg : T.panel, color:T.text, outline:"none", boxSizing:"border-box" as const, opacity: disabled ? 0.6 : 1 }}
+    onFocus={e => { if (!disabled) e.currentTarget.style.borderColor = T.gold; }}
+    onBlur={e => { e.currentTarget.style.borderColor = T.border; }}
+  />
+);
+
 /* ─── Report Issue view ─────────────────────────── */
 function ReportIssueView({ initialStation = "", initialIssueType, onSubmit }: { initialStation?: string; initialIssueType?: string; onSubmit?: (r: SubmittedReport) => void }) {
   const [station,      setStation]      = useState(initialStation);
@@ -1800,27 +1822,6 @@ function ReportIssueView({ initialStation = "", initialIssueType, onSubmit }: { 
     p === "critical" ? "#C62828" : p === "high" ? "#E65100" : "#5D7A8A";
   const priorityBg    = (p: "critical"|"high"|"routine") =>
     p === "critical" ? "#FFEBEE" : p === "high" ? "#FFF3E0" : "#EEF2F4";
-
-  /* ── Label helper ── */
-  const Label = ({ children }: { children: React.ReactNode }) => (
-    <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:600, letterSpacing:"0.22em", textTransform:"uppercase", color:T.textMuted, marginBottom:5 }}>
-      {children}
-    </div>
-  );
-
-  /* ── Field wrapper ── */
-  const Field = ({ children, mb=14 }: { children: React.ReactNode; mb?: number }) => (
-    <div style={{ marginBottom:mb }}>{children}</div>
-  );
-
-  /* ── Text input ── */
-  const Input = ({ value, onChange, placeholder, disabled=false }: { value:string; onChange:(v:string)=>void; placeholder:string; disabled?:boolean }) => (
-    <input value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} disabled={disabled}
-      style={{ width:"100%", fontFamily:"'Barlow Condensed'", fontSize:12, padding:"6px 10px", border:`1px solid ${T.border}`, borderRadius:3, background: disabled ? T.bg : T.panel, color:T.text, outline:"none", boxSizing:"border-box" as const, opacity: disabled ? 0.6 : 1 }}
-      onFocus={e => { if (!disabled) e.currentTarget.style.borderColor = T.gold; }}
-      onBlur={e => { e.currentTarget.style.borderColor = T.border; }}
-    />
-  );
 
   if (submitted && submittedAt) {
     const t = REPORT_TYPES.find(r => r.key === issueType)!;
