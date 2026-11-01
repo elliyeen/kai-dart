@@ -51,19 +51,16 @@ export function CinematicHero() {
 
 export function ProofSection() {
   return (
-    <section id="mission" className="bg-white py-16 sm:py-24 lg:py-32">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+    <section id="standard" className="bg-white py-20 sm:py-28 lg:py-36">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
         <FadeUp>
-          <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-6 uppercase">Mission</p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light leading-tight tracking-[-0.02em]">
-            See it. Own it. Solve it. Verify it. Learn from it.
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.08] tracking-[-0.03em] text-gray-900" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+            This is the new DART standard.<br />
+            <span className="text-gray-600">Enjoy your ride in North Texas.</span>
           </h2>
         </FadeUp>
         <FadeUp delay={120}>
-          <p className="text-xl text-gray-700 leading-relaxed font-light mb-8">
-            KAI is an operations and accountability layer for physical station conditions. It does not replace the systems transit teams already run. It connects them so an issue never stops at &ldquo;reported.&rdquo;
-          </p>
-          <EvidencePanel />
+          <div className="mt-14 max-w-2xl mx-auto text-left"><EvidencePanel /></div>
         </FadeUp>
       </div>
     </section>

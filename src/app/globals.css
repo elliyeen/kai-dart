@@ -235,3 +235,9 @@ nav, button, input, select, textarea, .font-ui {
 /* The brand theme maps --color-white to #F1F1F1 (inlined by Tailwind); the platform surfaces must be true white. */
 .stations-root .bg-white { background-color: #ffffff; }
 .stations-root .bg-white\/95 { background-color: rgb(255 255 255 / 0.95); }
+
+/* Landing page: Geist Sans headings (same family as the hero and the platform). */
+.landing-sans :where(h1, h2, h3) { font-family: var(--font-geist-sans), system-ui, sans-serif; font-weight: 300; }
+.landing-sans { font-family: var(--font-geist-sans), system-ui, sans-serif; }
+.landing-sans .bg-white { background-color: #ffffff; }
+.landing-sans .bg-white\/95 { background-color: rgb(255 255 255 / 0.95); }
