@@ -1,0 +1,30 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import Nav from "@/components/Nav";
+import Faq from "@/components/landing/Faq";
+import SiteFooter from "@/components/landing/SiteFooter";
+import { FAQ14 } from "@/lib/faq14";
+
+export const metadata: Metadata = {
+  title: "FAQ — KAI Station Intelligence",
+  description: "Fourteen short answers about the KAI pilot: scope, security, data ownership, cost, success measures and how to get started.",
+};
+
+export default function FaqPage() {
+  return (
+    <div className="landing-sans min-h-screen bg-white text-black">
+      <Nav />
+      <main id="main" className="bg-white pt-28 pb-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-[-0.02em] leading-[1.05]">FAQ</h1>
+          <div className="mt-10"><Faq items={FAQ14} /></div>
+          <div className="mt-12 flex flex-wrap gap-3">
+            <Link href="/get-started" className="cta-badge font-ui" data-variant="primary"><span className="cta-badge-text"><span className="cta-badge-label" style={{marginTop:0}}>Get started</span></span></Link>
+            <Link href="/stations" className="cta-badge font-ui" data-variant="outline"><span className="cta-badge-text"><span className="cta-badge-label" style={{marginTop:0}}>Demo</span></span></Link>
+          </div>
+        </div>
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}

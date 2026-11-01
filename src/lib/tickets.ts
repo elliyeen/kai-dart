@@ -1,5 +1,6 @@
 "use client";
 import { useSyncExternalStore } from "react";
+import { logAudit } from "@/lib/audit";
 import { ISSUE_LABELS, ISSUE_META, STATIONS } from "@/lib/stations";
 
 export type TicketStatus = "open" | "in_progress" | "done" | "cancelled";
@@ -59,9 +60,13 @@ export function submitTicket(t: Omit<Ticket, "ref" | "createdAt" | "status" | "s
   const ref = `KAI${Date.now()}${Math.floor(Math.random() * 90 + 10)}`;
   const ticket: Ticket = { ...t, ref, createdAt: new Date().toISOString(), status: "open", seeded: false };
   mine = [ticket, ...mine]; save(); rebuild();
+  logAudit({ actor: t.reportedBy ?? "Anonymous reporter", role: t.reportedBy ?? "Reporter", action: "create_ticket", entityType: "ticket", entityId: ref, input: `${t.typeLabel} · ${t.priority} · ${t.stationName}`, output: `Ticket ${ref} opened`, owner: "Operations Command" });
   return ticket;
 }
-export function setTicketStatus(ref: string, status: TicketStatus) { load(); overrides = { ...overrides, [ref]: status }; save(); rebuild(); }
+export function setTicketStatus(ref: string, status: TicketStatus) {
+  load(); overrides = { ...overrides, [ref]: status }; save(); rebuild();
+  logAudit({ actor: "demo.ops", role: "Operations Command", action: "update_ticket_status", entityType: "ticket", entityId: ref, input: `status=${status}`, output: `Ticket ${ref} is now ${STATUS_LABEL[status]}`, owner: "Operations Command" });
+}
 export function resetTickets() { load(); mine = []; overrides = {}; save(); rebuild(); }
 
 const subscribe = (f: () => void) => { subs.add(f); return () => { subs.delete(f); }; };
