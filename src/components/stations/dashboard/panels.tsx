@@ -6,10 +6,12 @@ import { EFF_LABEL, type Eff } from "@/lib/stations/effective";
 import { STATUS_COPY, type DemoState } from "@/lib/demo/workflow";
 import { AssignmentCard, EvidencePanel, VerificationTimeline } from "../workflow-ui";
 import { StatusIndicator } from "../ui";
+import { scoreTone, stationAssetUptime } from "@/lib/stations/readiness";
+import { ISSUE_LABELS, ISSUE_META, type Station } from "@/lib/stations";
 import { PUBLIC_SOURCE } from "@/lib/stations/publicData.generated";
 import { publicStopFor } from "@/lib/stations/rollout";
 
-export function KpiTile({ Icon, label, value, sub, step, tone = "#16A34A", id }: { Icon: LucideIcon; label: string; value: string; sub: string; step?: number; tone?: string; id: string }) {
+export function KpiTile({ Icon, label, value, sub, step, pct, tone = "#16A34A", id }: { Icon: LucideIcon; label: string; value: string; sub: string; step?: number; pct?: number; tone?: string; id: string }) {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-4 flex items-start gap-3" data-testid={id}>
       <span className="w-11 h-11 rounded-full bg-blue-50 text-[#0057A8] grid place-items-center shrink-0"><Icon className="w-5 h-5" aria-hidden="true" /></span>
@@ -21,6 +23,7 @@ export function KpiTile({ Icon, label, value, sub, step, tone = "#16A34A", id }:
             {[1, 2, 3, 4].map((n) => <span key={n} className="h-1.5 flex-1 rounded-full" style={{ background: n <= step ? tone : "#E5E7EB" }} />)}
           </div>
         )}
+        {pct !== undefined && <div className="mt-2 h-1.5 rounded-full bg-gray-200" role="img" aria-label={`${pct} percent`}><div className="h-1.5 rounded-full" style={{ width: `${pct}%`, background: tone }} /></div>}
         <p className="text-xs text-gray-700 mt-1.5">{sub}</p>
       </div>
     </div>
@@ -32,15 +35,19 @@ const CLEAN_VALUE: Record<DemoState["wo"]["status"], { v: string; tone: string }
   awaiting_verification: { v: "Awaiting verification", tone: "#4F46E5" }, verified: { v: "Verified clean", tone: "#16A34A" },
 };
 
-export function KpiRow({ demo, status, isDemoStation, issueCount }: { demo: DemoState; status: Eff; isDemoStation: boolean; issueCount: number }) {
+export function KpiRow({ demo, status, isDemoStation, issueCount, station }: { demo: DemoState; status: Eff; isDemoStation: boolean; issueCount: number; station: Station }) {
   const c = CLEAN_VALUE[demo.wo.status];
+  const score = station.demo.score, up = stationAssetUptime(station.recordIds).uptime;
+  const tone = scoreTone(score);
   return (
     <div className="grid grid-cols-2 xl:grid-cols-4 gap-3" data-testid="kpis">
-      <KpiTile id="kpi-readiness" Icon={Layers} label="Station readiness" value={EFF_LABEL[status]} sub="Synthetic demo condition" />
+      <KpiTile id="kpi-readiness" Icon={Layers} label="Station readiness" value={`${score}%`} pct={score} tone={tone} sub={`${EFF_LABEL[status]} · synthetic demo score`} />
       {isDemoStation
         ? <KpiTile id="kpi-clean" Icon={Sparkles} label="Cleanliness" value={c.v} sub="Independent verification required" step={CLEANLINESS_STEP[demo.wo.status]} tone={c.tone} />
         : <KpiTile id="kpi-clean" Icon={Sparkles} label="Open issues" value={String(issueCount)} sub="Synthetic demo issues" />}
-      <KpiTile id="kpi-assets" Icon={Wrench} label="Asset health" value="Not connected" sub="No asset feed or inventory" />
+      {up === null
+        ? <KpiTile id="kpi-assets" Icon={Wrench} label="Asset health" value="Not connected" sub="No asset feed or inventory" />
+        : <KpiTile id="kpi-assets" Icon={Wrench} label="Asset health" value={`${up}%`} pct={up} tone="#15803D" sub="Units up · synthetic demo counts" />}
       <KpiTile id="kpi-safety" Icon={ShieldCheck} label="Safety & accessibility" value="Not verified" sub="No inspection data connected" />
     </div>
   );
@@ -55,17 +62,24 @@ function Card({ title, Icon, children }: { title: string; Icon: LucideIcon; chil
   );
 }
 
-export function LowerStrip({ demo, isDemoStation, issues }: { demo: DemoState; isDemoStation: boolean; issues: string[] }) {
+export function LowerStrip({ demo, isDemoStation, issues, station }: { demo: DemoState; isDemoStation: boolean; issues: string[]; station: Station }) {
   const open = isDemoStation ? (demo.wo.status === "verified" ? 0 : 1) : issues.length;
-  const rows: { area: string; status: Eff }[] = isDemoStation
-    ? [{ area: "Platforms", status: demo.wo.status === "verified" ? "verified" : assetStatus("platform-b", demo) }, { area: "Public areas", status: "unknown" }, { area: "Vertical transport", status: "unknown" }]
-    : [{ area: "Platforms", status: "unknown" }, { area: "Public areas", status: "unknown" }, { area: "Vertical transport", status: "unknown" }];
+  const A = stationAssetUptime(station.recordIds);
+  const pct = (...k: ("elevators" | "cameras" | "stairwells" | "trash_cans" | "bus_covers")[]) => { const t = k.reduce((n, x) => n + A.byType[x].total, 0), o = k.reduce((n, x) => n + A.byType[x].ok, 0); return t ? Math.round((o / t) * 100) : null; };
+  const areas: { area: string; pct: number | null; note: string }[] = [
+    { area: "Platforms", pct: station.demo.score, note: "Station score" },
+    { area: "Public areas", pct: pct("trash_cans", "bus_covers"), note: "Trash cans + bus covers" },
+    { area: "Vertical transport", pct: pct("elevators", "stairwells"), note: "Elevators + stairwells" },
+  ];
   const steps = demo.wo.events.length;
   return (
     <div className="grid lg:grid-cols-3 gap-3">
       <Card title="Readiness by area" Icon={BarChart3}>
-        <ul className="space-y-2">{rows.map((r) => <li key={r.area} className="flex items-center justify-between gap-2 text-sm text-gray-900"><span>{r.area}</span><StatusIndicator status={r.status} size="sm" /></li>)}</ul>
-        <p className="text-xs text-gray-700 mt-3">Vertical transport: no elevator or escalator inventory is verified.</p>
+        <ul className="space-y-3" data-testid="areas">{areas.map((r) => (
+          <li key={r.area} className="text-sm text-gray-900"><div className="flex items-center justify-between"><span>{r.area}</span><span style={{ fontWeight: 700 }}>{r.pct === null ? "Not connected" : `${r.pct}%`}</span></div>
+            {r.pct !== null && <div className="mt-1 h-1.5 rounded-full bg-gray-200"><div className="h-1.5 rounded-full" style={{ width: `${r.pct}%`, background: scoreTone(r.pct) }} /></div>}
+            <p className="text-[11px] text-gray-700">{r.note}</p></li>))}</ul>
+        <p className="text-xs text-gray-700 mt-3">Synthetic demo values from the original app. No inventory is verified.</p>
       </Card>
       <Card title="Open work orders" Icon={ClipboardCheck}>
         <p className="text-3xl text-gray-900" style={{ fontWeight: 300 }} data-testid="open-wo">{open}</p>
@@ -133,5 +147,22 @@ export function DataSources({ stationKey }: { stationKey: string }) {
         <li className="py-2.5 flex items-center justify-between gap-2"><span><strong>Asset inventory (e.g. Maximo export)</strong><br /><span className="text-gray-700">Requires written DART authorization</span></span><span className="text-xs font-medium border rounded-full px-2.5 py-0.5 bg-gray-50 text-gray-800 border-gray-300">Not connected</span></li>
       </ul>
     </section>
+  );
+}
+
+const PRIO: Record<string, string> = { critical: "bg-red-50 text-red-900 border-red-200", high: "bg-amber-50 text-amber-900 border-amber-200", routine: "bg-green-50 text-green-900 border-green-200" };
+const ISTAT: Record<string, { label: string; cls: string }> = { open: { label: "Open", cls: "bg-amber-50 text-amber-900" }, in_progress: { label: "In progress", cls: "bg-blue-50 text-blue-900" }, hold: { label: "On hold", cls: "bg-gray-100 text-gray-800" } };
+
+/** Right-hand drawer for stations without a workflow demo: the station's open (synthetic) issues. */
+export function IssuesDrawer({ station }: { station: Station }) {
+  return (
+    <aside aria-labelledby="iss-h" data-testid="issues-drawer" className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5 space-y-4">
+      <div><h2 id="iss-h" className="text-2xl text-gray-900" style={{ fontWeight: 700 }}>Open issues</h2><p className="text-sm text-gray-700">Synthetic demo issues for {station.name}</p></div>
+      {station.demo.issues.length === 0 ? <p className="text-sm text-gray-800 border border-green-200 bg-green-50 rounded-lg p-3">No open issue recorded in the demo data.</p> : (
+        <ul className="divide-y divide-gray-100">{station.demo.issues.map((i) => { const m = ISSUE_META[i] ?? { priority: "routine", status: "open" }; return (
+          <li key={i} className="py-3 flex items-start justify-between gap-3"><span><span className="block text-sm text-gray-900" style={{ fontWeight: 600 }}>{ISSUE_LABELS[i] ?? i}</span><span className={`inline-block mt-1 text-[11px] rounded px-2 py-0.5 ${ISTAT[m.status].cls}`}>{ISTAT[m.status].label}</span></span><span className={`text-[11px] uppercase tracking-wide border rounded px-2 py-0.5 ${PRIO[m.priority]}`}>{m.priority}</span></li>); })}</ul>)}
+      <div><h3 className="text-xs tracking-[0.2em] uppercase text-gray-700 mb-1">Deployed staff</h3><p className="text-sm text-gray-800">No staff currently assigned (no live crew data is connected).</p></div>
+      <p className="text-xs text-gray-700">The independent-verification workflow is demonstrated at <Link href="/stations/akard" className="underline text-[#0057A8]">Akard</Link>.</p>
+    </aside>
   );
 }
