@@ -8,7 +8,6 @@ export default function SiteFooter() {
           © {new Date().getFullYear()} KAI, an Elliyeen product. Demonstration and proposed pilot; not affiliated with or endorsed by DART.
         </div>
         <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-[13px] text-gray-700">
-          <Link href="/platform" className="hover:text-black">Platform</Link>
           <Link href="/architecture" className="hover:text-black">Architecture</Link>
           <Link href="/faq" className="hover:text-black">FAQ</Link>
           <Link href="/get-started" className="hover:text-black">Get started</Link>
