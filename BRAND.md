@@ -34,7 +34,7 @@ Kai speaks like a confident expert — not a salesperson.
 
 | ❌ Avoid | ✅ Prefer |
 |----------|-----------|
-| "Our cutting-edge AI-powered platform..." | "94.2% accuracy. Live." |
+| "Our cutting-edge AI-powered platform..." | "See it. Own it. Solve it. Verify it." |
 | "We help organizations manage their facilities more efficiently." | "One platform. Every space." |
 | "REQUEST A DEMO TODAY!" | "Request a demo" |
 | "EXPLORE THE PLATFORM" | "Explore the Platform" |
@@ -42,7 +42,7 @@ Kai speaks like a confident expert — not a salesperson.
 
 ### Headline formulas
 - **Two-line contrast:** "Three layers. / One unified truth."
-- **Declarative fact:** "Kai is live across 65 DART stations today."
+- **Declarative fact:** only sourced, dated statements (e.g. a cited DART public release). No unverified deployment, accuracy, SLA or certification claims.
 - **Scale statement:** "From a single station to an entire city."
 - **Sentence-case always.** No ALL CAPS headlines.
 

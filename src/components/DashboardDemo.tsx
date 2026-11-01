@@ -607,7 +607,7 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
           { label:"Needs Attention",   val:warn,        sub:"Scheduled service needed", color:"#F57C00" },
           { label:"Avg Readiness",     val:avg,         sub:"Network average / 100",    color:scoreColor(avg) },
           { label:"Asset Uptime",      val:`${uptime}%`,sub:`${no} of ${nt} assets`,   color:scoreColor(uptime) },
-          { label:"AI Accuracy",       val:"94.2%",     sub:"Model v2.1 · Live",        color:T.gold },
+          { label:"AI Accuracy",       val:"94.2%",     sub:"Model v2.1 · Demo",        color:T.gold },
         ].map(k => (
           <div key={k.label} className="dash-cell" style={{ background:T.panel, padding:"18px 20px", cursor:"default" }}>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:600, letterSpacing:"0.18em", textTransform:"uppercase", color:T.textMuted, marginBottom:7 }}>{k.label}</div>
@@ -3223,7 +3223,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
               KAI · AI-Powered Facility Intelligence · Dallas Area Rapid Transit
             </div>
             <div style={{ fontFamily:"'Share Tech Mono'", fontSize:8, color:T.textMuted }}>
-              94.2% AI ACCURACY · &lt;30s ALERT-TO-ACTION
+              DEMO · SYNTHETIC DATA · NOT DART PERFORMANCE
             </div>
           </div>
 

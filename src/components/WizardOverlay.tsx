@@ -18,7 +18,7 @@ const steps = [
     icon: LayoutDashboard,
     label: "Command Center",
     title: "Command Center",
-    body: "The network overview shows real-time station health across all 65 DART stations. Spark charts surface ridership trends at a glance. Alerts surface in under 30 seconds — so the right action reaches the right person before small issues become big problems.",
+    body: "The network overview shows simulated station health across 65 modeled DART stations. Spark charts surface ridership trends at a glance. Alerts surface in the demo as they would in a pilot — so the right action reaches the right person before small issues become big problems.",
   },
   {
     icon: Map,

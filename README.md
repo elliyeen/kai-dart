@@ -15,7 +15,7 @@ KAI is built on three layers — the **Kai Fabric**:
 | Layer | Description |
 |---|---|
 | **Data Fabric** | Connects every sensor, system, and record across stations into a unified real-time picture |
-| **Operations Intelligence** | Predictive AI forecasts maintenance needs up to 4 hours ahead with 94.2% accuracy |
+| **Operations Intelligence** | Predictive AI forecasts maintenance needs up to 4 hours ahead |
 | **Workflow Automation** | AI-driven task routing and rapid-response team deployment in under 5 minutes |
 
 ---
@@ -97,7 +97,6 @@ Open [http://localhost:3001](http://localhost:3001) to view the site.
 | DART Stations | 65 |
 | Inspection Points / Station | 247 |
 | Total Inspection Points | 16,055 |
-| AI Forecast Accuracy | 94.2% |
 | Incident Response Time | < 30 seconds |
 
 ---

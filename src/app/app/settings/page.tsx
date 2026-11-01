@@ -73,7 +73,7 @@ export default function SettingsPage() {
               </div>
               <div className="px-4 py-3.5 flex items-center justify-between min-h-[48px]">
                 <span className="text-[13px] text-gray-600">Network</span>
-                <span className="text-[12px] text-green-600">65 stations live</span>
+                <span className="text-[12px] text-green-600">65 stations (demo)</span>
               </div>
               <Link
                 href="/"
