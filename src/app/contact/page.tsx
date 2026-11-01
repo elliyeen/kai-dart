@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, MapPin, Linkedin, Trophy } from "lucide-react";
+import { ArrowRight, MapPin, Linkedin } from "lucide-react";
 import Nav from "@/components/Nav";
 
 export default function ContactPage() {
@@ -50,9 +50,6 @@ export default function ContactPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const daysUntil = Math.ceil(
-    (new Date("2026-06-11").getTime() - Date.now()) / (1000 * 60 * 60 * 24)
-  );
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -173,7 +170,7 @@ export default function ContactPage() {
                         className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent appearance-none cursor-pointer"
                       >
                         <option value="demo">Platform demo</option>
-                        <option value="pilot">FIFA 2026 pilot program</option>
+                        <option value="pilot">Pilot program</option>
                         <option value="rfp">RFP response</option>
                         <option value="consultation">Strategic consultation</option>
                         <option value="general">General inquiry</option>
@@ -313,24 +310,6 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* FIFA 2026 note */}
-              <div className="bg-black text-white p-6 sm:p-10">
-                <Trophy className="w-4 h-4 text-white/40 mb-8" />
-                <div className="text-[10px] font-medium tracking-[0.35em] text-white/30 mb-4 uppercase">FIFA World Cup 2026</div>
-                <div className="text-[2.25rem] sm:text-[3rem] font-thin leading-none tracking-[-0.02em] mb-4">{daysUntil} days.</div>
-                <p className="text-sm text-white/50 leading-relaxed mb-8 font-light">
-                  The window to prepare DART for a 286% ridership surge is closing.
-                  June 11 – July 19, 2026. 9 matches. AT&T Stadium, Arlington.
-                </p>
-                <Link
-                  href="/world-cup-2026"
-                  className="inline-flex items-center text-sm font-medium border-b border-white pb-1 hover:border-white/40 transition-colors duration-200 gap-2"
-                >
-                  View FIFA 2026 roadmap
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-
             </div>
           </div>
         </div>
@@ -345,7 +324,6 @@ export default function ContactPage() {
             </div>
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
               <Link href="/platform" className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200">Platform</Link>
-              <Link href="/world-cup-2026" className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200">FIFA 2026</Link>
               <Link href="/#about" className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200">About</Link>
               <Link href="/contact" className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200">Contact</Link>
             </div>

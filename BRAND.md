@@ -16,7 +16,7 @@ Kai defines and owns the category of *City Operating Systems*. It is not a tool,
 Transit authorities, municipal governments, stadium operators, enterprise facility owners, and critical infrastructure operators. These are buyers where operational failure is not an option.
 
 **Proof point:**
-Live across 65 DART stations, 16,055 inspection points. Built for FIFA World Cup 2026.
+16,055 inspection points modeled across 65 DART stations (Elliyeen demonstration; not a DART-approved deployment).
 
 ---
 
@@ -34,7 +34,7 @@ Kai speaks like a confident expert — not a salesperson.
 
 | ❌ Avoid | ✅ Prefer |
 |----------|-----------|
-| "Our cutting-edge AI-powered platform..." | "94.2% accuracy. Live." |
+| "Our cutting-edge AI-powered platform..." | "See it. Own it. Solve it. Verify it." |
 | "We help organizations manage their facilities more efficiently." | "One platform. Every space." |
 | "REQUEST A DEMO TODAY!" | "Request a demo" |
 | "EXPLORE THE PLATFORM" | "Explore the Platform" |
@@ -42,7 +42,7 @@ Kai speaks like a confident expert — not a salesperson.
 
 ### Headline formulas
 - **Two-line contrast:** "Three layers. / One unified truth."
-- **Declarative fact:** "Kai is live across 65 DART stations today."
+- **Declarative fact:** only sourced, dated statements (e.g. a cited DART public release). No unverified deployment, accuracy, SLA or certification claims.
 - **Scale statement:** "From a single station to an entire city."
 - **Sentence-case always.** No ALL CAPS headlines.
 

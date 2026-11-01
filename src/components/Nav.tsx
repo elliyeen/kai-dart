@@ -7,8 +7,9 @@ import { Menu, X } from "lucide-react";
 
 const websiteLinks = [
   { href: "/platform", label: "Platform" },
-  { href: "/world-cup-2026", label: "FIFA 2026" },
-  { href: "/#about", label: "Why Kai" },
+  { href: "/#capabilities", label: "Capabilities" },
+  { href: "/#how-it-works", label: "How It Works" },
+  { href: "/#about", label: "About" },
 ];
 
 // Line colors for the nav pills

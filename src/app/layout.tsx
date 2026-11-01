@@ -21,7 +21,7 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: "KAI — The Operating System for Cities and Enterprise",
-  description: "AI-powered facilities management. Live at 65 DART stations. FIFA World Cup 2026 ready.",
+  description: "AI-powered facilities management and station readiness. An Elliyeen demonstration and proposed pilot for transit operators.",
 };
 
 export const viewport: Viewport = {

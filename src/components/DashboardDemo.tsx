@@ -607,7 +607,7 @@ function CommandCenter({ onDrill }: { onDrill: (id: string) => void }) {
           { label:"Needs Attention",   val:warn,        sub:"Scheduled service needed", color:"#F57C00" },
           { label:"Avg Readiness",     val:avg,         sub:"Network average / 100",    color:scoreColor(avg) },
           { label:"Asset Uptime",      val:`${uptime}%`,sub:`${no} of ${nt} assets`,   color:scoreColor(uptime) },
-          { label:"AI Accuracy",       val:"94.2%",     sub:"Model v2.1 · Live",        color:T.gold },
+          { label:"AI Accuracy",       val:"94.2%",     sub:"Model v2.1 · Demo",        color:T.gold },
         ].map(k => (
           <div key={k.label} className="dash-cell" style={{ background:T.panel, padding:"18px 20px", cursor:"default" }}>
             <div style={{ fontFamily:"'Barlow Condensed'", fontSize:11, fontWeight:600, letterSpacing:"0.18em", textTransform:"uppercase", color:T.textMuted, marginBottom:7 }}>{k.label}</div>
@@ -1045,13 +1045,6 @@ function StationView({ lineId, selectedId, onSelect, onReport, onViewTicket }: {
 
             {/* Station map */}
             <StationMap station={selected} lineColor={line.color} />
-
-            {/* FIFA callout */}
-            <div style={{ margin:"14px 22px", padding:"12px 14px", background:"#111827", borderRadius:4 }}>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.3em", textTransform:"uppercase", color:T.gold, marginBottom:4 }}>FIFA World Cup 2026</div>
-              <div style={{ fontFamily:"'Share Tech Mono'", fontSize:20, color:"#FFFFFF", lineHeight:1 }}>+286%</div>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:10, color:"rgba(255,255,255,0.5)", marginTop:4 }}>Expected surge · 9 match days · AT&T Stadium</div>
-            </div>
           </>
         )}
       </div>
@@ -3205,10 +3198,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
                 Intelligence
               </button>
             </div>
-            <div style={{ display:"flex", alignItems:"center", padding:"0 16px", borderLeft:`1px solid ${T.border}`, gap:6 }}>
-              <span style={{ width:6, height:6, borderRadius:"50%", background:T.gold, opacity:0.7 }}/>
-              <div style={{ fontFamily:"'Barlow Condensed'", fontSize:9, fontWeight:700, letterSpacing:"0.18em", color:T.gold }}>FIFA 2026 · 9 MATCH DAYS</div>
-            </div>
+
           </div>
 
           {/* Content */}
@@ -3233,7 +3223,7 @@ export default function DashboardDemo({ initialView }: { initialView?: string } 
               KAI · AI-Powered Facility Intelligence · Dallas Area Rapid Transit
             </div>
             <div style={{ fontFamily:"'Share Tech Mono'", fontSize:8, color:T.textMuted }}>
-              94.2% AI ACCURACY · &lt;30s ALERT-TO-ACTION
+              DEMO · SYNTHETIC DATA · NOT DART PERFORMANCE
             </div>
           </div>
 

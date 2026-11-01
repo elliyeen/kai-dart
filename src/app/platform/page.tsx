@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Database, Cpu, Workflow, BarChart3, Smartphone, Map, BookOpen } from "lucide-react";
-import CountUp from "@/components/CountUp";
 import FadeUp from "@/components/FadeUp";
 import DashboardDemo from "@/components/DashboardDemo";
 import Nav from "@/components/Nav";
@@ -287,24 +286,24 @@ export default function PlatformPage() {
                 icon: <Cpu className="w-4 h-4" />,
                 title: "Predictive AI Engine",
                 desc: "Machine learning models forecast cleaning demand, maintenance needs, and staffing requirements up to 4 hours before occurrence. Every prediction improves with each operational cycle.",
-                stat: "4 hours",
-                statLabel: "Forecast horizon",
+                stat: "Design goal",
+                statLabel: "Up to 4-hour forecast horizon; not yet measured",
               },
               {
                 num: "02",
                 icon: <BarChart3 className="w-4 h-4" />,
                 title: "Real-Time Command Center",
                 desc: "Live operational dashboard with full visibility across every asset, station, and team member. GPS tracking, IoT sensor feeds, and instant incident alerting in one unified view.",
-                stat: "<30s",
-                statLabel: "Alert-to-action",
+                stat: "Demo",
+                statLabel: "Simulated alerts in the live demo",
               },
               {
                 num: "03",
                 icon: <Map className="w-4 h-4" />,
                 title: "Digital Twin",
-                desc: "A complete digital replica of every facility under management. 247 inspection checkpoints per station generate compliance-ready audit reports in under 2 minutes.",
+                desc: "A complete digital replica of every facility under management. 247 inspection checkpoints per station generate audit-ready reports.",
                 stat: "16,055",
-                statLabel: "Mapped checkpoints",
+                statLabel: "Checkpoints modeled in the demo",
               },
               {
                 num: "04",
@@ -318,9 +317,9 @@ export default function PlatformPage() {
                 num: "05",
                 icon: <Workflow className="w-4 h-4" />,
                 title: "Automated Workflows",
-                desc: "AI-driven task routing eliminates manual dispatching. Right person, right task, right time — with surge-event protocols that deploy entire teams in under 5 minutes.",
-                stat: "<5 min",
-                statLabel: "Team deployment",
+                desc: "AI-driven task routing eliminates manual dispatching. Right person, right task, right time — with surge-event protocols. Assignments in a pilot require authorized human approval.",
+                stat: "Approval-gated",
+                statLabel: "Proposed dispatch model",
               },
               {
                 num: "06",
@@ -373,10 +372,10 @@ export default function PlatformPage() {
           <FadeUp>
             <div className="border-t border-gray-100">
               {[
-                { num: "01", industry: "Transit & Cities",      desc: "Rail networks, bus systems, and urban transit — unified operational management across every station, vehicle, and crew.", proof: "65 DART stations live" },
-                { num: "02", industry: "Stadiums & Events",     desc: "From daily operations to 100,000-person surge events. FIFA 2026 World Cup deployment across 9 Dallas match days.", proof: "FIFA 2026 ready" },
-                { num: "03", industry: "Enterprise Facilities", desc: "Large-scale facility portfolios — corporate campuses, convention centers, mixed-use real estate — all in one operating picture.", proof: "Enterprise-grade" },
-                { num: "04", industry: "Healthcare",            desc: "Hospital environments where compliance, cleanliness, and response time are mission-critical. Continuous inspection and accountability.", proof: "HIPAA-compatible" },
+                { num: "01", industry: "Transit & Cities",      desc: "Rail networks, bus systems, and urban transit — unified operational management across every station, vehicle, and crew.", proof: "Proposed DART pilot" },
+                { num: "02", industry: "Stadiums & Events",     desc: "From daily operations to high-attendance surge events — coordinated inspection, response, and verification for large venues.", proof: "Event operations" },
+                { num: "03", industry: "Enterprise Facilities", desc: "Large-scale facility portfolios — corporate campuses, convention centers, mixed-use real estate — all in one operating picture.", proof: "Portfolio operations" },
+                { num: "04", industry: "Healthcare",            desc: "Hospital environments where compliance, cleanliness, and response time are mission-critical. Continuous inspection and accountability.", proof: "Compliance reviewed per deployment" },
                 { num: "05", industry: "Energy & Utilities",    desc: "Maintenance scheduling, asset inspection, and predictive failure detection for critical infrastructure.", proof: "Critical infrastructure" },
               ].map((item) => (
                 <div key={item.industry} className="group border-b border-gray-100 py-8 lg:py-10 transition-all duration-200 hover:bg-gray-50/60 px-3 -mx-3">
@@ -478,46 +477,22 @@ export default function PlatformPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <FadeUp>
             <div className="mb-20">
-              <p className="text-[11px] font-medium tracking-[0.3em] text-gray-400 mb-6 uppercase">Measured Outcomes</p>
-              <h2 className="text-5xl font-thin tracking-[-0.02em]">Numbers that matter.</h2>
+              <p className="text-[11px] font-medium tracking-[0.3em] text-gray-400 mb-6 uppercase">Pilot Measures</p>
+              <h2 className="text-5xl font-thin tracking-[-0.02em]">What a pilot would measure.</h2>
             </div>
           </FadeUp>
           <FadeUp delay={100}>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12 mb-12 lg:mb-24">
-              <div>
-                <div className="text-[11px] font-medium text-gray-400 tracking-[0.2em] uppercase mb-3">AI prediction accuracy</div>
-                <div className="text-[3.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={94.2} decimals={1} suffix="%" /></div>
-              </div>
-              <div>
-                <div className="text-[11px] font-medium text-gray-400 tracking-[0.2em] uppercase mb-3">Reduction in downtime</div>
-                <div className="text-[3.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={60} suffix="%" /></div>
-              </div>
-              <div>
-                <div className="text-[11px] font-medium text-gray-400 tracking-[0.2em] uppercase mb-3">Alert-to-action</div>
-                <div className="text-[3.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]">&lt;30s</div>
-              </div>
-              <div>
-                <div className="text-[11px] font-medium text-gray-400 tracking-[0.2em] uppercase mb-3">Days to go-live</div>
-                <div className="text-[3.5rem] lg:text-[4.5rem] font-thin leading-none tracking-[-0.02em]"><CountUp end={30} /></div>
-              </div>
-            </div>
-          </FadeUp>
-          <FadeUp delay={150}>
-            <div className="border-t border-gray-100 pt-16 grid lg:grid-cols-2 gap-x-20">
-              {[
-                { label: "Stations under management",   value: <CountUp end={65} /> },
-                { label: "Total inspection points",     value: <CountUp end={16055} /> },
-                { label: "Inspection points / station", value: <CountUp end={247} /> },
-                { label: "Report generation time",      value: "<2 min" },
-                { label: "Team deployment time",        value: "<5 min" },
-                { label: "Platform uptime SLA",         value: <CountUp end={99.9} decimals={1} suffix="%" /> },
-              ].map((row, i) => (
-                <div key={i} className="group flex justify-between items-baseline border-b border-gray-100 py-5 transition-all duration-150 hover:border-gray-300">
-                  <span className="text-[12px] text-gray-400 tracking-wide transition-colors duration-150 group-hover:text-gray-700">{row.label}</span>
-                  <span className="text-2xl font-thin tracking-[-0.01em] transition-colors duration-150 group-hover:text-black">{row.value}</span>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12 mb-10">
+              {["Issue-to-assignment time", "Issue-to-verified-fix time", "Repeat cleanliness failures", "Unresolved asset defects"].map((m) => (
+                <div key={m}>
+                  <div className="text-[11px] font-medium text-gray-500 tracking-[0.2em] uppercase mb-3">{m}</div>
+                  <div className="text-2xl font-thin leading-tight text-gray-900">Baseline to be agreed</div>
                 </div>
               ))}
             </div>
+            <p className="border-t border-gray-100 pt-8 text-sm text-gray-600 max-w-2xl">
+              These are candidate measures, not results. KAI is an Elliyeen demonstration and proposed pilot; no performance, accuracy, uptime or savings figure has been measured on a DART system. Baselines and targets would be agreed with DART before any claim is made.
+            </p>
           </FadeUp>
         </div>
       </section>
@@ -528,14 +503,14 @@ export default function PlatformPage() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-20">
             <FadeUp>
               <p className="text-[11px] font-medium tracking-[0.3em] text-white/50 mb-6 uppercase">Technical Foundation</p>
-              <h2 className="text-5xl font-thin mb-8 tracking-[-0.02em]">Enterprise-grade.<br />Day-one ready.</h2>
+              <h2 className="text-5xl font-thin mb-8 tracking-[-0.02em]">Designed for<br />controlled pilots.</h2>
               <p className="text-xl text-white/65 leading-relaxed mb-6 font-light">
                 Cloud-native open architecture. Kai integrates with your existing
                 OCC, GIS, HR, ERP, and security systems — no rip-and-replace,
                 no years-long implementation.
               </p>
               <p className="text-lg text-white/50 leading-relaxed mb-12 font-light">
-                From contract to live operations in 30 days.
+                Onboarding is phased and scoped per pilot, subject to data access and approvals.
               </p>
               <Link
                 href="/contact"
@@ -548,14 +523,14 @@ export default function PlatformPage() {
             <FadeUp delay={160}>
               <div className="space-y-0">
                 {[
-                  { label: "Deployment",    value: "Cloud-native (Azure / AWS)" },
-                  { label: "Uptime SLA",    value: "99.9% guaranteed" },
-                  { label: "Data latency",  value: "<500ms end-to-end" },
+                  { label: "Deployment",    value: "Cloud-native; final hosting per partner requirements" },
+                  { label: "Uptime SLA",    value: "Defined in a pilot agreement" },
+                  { label: "Data latency",  value: "To be validated in pilot" },
                   { label: "API protocol",  value: "REST & WebSocket" },
                   { label: "Mobile OS",     value: "iOS 16+ / Android 13+" },
-                  { label: "Security",      value: "SOC 2 Type II · AES-256" },
-                  { label: "Compliance",    value: "FTA · NIST 800-53" },
-                  { label: "Go-live time",  value: "30 days" },
+                  { label: "Security",      value: "Encryption in transit and at rest (design); no certification claimed" },
+                  { label: "Compliance",    value: "NIST CSF 2.0 mapping planned; none claimed" },
+                  { label: "Onboarding",  value: "Phased, scoped per pilot" },
                 ].map((row) => (
                   <div key={row.label} className="group flex justify-between items-baseline border-b border-white/10 py-5 transition-all duration-150 hover:px-2 hover:-mx-2 hover:border-white/20">
                     <span className="text-[12px] text-white/55 tracking-wide transition-colors duration-150 group-hover:text-white/80">{row.label}</span>
@@ -578,7 +553,7 @@ export default function PlatformPage() {
             </h2>
             <p className="text-xl text-white/65 mb-16 max-w-2xl mx-auto leading-relaxed font-light">
               A 5-minute live demo — command center walkthrough, AI prediction
-              simulation, and a FIFA 2026 surge-event scenario.
+              simulation, and a high-attendance event scenario.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -588,10 +563,10 @@ export default function PlatformPage() {
                 Request a live demo
               </Link>
               <Link
-                href="/world-cup-2026"
+                href="/platform?tab=demo"
                 className="border border-white/20 px-8 sm:px-12 py-4 text-sm font-medium tracking-wide hover:border-white/50 transition-all duration-300 inline-flex items-center justify-center gap-2"
               >
-                FIFA 2026 deployment
+                Explore the platform
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -608,7 +583,6 @@ export default function PlatformPage() {
             </div>
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
               <Link href="/platform" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">Platform</Link>
-              <Link href="/world-cup-2026" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">FIFA 2026</Link>
               <Link href="/#about" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">About</Link>
               <Link href="/contact" className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">Contact</Link>
             </div>
