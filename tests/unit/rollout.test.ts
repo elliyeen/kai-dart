@@ -17,14 +17,14 @@ describe("rollout status", () => {
         expect(Date.parse(e.evidence.connectedAt), k).not.toBeNaN();
       }
   });
-  it("starts honest: nothing is LIVE-connected; Akard is the single demo station", () => {
+  it("starts honest: nothing is LIVE-connected; the proposed pilot sites are Park Lane, Akard and Spring Valley", () => {
     expect(STATIONS.filter((s) => rolloutOf(s.key) === "connected")).toHaveLength(0);
-    expect(STATIONS.filter((s) => rolloutOf(s.key) === "demo").map((s) => s.key)).toEqual(["akard"]);
+    expect(STATIONS.filter((s) => rolloutOf(s.key) === "pilot-planned").map((s) => s.name).sort()).toEqual(["Akard", "Park Lane", "Spring Valley"]);
   });
   it("links every station to official public schedule data (derived, never hand-set)", () => {
     const states = STATIONS.map((s) => rolloutOf(s.key));
     expect(states.filter((x) => x === "not-connected")).toHaveLength(0);
-    expect(states.filter((x) => x === "public-data")).toHaveLength(STATIONS.length - 1); // Akard shows as the demo station
+    expect(states.filter((x) => x === "public-data")).toHaveLength(STATIONS.length - 3); // the 3 pilot sites show as pilot-planned
     for (const s of STATIONS) expect(publicStopFor(s.key), s.key).toBeTruthy();
     expect(Object.values(ROLLOUT).some((e) => (e.status as string) === "public-data")).toBe(false);
   });

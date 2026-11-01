@@ -10,15 +10,18 @@ export type RolloutEntry =
  *  It means PUBLIC SCHEDULE data only — not live condition, inspection or asset data. */
 export type RolloutStatus = RolloutEntry["status"] | "public-data" | "not-connected";
 
-/** Keyed by canonical station key (see STATIONS). Anything absent is "not-connected". */
-export const ROLLOUT: Record<string, RolloutEntry> = {
-  akard: { status: "demo" },
-};
+/** Proposed pilot sites (by station name). Keyed to canonical station keys below. */
+export const PILOT_STATION_NAMES = ["Park Lane", "Akard", "Spring Valley"] as const;
 
 import { STATIONS } from "./index";
 import { PUBLIC_STOPS } from "./publicData.generated";
 
 /** Official stop for a physical station, merged across its line-membership records (notes and unconfirmed lines are kept). */
+/** Keyed by canonical station key. Pilot sites are "pilot-planned" (a proposal, not a live connection). */
+export const ROLLOUT: Record<string, RolloutEntry> = Object.fromEntries(
+  PILOT_STATION_NAMES.map((n) => [STATIONS.find((s) => s.name === n)!.key, { status: "pilot-planned", note: "Proposed pilot site" } as RolloutEntry]),
+);
+
 export const publicStopFor = (stationKey: string) => {
   const st = STATIONS.find((x) => x.key === stationKey);
   const stops = st ? st.recordIds.map((id) => PUBLIC_STOPS[id]).filter(Boolean) : [];

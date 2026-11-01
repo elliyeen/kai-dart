@@ -125,43 +125,6 @@ export function WorkflowSteps() {
   );
 }
 
-export function OperationalIntelligence() {
-  const rows = [
-    { m: "Station readiness", v: "Not connected", c: "Requires DART data access" },
-    { m: "Cleanliness status", v: "Unknown", c: "No verified inspection feed" },
-    { m: "Open issues", v: "Demo data", c: "Synthetic scenario in the live demo" },
-    { m: "Last verified update", v: "None", c: "Nothing is shown as live" },
-  ];
-  return (
-    <div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
-          <caption className="sr-only">Operational measures and their data status</caption>
-          <thead>
-            <tr className="border-b border-gray-300 text-[11px] tracking-[0.15em] uppercase text-gray-600">
-              <th scope="col" className="py-3 pr-4 font-medium">Measure</th>
-              <th scope="col" className="py-3 pr-4 font-medium">Status</th>
-              <th scope="col" className="py-3 font-medium">Classification</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r.m} className="border-b border-gray-200">
-                <th scope="row" className="py-4 pr-4 font-light text-base">{r.m}</th>
-                <td className="py-4 pr-4 text-base">{r.v}</td>
-                <td className="py-4 text-gray-700 font-light">{r.c}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p className="mt-6 text-sm text-gray-600 max-w-2xl">
-        KAI is an Elliyeen demonstration and proposed pilot. It is not a DART-approved or DART-operated system, and no figure here is DART performance data. Every metric in a pilot would carry its source, observation time and freshness.
-      </p>
-    </div>
-  );
-}
-
 export function FinalCTA() {
   return (
     <section className="relative py-24 sm:py-36 overflow-hidden text-white">
