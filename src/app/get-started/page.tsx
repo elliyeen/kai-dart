@@ -22,23 +22,21 @@ export default function GetStartedPage() {
       <Nav />
       <main id="main" className="bg-white pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-4 uppercase">Get started</p>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-[-0.02em] leading-[1.05] max-w-3xl">From first conversation to a verified pilot</h1>
-          <p className="mt-5 text-lg text-gray-800 font-light max-w-2xl">A six-month paid pilot at three stations, in four steps. DART decides at every stage.</p>
-          <ol className="mt-12 grid gap-4 md:grid-cols-2" data-testid="steps">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-[-0.02em] leading-[1.05]">Getting started</h1>
+          <ol className="mt-12 max-w-3xl border-l border-gray-300" data-testid="steps">
             {STEPS.map((s) => (
-              <li key={s.n} className="border border-gray-200 rounded-xl p-6 bg-white" data-testid="step">
-                <div className="flex items-center gap-3"><span aria-hidden="true" className="w-9 h-9 rounded-full bg-[#0B1F33] text-white grid place-items-center text-sm font-semibold">{s.n}</span><p className="text-xs uppercase tracking-wider text-gray-700">{s.when}</p></div>
-                <h2 className="mt-4 text-2xl font-normal">{s.title}</h2>
+              <li key={s.n} className="relative pl-8 pb-10 last:pb-0" data-testid="step">
+                <p className="text-xs uppercase tracking-wider text-gray-700">{s.when}</p>
+                <h2 className="mt-2 text-2xl font-normal">{s.title}</h2>
                 <p className="mt-2 text-base text-gray-800 leading-relaxed">{s.body}</p>
-                <p className="mt-4 text-sm text-gray-800"><span className="font-semibold">What DART gets:</span> {s.out}</p>
+                <p className="mt-3 text-sm text-gray-800"><span className="font-semibold">What DART gets:</span> {s.out}</p>
               </li>
             ))}
           </ol>
           <p className="mt-6 text-sm text-gray-700 max-w-3xl">The pilot scope is three stations, proposed as Park Lane, Akard and Spring Valley. The interactive demo also shows SMU/Mockingbird as an illustration.</p>
           <div className="mt-10 flex flex-wrap gap-3 items-center">
-            <Link href="/contact" className="cta-badge font-ui" data-variant="primary"><span className="cta-badge-text"><span className="cta-badge-caption">Start here</span> <span className="cta-badge-label">Discuss a Pilot</span></span><ArrowRight className="cta-badge-arrow w-4 h-4" aria-hidden="true" /></Link>
-            <Link href="/faq" className="cta-badge font-ui" data-variant="outline"><span className="cta-badge-text"><span className="cta-badge-caption">Read the</span> <span className="cta-badge-label">14 answers</span></span></Link>
+            <Link href="/contact" className="cta-badge font-ui" data-variant="primary"><span className="cta-badge-text"><span className="cta-badge-label" style={{marginTop:0}}>Discuss a Pilot</span></span><ArrowRight className="cta-badge-arrow w-4 h-4" aria-hidden="true" /></Link>
+            <Link href="/faq" className="cta-badge font-ui" data-variant="outline"><span className="cta-badge-text"><span className="cta-badge-label" style={{marginTop:0}}>FAQ</span></span></Link>
             <Link href="/stations" className="text-sm underline underline-offset-2">Try the interactive demo</Link>
           </div>
         </div>
