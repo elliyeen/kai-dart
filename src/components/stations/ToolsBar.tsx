@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlertTriangle, ClipboardList, ListChecks, Sparkles, Boxes, ScrollText, PlayCircle } from "lucide-react";
+import { AlertTriangle, ClipboardList, ListChecks, Sparkles, Boxes, ScrollText, PlayCircle, FlaskConical, HardHat } from "lucide-react";
 
 const TOOLS = [
   { href: "/stations/report", label: "Report issue", Icon: AlertTriangle },
@@ -9,6 +9,8 @@ const TOOLS = [
   { href: "/stations/inventory", label: "Inventory", Icon: Boxes },
   { href: "/stations/audit", label: "Audit log", Icon: ScrollText },
   { href: "/stations/loop", label: "Auto demo", Icon: PlayCircle },
+  { href: "/stations/scenarios", label: "Test scenarios", Icon: FlaskConical },
+  { href: "/stations/contractors", label: "Contractors", Icon: HardHat },
 ];
 
 /** Field operations + intelligence tools from the original app, reachable from every platform page. */

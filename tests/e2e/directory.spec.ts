@@ -110,6 +110,7 @@ test("auto demo loop runs, can be deep-linked and paused", async ({ page }) => {
   await page.goto("stations/loop#akard");
   await expect(page.getByTestId("loop-scene")).toHaveAttribute("data-scene", "akard");
   await expect(page.getByTestId("loop-log")).toContainText("Platform B camera offline");
+  await expect(page.getByTestId("loop-owner")).toContainText("Camera and Security Systems Contractor");
   await page.getByTestId("loop-toggle").click();
   await expect(page.getByTestId("loop-toggle")).toContainText("Play");
   const before = await page.getByTestId("loop-score").textContent();
@@ -131,4 +132,19 @@ test("audit log records sign-in and actions; inventory lists owned assets", asyn
   await expect(page.getByTestId("inv-row").first()).toBeVisible();
   await expect(page.getByTestId("inv-table")).toContainText("Facilities Maintenance");
   await expect(page.getByTestId("dictionary")).toContainText("audit_log");
+});
+
+test("test case scenarios page shows all four stations with steps", async ({ page }) => {
+  await page.goto("stations/scenarios");
+  for (const id of ["park-lane", "spring-valley", "akard", "smu-mockingbird"]) await expect(page.getByTestId(`scenario-${id}`)).toBeVisible();
+  await expect(page.getByTestId("scenario-akard")).toContainText("Approves moving an officer to Platform B");
+  await expect(page.getByTestId("scenario-akard").getByTestId("scenario-step")).toHaveCount(9);
+});
+
+test("contractors page lists contract holders and personnel; elevator waits on parts in its own color state", async ({ page }) => {
+  await page.goto("stations/contractors");
+  await expect(page.getByTestId("providers")).toContainText("CT-ELV-001");
+  await expect(page.getByTestId("personnel")).toContainText("On site");
+  await page.goto("stations/loop#smu-mockingbird");
+  await expect(page.getByTestId("loop-stage")).toContainText("Waiting on parts", { timeout: 25000 });
 });
