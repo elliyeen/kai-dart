@@ -59,3 +59,11 @@ test("image-led experience lineup replaces the data table", async ({ page }) => 
 test("old World Cup route is gone", async ({ request }) => {
   expect((await request.get("world-cup-2026")).status()).toBe(404);
 });
+
+test("year-to-date trips is labeled as an estimate, not a DART figure", async ({ page }) => {
+  await page.goto("");
+  const box = page.getByTestId("ytd-trips");
+  await expect(box).toContainText("Estimated trips so far");
+  await expect(box).toContainText("not a DART-reported total");
+  await expect(box).toContainText(/≈ [\d,]+/);
+});

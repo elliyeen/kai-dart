@@ -1,5 +1,7 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 import { ISSUE_LABELS, LINES, LINE_BY_ID, STATIONS, STATION_RECORDS, type LineId, type StationRecord } from "@/lib/stations";
 import { recordStatus, scoreTone, type RecStatus } from "@/lib/stations/readiness";
 import { useDemo } from "@/lib/demo/store";
@@ -48,19 +50,36 @@ function Row({ r, first, last, color, score }: { r: StationRecord; first: boolea
   );
 }
 
-/** Every line-station entry, grouped by line in the original order, as a connected timeline. */
+/** Every line-station entry, grouped by line in the original order, as a connected timeline. Each line collapses on its own. */
 export default function LineDirectory({ records, line }: { records: StationRecord[]; line: LineId | null }) {
+  const [collapsed, setCollapsed] = useState<ReadonlySet<LineId>>(new Set());
   const groups = LINES.filter((l) => !line || l.id === line).map((l) => ({ l, recs: records.filter((r) => r.lineId === l.id) })).filter((g) => g.recs.length);
+  const toggle = (id: LineId) => setCollapsed((c) => { const n = new Set(c); if (n.has(id)) n.delete(id); else n.add(id); return n; });
+  const allCollapsed = groups.length > 0 && groups.every((g) => collapsed.has(g.l.id));
   return (
     <div data-testid="station-list">
-      {groups.map(({ l, recs }) => (
-        <section key={l.id} aria-labelledby={`grp-${l.id}`} data-testid={`group-${l.id}`}>
-          <h3 id={`grp-${l.id}`} className="sticky top-0 z-10 bg-white/95 backdrop-blur flex items-center gap-2 px-4 py-2.5 border-y border-gray-200 text-sm" style={{ fontWeight: 700 }}>
-            <span aria-hidden="true" className="w-3 h-3 rounded-full" style={{ background: l.color }} />{LINE_BY_ID[l.id].name}<span className="ml-auto text-xs font-normal text-gray-700">{recs.length} sta</span>
-          </h3>
-          <ul>{recs.map((r, i) => <Row key={r.id} r={r} first={i === 0} last={i === recs.length - 1} color={l.color} score={r.demo.score} />)}</ul>
-        </section>
-      ))}
+      {groups.length > 1 && (
+        <div className="flex justify-end px-4 py-1.5">
+          <button type="button" data-testid="toggle-all-lines" onClick={() => setCollapsed(allCollapsed ? new Set() : new Set(groups.map((g) => g.l.id)))} className="min-h-11 px-2 text-xs text-[#0057A8] underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]">
+            {allCollapsed ? "Expand all lines" : "Collapse all lines"}
+          </button>
+        </div>
+      )}
+      {groups.map(({ l, recs }) => {
+        const open = !collapsed.has(l.id);
+        return (
+          <section key={l.id} aria-labelledby={`grp-${l.id}`} data-testid={`group-${l.id}`}>
+            <h3 id={`grp-${l.id}`} className="sticky top-0 z-10 bg-white/95 backdrop-blur border-y border-gray-200 text-sm" style={{ fontWeight: 700 }}>
+              <button type="button" aria-expanded={open} aria-controls={`list-${l.id}`} data-testid={`toggle-${l.id}`} onClick={() => toggle(l.id)} className="w-full min-h-11 flex items-center gap-2 px-4 py-2.5 text-left hover:bg-gray-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8]">
+                <span aria-hidden="true" className="w-3 h-3 rounded-full" style={{ background: l.color }} />{LINE_BY_ID[l.id].name}
+                <span className="ml-auto text-xs font-normal text-gray-700">{recs.length} sta</span>
+                <ChevronDown aria-hidden="true" className={`w-4 h-4 text-gray-700 transition-transform duration-200 motion-reduce:transition-none ${open ? "" : "-rotate-90"}`} />
+              </button>
+            </h3>
+            <ul id={`list-${l.id}`} hidden={!open}>{recs.map((r, i) => <Row key={r.id} r={r} first={i === 0} last={i === recs.length - 1} color={l.color} score={r.demo.score} />)}</ul>
+          </section>
+        );
+      })}
       {groups.length === 0 && <p className="p-6 text-sm text-gray-800" data-testid="no-results">No stations match. Clear the search or choose another line.</p>}
     </div>
   );

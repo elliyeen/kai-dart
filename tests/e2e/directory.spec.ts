@@ -63,3 +63,22 @@ test.describe("station directory", () => {
     await expect(page.getByText("Reported closure (unverified)")).toBeVisible();
   });
 });
+
+test("each line collapses and expands on its own", async ({ page }) => {
+  await page.goto("stations");
+  const red = page.getByTestId("group-red"), green = page.getByTestId("group-green");
+  const redRows = red.getByTestId("station-row"), greenRows = green.getByTestId("station-row");
+  const before = await redRows.count();
+  expect(before).toBeGreaterThan(0);
+  await page.getByTestId("toggle-red").click();
+  await expect(page.getByTestId("toggle-red")).toHaveAttribute("aria-expanded", "false");
+  await expect(redRows.first()).toBeHidden();
+  await expect(greenRows.first()).toBeVisible();
+  await page.getByTestId("toggle-red").click();
+  await expect(redRows).toHaveCount(before);
+  await expect(redRows.first()).toBeVisible();
+  await page.getByTestId("toggle-all-lines").click();
+  await expect(greenRows.first()).toBeHidden();
+  await page.getByTestId("toggle-all-lines").click();
+  await expect(greenRows.first()).toBeVisible();
+});

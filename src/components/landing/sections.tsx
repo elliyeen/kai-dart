@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import FadeUp from "@/components/FadeUp";
 import { IMAGES, img } from "./assets";
+import YtdTrips from "./YtdTrips";
 
 type CtaVariant = "primary" | "light" | "outline";
 
@@ -69,6 +70,7 @@ export function HeroIntro() {
           <p className="text-6xl sm:text-7xl font-light tracking-[-0.03em] leading-none text-gray-900" data-testid="hero-metric">171,000+</p>
           <p className="mt-2 text-base text-gray-800">Daily Passenger Trips</p>
           <p className="mt-1 text-xs text-gray-600">Source: <a className="underline underline-offset-2 hover:text-black" href="https://www.dart.org/about/news-and-events/newsreleases/newsrelease-detail/dallas-area-rapid-transit-releases-point-b-strategic-plan-annual-report-highlighting-major-investments-and-accomplishments" target="_blank" rel="noopener noreferrer">DART</a></p>
+          <YtdTrips />
         </div>
       </div>
     </section>
