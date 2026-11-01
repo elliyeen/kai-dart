@@ -6,6 +6,7 @@ import { Bell, BarChart3, ClipboardCheck, Home, Layers, PlayCircle, RotateCcw, S
 import { PERSONAS, PERSONA_BY_ROLE, type Role } from "@/lib/demo/roles";
 import { dispatch, useDemo } from "@/lib/demo/store";
 import type { Cmd, DemoState } from "@/lib/demo/workflow";
+import ToolsBar from "./ToolsBar";
 
 const STEPS: { label: string; cta: string; role: Role; cmd?: Cmd; go?: string }[] = [
   { label: "1 · See the whole network", cta: "Start the guided demo", role: "executive", go: "/stations" },
@@ -17,7 +18,7 @@ const STEPS: { label: string; cta: string; role: Role; cmd?: Cmd; go?: string }[
 ];
 
 const NAV: { href: string; label: string; Icon: LucideIcon; match: (p: string) => boolean }[] = [
-  { href: "/stations", label: "Stations", Icon: Home, match: (p) => p === "/stations" || (p.startsWith("/stations/") && !/^\/stations\/(assets|inspections|readiness)/.test(p)) },
+  { href: "/stations", label: "Stations", Icon: Home, match: (p) => p === "/stations" || (p.startsWith("/stations/") && !/^\/stations\/(assets|inspections|readiness|report|issues|ticket|checklist|intelligence)/.test(p)) },
   { href: "/stations/assets", label: "Assets", Icon: Layers, match: (p) => p.startsWith("/stations/assets") },
   { href: "/stations/inspections", label: "Inspections", Icon: ClipboardCheck, match: (p) => p.startsWith("/stations/inspections") },
   { href: "/stations/readiness", label: "Readiness", Icon: BarChart3, match: (p) => p.startsWith("/stations/readiness") },
@@ -52,9 +53,6 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white text-gray-900 pb-20 lg:pb-0 font-[family-name:var(--font-geist)]">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-3">Skip to content</a>
-      <div role="note" data-testid="demo-banner" className="bg-amber-50 border-b border-amber-200 text-amber-950 text-xs sm:text-[13px] px-4 py-2 text-center">
-        <strong>SYNTHETIC DEMO</strong> — an Elliyeen proposal, not a DART system. No live data, no real dispatch. Role switching is a simulation, <strong>not</strong> access control.
-      </div>
       <header className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-gray-200">
         <div className="max-w-[1600px] mx-auto px-4 lg:px-6 min-h-[68px] flex flex-wrap items-center gap-x-4 gap-y-2 py-2">
           <Link href="/" className="inline-flex items-center gap-3 min-h-11 min-w-11">
@@ -99,6 +97,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           </section>
         )}
       </header>
+      <ToolsBar path={path} />
       <main id="main" tabIndex={-1} className="max-w-[1600px] mx-auto">{children}</main>
       <nav aria-label="Primary mobile" className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-200 grid grid-cols-4 pb-[env(safe-area-inset-bottom)]">
         {NAV.map((n) => { const on = n.match(path); return (

@@ -76,7 +76,6 @@ export default function AkardTwin({ demo, selected, onSelect }: { demo: DemoStat
             )}
           </div>
         </div>
-        <span className="absolute right-3 bottom-3 rounded bg-amber-50 border border-amber-300 text-amber-950 text-[11px] font-semibold px-2 py-0.5">SYNTHETIC DEMO</span>
       </div>
       <p className="px-4 py-2.5 text-xs text-gray-700 border-t border-gray-100">{AKARD_LAYOUT_NOTE} No elevators or escalators are shown: no inventory has been verified for this station.</p>
     </section>

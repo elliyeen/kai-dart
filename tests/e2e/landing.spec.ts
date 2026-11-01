@@ -67,3 +67,12 @@ test("year-to-date trips is labeled as an estimate, not a DART figure", async ({
   await expect(box).toContainText("not a DART-reported total");
   await expect(box).toContainText(/≈ [\d,]+/);
 });
+
+test("FAQ answers ten questions and expands", async ({ page }) => {
+  await page.goto("");
+  const items = page.getByTestId("faq").locator("details");
+  await expect(items).toHaveCount(10);
+  await items.first().locator("summary").click();
+  await expect(items.first()).toHaveAttribute("open", "");
+  await expect(page.getByTestId("faq")).toContainText("not affiliated with or endorsed by DART");
+});

@@ -66,6 +66,7 @@ test.describe("station directory", () => {
 
 test("each line collapses and expands on its own", async ({ page }) => {
   await page.goto("stations");
+  await page.waitForLoadState("networkidle");
   const red = page.getByTestId("group-red"), green = page.getByTestId("group-green");
   const redRows = red.getByTestId("station-row"), greenRows = green.getByTestId("station-row");
   const before = await redRows.count();
@@ -81,4 +82,26 @@ test("each line collapses and expands on its own", async ({ page }) => {
   await expect(greenRows.first()).toBeHidden();
   await page.getByTestId("toggle-all-lines").click();
   await expect(greenRows.first()).toBeVisible();
+});
+
+test("restored tools: report an issue, track it, log, checklist, intelligence", async ({ page }) => {
+  await page.goto("stations/report");
+  await expect(page.getByTestId("report-submit")).toBeDisabled();
+  await page.getByTestId("type-safety").click();
+  await expect(page.getByTestId("priority-critical")).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("textbox").first().fill("Test note");
+  await page.getByTestId("report-submit").click();
+  const ref = (await page.getByTestId("report-ref").textContent())!;
+  await page.getByRole("link", { name: "Track this ticket" }).click();
+  await expect(page.getByTestId("ticket-current")).toContainText("Open");
+  await page.getByTestId("status-in_progress").click();
+  await expect(page.getByTestId("ticket-current")).toContainText("In progress");
+  await page.goto("stations/issues");
+  await expect(page.getByTestId("issue-row").first()).toContainText(ref);
+  await page.goto("stations/checklist");
+  await page.getByRole("checkbox").first().check();
+  await expect(page.getByTestId("checklist-count")).toContainText("1 of 48");
+  await page.goto("stations/intelligence");
+  await expect(page.getByTestId("intelligence")).toContainText("not machine-learning predictions");
+  await expect(page.getByTestId("tools-bar")).toBeVisible();
 });

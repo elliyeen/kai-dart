@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import FadeUp from "@/components/FadeUp";
 import ExperienceTabs from "@/components/landing/ExperienceTabs";
 import RolloutSection from "@/components/landing/RolloutSection";
+import Faq from "@/components/landing/Faq";
 import ExperienceLineup from "@/components/landing/ExperienceLineup";
 import { CinematicHero, HeroIntro, ProofSection, WorkflowSteps, FinalCTA } from "@/components/landing/sections";
 
@@ -61,6 +62,13 @@ export default function Home() {
                 Good spaces don&apos;t happen by accident. They&apos;re built by people who care, using tools that respect their expertise. KAI gives frontline teams cleaner data and clear ownership, and leaves safety and contract decisions with the people accountable for them.
               </p>
             </FadeUp>
+          </div>
+        </section>
+
+        <section id="faq" className="bg-white py-16 sm:py-24 lg:py-32">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <FadeUp><h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.02em] mb-10 lg:mb-14">Frequently asked questions</h2></FadeUp>
+            <Faq />
           </div>
         </section>
 

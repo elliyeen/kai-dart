@@ -85,8 +85,9 @@ export function StationRow({ station, status, selected, href, onSelect }: {
   );
 }
 
-export function DemoBadge({ children = "SYNTHETIC DEMO" }: { children?: string }) {
-  return <span className="inline-block border border-amber-300 bg-amber-50 text-amber-950 text-[11px] font-semibold tracking-wide px-2 py-0.5 rounded">{children}</span>;
+/** Intentionally renders nothing: the on-page "SYNTHETIC DEMO" labels were removed at the owner's request. Disclosure lives in the FAQ and data-sources card. */
+export function DemoBadge(_props: { children?: string }) {
+  return null;
 }
 
 export function ProvenanceNote({ children }: { children: React.ReactNode }) {
