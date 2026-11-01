@@ -7,7 +7,7 @@ on:
 
 jobs:
   ci:
-    name: Lint & Build
+    name: Lint, Typecheck, Unit, Build, E2E, Audit
     runs-on: ubuntu-latest
 
     steps:
@@ -26,5 +26,30 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Build
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit + station parity tests
+        run: npm run test:unit
+
+      - name: Dependency audit (production, high+)
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Build (GitHub Pages static export)
+        env:
+          GITHUB_PAGES: "true"
         run: npm run build
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E, accessibility and responsive tests (5 viewports)
+        run: npm run test:e2e
+
+      - name: Upload Playwright traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 7

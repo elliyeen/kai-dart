@@ -2778,9 +2778,12 @@ function IssuesLogView({ reports, onGoReport }: { reports: SubmittedReport[]; on
 export default function DashboardDemo({ initialView }: { initialView?: string } = {}) {
   const [view,        setView]      = useState<View>((initialView as View) ?? "command");
 
-  useEffect(() => {
+  // Sync the view when the parent changes `initialView` (derived-state pattern; no effect needed).
+  const [prevInitialView, setPrevInitialView] = useState(initialView);
+  if (initialView !== prevInitialView) {
+    setPrevInitialView(initialView);
     if (initialView) setView(initialView as View);
-  }, [initialView]);
+  }
   const [lineId,      setLineId]    = useState("red");
   const [stationId,   setStationId] = useState<string>("cityplace-up");
   const [preReportStation,   setPreReportStation]   = useState("");

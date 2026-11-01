@@ -1,0 +1,1504 @@
+{
+ "source": "git:238759d:src/components/DashboardDemo.tsx",
+ "records": [
+  {
+   "id": "westmoreland",
+   "name": "Westmoreland",
+   "demoScore": 74,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "debris",
+    "cleaning_overdue"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.871727,
+   "lat": 32.719758
+  },
+  {
+   "id": "hampton",
+   "name": "Hampton",
+   "demoScore": 70,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "debris",
+    "cleaning_overdue"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.855532,
+   "lat": 32.726333
+  },
+  {
+   "id": "tyler-vernon",
+   "name": "Tyler/Vernon",
+   "demoScore": 66,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "cleaning_overdue",
+    "lighting_fault"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.83839,
+   "lat": 32.73314
+  },
+  {
+   "id": "zoo",
+   "name": "Zoo",
+   "demoScore": 78,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.812896,
+   "lat": 32.740771
+  },
+  {
+   "id": "8th-corinth-r",
+   "name": "8th & Corinth",
+   "demoScore": 71,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "cleaning_overdue"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.798474,
+   "lat": 32.748082
+  },
+  {
+   "id": "cedars-r",
+   "name": "Cedars",
+   "demoScore": 38,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "safety",
+    "cleaning_overdue",
+    "graffiti",
+    "debris",
+    "lighting_fault"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.793253,
+   "lat": 32.768574
+  },
+  {
+   "id": "convention-r",
+   "name": "Convention Center",
+   "demoScore": 0,
+   "demoStatus": "closed",
+   "demoIssues": [
+    "safety",
+    "lighting_fault"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.802992,
+   "lat": 32.772481
+  },
+  {
+   "id": "union-r",
+   "name": "EBJ Union Station",
+   "demoScore": 79,
+   "demoStatus": "deploying",
+   "demoIssues": [
+    "debris",
+    "cleaning_overdue"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.808201,
+   "lat": 32.776208
+  },
+  {
+   "id": "west-end-r",
+   "name": "West End",
+   "demoScore": 82,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.805443,
+   "lat": 32.780915
+  },
+  {
+   "id": "akard",
+   "name": "Akard",
+   "demoScore": 68,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "cleaning_overdue",
+    "debris"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.800633,
+   "lat": 32.781893
+  },
+  {
+   "id": "st-paul",
+   "name": "St. Paul",
+   "demoScore": 44,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "safety",
+    "graffiti",
+    "cleaning_overdue",
+    "lighting_fault"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.797026,
+   "lat": 32.784296
+  },
+  {
+   "id": "pearl",
+   "name": "Pearl/Arts District",
+   "demoScore": 92,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.79431,
+   "lat": 32.786618
+  },
+  {
+   "id": "cityplace-up",
+   "name": "CityPlace/Uptown",
+   "demoScore": 87,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.793176,
+   "lat": 32.805424
+  },
+  {
+   "id": "smu",
+   "name": "SMU/Mockingbird",
+   "demoScore": 55,
+   "demoStatus": "deploying",
+   "demoIssues": [
+    "cleaning_overdue",
+    "debris"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.774939,
+   "lat": 32.837828
+  },
+  {
+   "id": "lovers-lane",
+   "name": "Lovers Lane",
+   "demoScore": 83,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.771758,
+   "lat": 32.848601
+  },
+  {
+   "id": "park-lane",
+   "name": "Park Lane",
+   "demoScore": 41,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "safety",
+    "cleaning_overdue",
+    "graffiti",
+    "lighting_fault"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.765899,
+   "lat": 32.872513
+  },
+  {
+   "id": "walnut-hill-r",
+   "name": "Walnut Hill",
+   "demoScore": 78,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "debris"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.764931,
+   "lat": 32.88265
+  },
+  {
+   "id": "forest-lane",
+   "name": "Forest Lane",
+   "demoScore": 73,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "debris"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.76168,
+   "lat": 32.908604
+  },
+  {
+   "id": "lbj-central",
+   "name": "LBJ/Central",
+   "demoScore": 61,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "cleaning_overdue",
+    "debris"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.752235,
+   "lat": 32.918254
+  },
+  {
+   "id": "spring-valley",
+   "name": "Spring Valley",
+   "demoScore": 34,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "safety",
+    "cleaning_overdue",
+    "graffiti",
+    "lighting_fault"
+   ],
+   "lineId": "red",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.737424,
+   "lat": 32.940852
+  },
+  {
+   "id": "arapaho-center",
+   "name": "Arapaho Center",
+   "demoScore": 91,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Richardson",
+   "closure": null,
+   "lng": -96.722981,
+   "lat": 32.963447
+  },
+  {
+   "id": "galatyn-park",
+   "name": "Galatyn Park",
+   "demoScore": 85,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Richardson",
+   "closure": null,
+   "lng": -96.710953,
+   "lat": 32.985226
+  },
+  {
+   "id": "cityline-bush",
+   "name": "CityLine/Bush",
+   "demoScore": 88,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Richardson",
+   "closure": null,
+   "lng": -96.703144,
+   "lat": 33.002166
+  },
+  {
+   "id": "12th-street",
+   "name": "12th Street",
+   "demoScore": 80,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Plano",
+   "closure": null,
+   "lng": -96.701066,
+   "lat": 33.01436
+  },
+  {
+   "id": "downtown-plano",
+   "name": "Downtown Plano",
+   "demoScore": 84,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Plano",
+   "closure": null,
+   "lng": -96.700898,
+   "lat": 33.020856
+  },
+  {
+   "id": "parker-road",
+   "name": "Parker Road",
+   "demoScore": 88,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "red",
+   "city": "Plano",
+   "closure": null,
+   "lng": -96.700736,
+   "lat": 33.033454
+  },
+  {
+   "id": "buckner",
+   "name": "Buckner",
+   "demoScore": 93,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.685108,
+   "lat": 32.718478
+  },
+  {
+   "id": "lake-june",
+   "name": "Lake June",
+   "demoScore": 91,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.709432,
+   "lat": 32.732335
+  },
+  {
+   "id": "lawnview",
+   "name": "Lawnview",
+   "demoScore": 94,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.720388,
+   "lat": 32.765606
+  },
+  {
+   "id": "hatcher",
+   "name": "Hatcher",
+   "demoScore": 88,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "graffiti"
+   ],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.742471,
+   "lat": 32.766323
+  },
+  {
+   "id": "mlk",
+   "name": "MLK Jr.",
+   "demoScore": 92,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.764576,
+   "lat": 32.773757
+  },
+  {
+   "id": "fair-park",
+   "name": "Fair Park",
+   "demoScore": 96,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.765928,
+   "lat": 32.782058
+  },
+  {
+   "id": "baylor",
+   "name": "Baylor University Med Ctr",
+   "demoScore": 94,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.782132,
+   "lat": 32.786495
+  },
+  {
+   "id": "deep-ellum",
+   "name": "Deep Ellum",
+   "demoScore": 90,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.788532,
+   "lat": 32.785866
+  },
+  {
+   "id": "pearl-g",
+   "name": "Pearl/Arts District",
+   "demoScore": 97,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.79431,
+   "lat": 32.786618
+  },
+  {
+   "id": "st-paul-g",
+   "name": "St. Paul",
+   "demoScore": 87,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "cleaning_overdue"
+   ],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.797026,
+   "lat": 32.784296
+  },
+  {
+   "id": "akard-g",
+   "name": "Akard",
+   "demoScore": 95,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.800633,
+   "lat": 32.781893
+  },
+  {
+   "id": "west-end-g",
+   "name": "West End",
+   "demoScore": 89,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "debris"
+   ],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.805443,
+   "lat": 32.780915
+  },
+  {
+   "id": "victory-g",
+   "name": "Victory",
+   "demoScore": 96,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.812513,
+   "lat": 32.789607
+  },
+  {
+   "id": "market-center-g",
+   "name": "Market Center",
+   "demoScore": 93,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.823713,
+   "lat": 32.804635
+  },
+  {
+   "id": "sw-medical",
+   "name": "SW Medical District/Parkland",
+   "demoScore": 72,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "elevator_down",
+    "camera_offline"
+   ],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.833204,
+   "lat": 32.813602
+  },
+  {
+   "id": "inwood-g",
+   "name": "Inwood/Love Field",
+   "demoScore": 98,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.833361,
+   "lat": 32.822243
+  },
+  {
+   "id": "burbank",
+   "name": "Burbank",
+   "demoScore": 91,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.862176,
+   "lat": 32.842971
+  },
+  {
+   "id": "bachman-g",
+   "name": "Bachman",
+   "demoScore": 94,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.877344,
+   "lat": 32.853778
+  },
+  {
+   "id": "walnut-hill",
+   "name": "Walnut Hill/Denton",
+   "demoScore": 78,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "elevator_down",
+    "lighting_fault"
+   ],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.883811,
+   "lat": 32.88212
+  },
+  {
+   "id": "royal-lane",
+   "name": "Royal Lane",
+   "demoScore": 93,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.88811,
+   "lat": 32.896055
+  },
+  {
+   "id": "farmers-branch",
+   "name": "Farmers Branch",
+   "demoScore": 95,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Farmers Branch",
+   "closure": null,
+   "lng": -96.896238,
+   "lat": 32.921962
+  },
+  {
+   "id": "downtown-carrollton",
+   "name": "Downtown Carrollton",
+   "demoScore": 97,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Carrollton",
+   "closure": null,
+   "lng": -96.908277,
+   "lat": 32.954443
+  },
+  {
+   "id": "trinity-mills",
+   "name": "Trinity Mills",
+   "demoScore": 92,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Carrollton",
+   "closure": null,
+   "lng": -96.926476,
+   "lat": 32.980876
+  },
+  {
+   "id": "north-carrollton-frank",
+   "name": "N. Carrollton/Frankford",
+   "demoScore": 99,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "green",
+   "city": "Carrollton",
+   "closure": null,
+   "lng": -96.936753,
+   "lat": 32.991611
+  },
+  {
+   "id": "unt-dallas",
+   "name": "UNT Dallas",
+   "demoScore": 80,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.801091,
+   "lat": 32.654057
+  },
+  {
+   "id": "camp-wisdom",
+   "name": "Camp Wisdom",
+   "demoScore": 76,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.7881,
+   "lat": 32.666638
+  },
+  {
+   "id": "ledbetter",
+   "name": "Ledbetter",
+   "demoScore": 72,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "smell",
+    "litter"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.788812,
+   "lat": 32.683394
+  },
+  {
+   "id": "va-medical",
+   "name": "VA Medical Center",
+   "demoScore": 84,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.792986,
+   "lat": 32.693641
+  },
+  {
+   "id": "kiest",
+   "name": "Kiest",
+   "demoScore": 69,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "litter"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.801175,
+   "lat": 32.707113
+  },
+  {
+   "id": "illinois-tc",
+   "name": "Illinois TC",
+   "demoScore": 74,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "smell"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.805162,
+   "lat": 32.723302
+  },
+  {
+   "id": "morrell",
+   "name": "Morrell",
+   "demoScore": 70,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "litter",
+    "lighting"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.802604,
+   "lat": 32.73986
+  },
+  {
+   "id": "eight-blue",
+   "name": "8th & Corinth",
+   "demoScore": 71,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "smell"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.798474,
+   "lat": 32.748082
+  },
+  {
+   "id": "cedars-blue",
+   "name": "Cedars",
+   "demoScore": 42,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "safety",
+    "smell",
+    "vandalism",
+    "litter",
+    "lighting"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.793253,
+   "lat": 32.768574
+  },
+  {
+   "id": "convention-blue",
+   "name": "Convention Center",
+   "demoScore": 0,
+   "demoStatus": "closed",
+   "demoIssues": [
+    "safety",
+    "lighting"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": "Closed Jan 5 2026 \u2014 KBHCC redevelopment. Est. reopening 2029. Use EBJ Union Station or Akard.",
+   "lng": -96.802992,
+   "lat": 32.772481
+  },
+  {
+   "id": "union-blue",
+   "name": "EBJ Union Station",
+   "demoScore": 82,
+   "demoStatus": "deploying",
+   "demoIssues": [
+    "litter"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.808201,
+   "lat": 32.776208
+  },
+  {
+   "id": "west-end-blue",
+   "name": "West End",
+   "demoScore": 83,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.805443,
+   "lat": 32.780915
+  },
+  {
+   "id": "akard-blue",
+   "name": "Akard",
+   "demoScore": 70,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "litter",
+    "smell"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.800633,
+   "lat": 32.781893
+  },
+  {
+   "id": "st-paul-blue",
+   "name": "St. Paul",
+   "demoScore": 48,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "safety",
+    "smell",
+    "lighting"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.797026,
+   "lat": 32.784296
+  },
+  {
+   "id": "pearl-blue",
+   "name": "Pearl/Arts District",
+   "demoScore": 92,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.79431,
+   "lat": 32.786618
+  },
+  {
+   "id": "cityplace-blue",
+   "name": "CityPlace/Uptown",
+   "demoScore": 87,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.793176,
+   "lat": 32.805424
+  },
+  {
+   "id": "mockingbird-blue",
+   "name": "SMU/Mockingbird",
+   "demoScore": 77,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.774939,
+   "lat": 32.837828
+  },
+  {
+   "id": "white-rock",
+   "name": "White Rock",
+   "demoScore": 88,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.732732,
+   "lat": 32.855791
+  },
+  {
+   "id": "lake-highlands",
+   "name": "Lake Highlands",
+   "demoScore": 91,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.730452,
+   "lat": 32.879487
+  },
+  {
+   "id": "lbj-skillman",
+   "name": "LBJ/Skillman",
+   "demoScore": 66,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "litter"
+   ],
+   "lineId": "blue",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.712139,
+   "lat": 32.897924
+  },
+  {
+   "id": "forest-jupiter",
+   "name": "Forest/Jupiter",
+   "demoScore": 42,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "safety",
+    "vandalism",
+    "smell",
+    "lighting"
+   ],
+   "lineId": "blue",
+   "city": "Garland",
+   "closure": null,
+   "lng": -96.679457,
+   "lat": 32.908056
+  },
+  {
+   "id": "downtown-garland",
+   "name": "Downtown Garland",
+   "demoScore": 75,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "litter"
+   ],
+   "lineId": "blue",
+   "city": "Garland",
+   "closure": null,
+   "lng": -96.635369,
+   "lat": 32.916319
+  },
+  {
+   "id": "downtown-rowlett",
+   "name": "Downtown Rowlett",
+   "demoScore": 85,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "blue",
+   "city": "Rowlett",
+   "closure": null,
+   "lng": -96.563388,
+   "lat": 32.904111
+  },
+  {
+   "id": "parker-road-o",
+   "name": "Parker Road",
+   "demoScore": 99,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Plano",
+   "closure": null,
+   "lng": -96.700736,
+   "lat": 33.033454
+  },
+  {
+   "id": "downtown-plano-o",
+   "name": "Downtown Plano",
+   "demoScore": 93,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Plano",
+   "closure": null,
+   "lng": -96.700898,
+   "lat": 33.020856
+  },
+  {
+   "id": "12th-street-o",
+   "name": "12th Street",
+   "demoScore": 90,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Plano",
+   "closure": null,
+   "lng": -96.701066,
+   "lat": 33.01436
+  },
+  {
+   "id": "cityline-bush-o",
+   "name": "Cityline/Bush",
+   "demoScore": 97,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Richardson",
+   "closure": null,
+   "lng": -96.703144,
+   "lat": 33.002166
+  },
+  {
+   "id": "galatyn-park-o",
+   "name": "Galatyn Park",
+   "demoScore": 96,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Richardson",
+   "closure": null,
+   "lng": -96.710953,
+   "lat": 32.985226
+  },
+  {
+   "id": "arapaho-center-o",
+   "name": "Arapaho Center",
+   "demoScore": 92,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Richardson",
+   "closure": null,
+   "lng": -96.722981,
+   "lat": 32.963447
+  },
+  {
+   "id": "spring-valley-o",
+   "name": "Spring Valley",
+   "demoScore": 95,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.737424,
+   "lat": 32.940852
+  },
+  {
+   "id": "lbj-central-o",
+   "name": "LBJ/Central",
+   "demoScore": 73,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "elevator_down",
+    "lighting_fault",
+    "camera_offline"
+   ],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.752235,
+   "lat": 32.918254
+  },
+  {
+   "id": "forest-ln-o",
+   "name": "Forest Lane",
+   "demoScore": 94,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.76168,
+   "lat": 32.908604
+  },
+  {
+   "id": "walnut-hill-o",
+   "name": "Walnut Hill",
+   "demoScore": 89,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "lighting_fault"
+   ],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.764931,
+   "lat": 32.88265
+  },
+  {
+   "id": "park-lane-o",
+   "name": "Park Lane",
+   "demoScore": 91,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.765899,
+   "lat": 32.872513
+  },
+  {
+   "id": "lovers-lane-o",
+   "name": "Lovers Lane",
+   "demoScore": 94,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.771758,
+   "lat": 32.848601
+  },
+  {
+   "id": "smu-o",
+   "name": "SMU/Mockingbird",
+   "demoScore": 93,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.774939,
+   "lat": 32.837828
+  },
+  {
+   "id": "cityplace-o",
+   "name": "Cityplace/Uptown",
+   "demoScore": 71,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "restroom_closed",
+    "crew_delayed"
+   ],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.793176,
+   "lat": 32.805424
+  },
+  {
+   "id": "pearl-o",
+   "name": "Pearl/Arts District",
+   "demoScore": 98,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.79431,
+   "lat": 32.786618
+  },
+  {
+   "id": "st-paul-o",
+   "name": "St. Paul",
+   "demoScore": 87,
+   "demoStatus": "warning",
+   "demoIssues": [
+    "cleaning_overdue"
+   ],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.797026,
+   "lat": 32.784296
+  },
+  {
+   "id": "akard-o",
+   "name": "Akard",
+   "demoScore": 96,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.800633,
+   "lat": 32.781893
+  },
+  {
+   "id": "west-end-o",
+   "name": "West End",
+   "demoScore": 93,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.805443,
+   "lat": 32.780915
+  },
+  {
+   "id": "victory-o",
+   "name": "Victory",
+   "demoScore": 96,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.812513,
+   "lat": 32.789607
+  },
+  {
+   "id": "market-center-o",
+   "name": "Market Center",
+   "demoScore": 93,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.823713,
+   "lat": 32.804635
+  },
+  {
+   "id": "sw-medical-o",
+   "name": "SW Medical District/Parkland",
+   "demoScore": 72,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "elevator_down",
+    "camera_offline"
+   ],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.833204,
+   "lat": 32.813602
+  },
+  {
+   "id": "love-o",
+   "name": "Inwood/Love Field",
+   "demoScore": 98,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.833361,
+   "lat": 32.822243
+  },
+  {
+   "id": "burbank-o",
+   "name": "Burbank",
+   "demoScore": 91,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.862176,
+   "lat": 32.842971
+  },
+  {
+   "id": "bachman",
+   "name": "Bachman",
+   "demoScore": 94,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.877344,
+   "lat": 32.853778
+  },
+  {
+   "id": "univ-dallas",
+   "name": "University of Dallas",
+   "demoScore": 90,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Irving",
+   "closure": null,
+   "lng": -96.915006,
+   "lat": 32.849085
+  },
+  {
+   "id": "las-colinas",
+   "name": "Las Colinas Urban Ctr",
+   "demoScore": 72,
+   "demoStatus": "critical",
+   "demoIssues": [
+    "restroom_closed",
+    "graffiti"
+   ],
+   "lineId": "orange",
+   "city": "Irving",
+   "closure": null,
+   "lng": -96.933574,
+   "lat": 32.868572
+  },
+  {
+   "id": "irving",
+   "name": "Irving Convention Ctr",
+   "demoScore": 91,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Irving",
+   "closure": null,
+   "lng": -96.938558,
+   "lat": 32.876891
+  },
+  {
+   "id": "hidden-ridge",
+   "name": "Hidden Ridge",
+   "demoScore": 95,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Irving",
+   "closure": null,
+   "lng": -96.955159,
+   "lat": 32.882109
+  },
+  {
+   "id": "north-lake",
+   "name": "Dallas College Northlake Campus",
+   "demoScore": 88,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Irving",
+   "closure": null,
+   "lng": -96.967119,
+   "lat": 32.875197
+  },
+  {
+   "id": "belt-line",
+   "name": "Belt Line",
+   "demoScore": 95,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "Irving",
+   "closure": null,
+   "lng": -96.986505,
+   "lat": 32.888023
+  },
+  {
+   "id": "dfw-a",
+   "name": "DFW Airport T-A",
+   "demoScore": 97,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "DFW Airport",
+   "closure": null,
+   "lng": -97.039504,
+   "lat": 32.907386
+  },
+  {
+   "id": "dfw-b",
+   "name": "DFW Airport T-B",
+   "demoScore": 96,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "orange",
+   "city": "DFW Airport",
+   "closure": null,
+   "lng": -97.039504,
+   "lat": 32.907386
+  },
+  {
+   "id": "shiloh-sl",
+   "name": "Shiloh Rd",
+   "demoScore": 96,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "silver",
+   "city": "Plano",
+   "closure": null,
+   "lng": -96.665722,
+   "lat": 33.012603
+  },
+  {
+   "id": "12th-street-sl",
+   "name": "12th Street",
+   "demoScore": 93,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "silver",
+   "city": "Plano",
+   "closure": null,
+   "lng": -96.698598,
+   "lat": 33.015407
+  },
+  {
+   "id": "cityline-bush-sl",
+   "name": "Cityline/Bush",
+   "demoScore": 97,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "silver",
+   "city": "Richardson",
+   "closure": null,
+   "lng": -96.703144,
+   "lat": 33.002166
+  },
+  {
+   "id": "ut-dallas-sl",
+   "name": "UT Dallas",
+   "demoScore": 91,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "silver",
+   "city": "Richardson",
+   "closure": null,
+   "lng": -96.750008,
+   "lat": 32.996459
+  },
+  {
+   "id": "knoll-trail",
+   "name": "Knoll Trail",
+   "demoScore": 95,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "silver",
+   "city": "Dallas",
+   "closure": null,
+   "lng": -96.817617,
+   "lat": 32.962884
+  },
+  {
+   "id": "addison-sl",
+   "name": "Addison",
+   "demoScore": 94,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "silver",
+   "city": "Addison",
+   "closure": null,
+   "lng": -96.828258,
+   "lat": 32.958982
+  },
+  {
+   "id": "downtown-carrollton-sl",
+   "name": "Downtown Carrollton",
+   "demoScore": 92,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "silver",
+   "city": "Carrollton",
+   "closure": null,
+   "lng": -96.908107,
+   "lat": 32.95567
+  },
+  {
+   "id": "cypress-waters",
+   "name": "Cypress Waters",
+   "demoScore": 98,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "silver",
+   "city": "Coppell",
+   "closure": null,
+   "lng": -96.983242,
+   "lat": 32.950699
+  },
+  {
+   "id": "dfw-north-sl",
+   "name": "DFW North",
+   "demoScore": 96,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "silver",
+   "city": "DFW Airport",
+   "closure": null,
+   "lng": -97.054193,
+   "lat": 32.933913
+  },
+  {
+   "id": "dfw-terminal-b-sl",
+   "name": "DFW Terminal B",
+   "demoScore": 99,
+   "demoStatus": "good",
+   "demoIssues": [],
+   "lineId": "silver",
+   "city": "DFW Airport",
+   "closure": null,
+   "lng": -97.041243,
+   "lat": 32.906306
+  }
+ ]
+}
