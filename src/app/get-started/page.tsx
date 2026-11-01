@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Nav from "@/components/Nav";
 import SiteFooter from "@/components/landing/SiteFooter";
 
@@ -31,6 +32,7 @@ export default function GetStartedPage() {
             ))}
           </ol>
           <p className="mt-6 text-sm text-gray-700 max-w-3xl">The pilot scope is three stations, proposed as Park Lane, Akard and Spring Valley. The interactive demo also shows SMU/Mockingbird as an illustration.</p>
+          <div className="mt-10"><Link href="/get-started/checkout" className="cta-badge font-ui" data-variant="primary"><span className="cta-badge-label" style={{ marginTop: 0 }}>Start checkout</span></Link></div>
         </div>
       </main>
       <SiteFooter />
