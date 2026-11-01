@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, PanelRightClose, PanelRightOpen } from "lucide-react";
 import { LINE_BY_ID, addressOf, formatCoords, linePositions, type Station } from "@/lib/stations";
 import { effectiveStatus } from "@/lib/stations/effective";
 import { useDemo } from "@/lib/demo/store";
@@ -16,6 +16,7 @@ import StationFocusMap from "./dashboard/StationFocusMap";
 export default function StationDashboard({ station }: { station: Station }) {
   const demo = useDemo();
   const [asset, setAsset] = useState<TwinAsset["id"]>("platform-b");
+  const [drawerOpen, setDrawerOpen] = useState(true);
   const status = effectiveStatus(station, demo);
   const isDemo = station.key === demo.wo.stationKey;
   const persona = PERSONA_BY_ROLE[demo.role];
@@ -23,9 +24,14 @@ export default function StationDashboard({ station }: { station: Station }) {
 
   return (
     <article aria-labelledby="st-h" data-testid="station-detail" data-station={station.key} className="p-4 lg:p-6 space-y-4">
-      <div className="grid xl:grid-cols-[minmax(0,1fr)_360px] gap-4 items-start">
+      <div className={`grid items-start gap-4 transition-[grid-template-columns,gap] duration-300 ease-out motion-reduce:transition-none ${drawerOpen ? "xl:grid-cols-[minmax(0,1fr)_360px]" : "xl:grid-cols-[minmax(0,1fr)_0px] xl:gap-0"}`} data-testid="dash-grid" data-drawer={drawerOpen ? "open" : "closed"}>
         <div className="space-y-4 min-w-0">
-          <Link href="/stations" className="inline-flex items-center gap-1.5 min-h-11 text-sm text-gray-800 hover:text-black"><ArrowLeft className="w-4 h-4" aria-hidden="true" />All stations</Link>
+          <div className="flex items-center justify-between gap-3">
+            <Link href="/stations" className="inline-flex items-center gap-1.5 min-h-11 text-sm text-gray-800 hover:text-black"><ArrowLeft className="w-4 h-4" aria-hidden="true" />All stations</Link>
+            {allowed && <button type="button" data-testid="drawer-toggle" aria-expanded={drawerOpen} aria-controls="side-drawer" onClick={() => setDrawerOpen((o) => !o)}
+              className="inline-flex items-center gap-2 min-h-11 px-4 rounded-full border border-gray-300 bg-white text-sm font-semibold hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]">
+              {drawerOpen ? <PanelRightClose className="w-4 h-4" aria-hidden="true" /> : <PanelRightOpen className="w-4 h-4" aria-hidden="true" />}{drawerOpen ? "Hide details" : "Show details"}</button>}
+          </div>
           <header className="flex flex-wrap items-end justify-between gap-4">
             <div className="space-y-2">
               <p className="text-xs tracking-[0.2em] text-gray-700 uppercase">Infrastructure digital twin</p>
@@ -50,7 +56,7 @@ export default function StationDashboard({ station }: { station: Station }) {
           ) : (
             <>
               <KpiRow demo={demo} status={status} isDemoStation={isDemo} issueCount={station.demo.issues.length} station={station} />
-              {isDemo ? <AkardTwin demo={demo} selected={asset} onSelect={setAsset} /> : (
+              {isDemo ? <AkardTwin demo={demo} selected={asset} onSelect={(id) => { setAsset(id); setDrawerOpen(true); }} /> : (
                 <section aria-labelledby="loc-h" className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
                   <h2 id="loc-h" className="sr-only">Station location map</h2>
                   <StationFocusMap station={station} />
@@ -62,7 +68,12 @@ export default function StationDashboard({ station }: { station: Station }) {
             </>
           )}
         </div>
-        {allowed && <div className="xl:sticky xl:top-20">{isDemo ? <AssetDrawer demo={demo} assetId={asset} /> : <IssuesDrawer station={station} />}</div>}
+        {allowed && (
+          <div id="side-drawer" data-testid="side-drawer" aria-hidden={!drawerOpen} inert={!drawerOpen}
+            className={`xl:sticky xl:top-20 overflow-hidden xl:overflow-visible transition-all duration-300 ease-out motion-reduce:transition-none ${drawerOpen ? "opacity-100 translate-x-0 max-h-[4000px] visible" : "opacity-0 xl:translate-x-full max-h-0 invisible"}`}>
+            {isDemo ? <AssetDrawer demo={demo} assetId={asset} /> : <IssuesDrawer station={station} />}
+          </div>
+        )}
       </div>
     </article>
   );

@@ -25,7 +25,7 @@ export default function RolloutSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-10 lg:gap-16 items-center">
         <FadeUp>
           <h2 className="text-4xl sm:text-5xl font-light tracking-[-0.02em] leading-[1.05]" data-testid="pilot-title">Pilot for Park Lane, Akard and Spring Valley Station</h2>
-          <p className="mt-6 text-xl text-gray-800 leading-relaxed font-light">to improve the readiness of each station to set the standard for clean transportation in North Texas.</p>
+          <p className="mt-6 text-xl text-gray-800 leading-relaxed font-light">The Standard in clean transportation in North Texas</p>
           <p className="sr-only" data-testid="rollout-connected">{count("connected")} stations connected to live DART data</p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <Link href="/stations" className="font-ui inline-flex items-center justify-center min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] text-white hover:opacity-90" style={{ background: "#0057A8" }}>Explore the stations</Link>

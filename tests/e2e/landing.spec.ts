@@ -15,6 +15,7 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await expect(page.getByText("This is the new DART standard.")).toBeVisible();
   await expect(page.getByText("Enjoy your ride in North Texas.")).toBeVisible();
   await expect(page.getByText("Mission", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("Verified public source")).toHaveCount(0);
   // segmented rider tabs
   await expect(page.getByRole("heading", { name: "Clean. Safe. Intelligent." })).toBeVisible();
   await expect(page.getByText("The ride", { exact: true })).toHaveCount(0);
@@ -33,7 +34,7 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
 test("pilot section names the three pilot stations; nothing is shown as live", async ({ page }) => {
   await page.goto("");
   await expect(page.getByTestId("pilot-title")).toHaveText("Pilot for Park Lane, Akard and Spring Valley Station");
-  await expect(page.getByText("to improve the readiness of each station to set the standard for clean transportation in North Texas.")).toBeVisible();
+  await expect(page.getByText("The Standard in clean transportation in North Texas", { exact: true })).toBeVisible();
   await expect(page.getByText("Bringing stations online.")).toHaveCount(0);
   const legend = page.getByTestId("rollout-legend");
   await expect(legend).toContainText("Pilot site (proposed) · 3");
