@@ -21,25 +21,45 @@ export function CTAButtons({ dark = false }: { dark?: boolean }) {
 
 export function CinematicHero() {
   return (
-    <section className="relative min-h-[640px] h-[100svh] max-h-[1000px] flex flex-col overflow-hidden text-white font-sans">
+    <section className="relative h-[78svh] min-h-[520px] max-h-[860px] flex flex-col justify-end overflow-hidden text-white">
       <Image src={img(IMAGES.hero.file)} alt={IMAGES.hero.alt} fill priority sizes="100vw" className="object-cover object-[62%_center]" />
-      <div className="absolute inset-0 bg-linear-to-b from-black/75 via-black/40 to-black/80" />
-
-      <div className="relative z-10 flex-1 flex flex-col items-center text-center px-6 pt-32 sm:pt-40">
-        <h1 className="hero-animate font-sans text-[2.5rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-light leading-[1.04] tracking-[-0.03em] max-w-4xl" style={{ animationDelay: "120ms", fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
-          Transit for Everyone<br />and Every Ride
-        </h1>
-        <p className="hero-animate mt-5 sm:mt-6 text-2xl sm:text-3xl lg:text-4xl font-light tracking-[-0.01em] text-white/95" style={{ animationDelay: "240ms", fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
-          Transit for North Texas
-        </p>
-        <div className="hero-animate mt-8 w-full max-w-md sm:max-w-none" style={{ animationDelay: "340ms" }}>
-          <CTAButtons dark />
+      <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-black/30" />
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 pb-10 sm:pb-14">
+        <p className="hero-animate text-5xl sm:text-6xl lg:text-7xl leading-none" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif", fontWeight: 800, fontStyle: "italic", letterSpacing: "-0.05em" }}>KAI</p>
+        <p className="hero-animate mt-2 text-lg sm:text-xl font-medium" style={{ animationDelay: "120ms" }}>DART clean for all of North Texas</p>
+        <div className="hero-animate mt-6 max-w-md sm:max-w-none" style={{ animationDelay: "240ms" }}>
+          <div className="sm:flex sm:justify-start"><HeroButtons /></div>
         </div>
       </div>
+    </section>
+  );
+}
 
-      <div className="relative z-10 px-6 pb-8 sm:pb-10 text-center">
-        <p className="hero-animate text-6xl sm:text-7xl lg:text-8xl font-thin tracking-[-0.03em] leading-none" style={{ animationDelay: "460ms" }} data-testid="hero-metric">75</p>
-        <p className="hero-animate mt-2 text-sm sm:text-base font-light text-white/95" style={{ animationDelay: "520ms" }}>Rail Stations in the DART Network</p>
+/** Left-aligned CTA pair for the hero (the shared CTAButtons is centered). */
+function HeroButtons() {
+  return (
+    <div className="flex flex-col sm:flex-row gap-3">
+      <Link href="/stations" className="font-ui inline-flex items-center justify-center min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] text-white hover:opacity-90 transition-opacity" style={{ background: BLUE }}>Explore Station Intelligence</Link>
+      <Link href="/contact" className="font-ui inline-flex items-center justify-center gap-2 min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] bg-white text-gray-900 hover:bg-white/90 transition-colors">Request Demo <ArrowRight className="w-3 h-3" aria-hidden="true" /></Link>
+    </div>
+  );
+}
+
+/** Flows straight on from the hero photo: headline + subcopy on the left, the one sourced metric on the right. */
+export function HeroIntro() {
+  return (
+    <section className="bg-white py-14 sm:py-20 lg:py-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-10 lg:gap-16 items-center">
+        <div>
+          <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl leading-[1.04] tracking-[-0.03em] text-gray-900" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif", fontWeight: 500 }}>
+            Transit for Everyone<br />and Every Ride
+          </h1>
+          <p className="mt-6 text-lg sm:text-xl font-light text-gray-800 max-w-xl leading-relaxed">We&rsquo;re changing public transportation to make it clean, safe and more intelligent than ever.</p>
+        </div>
+        <div className="lg:text-right">
+          <p className="text-7xl sm:text-8xl font-light tracking-[-0.03em] leading-none text-gray-900" data-testid="hero-metric">75</p>
+          <p className="mt-2 text-base text-gray-800">Rail Stations in the DART Network</p>
+        </div>
       </div>
     </section>
   );
@@ -54,7 +74,6 @@ export function ProofSection() {
             This is the new DART standard.<br />
             <span className="text-gray-600">Enjoy your ride in North Texas.</span>
           </h2>
-          <p className="mt-8 text-lg sm:text-xl font-light text-gray-800 max-w-2xl mx-auto leading-relaxed">We&rsquo;re changing public transportation to make it clean, safe and more intelligent than ever.</p>
         </FadeUp>
         <FadeUp delay={120}>
           <div className="mt-14 max-w-2xl mx-auto text-left"><EvidencePanel /></div>

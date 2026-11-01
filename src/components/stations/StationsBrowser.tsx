@@ -7,7 +7,6 @@ import { effectiveStatus } from "@/lib/stations/effective";
 import { useDemo } from "@/lib/demo/store";
 import { LineFilter, StationRow } from "./ui";
 import NetworkOverview from "./NetworkOverview";
-import StationDetail from "./StationDetail";
 
 export default function StationsBrowser() {
   const sp = useSearchParams();
@@ -16,8 +15,7 @@ export default function StationsBrowser() {
   const lineParam = sp.get("line");
   const line = (LINES.some((l) => l.id === lineParam) ? lineParam : null) as LineId | null;
   const q = sp.get("q") ?? "";
-  const selKey = sp.get("station");
-  const selected = STATIONS.find((s) => s.key === selKey) ?? null;
+  const go = (key: string) => router.push(`/stations/${key}`);
 
   const setParams = useCallback((patch: Record<string, string | null>) => {
     const n = new URLSearchParams(sp.toString());
@@ -40,22 +38,22 @@ export default function StationsBrowser() {
             <input id="station-search" type="search" value={q} placeholder="Search stations or cities" onChange={(e) => setParams({ q: e.target.value || null })}
               className="w-full min-h-11 pl-9 pr-3 border border-gray-300 rounded-md text-[15px] focus-visible:outline-2 focus-visible:outline-[#0057A8]" />
           </div>
-          <LineFilter value={line} onChange={(l) => setParams({ line: l, station: null })} />
+          <LineFilter value={line} onChange={(l) => setParams({ line: l })} />
           <p className="text-sm text-gray-700" aria-live="polite" data-testid="result-count">{list.length} of {STATIONS.length} stations{line ? ` on the ${line} line` : ""}</p>
         </div>
         <ul className="overflow-y-auto grow" data-testid="station-list">
           {list.map((s) => (
             <li key={s.key}>
-              <StationRow station={s} status={effectiveStatus(s, demo)} selected={s.key === selKey} href={`/stations/${s.key}`} onSelect={() => setParams({ station: s.key })} />
+              <StationRow station={s} status={effectiveStatus(s, demo)} href={`/stations/${s.key}`} />
             </li>
           ))}
           {list.length === 0 && <li className="p-6 text-sm text-gray-800" data-testid="no-results">No stations match. Clear the search or choose another line.</li>}
         </ul>
       </section>
       <section aria-label="Detail" className="hidden lg:block overflow-y-auto min-h-0">
-        {selected ? <div className="p-8 max-w-3xl"><StationDetail station={selected} /></div> : <NetworkOverview line={line} onSelect={(k) => setParams({ station: k })} />}
+        <NetworkOverview line={line} onSelect={go} />
       </section>
-      <section aria-label="Network summary" className="order-1 lg:hidden border-b border-gray-200"><NetworkOverview line={line} onSelect={() => undefined} /></section>
+      <section aria-label="Network summary" className="order-1 lg:hidden border-b border-gray-200"><NetworkOverview line={line} onSelect={go} /></section>
     </div>
   );
 }

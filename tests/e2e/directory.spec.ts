@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { BASE, UNIQUE_NAMES, isDesktop, noHorizontalOverflow } from "./helpers";
+import { BASE, UNIQUE_NAMES, noHorizontalOverflow } from "./helpers";
 
 const rowNames = (page: import("@playwright/test").Page) => page.getByTestId("station-row").evaluateAll((els) => els.map((e) => e.querySelector("span.truncate")!.textContent));
 
@@ -33,13 +33,13 @@ test.describe("station directory", () => {
     await expect(page.getByTestId("no-results")).toBeVisible();
   });
 
-  test("selecting a station opens its detail (pane on desktop, page elsewhere)", async ({ page }) => {
+  test("selecting a station opens its dashboard", async ({ page }) => {
     await page.goto("stations");
     await page.getByLabel("Search stations").fill("cedars");
     await page.getByTestId("station-row").first().click();
+    await expect(page).toHaveURL(/stations\/cedars-r/);
     await expect(page.getByTestId("station-detail")).toBeVisible();
     await expect(page.getByRole("heading", { level: 1, name: "Cedars" })).toBeVisible();
-    if (!isDesktop(page)) await expect(page).toHaveURL(/stations\/cedars-r/);
   });
 
   test("every one of the 115 original ids is a working route", async ({ request }) => {

@@ -19,7 +19,7 @@ export default function WorkQueue() {
   return (
     <div className="p-4 lg:p-8 max-w-3xl space-y-6" data-testid="work-queue">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div><h1 className="text-3xl font-light tracking-[-0.01em]">Work</h1><p className="text-sm text-gray-700">Viewing as {persona.label} · primary action: {persona.primaryAction}</p></div>
+        <div><h1 className="text-4xl text-gray-900" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>Inspections</h1><p className="text-sm text-gray-700">Viewing as {persona.label} · primary action: {persona.primaryAction}</p></div>
         <DemoBadge />
       </div>
 

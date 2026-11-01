@@ -3,7 +3,7 @@ import Nav from "@/components/Nav";
 import FadeUp from "@/components/FadeUp";
 import ExperienceTabs from "@/components/landing/ExperienceTabs";
 import RolloutSection from "@/components/landing/RolloutSection";
-import { CinematicHero, ProofSection, WorkflowSteps, OperationalIntelligence, FinalCTA } from "@/components/landing/sections";
+import { CinematicHero, HeroIntro, ProofSection, WorkflowSteps, OperationalIntelligence, FinalCTA } from "@/components/landing/sections";
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
   <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-4 uppercase">{children}</p>
@@ -12,9 +12,10 @@ const Eyebrow = ({ children }: { children: React.ReactNode }) => (
 export default function Home() {
   return (
     <div className="landing-sans min-h-screen bg-white text-black">
-      <Nav />
+      <Nav overlay />
       <main id="main">
         <CinematicHero />
+        <HeroIntro />
         <ProofSection />
 
         <section id="platform" className="bg-[#F8F7F4] py-16 sm:py-24 lg:py-32">

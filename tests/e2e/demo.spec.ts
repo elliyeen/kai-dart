@@ -67,8 +67,8 @@ test.describe("executive demo and workflow", () => {
     await page.getByTestId("reset-demo").click();
   });
 
-  test("role-scoped surfaces on the Work page", async ({ page }) => {
-    await page.goto("stations/work");
+  test("role-scoped surfaces on the Inspections page", async ({ page }) => {
+    await page.goto("stations/inspections");
     await setRole(page, "Contractor / Crew");
     await expect(page.getByTestId("contractor-empty")).toBeVisible();
     await setRole(page, "Security / Compliance");
@@ -89,7 +89,7 @@ test.describe("executive demo and workflow", () => {
   });
 
   test("demo labels persist on every surface", async ({ page }) => {
-    for (const path of ["stations", "stations/akard", "stations/work"]) {
+    for (const path of ["stations", "stations/akard", "stations/inspections"]) {
       await page.goto(path);
       await expect(page.getByTestId("demo-banner")).toContainText("SYNTHETIC DEMO");
     }

@@ -13,6 +13,7 @@ const EFF_STYLE: Record<Eff, { Icon: LucideIcon; cls: string }> = {
   assigned:  { Icon: Truck,         cls: "bg-blue-50 text-blue-900 border-blue-200" },
   awaiting:  { Icon: Clock,         cls: "bg-indigo-50 text-indigo-900 border-indigo-200" },
   verified:  { Icon: ShieldCheck,   cls: "bg-emerald-50 text-emerald-900 border-emerald-200" },
+  unknown:   { Icon: Clock,         cls: "bg-gray-50 text-gray-800 border-gray-300" },
 };
 
 /** Status is always icon + text, never color alone. */
