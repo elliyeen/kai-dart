@@ -97,7 +97,6 @@ Open [http://localhost:3001](http://localhost:3001) to view the site.
 | DART Stations | 65 |
 | Inspection Points / Station | 247 |
 | Total Inspection Points | 16,055 |
-| Incident Response Time | < 30 seconds |
 
 ---
 

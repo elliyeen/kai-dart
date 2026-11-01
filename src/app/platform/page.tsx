@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Database, Cpu, Workflow, BarChart3, Smartphone, Map, BookOpen } from "lucide-react";
-import CountUp from "@/components/CountUp";
 import FadeUp from "@/components/FadeUp";
 import DashboardDemo from "@/components/DashboardDemo";
 import Nav from "@/components/Nav";
