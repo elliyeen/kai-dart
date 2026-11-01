@@ -40,8 +40,8 @@ jobs:
           GITHUB_PAGES: "true"
         run: npm run build
 
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
+      - name: Install Playwright browsers (Chromium, Firefox, WebKit)
+        run: npx playwright install --with-deps chromium firefox webkit
 
       - name: E2E, accessibility and responsive tests (5 viewports)
         run: npm run test:e2e
