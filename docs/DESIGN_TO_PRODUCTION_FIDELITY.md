@@ -33,3 +33,10 @@ An approved image is not merely inspiration. A production page must match its ap
 
 ## Definition of done
 Code + tests + visual evidence + responsive review + human visual approval + authorized deployment + verified live page. Missing any item means NOT COMPLETE. Visual approval is separate from code/test approval.
+
+## Actual visual failure evidence — 2026-11-01
+User supplied TWO images in conversation: (A) screenshot of delivered architecture page, 1320×2868 phone screenshot with small content in middle; (B) approved desktop mockup, 1536×768 with large, polished five-stage isometric illustrations. **Image B is the visual authority; image A is a failed implementation, not a new reference.** The current delivered design is REJECTED. The two files were supplied in ChatGPT, but have not been committed to GitHub; Claude must obtain the actual reference image file before claiming visual fidelity.
+
+**Preserve from approved image B:** large stage illustrations occupying substantial visual width; high-contrast navy hero; prominent type; strong horizontal five-stage rhythm; refined consistent illustration silhouettes; clear thick security ribbon with icons; professional spacing and scale. **Do not copy its outdated content:** remove proposal CTA, circular numbered badges, “DART Platform” label, and old right-action subtitle. Use latest approved exact text and labels from Notion. Do not treat the rejected implementation as an aesthetic target.
+
+**Mandatory correction:** At desktop 1536×768, create a screenshot of /architecture and compare against approved B at the same viewport; the diagram must be the hero rather than tiny icons. At mobile viewport 390/430, show a designed mobile layout, not a zoomed-out desktop page. Screenshot dimensions alone are not sufficient: review actual illustration scale, content density, typography and icon fidelity. Do not solve by scaling the entire page or placing the approved JPEG as a background. Rebuild/reuse the illustration assets as real responsive elements, preserving the visual design. No approval or completion without user acceptance of rendered screenshot.
