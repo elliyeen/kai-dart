@@ -39,3 +39,24 @@ CREATE INDEX audit_actor ON audit_log (actor_id, at);
 
 -- Separation of duties, enforced in the application and checkable here:
 -- SELECT w.id FROM work_orders w JOIN proofs p ON p.work_order_id = w.id JOIN inspections i ON i.work_order_id = w.id WHERE p.submitted_by = i.inspector_id;  -- must return zero rows
+
+-- Contracts, personnel and timing -------------------------------------------------------------
+CREATE TABLE providers (id TEXT PRIMARY KEY, name TEXT NOT NULL, kind TEXT NOT NULL CHECK (kind IN ('in_house','contractor')), owner_id TEXT REFERENCES owners(id));
+CREATE TABLE contracts (
+  id TEXT PRIMARY KEY, provider_id TEXT NOT NULL REFERENCES providers(id), contract_ref TEXT NOT NULL, scope TEXT NOT NULL,
+  respond_critical_min INTEGER, respond_high_min INTEGER, respond_routine_min INTEGER, resolve_target_min INTEGER, starts_on TEXT, ends_on TEXT
+);
+CREATE TABLE technicians (id TEXT PRIMARY KEY, provider_id TEXT NOT NULL REFERENCES providers(id), display_name TEXT NOT NULL, user_id TEXT REFERENCES users(id));
+ALTER TABLE work_orders ADD COLUMN provider_id TEXT REFERENCES providers(id);
+ALTER TABLE work_orders ADD COLUMN contract_id TEXT REFERENCES contracts(id);
+ALTER TABLE work_orders ADD COLUMN technician_id TEXT REFERENCES technicians(id);
+-- Every stage change is timestamped: detected, ticket_opened, dispatched, accepted (on the technician's device), on_site (check-in),
+-- waiting_on_parts (with reason and expected delivery), completed (technician confirms), verified (independent inspector).
+CREATE TABLE ticket_stage_events (
+  id TEXT PRIMARY KEY, ticket_id TEXT NOT NULL REFERENCES tickets(id), stage TEXT NOT NULL CHECK (stage IN ('detected','ticket_opened','dispatched','accepted','on_site','waiting_on_parts','completed','verified')),
+  actor_id TEXT, note TEXT, at TEXT NOT NULL
+);
+CREATE INDEX stage_ticket ON ticket_stage_events (ticket_id, at);
+-- Time to fix by asset type, including time waiting on parts:
+-- SELECT a.type, AVG(julianday(v.at) - julianday(d.at)) * 1440 AS minutes FROM tickets t JOIN assets a ON a.id = t.asset_id
+--   JOIN ticket_stage_events d ON d.ticket_id = t.id AND d.stage = 'detected' JOIN ticket_stage_events v ON v.ticket_id = t.id AND v.stage = 'verified' GROUP BY a.type;
