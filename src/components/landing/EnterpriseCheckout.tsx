@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Check, Copy, Mail, Printer } from "lucide-react";
 
 const DEPLOYMENTS = [
-  { id: "pilot3", name: "Three-station illustrative pilot", note: "Park Lane, Akard and Spring Valley. Illustrative proposals, not approved sites.", scope: "Three stations (illustrative): Park Lane, Akard, Spring Valley" },
+  { id: "pilot3", name: "Three-station illustrative pilot", note: "Akard, Park Lane and Spring Valley. Illustrative proposals, not approved sites.", scope: "Three stations (illustrative): Akard, Park Lane, Spring Valley" },
   { id: "custom", name: "Custom or network expansion", note: "A different set of stations, or a wider network. Scope agreed together.", scope: "Custom or network expansion (scope to be agreed)" },
 ];
 const TERMS = [

@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { IMAGES, img } from "./assets";
 
 const ITEMS = [
-  { id: "station", name: "Station", tag: "Pilot", image: IMAGES.lineStation, body: "Park Lane, Akard and Spring Valley first." },
+  { id: "station", name: "Station", tag: "Pilot", image: IMAGES.lineStation, body: "Akard, Park Lane and Spring Valley first." },
   { id: "car", name: "Cab & Car", tag: "Coming soon", image: IMAGES.lineCar, body: "Cleaner, safer rides on board." },
   { id: "experience", name: "DART Experience", tag: "Coming soon", image: IMAGES.lineExperience, body: "One connected ride, door to door." },
 ] as const;

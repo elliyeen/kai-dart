@@ -20,20 +20,21 @@ function scoreAt(s: Scenario, m: number) {
 const stageIndex = (s: Scenario, m: number) => { const st = stageStarts(s); return STAGES.reduce((n, g, i) => (m >= st[g] ? i : n), 0); };
 const fmt = (n: number) => (n >= 60 ? `${Math.floor(n / 60)}h ${n % 60}m` : `${n}m`);
 
-export default function LoopDemo() {
+/** `scene` pins the demo to one station (embedded on a station page); without it the page cycles the four Red Line scenes. */
+export default function LoopDemo({ scene: fixed }: { scene?: Scenario } = {}) {
   const [mode, setMode] = useState<string>("all");
   const [t, setT] = useState(0);
   const [paused, setPaused] = useState(false);
   const last = useRef<number | null>(null);
 
   useEffect(() => { // deep link + reduced motion: only readable after mount
-    const h = window.location.hash.slice(1);
+    const h = fixed ? "" : window.location.hash.slice(1);
     // eslint-disable-next-line react-hooks/set-state-in-effect -- reading the URL hash and media query is only possible after mount
     if (SCENARIOS.some((s) => s.id === h)) setMode(h);
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setPaused(true);
   }, []);
-  const order = useMemo(() => (mode === "all" ? SCENARIOS : SCENARIOS.filter((s) => s.id === mode)), [mode]);
-  const total = order.length * SCENE_MS + (mode === "all" ? SUMMARY_MS : 0);
+  const order = useMemo(() => (fixed ? [fixed] : mode === "all" ? SCENARIOS : SCENARIOS.filter((s) => s.id === mode)), [mode, fixed]);
+  const total = order.length * SCENE_MS + (!fixed && mode === "all" ? SUMMARY_MS : 0);
   useEffect(() => {
     if (paused) { last.current = null; return; }
     const id = window.setInterval(() => {
@@ -45,7 +46,7 @@ export default function LoopDemo() {
   const choose = (m: string) => { setMode(m); setT(0); try { history.replaceState(null, "", m === "all" ? "#" : `#${m}`); } catch { /* ignore */ } };
 
   const idx = Math.min(order.length, Math.floor(t / SCENE_MS));
-  const summary = mode === "all" && idx >= order.length;
+  const summary = !fixed && mode === "all" && idx >= order.length;
   const scene = order[Math.min(idx, order.length - 1)];
   const p = summary ? 1 : (t - idx * SCENE_MS) / SCENE_MS;
   const m = Math.min(1, p / HOLD) * scene.totalMin;            // simulated minutes since detection
@@ -62,21 +63,21 @@ export default function LoopDemo() {
   const pts = Array.from({ length: 41 }, (_, i) => `${(i / 40) * 100},${44 - (scoreAt(scene, (i / 40) * scene.totalMin) - 50) * 0.8}`).join(" ");
   const within = scene.totalMin <= scene.slaResolveMin;
   const seg = "min-h-11 px-4 rounded-full border text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]";
-  const Icon = ICON[scene.id];
+  const Icon = ICON[scene.id] ?? Camera;
 
   return (
-    <div className="p-4 lg:p-8 space-y-6 max-w-6xl" data-testid="loop">
+    <div className={fixed ? "space-y-4" : "p-4 lg:p-8 space-y-6 max-w-6xl"} data-testid={fixed ? "station-loop" : "loop"}>
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div><h1 className="text-4xl text-gray-900" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>Station operations, start to finish</h1>
-          <p className="text-sm text-gray-700">From detection to independently verified, across four stations on the Red Line. Every stage is timed. Runs automatically.</p></div>
+        {fixed ? <p className="text-sm text-gray-700">From detection to independently verified at {fixed.station}. Every stage is timed. Runs automatically.</p> : <div><h1 className="text-4xl text-gray-900" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>Station operations, start to finish</h1>
+          <p className="text-sm text-gray-700">From detection to independently verified, across four stations on the Red Line. Every stage is timed. Runs automatically.</p></div>}
         <button type="button" data-testid="loop-toggle" onClick={() => setPaused((x) => !x)} className="min-h-11 px-4 rounded-md border border-gray-300 hover:bg-gray-50 inline-flex items-center gap-2">
           {paused ? <Play className="w-4 h-4" aria-hidden="true" /> : <Pause className="w-4 h-4" aria-hidden="true" />}{paused ? "Play" : "Pause"}
         </button>
       </div>
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Station scene">
+      {!fixed && <div className="flex flex-wrap gap-2" role="group" aria-label="Station scene">
         {[{ id: "all", label: "All stations" }, ...SCENARIOS.map((s) => ({ id: s.id, label: s.station }))].map((o) => (
           <button key={o.id} type="button" aria-pressed={mode === o.id} onClick={() => choose(o.id)} className={`${seg} ${mode === o.id ? "bg-[#0B1F33] text-white border-[#0B1F33]" : "bg-white border-gray-300 hover:bg-gray-50"}`}>{o.label}</button>))}
-      </div>
+      </div>}
 
       {summary ? (
         <section aria-live="polite" data-testid="loop-summary" className="border border-gray-200 rounded-xl p-6 space-y-6">
@@ -138,7 +139,7 @@ export default function LoopDemo() {
           </section>
         </div>
       )}
-      <p className="text-sm"><Link className="underline text-[#0057A8]" href={`/stations/scenarios#${scene.id}`}>See the test case details for {scene.station}</Link> · <Link className="underline text-[#0057A8]" href="/stations/contractors">Contractors and personnel</Link></p>
+      <p className="text-sm">{SCENARIOS.some((x) => x.id === scene.id) && <><Link className="underline text-[#0057A8]" href={`/stations/scenarios#${scene.id}`}>See the test case details for {scene.station}</Link> · </>}<Link className="underline text-[#0057A8]" href="/stations/contractors">Contractors and personnel</Link></p>
       <p className="text-xs text-gray-700">Timings, targets, scores, contract references and technician IDs are sample values for illustration.</p>
     </div>
   );

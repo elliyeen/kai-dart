@@ -34,7 +34,7 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
 
 test("pilot section names the three pilot stations; nothing is shown as live", async ({ page }) => {
   await page.goto("");
-  await expect(page.getByTestId("pilot-title")).toHaveText("Pilot for Park Lane, Akard and Spring Valley Station");
+  await expect(page.getByTestId("pilot-title")).toHaveText("Pilot for Akard, Park Lane and Spring Valley Stations");
   await expect(page.getByText("The Standard in clean transportation in North Texas", { exact: true })).toBeVisible();
   await expect(page.getByText("Bringing stations online.")).toHaveCount(0);
   const legend = page.getByTestId("rollout-legend");

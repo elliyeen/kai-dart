@@ -13,15 +13,21 @@ test.describe("executive demo and workflow", () => {
     await next.click();                                              // 2 open Akard
     await expect(page).toHaveURL(/stations\/akard/);
     await expect(status(page)).toHaveText("Reported — unassigned");
-    await next.click();                                              // 3 assign
+    await next.click();                                              // 3 inspector runs the checklist; KAI loop
+    await expect(page).toHaveURL(/stations\/checklist/);
+    await expect(page.getByTestId("kai-loop")).toBeVisible();
+    await expect(page.getByTestId("kai-stage-learn")).toHaveAttribute("data-on", "true", { timeout: 10_000 });
+    await expect(page.getByTestId("kai-actions").locator("li")).toHaveCount(3);
+    await next.click();                                              // 4 assign
+    await expect(page).toHaveURL(/stations\/akard/);
     await expect(status(page)).toHaveText("Assigned — work in progress");
-    await next.click();                                              // 4 proof
+    await next.click();                                              // 5 proof
     await expect(status(page)).toHaveText("Awaiting independent verification");
     await expect(page.getByTestId("work-order")).toContainText("Not yet verified");
-    await next.click();                                              // 5 verify
+    await next.click();                                              // 6 verify
     await expect(status(page)).toHaveText("Verified resolved");
     await expect(page.getByTestId("work-order")).toContainText("demo.inspector");
-    await next.click();                                              // 6 executive network
+    await next.click();                                              // 7 executive network
     await expect(page.getByTestId("guide-step")).toContainText("Demo complete");
     await expect(page.getByTestId("stat-verified").first()).toHaveText("1");
     expect(Date.now() - t0, "demo wall time").toBeLessThan(120_000);

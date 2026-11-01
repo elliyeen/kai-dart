@@ -12,6 +12,9 @@ import { DemoBadge, LineChips, StatusIndicator } from "./ui";
 import AkardTwin from "./dashboard/AkardTwin";
 import { AssetDrawer, DataSources, IssuesDrawer, KpiRow, LowerStrip } from "./dashboard/panels";
 import StationFocusMap from "./dashboard/StationFocusMap";
+import StationActions from "./StationActions";
+import LoopDemo from "./LoopDemo";
+import { scenarioForStation } from "@/lib/stationScenario";
 
 export default function StationDashboard({ station }: { station: Station }) {
   const demo = useDemo();
@@ -55,6 +58,7 @@ export default function StationDashboard({ station }: { station: Station }) {
             <p className="border border-gray-200 rounded-lg p-4 text-sm text-gray-800">The {persona.label} demo persona has no access to station condition detail. Switch role to continue.</p>
           ) : (
             <>
+              <StationActions station={station} canDeploy={can(demo.role, "assign_work", { stationKey: station.key })} roleLabel={persona.label} />
               <KpiRow demo={demo} status={status} isDemoStation={isDemo} issueCount={station.demo.issues.length} station={station} />
               {isDemo ? <AkardTwin demo={demo} selected={asset} onSelect={(id) => { setAsset(id); setDrawerOpen(true); }} /> : (
                 <section aria-labelledby="loc-h" className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
@@ -64,6 +68,10 @@ export default function StationDashboard({ station }: { station: Station }) {
                 </section>
               )}
               <LowerStrip demo={demo} isDemoStation={isDemo} issues={station.demo.issues} station={station} />
+              <section id="station-demo" aria-labelledby="demo-h" className="scroll-mt-28 rounded-2xl border border-gray-200 bg-white shadow-sm p-5 space-y-3">
+                <div className="flex flex-wrap items-baseline justify-between gap-2"><h2 id="demo-h" className="text-2xl text-gray-900" style={{ fontWeight: 700 }}>Autonomous demo · {station.name}</h2><DemoBadge /></div>
+                <LoopDemo scene={scenarioForStation(station)} />
+              </section>
               <DataSources stationKey={station.key} />
             </>
           )}
