@@ -2,7 +2,6 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import FadeUp from "@/components/FadeUp";
 import ExperienceTabs from "@/components/landing/ExperienceTabs";
-import CapabilityLineup from "@/components/landing/CapabilityLineup";
 import RolloutSection from "@/components/landing/RolloutSection";
 import { CinematicHero, ProofSection, WorkflowSteps, OperationalIntelligence, FinalCTA } from "@/components/landing/sections";
 
@@ -28,16 +27,6 @@ export default function Home() {
             </FadeUp>
             <ExperienceTabs />
             <p className="mt-10 text-center"><Link href="/stations" className="text-sm font-medium border-b border-black pb-1 hover:border-gray-400">Open the interactive demo (synthetic data)</Link></p>
-          </div>
-        </section>
-
-        <section id="capabilities" className="bg-white py-16 sm:py-24 lg:py-32">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <FadeUp>
-              <Eyebrow>Capabilities</Eyebrow>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.02em] mb-10 lg:mb-14">Three layers. One accountable record.</h2>
-            </FadeUp>
-            <CapabilityLineup />
           </div>
         </section>
 
@@ -87,7 +76,6 @@ export default function Home() {
           </div>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-[13px] text-gray-700">
             <Link href="/platform" className="hover:text-black">Platform</Link>
-            <Link href="/#capabilities" className="hover:text-black">Capabilities</Link>
             <Link href="/#about" className="hover:text-black">About</Link>
             <Link href="/contact" className="hover:text-black">Contact</Link>
           </div>

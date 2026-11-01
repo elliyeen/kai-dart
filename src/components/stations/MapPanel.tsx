@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { DFW_COUNTIES } from "@/lib/geo/dfw-counties";
 import { LINES, STATIONS, STATION_RECORDS, type LineId } from "@/lib/stations";
 import { rolloutOf, ROLLOUT_LABEL, type RolloutStatus } from "@/lib/stations/rollout";
+import StationsMapbox from "./StationsMapbox";
 
 const W = 640, H = 600, PAD = 20;
 // City labels for orientation only (approximate city-center coordinates).
@@ -14,9 +15,23 @@ const CITIES: City[] = [
 ];
 
 /** Dallas–Fort Worth base map: Census county outlines + the app's own station coordinates. Not to scale for navigation. */
-export default function MapPanel({ mode = "network", selectedKey, line, onSelect }: {
-  mode?: "network" | "rollout"; selectedKey?: string | null; line?: LineId | null; onSelect?: (key: string) => void;
-}) {
+type MapProps = { mode?: "network" | "rollout"; selectedKey?: string | null; line?: LineId | null; onSelect?: (key: string) => void };
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? "";
+
+/** Mapbox when a public token is configured at build time; otherwise the self-contained SVG county map. */
+export default function MapPanel(props: MapProps) {
+  if (MAPBOX_TOKEN) {
+    return (
+      <figure className="m-0">
+        <StationsMapbox token={MAPBOX_TOKEN} mode={props.mode ?? "network"} line={props.line} selectedKey={props.selectedKey} onSelect={props.onSelect} />
+        <figcaption className="mt-2 text-xs text-gray-600">Base map © Mapbox © OpenStreetMap. Station positions: the app&apos;s station coordinates. Orientation only, not a navigation map.</figcaption>
+      </figure>
+    );
+  }
+  return <SvgCountyMap {...props} />;
+}
+
+function SvgCountyMap({ mode = "network", selectedKey, line, onSelect }: MapProps) {
   const g = useMemo(() => {
     const lats = STATIONS.map((s) => s.lat), lngs = STATIONS.map((s) => s.lng);
     const pad = 0.035;
