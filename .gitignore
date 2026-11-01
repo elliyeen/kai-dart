@@ -45,3 +45,8 @@ infrastructure/terraform/terraform.tfvars
 infrastructure/terraform/.terraform/
 infrastructure/terraform/*.tfstate
 infrastructure/terraform/*.tfstate.backup
+
+# test artifacts
+/test-results/
+/playwright-report/
+/.playwright-mcp/
