@@ -9,6 +9,7 @@ export default function SiteFooter() {
         </div>
         <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-[13px] text-gray-700">
           <Link href="/platform" className="hover:text-black">Platform</Link>
+          <Link href="/architecture" className="hover:text-black">Architecture</Link>
           <Link href="/faq" className="hover:text-black">FAQ</Link>
           <Link href="/get-started" className="hover:text-black">Get started</Link>
           <Link href="/#about" className="hover:text-black">About</Link>
