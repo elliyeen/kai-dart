@@ -22,8 +22,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <FadeUp>
               <div className="text-center">
-                <Eyebrow>The ride</Eyebrow>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.02em] mb-10 lg:mb-14">Clean. Safe. Intelligent. Verified.</h2>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.02em] mb-10 lg:mb-14">Clean. Safe. Intelligent.</h2>
               </div>
             </FadeUp>
             <ExperienceTabs />

@@ -3,19 +3,21 @@ import { noHorizontalOverflow } from "./helpers";
 
 test("landing: no tournament content, CTAs reach the platform, tabs and accordion work", async ({ page }) => {
   await page.goto("");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Transit for Everyone");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Super experience");
   expect(await page.locator("body").innerText()).not.toMatch(/fifa|world cup|at&t stadium|arlington/i);
   await expect(page.getByTestId("hero-metric")).toHaveText("171,000+");
   await expect(page.getByText("Daily Passenger Trips")).toBeVisible();
   await expect(page.getByText("Rail Stations in the DART Network")).toHaveCount(0);
-  await expect(page.getByText("DART clean for all of North Texas")).toBeVisible();
-  await expect(page.getByText("Transit for North Texas")).toHaveCount(0);
+  await expect(page.getByText("Clean Transit for North Texas")).toBeVisible();
+  await expect(page.getByText("Transit for North Texas", { exact: true })).toHaveCount(0);
   await expect(page.getByText("Transit for All", { exact: true })).toHaveCount(0);
   await expect(page.getByText("We’re changing public transportation to make it clean, safe and more intelligent than ever.")).toBeVisible();
   await expect(page.getByText("This is the new DART standard.")).toBeVisible();
   await expect(page.getByText("Enjoy your ride in North Texas.")).toBeVisible();
   await expect(page.getByText("Mission", { exact: true })).toHaveCount(0);
   // segmented rider tabs
+  await expect(page.getByRole("heading", { name: "Clean. Safe. Intelligent." })).toBeVisible();
+  await expect(page.getByText("The ride", { exact: true })).toHaveCount(0);
   await page.getByRole("tab", { name: "Verified" }).click();
   await expect(page.getByRole("tab", { name: "Verified" })).toHaveAttribute("aria-selected", "true");
   await page.getByRole("tab", { name: "Verified" }).press("ArrowLeft");

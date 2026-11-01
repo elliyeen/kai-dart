@@ -1,9 +1,12 @@
 import { STATION_RECORDS } from "./records.generated";
+import { STATION_ADDRESSES } from "./addresses.generated";
 import { LINES } from "./lines";
 import type { LineId, Station, StationRecord } from "./types";
 
 export * from "./types";
 export * from "./lines";
+export { STATION_ADDRESSES };
+export type { StationAddress } from "./addresses.generated";
 export { STATION_RECORDS };
 
 const lineOrder = (l: LineId) => LINES.findIndex((x) => x.id === l);
@@ -21,7 +24,7 @@ export function buildStations(records: StationRecord[]): Station[] {
     return {
       key: first.id,
       name: first.name,
-      city: first.city,
+      city: STATION_ADDRESSES[first.name]?.city ?? first.city,
       lat: first.lat,
       lng: first.lng,
       closure: sorted.find((r) => r.closure)?.closure,
@@ -37,6 +40,7 @@ export function buildStations(records: StationRecord[]): Station[] {
 }
 
 export const STATIONS: Station[] = buildStations(STATION_RECORDS);
+export const addressOf = (s: Station) => STATION_ADDRESSES[s.name];
 const byRecordId = new Map<string, Station>();
 for (const s of STATIONS) for (const id of s.recordIds) byRecordId.set(id, s);
 

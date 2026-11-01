@@ -11,5 +11,6 @@ export const IMAGES = {
   lineupData: { file: "20260223_195547.jpg", alt: "DART rail system map posted in a station, showing the Red, Blue, Green and Orange lines" },
   lineupOps: { file: "DartredlineParker.jpg", alt: "Teal DART train signed for Parker Road arriving at a platform at night" },
   lineupIntel: { file: "20260314_083035.jpg", alt: "Yellow-and-white DART train at a station platform with its doors open" },
+  statement: { file: "DartredlineParker.jpg", alt: "Teal DART train signed for Parker Road arriving at a platform at night" },
   cta: { file: "20260227_124144.jpg", alt: "Park Lane DART Station" },
 } as const;

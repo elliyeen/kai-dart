@@ -26,7 +26,7 @@ export function CinematicHero() {
       <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-black/30" />
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 pb-10 sm:pb-14">
         <p className="hero-animate text-5xl sm:text-6xl lg:text-7xl leading-none" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif", fontWeight: 800, fontStyle: "italic", letterSpacing: "-0.05em" }}>KAI</p>
-        <p className="hero-animate mt-2 text-lg sm:text-xl font-medium" style={{ animationDelay: "120ms" }}>DART clean for all of North Texas</p>
+        <p className="hero-animate mt-2 text-lg sm:text-xl font-medium" style={{ animationDelay: "120ms" }}>Clean Transit for North Texas</p>
         <div className="hero-animate mt-6 max-w-md sm:max-w-none" style={{ animationDelay: "240ms" }}>
           <div className="sm:flex sm:justify-start"><HeroButtons /></div>
         </div>
@@ -52,7 +52,7 @@ export function HeroIntro() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-10 lg:gap-16 items-center">
         <div>
           <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl leading-[1.04] tracking-[-0.03em] text-gray-900" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif", fontWeight: 500 }}>
-            Transit for Everyone<br />and Every Ride
+            Super experience<br />for every ride
           </h1>
           <p className="mt-6 text-lg sm:text-xl font-light text-gray-800 max-w-xl leading-relaxed">We&rsquo;re changing public transportation to make it clean, safe and more intelligent than ever.</p>
         </div>
@@ -68,16 +68,18 @@ export function HeroIntro() {
 
 export function ProofSection() {
   return (
-    <section id="standard" className="bg-white py-20 sm:py-28 lg:py-36">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+    <section id="standard" className="relative overflow-hidden py-24 sm:py-32 lg:py-44 text-white">
+      <Image src={img(IMAGES.statement.file)} alt={IMAGES.statement.alt} fill sizes="100vw" className="object-cover object-center" />
+      <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/55 to-black/80" />
+      <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
         <FadeUp>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.08] tracking-[-0.03em] text-gray-900" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.08] tracking-[-0.03em]" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
             This is the new DART standard.<br />
-            <span className="text-gray-600">Enjoy your ride in North Texas.</span>
+            <span className="text-white/85">Enjoy your ride in North Texas.</span>
           </h2>
         </FadeUp>
         <FadeUp delay={120}>
-          <div className="mt-14 max-w-2xl mx-auto text-left"><EvidencePanel /></div>
+          <div className="mt-14 max-w-2xl mx-auto text-left text-gray-900"><EvidencePanel /></div>
         </FadeUp>
       </div>
     </section>
@@ -86,7 +88,7 @@ export function ProofSection() {
 
 export function EvidencePanel() {
   return (
-    <figure className="border border-gray-200 p-6">
+    <figure className="border border-gray-200 bg-white p-6 rounded-lg">
       <p className="text-[11px] tracking-[0.2em] uppercase text-gray-600 mb-3">Verified public source</p>
       <blockquote className="text-lg font-light text-gray-900 leading-snug">
         DART&rsquo;s FY2026 customer survey reports record satisfaction, and still names bus reliability, safety, train cleanliness and disruption communication as areas to improve.

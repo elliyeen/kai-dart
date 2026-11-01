@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { LINE_BY_ID, formatCoords, linePositions, type Station } from "@/lib/stations";
+import { LINE_BY_ID, addressOf, formatCoords, linePositions, type Station } from "@/lib/stations";
 import { effectiveStatus } from "@/lib/stations/effective";
 import { useDemo } from "@/lib/demo/store";
 import { can } from "@/lib/demo/permissions";
@@ -31,7 +31,12 @@ export default function StationDashboard({ station }: { station: Station }) {
               <p className="text-xs tracking-[0.2em] text-gray-700 uppercase">Infrastructure digital twin</p>
               <h1 id="st-h" className="text-4xl sm:text-5xl text-gray-900" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>{station.name}{station.name === "Akard" ? " Station" : ""}</h1>
               <div className="text-gray-800 space-y-0.5" data-testid="station-meta">
-                <p>{station.city}, TX · <span data-testid="coords">{formatCoords(station.lat, station.lng)}</span></p>
+                {(() => { const a = addressOf(station); return a ? (
+                  <>
+                    <p data-testid="address">{a.street}, {a.city}, {a.state} {a.zip}{a.county ? ` · ${a.county}` : ""}</p>
+                    <p className="text-sm text-gray-700">Coordinates <span data-testid="coords">{formatCoords(station.lat, station.lng)}</span> · official stop ID {a.stopId} · <a className="underline text-[#0057A8]" href={a.source} target="_blank" rel="noopener noreferrer">DART station page</a></p>
+                    {a.additional?.map((x) => <p key={x.stopId} className="text-sm text-gray-700" data-testid="additional-stop">Also served at {x.name} (stop {x.stopId}): {x.address}</p>)}
+                  </>) : <p>{station.city}, TX · <span data-testid="coords">{formatCoords(station.lat, station.lng)}</span></p>; })()}
                 {linePositions(station).map((p) => <p key={p.lineId} className="text-sm text-gray-700" data-testid={`pos-${p.lineId}`}>{LINE_BY_ID[p.lineId].name} · Station {p.index} of {p.total}{p.prev ? <> · previous: <Link className="underline text-[#0057A8]" href={`/stations/${p.prev.id}`}>{p.prev.name}</Link></> : " · line terminus"}{p.next ? <> · next: <Link className="underline text-[#0057A8]" href={`/stations/${p.next.id}`}>{p.next.name}</Link></> : " · line terminus"}</p>)}
               </div>
               <div className="flex flex-wrap items-center gap-2"><StatusIndicator status={status} /><span className="text-sm text-gray-800">Infrastructure &amp; cleanliness</span><LineChips lineIds={station.lineIds} /></div>
