@@ -100,6 +100,18 @@ test.describe("executive demo and workflow", () => {
     await expect(page.getByTestId("ds-public")).toContainText("closure NOT confirmed");
   });
 
+  test("side drawer slides out and back in", async ({ page }) => {
+    await page.goto("stations/akard");
+    const drawer = page.getByTestId("side-drawer"), toggle = page.getByTestId("drawer-toggle");
+    await expect(drawer).toBeVisible(); await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await toggle.click();
+    await expect(page.getByTestId("dash-grid")).toHaveAttribute("data-drawer", "closed");
+    await expect(drawer).toBeHidden(); await expect(toggle).toHaveAttribute("aria-expanded", "false"); await expect(toggle).toContainText("Show details");
+    await page.getByTestId("twin-platform-a").click();                     // selecting an asset reopens it
+    await expect(drawer).toBeVisible(); await expect(page.getByTestId("asset-drawer")).toHaveAttribute("data-asset", "platform-a");
+    await toggle.click(); await expect(drawer).toBeHidden(); await toggle.click(); await expect(drawer).toBeVisible();
+  });
+
   test("demo labels persist on every surface", async ({ page }) => {
     for (const path of ["stations", "stations/akard", "stations/inspections"]) {
       await page.goto(path);

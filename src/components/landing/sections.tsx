@@ -68,7 +68,7 @@ export function HeroIntro() {
 
 export function ProofSection() {
   return (
-    <section id="standard" className="relative overflow-hidden py-24 sm:py-32 lg:py-44 text-white">
+    <section id="standard" className="relative overflow-hidden py-28 sm:py-40 lg:py-56 text-white">
       <Image src={img(IMAGES.statement.file)} alt={IMAGES.statement.alt} fill sizes="100vw" className="object-cover object-center" />
       <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/55 to-black/80" />
       <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
@@ -78,29 +78,8 @@ export function ProofSection() {
             <span className="text-white/85">Enjoy your ride in North Texas.</span>
           </h2>
         </FadeUp>
-        <FadeUp delay={120}>
-          <div className="mt-14 max-w-2xl mx-auto text-left text-gray-900"><EvidencePanel /></div>
-        </FadeUp>
       </div>
     </section>
-  );
-}
-
-export function EvidencePanel() {
-  return (
-    <figure className="border border-gray-200 bg-white p-6 rounded-lg">
-      <p className="text-[11px] tracking-[0.2em] uppercase text-gray-600 mb-3">Verified public source</p>
-      <blockquote className="text-lg font-light text-gray-900 leading-snug">
-        DART&rsquo;s FY2026 customer survey reports record satisfaction, and still names bus reliability, safety, train cleanliness and disruption communication as areas to improve.
-      </blockquote>
-      <figcaption className="mt-4 text-sm text-gray-600">
-        Source:{" "}
-        <a className="underline underline-offset-2 hover:text-black" href="https://prod.dart.org/about/news-and-events/newsreleases/newsrelease-detail/dart-earns-record-net-promoter-score-as-rider-satisfaction-reaches-highest-level-since-2019" target="_blank" rel="noopener noreferrer">
-          DART news release, FY2026 Net Promoter Score
-        </a>
-        . Classification: public statement by DART.
-      </figcaption>
-    </figure>
   );
 }
 

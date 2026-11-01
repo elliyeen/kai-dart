@@ -7,16 +7,22 @@ test.describe("station directory", () => {
   test("lists every unique original station and the counts add up", async ({ page }) => {
     await page.goto("stations");
     await expect(page.getByTestId("result-count")).toHaveText(new RegExp(`^${UNIQUE_NAMES.length} of ${UNIQUE_NAMES.length} stations`));
+    await expect(page.getByTestId("station-row")).toHaveCount(BASE.length);              // one row per original line-station entry
     expect(new Set(await rowNames(page))).toEqual(new Set(UNIQUE_NAMES));
+    // organized by line colour, in the original line order
+    const heads = await page.locator('[data-testid^="group-"] h3').allInnerTexts();
+    expect(heads.map((h) => h.split("\n")[0])).toEqual(["Red Line", "Green Line", "Blue Line", "Orange Line", "Silver Line"]);
     await noHorizontalOverflow(page);
   });
 
   for (const line of ["red", "blue", "green", "orange", "silver"]) {
     test(`${line} line filter shows exactly that line's stations`, async ({ page }) => {
       await page.goto("stations");
-      await page.getByRole("group", { name: "Filter by line" }).getByRole("button", { name: new RegExp(`^${line}$`, "i") }).click();
+      await page.getByRole("group", { name: "Filter by line" }).getByRole("button", { name: new RegExp(`^${line} line`, "i") }).click();
       const expected = new Set(BASE.filter((b) => b.lineId === line).map((b) => b.name));
       await expect(page.getByTestId("result-count")).toContainText(`${expected.size} of`);
+      await expect(page.getByTestId("station-row")).toHaveCount(BASE.filter((b) => b.lineId === line).length);
+      await expect(page.locator('[data-testid^="group-"]')).toHaveCount(1);
       await expect(page).toHaveURL(new RegExp(`line=${line}`));
       expect(new Set(await rowNames(page))).toEqual(expected);
     });
@@ -25,7 +31,7 @@ test.describe("station directory", () => {
   test("search narrows the list and a deep link restores it", async ({ page }) => {
     await page.goto("stations");
     await page.getByLabel("Search stations").fill("akard");
-    await expect(page.getByTestId("station-row")).toHaveCount(1);
+    await expect(page.getByTestId("station-row")).toHaveCount(4);                         // Akard serves four lines
     await page.goto("stations?line=silver&q=carrollton");
     await expect(page.getByTestId("station-row")).toHaveCount(1);
     await expect(page.getByLabel("Search stations")).toHaveValue("carrollton");
