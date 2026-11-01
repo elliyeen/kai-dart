@@ -32,7 +32,7 @@ export default function Checklist() {
             <label key={id} className="flex items-center gap-3 min-h-11 px-1 text-sm"><input type="checkbox" className="w-5 h-5" checked={!!checked[id]} onChange={(e) => { setChecked({ ...checked, [id]: e.target.checked }); setSent(false); }} />{it}</label>); })}
         </fieldset>
       ))}
-      <div><span className="block text-sm font-semibold mb-1.5">Photo evidence</span><input type="file" accept="image/*" aria-label="Add inspection photo" onChange={(e) => setPhoto(e.target.files?.[0]?.name ?? "")} className="text-sm" /><p className="mt-1 text-xs text-gray-700">{photo ? `${photo} (kept on this device, not uploaded)` : "Photos are not uploaded in this demo."}</p></div>
+      <div><span className="block text-sm font-semibold mb-1.5">Photo evidence</span><input type="file" accept="image/*" aria-label="Add inspection photo" onChange={(e) => setPhoto(e.target.files?.[0]?.name ?? "")} className="text-sm w-full max-w-full min-w-0" /><p className="mt-1 text-xs text-gray-700">{photo ? `${photo} (kept on this device, not uploaded)` : "Photos are not uploaded in this demo."}</p></div>
       <div className="flex items-center gap-3"><button type="button" data-testid="checklist-submit" disabled={n === 0} onClick={() => setSent(true)} className="min-h-11 px-6 rounded-md bg-[#0057A8] text-white font-semibold disabled:bg-gray-200 disabled:text-gray-700">Complete inspection</button>
         {sent && <p role="status" className="text-sm" data-testid="checklist-done">Recorded for this session only: {n}/{total} items at {STATIONS.find((s) => s.key === station)!.name}. Not sent to DART.</p>}</div>
     </div>

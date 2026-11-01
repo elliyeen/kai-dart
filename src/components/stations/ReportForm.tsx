@@ -52,7 +52,7 @@ export default function ReportForm() {
       <label className="block"><span className="block text-sm font-semibold mb-1.5">Notes</span>
         <textarea rows={4} className={`${field} py-2`} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Describe the issue and its exact location…" /></label>
       <div><span className="block text-sm font-semibold mb-1.5">Photo</span>
-        <input type="file" accept="image/*" aria-label="Add photo" onChange={(e) => setPhoto(e.target.files?.[0]?.name ?? "")} className="text-sm" />
+        <input type="file" accept="image/*" aria-label="Add photo" onChange={(e) => setPhoto(e.target.files?.[0]?.name ?? "")} className="text-sm w-full max-w-full min-w-0" />
         <p className="mt-1 text-xs text-gray-700">{photo ? `Attached: ${photo} (kept on this device, not uploaded)` : "No file selected. Photos are not uploaded in this demo."}</p></div>
       <fieldset><legend className="text-sm font-semibold mb-1.5">Reported by <span className="font-normal text-gray-700">(optional)</span></legend>
         <div className="flex flex-wrap gap-2">{REPORTERS.map((r) => <button key={r} type="button" aria-pressed={by === r} className={chip(by === r)} onClick={() => setBy(by === r ? null : r)}>{r}</button>)}</div>
