@@ -2,7 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import { basePath } from "./assets";
-import { ArrowDown, Infinity as InfinityIcon, Layers, Lock, ShieldCheck } from "lucide-react";
+import { ArrowDown, KeyRound, Lock, ShieldCheck } from "lucide-react";
 
 type Status = "demo" | "proposed";
 const SCENE = (file: string, alt: string, w: number) => <img src={`${basePath}/images/architecture/${file}`} alt={alt} width={w} height={282} loading="lazy" decoding="async" className="w-full h-full object-contain object-bottom mix-blend-multiply" />;
@@ -14,24 +14,29 @@ const STATUS: Record<Status, string> = { demo: "Shown in the demo with synthetic
 const STAGES: Item[] = [
   { id: "data", title: "Data In", sub: "Vehicles · Stations · Operations", status: "proposed", art: SCENE("data-in.png", "Light-rail vehicle stopped at a station platform", 345),
     detail: ["KAI would begin from DART-approved sources such as inspection, maintenance and station-condition records, plus optional approved sensors.", "Access starts read-only. Nothing in an existing DART system changes without DART approval.", "In this demonstration every record is synthetic. No DART system is connected."] },
-  { id: "kai", title: "KAI", sub: "Ingest · Model · Analyze", status: "demo", art: SCENE("kai.png", "Three layered tiles in white, yellow and navy labelled KAI", 272),
+  { id: "kai", title: "DART Platform", sub: "Ingest · Model · Analyze", status: "demo", art: SCENE("kai.png", "Three layered tiles in white, yellow and navy labelled KAI", 272),
     detail: ["Each record keeps its source and time, so every finding can be traced back to where it came from.", "A shared model links the station, the issue, the work order, the evidence and the inspector.", "The demonstration shows this model with synthetic records."] },
   { id: "intelligence", title: "Intelligence", sub: "Detect · Predict · Prioritize", status: "demo", art: SCENE("intelligence.png", "Operations screen showing a network map with an alert", 252),
     detail: ["Clear, explainable rules rank station issues by severity, repeat history and what is blocking the fix.", "Every recommendation shows the evidence behind it. DART staff make the final decision.", "The demonstration ranks synthetic issues this way. Prediction is a proposed capability and is not shown."] },
   { id: "action", title: "Action", sub: "Dispatch · Maintain · Resolve", status: "demo", art: SCENE("action.png", "Maintenance van with a technician on a station platform", 278),
     detail: ["Authorized staff dispatch a ticket. A technician acknowledges it, checks in on site and confirms the work.", "A separate inspector verifies the result. People approve and confirm every step; nothing acts on its own.", "The demonstration simulates this full path with timing at every stage."] },
-  { id: "outcomes", title: "Outcomes", sub: "A safer, cleaner, more reliable DART", status: "proposed", art: SCENE("outcomes.png", "Smiling riders walking through a station shelter", 335),
+  { id: "outcomes", title: "Outcomes", sub: "Safer. Cleaner. DART", status: "proposed", art: SCENE("outcomes.png", "Smiling riders walking through a station shelter", 335),
     detail: ["The goal is a station that is cleaner, safer and more reliable for the people who use it.", "Progress would be measured against agreed baselines, such as verified closures and time to verification. This is an intended goal, not a proven result.", "Expansion beyond a pilot would be DART's separate decision."] },
 ];
 
 const SECURITY: Item[] = [
-  { id: "sec-data", title: "Protected Data", sub: "", status: "proposed", detail: ["Proposed: encryption in transit and at rest, and agreed retention and deletion terms.", "Protection begins at the source connection, then continues through ingestion, processing and storage."] },
-  { id: "sec-access", title: "Controlled Access", sub: "", status: "proposed", detail: ["Proposed: role-based access with least privilege, enforced on the server, with approval before any action.", "The role switcher in the demonstration is a simulation, not access control."] },
-  { id: "sec-compliance", title: "Compliance Ready", sub: "", status: "proposed", detail: ["Design intent: controls, test results and known gaps documented for DART's security review.", "No certification, audit or regulatory approval has been achieved. Nothing here should be read as one."] },
-  { id: "sec-reliable", title: "Reliable & Scalable", sub: "", status: "proposed", detail: ["Design intent: stale or missing data is flagged instead of shown as current, and the model is built to extend from three stations to more.", "No performance or uptime figures are claimed."] },
+  { id: "sec-soc2", title: "SOC 2 Type II", sub: "Target, not yet audited. Controls designed for security, availability and data protection.", status: "proposed", detail: ["Target: an independent SOC 2 Type II audit of KAI's controls for security, availability and data protection.", "No SOC 2 audit or report exists yet. Nothing here should be read as one; the scope and timing would be agreed with DART."] },
+  { id: "sec-zerotrust", title: "Zero Trust", sub: "Verify · Limit · Monitor", status: "proposed", detail: ["Proposed: every request is verified, access is limited to the least needed, and activity is monitored and logged.", "The role switcher in the demonstration is a simulation, not access control. Real enforcement would be on the server."] },
+  { id: "sec-encryption", title: "Encryption", sub: "In Transit & At Rest", status: "proposed", detail: ["Proposed: encryption in transit and at rest, with agreed retention and deletion terms.", "The demonstration is a static site with synthetic data and stores nothing on a server."] },
+  { id: "sec-compliance", title: "Compliance", sub: "Mapped to FISMA · NIST · CMMC L1 and DART requirements. Not certified.", status: "proposed", detail: ["Design intent: map KAI's controls to FISMA, NIST and CMMC Level 1 expectations and to DART's own requirements, and document controls, test results and known gaps for DART's security review.", "No certification, audit or regulatory approval has been achieved. Nothing here should be read as one."] },
 ];
-const SEC_ICON: Record<string, ReactNode> = { "sec-data": <ShieldCheck className="w-5 h-5" aria-hidden="true" />, "sec-access": <Layers className="w-5 h-5" aria-hidden="true" />, "sec-compliance": <ShieldCheck className="w-5 h-5" aria-hidden="true" />, "sec-reliable": <InfinityIcon className="w-5 h-5" aria-hidden="true" /> };
-const RIBBON_DETAIL: Item = { id: "sec-all", title: "Built for Security", sub: "", status: "proposed", detail: ["Security is designed in from the first connection, not added after ingestion: at the source and connector, during ingestion and transport, in processing and storage, in identity and permissions, in decisions, in dispatch, and in the audit record.", "These are proposed design principles. Select an item to read more."] };
+const SEC_ICON: Record<string, ReactNode> = {
+  "sec-soc2": <span aria-hidden="true" className="shrink-0 w-14 h-14 rounded-full border-[3px] border-[#FFD21F] grid place-items-center text-[11px] leading-[1.05] font-bold text-center text-[#0B1F33]">SOC 2<br />Type II</span>,
+  "sec-zerotrust": <Lock className="w-8 h-8 shrink-0 text-[#0B1F33]" strokeWidth={1.6} aria-hidden="true" />,
+  "sec-encryption": <KeyRound className="w-8 h-8 shrink-0 text-[#0B1F33]" strokeWidth={1.6} aria-hidden="true" />,
+  "sec-compliance": <ShieldCheck className="w-8 h-8 shrink-0 text-[#0B1F33]" strokeWidth={1.6} aria-hidden="true" />,
+};
+const RIBBON_DETAIL: Item = { id: "sec-all", title: "Enterprise Security", sub: "", status: "proposed", detail: ["Security is designed in from the first connection, not added after ingestion: at the source and connector, during ingestion and transport, in processing and storage, in identity and permissions, in decisions, in dispatch, and in the audit record.", "These are proposed design principles. Select an item to read more."] };
 
 export default function ArchitectureMap() {
   const [sel, setSel] = useState<string>("sec-all");
@@ -44,7 +49,7 @@ export default function ArchitectureMap() {
             <button type="button" onClick={() => setSel(s.id)} aria-pressed={sel === s.id} data-testid="arch-node"
               className="group min-w-0 text-center rounded-xl px-2 pt-2 pb-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]">
               <div className="mx-auto max-w-[300px] md:max-w-none md:-mx-4 aspect-[6/5] transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">{s.art}</div>
-              <span className="mt-3 block text-2xl font-semibold text-[#0B1F33] leading-tight">{s.title}</span>
+              <span className="mt-3 block text-2xl font-semibold text-[#0B1F33] leading-tight"><span aria-hidden="true" className="mr-3 font-medium">{i + 1}</span>{s.title}</span>
               <span className="mt-1.5 block text-base text-gray-700">{s.sub}</span>
               {s.extra && <span className="mt-1 block text-base text-gray-700">{s.extra}</span>}
               <span aria-hidden="true" className={`mx-auto mt-3 block h-[3px] rounded-full bg-[#FFD21F] transition-all duration-300 ${sel === s.id ? "w-10" : "w-0 group-hover:w-6"}`} />
@@ -62,18 +67,20 @@ export default function ArchitectureMap() {
       <div className="mt-8 flex flex-col md:flex-row md:items-stretch rounded-2xl md:rounded-full overflow-hidden bg-[#F1F4F8]" data-testid="arch-security">
         <button type="button" onClick={() => setSel("sec-all")} aria-pressed={sel === "sec-all"}
           className="flex items-center gap-3 bg-[#0B1F33] text-white px-7 py-4 md:pr-14 md:[clip-path:polygon(0_0,100%_0,calc(100%-26px)_100%,0_100%)] min-h-[56px] focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-[#FFD21F]">
-          <Lock className="w-5 h-5" aria-hidden="true" /><span className="text-lg font-semibold">Built for Security</span>
+          <ShieldCheck className="w-8 h-8" strokeWidth={1.6} aria-hidden="true" /><span className="text-xl font-semibold">Enterprise Security</span>
         </button>
         <span aria-hidden="true" className="hidden md:block w-[38px] -ml-[26px] flex-none bg-[#FFD21F] [clip-path:polygon(26px_0,38px_0,12px_100%,0_100%)]" />
         <div className="flex-1 grid grid-cols-2 md:grid-cols-4 md:-ml-6">
           {SECURITY.map((s) => (
             <button key={s.id} type="button" onClick={() => setSel(s.id)} aria-pressed={sel === s.id} data-testid="arch-sec"
-              className={`flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] text-base font-medium text-[#0B1F33] border-t md:border-t-0 md:border-l border-[#D5DCE6] first:border-t-0 hover:bg-white focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8] ${sel === s.id ? "bg-white shadow-[inset_0_-3px_0_#FFD21F]" : ""}`}>
-              {SEC_ICON[s.id]}{s.title}
+              className={`flex items-center gap-3 px-4 py-4 min-h-[72px] text-left text-[#0B1F33] border-t md:border-t-0 md:border-l border-[#D5DCE6] first:border-t-0 hover:bg-white focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8] ${sel === s.id ? "bg-white shadow-[inset_0_-3px_0_#FFD21F]" : ""}`}>
+              {SEC_ICON[s.id]}<span className="min-w-0"><span className="block text-base font-semibold leading-tight">{s.title}</span><span className="mt-0.5 block text-[13px] font-normal leading-snug text-[#3B4A5C]">{s.sub}</span></span>
             </button>
           ))}
         </div>
       </div>
+
+      <p className="mt-3 px-2 text-xs text-gray-700" data-testid="arch-security-note">Security items are proposed design intent for the pilot. No certification, audit or compliance approval has been achieved.</p>
 
       <section aria-live="polite" aria-labelledby="arch-detail-title" className="mt-8 max-w-3xl border-l-[3px] border-[#FFD21F] pl-5" data-testid="arch-detail">
         <p className="text-xs uppercase tracking-wider text-gray-700">{STATUS[cur.status]}</p>
@@ -86,7 +93,7 @@ export default function ArchitectureMap() {
         <ol className="mt-3 space-y-3 text-sm text-gray-800 list-decimal pl-5">
           {STAGES.map((n) => <li key={n.id}><span className="font-semibold">{n.title}</span> ({STATUS[n.status]}): {n.detail[0]}</li>)}
         </ol>
-        <p className="mt-4 text-sm font-semibold">Built for Security</p>
+        <p className="mt-4 text-sm font-semibold">Enterprise Security</p>
         <ul className="mt-2 space-y-2 text-sm text-gray-800 list-disc pl-5">{SECURITY.map((s) => <li key={s.id}><span className="font-semibold">{s.title}</span> ({STATUS[s.status]}): {s.detail[0]}</li>)}</ul>
       </details>
     </div>

@@ -61,12 +61,12 @@ test("Checkout prepopulates the organization only from the DART demo link", asyn
 test("Architecture page: five steps, security strip, keyboard-selectable details, text fallback", async ({ page }) => {
   await page.goto("architecture");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("DART Super Intelligence");
-  await expect(page.getByText("Turn transit data into a clean and safe experience for all.")).toBeVisible();
+  await expect(page.getByText("Turn transit data into the right action, at the right time.")).toBeVisible();
   await expect(page.getByText("Request a Proposal")).toHaveCount(0);
   await expect(page.getByTestId("arch-flow").getByText("Platform", { exact: true })).toHaveCount(0);
   await expect(page.getByTestId("arch-node")).toHaveCount(5);
   await expect(page.getByTestId("arch-node").nth(4)).not.toContainText("Work");
-  await expect(page.getByTestId("arch-node").nth(4)).toContainText("A safer, cleaner, more reliable DART");
+  await expect(page.getByTestId("arch-node").nth(4)).toContainText("Safer. Cleaner. DART");
   await expect(page.getByTestId("arch-sec")).toHaveCount(4);
   await page.getByTestId("arch-node").nth(2).focus();
   await page.keyboard.press("Enter");
@@ -76,5 +76,18 @@ test("Architecture page: five steps, security strip, keyboard-selectable details
   await page.getByTestId("arch-sec").nth(1).click();
   await expect(page.getByTestId("arch-detail")).toContainText("simulation, not access control");
   await page.getByTestId("arch-text").locator("summary").click();
-  await expect(page.getByTestId("arch-text")).toContainText("Compliance Ready");
+  await expect(page.getByTestId("arch-text")).toContainText("map KAI's controls to FISMA");
+});
+
+test("intelligence engine can be viewed for each line", async ({ page }) => {
+  await page.goto("stations/intelligence");
+  const all = Number(await page.getByTestId("intel-summary").locator("dd").first().textContent());
+  const seen: number[] = [];
+  for (const line of ["red", "green", "blue", "orange", "silver"]) {
+    await page.getByRole("group", { name: "Filter by line" }).getByRole("button", { name: new RegExp(`^${line} line`, "i") }).click();
+    await expect(page.getByTestId("intelligence")).toContainText(`Showing ${line[0].toUpperCase()}${line.slice(1)} Line`);
+    seen.push(Number(await page.getByTestId("intel-summary").locator("dd").first().textContent()));
+  }
+  expect(seen.every((n) => n > 0 && n <= all)).toBe(true);
+  expect(new Set(seen).size).toBeGreaterThan(1);
 });
