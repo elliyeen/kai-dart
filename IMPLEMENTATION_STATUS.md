@@ -1,6 +1,23 @@
 # KAI Station Intelligence — Implementation Status
 
-Last updated: 2026-11-01 · Branch `feat/platform-redesign` · Evidence below was produced by the commands shown. Nothing here is a claim about DART operations.
+Last updated: 2026-11-01 · Version 0.2.0 · Branch `docs/status-readme-changelog` · Evidence below was produced by the commands shown. Nothing here is a claim about DART operations.
+
+## Update — PRs #12–#30 (read this first; older sections below are the PR #4 baseline)
+**On `main` (merged 2026-11-01):** PRs #12–#30 and #32–#33 (#29 sidebar single list; #30 station actions, per-station demo, 45-item checklist + KAI loop, pilot heading; #32 architecture Enterprise Security band + per-line intelligence; #33 Platform and How It Works links removed). Docs PR #31 had merged into a stacked branch, so it lands via a rollup PR. GitHub Pages deploy status for these merges is checked separately; see the PR for the result.
+
+| Area | Status | Evidence |
+|---|---|---|
+| Landing, FAQ, Get started, Checkout, Architecture | Live | Routes return 200 live; E2E + axe at 5 viewports. Checkout is non-binding; nothing is submitted or sent. Architecture scenes are cropped from the approved mock and contain DART marks: **logo permission not confirmed** |
+| Station platform + per-station Report / Deploy crew / Autonomous demo | On main (#30) | `tests/e2e/station-actions.spec.ts`; deploy is simulated, Operations role only |
+| 45-item inspection checklist + KAI loop + guided-demo step 3 | On main (#30) | Checklist E2E and guided-demo E2E pass. Loop is rules-based, simulated, browser-only. Four items not visible in the reference screenshots were added and are marked `(added)` in `src/lib/checklist.ts` |
+| Cross-browser / device | Live | 90 cross-browser tests (11 routes × 12 widths, 320–2560 px) in Chromium, Firefox, WebKit, iPhone 14, iPad Pro 11, Pixel 7. **Not tested on real devices** |
+| CI | Green on #28 | Installs Chromium, Firefox, WebKit (`.github/workflows/ci.yml`) |
+
+Latest local totals: lint 0 errors / 19 warnings; typecheck pass; 38 unit tests; 540 Playwright tests (535 passed on the run before the final heading tweak, landing + pages re-run green after it; full re-run on the final head pending).
+
+**Not done:** Cloudflare preview/production deploy (needs credentials + approval; GitHub Pages must not be substituted); server-side auth/RBAC, database, email sending (needs approval); Formspree contact form unverified (`NEXT_PUBLIC_FORMSPREE_ID`); Notion write-back for PRs #19–#30; legacy `/platform` dashboard still present; offline/PWA; real-device testing; Apple/robotaxi visual pass beyond the stations sidebar and pilot heading. Sample values (asset counts, loop timings, contract refs, technician IDs, scores) are labelled synthetic. No station is connected to live DART data.
+
+**Versioning:** `package.json` is 0.2.0 (see `CHANGELOG.md`). Tag `v0.2.0` after this rollup merges and the deploy is verified; rollback steps are in `docs/RELEASE.md`.
 
 ## CI evidence
 PR #4 (https://github.com/elliyeen/kai-dart/pull/4), head `8dc24f7`: GitHub Actions "Lint, Typecheck, Unit, Build, E2E, Audit" **passed** (run 41260247003, 2m57s) — includes the 163 Playwright tests on 5 viewports.
