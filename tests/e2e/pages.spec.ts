@@ -76,7 +76,7 @@ test("Architecture page: five steps, security strip, keyboard-selectable details
   await page.getByTestId("arch-sec").nth(1).click();
   await expect(page.getByTestId("arch-detail")).toContainText("simulation, not access control");
   await page.getByTestId("arch-text").locator("summary").click();
-  await expect(page.getByTestId("arch-text")).toContainText("map KAI's controls to FISMA");
+  await expect(page.getByTestId("arch-text")).toContainText("mapped to FISMA");
 });
 
 test("intelligence engine can be viewed for each line", async ({ page }) => {
