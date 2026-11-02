@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { BASE, UNIQUE_NAMES, isDesktop, noHorizontalOverflow } from "./helpers";
+import { BASE, UNIQUE_NAMES, isDesktop, noHorizontalOverflow, setRole } from "./helpers";
 
 const rowNames = (page: import("@playwright/test").Page) => page.getByTestId("station-row").evaluateAll((els) => els.map((e) => e.querySelector("span.truncate")!.textContent));
 
@@ -133,7 +133,7 @@ test("auto demo loop runs, can be deep-linked and paused", async ({ page }) => {
 test("audit log records sign-in and actions; inventory lists owned assets", async ({ page }) => {
   await page.goto("stations");
   await page.waitForLoadState("networkidle");
-  await page.getByTestId("role-select").selectOption("operations");
+  await setRole(page, "Operations Command");
   await page.goto("stations/audit");
   await expect(page.getByTestId("audit-row").first()).toBeVisible();
   await expect(page.getByTestId("audit-table")).toContainText("sign_in");
@@ -177,4 +177,18 @@ test("side navigation slides between full width and an icon rail, remembers the 
   await side.getByRole("link", { name: "Inspection checklist" }).click();
   await expect(page).toHaveURL(/stations\/checklist/);
   await expect(page.getByText("KAI facilities management")).toHaveCount(0);
+});
+
+test("account menu: bottom-of-sidebar switcher lists all seven demo roles, switches account and logs it", async ({ page }) => {
+  test.skip(!isDesktop(page), "the account menu lives in the desktop sidebar; phones and tablets use the header selector");
+  await page.goto("stations");
+  await expect(page.getByTestId("account-name")).toHaveText("Executive");
+  await page.getByTestId("account-button").click();
+  await expect(page.getByRole("menuitemradio")).toHaveCount(7);
+  await expect(page.getByTestId("account-menu")).toContainText("Simulation only");
+  await page.getByTestId("role-option-inspector").click();
+  await expect(page.getByTestId("account-menu")).toBeHidden();
+  await expect(page.getByTestId("account-name")).toHaveText("Field Inspector");
+  await page.goto("stations/audit");
+  await expect(page.getByTestId("audit-table")).toContainText("switch_account");
 });

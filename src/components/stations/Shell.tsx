@@ -8,6 +8,7 @@ import { dispatch, useDemo } from "@/lib/demo/store";
 import { logAudit } from "@/lib/audit";
 import type { Cmd, DemoState } from "@/lib/demo/workflow";
 import ToolsBar, { TOOL_GROUPS } from "./ToolsBar";
+import AccountMenu from "./AccountMenu";
 
 const STEPS: { label: string; cta: string; role: Role; cmd?: Cmd; go?: string }[] = [
   { label: "1 · See the whole network", cta: "Start the guided demo", role: "executive", go: "/stations" },
@@ -124,6 +125,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             </div>
           ))}
         </nav>
+        <AccountMenu collapsed={collapsed} onReset={reset} />
       </aside>
       <div className="min-w-0 flex-1 pb-20 lg:pb-0">
       <header ref={headRef} className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-gray-200">
@@ -138,7 +140,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             <Link href="/stations/inspections" aria-label={`Alerts: ${badge} waiting for you`} className={`${btn} px-3 hover:bg-gray-100 relative`}>
               <Bell className="w-5 h-5" aria-hidden="true" />{badge > 0 && <span data-testid="bell-badge" className="absolute top-1.5 right-1.5 w-3 h-3 rounded-full bg-red-600 border-2 border-white" />}
             </Link>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex lg:hidden items-center gap-2 text-sm">
               <span className="sr-only">Demo role (simulation only)</span>
               <select aria-label="Demo role (simulation only)" data-testid="role-select" value={demo.role} onChange={(e) => dispatch({ type: "setRole", role: e.target.value as Role })}
                 className="min-h-11 border border-gray-300 rounded-md px-2 bg-white text-sm max-w-[8.25rem] sm:max-w-none">
