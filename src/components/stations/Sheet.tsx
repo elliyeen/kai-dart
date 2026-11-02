@@ -12,7 +12,7 @@ export default function Sheet({ open, onClose, title, children, testId }: { open
       {open && (
         <div className="flex flex-col max-h-[calc(100dvh-24px)]">
           <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-gray-200">
-            <h2 id={`${testId}-h`} className="text-2xl text-gray-900" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>{title}</h2>
+            <h2 id={`${testId}-h`} className="text-2xl text-black" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>{title}</h2>
             <button type="button" onClick={onClose} aria-label="Close" className="w-11 h-11 -mr-2 grid place-items-center rounded-full hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-[#0057A8]"><X className="w-5 h-5" aria-hidden="true" /></button>
           </div>
           <div className="px-6 py-5 overflow-y-auto">{children}</div>

@@ -9,7 +9,7 @@ const websiteLinks = [
   { href: "/#about", label: "About" },
   { href: "/architecture", label: "Architecture" },
   { href: "/faq", label: "FAQ" },
-  { href: "/get-started", label: "Get Started" },
+  { href: "/architecture", label: "Get Started" },
   { href: "/checkout", label: "Checkout" },
 ];
 
@@ -64,14 +64,14 @@ export default function Nav({ hideLinks = false, overlay = false, wide = false }
                     href="/dart"
                     className={`text-[13px] font-semibold px-3 py-1.5 rounded-sm transition-colors ${
                       pathname === "/dart"
-                        ? "bg-gray-100 text-gray-900"
-                        : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                        ? "bg-gray-100 text-black"
+                        : "text-black hover:text-black hover:bg-gray-50"
                     }`}
                   >
                     Network
                   </Link>
 
-                  <span className="text-gray-300 mx-1 text-xs">|</span>
+                  <span className="text-black mx-1 text-xs">|</span>
 
                   {LINE_LINKS.map(({ href, label, color }) => {
                     const active = pathname.startsWith(href);
@@ -81,8 +81,8 @@ export default function Nav({ hideLinks = false, overlay = false, wide = false }
                         href={href}
                         className={`text-[13px] font-semibold px-3 py-1.5 rounded-sm transition-colors flex items-center gap-1.5 ${
                           active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                            ? "bg-gray-100 text-black"
+                            : "text-black hover:text-black hover:bg-gray-50"
                         }`}
                       >
                         <span
@@ -94,14 +94,14 @@ export default function Nav({ hideLinks = false, overlay = false, wide = false }
                     );
                   })}
 
-                  <span className="text-gray-300 mx-1 text-xs">|</span>
+                  <span className="text-black mx-1 text-xs">|</span>
 
                   <Link
                     href="/cities"
                     className={`text-[13px] font-semibold px-3 py-1.5 rounded-sm transition-colors ${
                       pathname.startsWith("/cities")
-                        ? "bg-gray-100 text-gray-900"
-                        : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                        ? "bg-gray-100 text-black"
+                        : "text-black hover:text-black hover:bg-gray-50"
                     }`}
                   >
                     Cities
@@ -120,7 +120,7 @@ export default function Nav({ hideLinks = false, overlay = false, wide = false }
 
                 {/* Mobile hamburger */}
                 <button
-                  className="md:hidden p-2.5 -mr-2.5 text-black/50 hover:text-black transition-colors"
+                  className="md:hidden p-2.5 -mr-2.5 text-black hover:text-black transition-colors"
                   onClick={() => setOpen(!open)}
                   aria-label="Toggle menu"
                 >
@@ -141,7 +141,7 @@ export default function Nav({ hideLinks = false, overlay = false, wide = false }
                       className={`text-[13px] transition-colors duration-200 ${
                         pathname === href
                           ? "text-black"
-                          : "text-black/60 hover:text-black"
+                          : "text-black hover:text-black"
                       }`}
                     >
                       {label}
@@ -157,7 +157,7 @@ export default function Nav({ hideLinks = false, overlay = false, wide = false }
                     Contact
                   </Link>
                   <button
-                    className="md:hidden p-2.5 -mr-2.5 text-black/50 hover:text-black transition-colors"
+                    className="md:hidden p-2.5 -mr-2.5 text-black hover:text-black transition-colors"
                     onClick={() => setOpen(!open)}
                     aria-label="Toggle menu"
                   >
@@ -195,18 +195,18 @@ export default function Nav({ hideLinks = false, overlay = false, wide = false }
         <div className="fixed inset-0 z-40 bg-white flex flex-col pt-16 border-t border-gray-100">
           <div className="flex-1 flex flex-col px-6 pt-6 gap-1">
             <Link href="/dart" onClick={() => setOpen(false)}
-              className="text-[15px] font-medium text-gray-800 py-3.5 border-b border-gray-100 hover:text-black transition-colors">
+              className="text-[15px] font-medium text-black py-3.5 border-b border-gray-100 hover:text-black transition-colors">
               Network Overview
             </Link>
             {LINE_LINKS.map(({ href, label, color }) => (
               <Link key={href} href={href} onClick={() => setOpen(false)}
-                className="text-[15px] font-medium text-gray-600 py-3.5 border-b border-gray-100 hover:text-black transition-colors flex items-center gap-2.5">
+                className="text-[15px] font-medium text-black py-3.5 border-b border-gray-100 hover:text-black transition-colors flex items-center gap-2.5">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
                 {label} Line
               </Link>
             ))}
             <Link href="/cities" onClick={() => setOpen(false)}
-              className="text-[15px] font-medium text-gray-600 py-3.5 border-b border-gray-100 hover:text-black transition-colors">
+              className="text-[15px] font-medium text-black py-3.5 border-b border-gray-100 hover:text-black transition-colors">
               City Accounts
             </Link>
             <Link href="/contact" onClick={() => setOpen(false)}

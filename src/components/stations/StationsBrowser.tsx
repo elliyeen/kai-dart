@@ -34,12 +34,12 @@ export default function StationsBrowser() {
           <h2 className="sr-only">Station directory by line</h2>
           <div className="relative">
             <label htmlFor="station-search" className="sr-only">Search stations</label>
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" aria-hidden="true" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-black" aria-hidden="true" />
             <input id="station-search" type="search" value={q} placeholder="Search stations or cities" onChange={(e) => setParams({ q: e.target.value || null })}
               className="w-full min-h-11 pl-9 pr-3 border border-gray-300 rounded-md text-[15px] focus-visible:outline-2 focus-visible:outline-[#0057A8]" />
           </div>
           <LinePicker value={line} onChange={(l) => setParams({ line: l })} />
-          <p className="text-sm text-gray-700" aria-live="polite" data-testid="result-count">{uniq} of {STATIONS.length} stations{line ? ` on the ${line} line` : ""} · {recs.length} line entries</p>
+          <p className="text-sm text-black" aria-live="polite" data-testid="result-count">{uniq} of {STATIONS.length} stations{line ? ` on the ${line} line` : ""} · {recs.length} line entries</p>
         </div>
         <div className="grow"><LineDirectory records={recs} line={line} /></div>
       </section>

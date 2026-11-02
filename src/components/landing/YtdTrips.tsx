@@ -14,8 +14,8 @@ export default function YtdTrips() {
   if (days < 1) return null;
   return (
     <div className="mt-6" data-testid="ytd-trips">
-      <p className="text-3xl sm:text-4xl font-light tracking-[-0.02em] leading-none text-gray-900">≈ {estimateYtdTrips(now).toLocaleString("en-US")}</p>
-      <p className="mt-2 text-base text-gray-800">Estimated trips so far in {now.getFullYear()}</p>
+      <p className="text-3xl sm:text-4xl font-light tracking-[-0.02em] leading-none text-black">≈ {estimateYtdTrips(now).toLocaleString("en-US")}</p>
+      <p className="mt-2 text-base text-black">Estimated trips so far in {now.getFullYear()}</p>
     </div>
   );
 }

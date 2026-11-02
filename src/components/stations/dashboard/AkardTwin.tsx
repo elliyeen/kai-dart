@@ -57,27 +57,27 @@ export default function AkardTwin({ demo, selected, onSelect }: { demo: DemoStat
             <button key={a.id} type="button" onClick={() => onSelect(a.id)} aria-pressed={selected === a.id} data-testid={`twin-${a.id}`}
               style={{ left: `${p.bubble.left}%`, top: `${p.bubble.top}%` }}
               className={`absolute min-h-11 px-3 py-1.5 rounded-xl bg-white text-left shadow-md border text-[13px] leading-tight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8] ${selected === a.id ? "border-[#0057A8] ring-2 ring-[#0057A8]/25" : "border-gray-200 hover:border-gray-400"}`}>
-              <span className="block font-semibold text-gray-900">{a.name}</span>
-              <span className="flex items-center gap-1.5 text-gray-800"><span aria-hidden="true" className="inline-block w-2 h-2 rounded-full" style={{ background: TONE[st].dot }} />{EFF_LABEL[st]} · demo</span>
+              <span className="block font-semibold text-black">{a.name}</span>
+              <span className="flex items-center gap-1.5 text-black"><span aria-hidden="true" className="inline-block w-2 h-2 rounded-full" style={{ background: TONE[st].dot }} />{EFF_LABEL[st]} · demo</span>
             </button>
           );
         })}
 
         <div className="absolute left-3 bottom-3 flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 min-h-11 px-4 rounded-full bg-[#0057A8] text-white text-sm font-semibold"><Waypoints className="w-4 h-4" aria-hidden="true" />2D plan</span>
+          <span className="inline-flex items-center gap-1.5 min-h-11 px-4 rounded-md bg-[#0057A8] text-white text-sm font-semibold"><Waypoints className="w-4 h-4" aria-hidden="true" />2D plan</span>
           <div className="relative">
             <button type="button" aria-expanded={layersOpen} aria-controls="layers-menu" onClick={() => setLayersOpen((o) => !o)}
-              className="inline-flex items-center gap-1.5 min-h-11 px-4 rounded-full bg-white text-gray-900 text-sm font-semibold border border-gray-200 shadow-sm hover:bg-gray-50"><Layers className="w-4 h-4" aria-hidden="true" />Layers</button>
+              className="inline-flex items-center gap-1.5 min-h-11 px-4 rounded-md bg-white text-black text-sm font-semibold border border-gray-200 shadow-sm hover:bg-gray-50"><Layers className="w-4 h-4" aria-hidden="true" />Layers</button>
             {layersOpen && (
               <div id="layers-menu" className="absolute bottom-12 left-0 w-60 rounded-xl bg-white border border-gray-200 shadow-lg p-3 space-y-1">
-                <label className="flex items-center gap-2 min-h-11 text-sm text-gray-900"><input type="checkbox" checked={callouts} onChange={(e) => setCallouts(e.target.checked)} className="w-4 h-4" /><Sparkles className="w-4 h-4" aria-hidden="true" />Status callouts</label>
-                <label className="flex items-center gap-2 min-h-11 text-sm text-gray-900"><input type="checkbox" checked={highlight} onChange={(e) => setHighlight(e.target.checked)} className="w-4 h-4" /><Footprints className="w-4 h-4" aria-hidden="true" />Demo issue area</label>
+                <label className="flex items-center gap-2 min-h-11 text-sm text-black"><input type="checkbox" checked={callouts} onChange={(e) => setCallouts(e.target.checked)} className="w-4 h-4" /><Sparkles className="w-4 h-4" aria-hidden="true" />Status callouts</label>
+                <label className="flex items-center gap-2 min-h-11 text-sm text-black"><input type="checkbox" checked={highlight} onChange={(e) => setHighlight(e.target.checked)} className="w-4 h-4" /><Footprints className="w-4 h-4" aria-hidden="true" />Demo issue area</label>
               </div>
             )}
           </div>
         </div>
       </div>
-      <p className="px-4 py-2.5 text-xs text-gray-700 border-t border-gray-100">{AKARD_LAYOUT_NOTE} No elevators or escalators are shown: no inventory has been verified for this station.</p>
+      <p className="px-4 py-2.5 text-xs text-black border-t border-gray-100">{AKARD_LAYOUT_NOTE} No elevators or escalators are shown: no inventory has been verified for this station.</p>
     </section>
   );
 }

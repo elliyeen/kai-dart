@@ -91,3 +91,22 @@ test("intelligence engine can be viewed for each line", async ({ page }) => {
   expect(seen.every((n) => n > 0 && n <= all)).toBe(true);
   expect(new Set(seen).size).toBeGreaterThan(1);
 });
+
+test("Get Started goes to Architecture, which ends with a See KAI in action button that opens the demo wizard", async ({ page }) => {
+  await page.goto("");
+  await page.getByRole("link", { name: /^Get Started$/ }).first().click();
+  await expect(page).toHaveURL(/architecture/);
+  const cta = page.getByTestId("arch-cta").getByRole("link", { name: "See KAI in action" });
+  await expect(cta).toBeVisible();
+  await cta.click();
+  await expect(page).toHaveURL(/\/stations\/?$/);
+  await expect(page.getByTestId("guide")).toBeVisible();
+});
+
+test("architecture step labels share one font size and stay on one line", async ({ page }) => {
+  await page.goto("architecture");
+  const info = await page.getByTestId("arch-node").evaluateAll((els) => els.map((e) => { const t = e.querySelector("span.block") as HTMLElement; const cs = getComputedStyle(t); return { size: cs.fontSize, weight: cs.fontWeight, h: t.getBoundingClientRect().height }; }));
+  expect(new Set(info.map((i) => i.size)).size).toBe(1);
+  expect(new Set(info.map((i) => i.weight)).size).toBe(1);
+  expect(new Set(info.map((i) => Math.round(i.h))).size).toBe(1);
+});

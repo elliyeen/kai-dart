@@ -30,19 +30,19 @@ export default function KaiLoopPanel({ result, station, refs }: { result: LoopRe
   };
   return (
     <section aria-labelledby="kai-loop-h" data-testid="kai-loop" className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5 space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2"><h2 id="kai-loop-h" className="text-2xl text-gray-900 inline-flex items-center gap-2" style={{ fontWeight: 700 }}><Repeat className="w-5 h-5" aria-hidden="true" />KAI loop</h2><span className="text-xs rounded-full border border-gray-300 px-2.5 py-1 text-gray-800">Simulation · rules, no ML model connected</span></div>
+      <div className="flex flex-wrap items-center justify-between gap-2"><h2 id="kai-loop-h" className="text-2xl text-black inline-flex items-center gap-2" style={{ fontWeight: 700 }}><Repeat className="w-5 h-5" aria-hidden="true" />KAI loop</h2><span className="text-xs rounded-full border border-gray-300 px-2.5 py-1 text-black">Simulation · rules, no ML model connected</span></div>
       <ol className="space-y-3">
         {STAGES.map(({ id, label, Icon }, i) => {
           const on = i < shown;
           return (
             <li key={id} data-testid={`kai-stage-${id}`} data-on={on ? "true" : "false"} className={`flex gap-3 transition-opacity duration-500 motion-reduce:transition-none ${on ? "opacity-100" : "opacity-30"}`}>
-              <span className={`w-9 h-9 rounded-full grid place-items-center shrink-0 ${on ? "bg-[#0B1F33] text-white" : "bg-gray-100 text-gray-600"}`}>{on && i < shown - 1 ? <Check className="w-4 h-4" aria-hidden="true" /> : <Icon className="w-4 h-4" aria-hidden="true" />}</span>
-              <div className="min-w-0"><h3 className="text-sm font-semibold text-gray-900">{i + 1} · {label}</h3><div className="text-sm text-gray-800">{on ? body[id] : null}</div></div>
+              <span className={`w-9 h-9 rounded-md grid place-items-center shrink-0 ${on ? "bg-[#0B1F33] text-white" : "bg-gray-100 text-black"}`}>{on && i < shown - 1 ? <Check className="w-4 h-4" aria-hidden="true" /> : <Icon className="w-4 h-4" aria-hidden="true" />}</span>
+              <div className="min-w-0"><h3 className="text-sm font-semibold text-black">{i + 1} · {label}</h3><div className="text-sm text-black">{on ? body[id] : null}</div></div>
             </li>
           );
         })}
       </ol>
-      <p className="text-xs text-gray-700">Work orders are saved in this browser only; nothing is sent to DART, to a crew or to any dispatch system.</p>
+      <p className="text-xs text-black">Work orders are saved in this browser only; nothing is sent to DART, to a crew or to any dispatch system.</p>
     </section>
   );
 }

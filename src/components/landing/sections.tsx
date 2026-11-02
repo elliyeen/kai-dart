@@ -12,7 +12,7 @@ export function CTAButtons() {
   return (
     <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
       <GetStartedButton />
-      <CtaBadge href="/stations" caption="Try the" label="Demo" icon={DEMO} />
+      <CtaBadge href="/stations?guide=1" caption="Try the" label="Demo" icon={DEMO} />
     </div>
   );
 }
@@ -48,15 +48,15 @@ export function HeroIntro() {
     <section className="bg-white py-14 sm:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-10 lg:gap-16 items-center">
         <div>
-          <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl leading-[1.04] tracking-[-0.03em] text-gray-900" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif", fontWeight: 500 }}>
+          <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl leading-[1.04] tracking-[-0.03em] text-black" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif", fontWeight: 500 }}>
             Super experience<br />for every ride
           </h1>
-          <p className="mt-6 text-lg sm:text-xl font-light text-gray-800 max-w-xl leading-relaxed">We&rsquo;re changing public transportation to make it clean, safe and more intelligent than ever.</p>
+          <p className="mt-6 text-lg sm:text-xl font-light text-black max-w-xl leading-relaxed">We&rsquo;re changing public transportation to make it clean, safe and more intelligent than ever.</p>
         </div>
         <div className="lg:text-right">
-          <p className="text-6xl sm:text-7xl font-light tracking-[-0.03em] leading-none text-gray-900" data-testid="hero-metric">171,000+</p>
-          <p className="mt-2 text-base text-gray-800">Daily Passenger Trips</p>
-          <p className="mt-1 text-xs text-gray-600">Source: <a className="underline underline-offset-2 hover:text-black" href="https://www.dart.org/about/news-and-events/newsreleases/newsrelease-detail/dallas-area-rapid-transit-releases-point-b-strategic-plan-annual-report-highlighting-major-investments-and-accomplishments" target="_blank" rel="noopener noreferrer">DART</a></p>
+          <p className="text-6xl sm:text-7xl font-light tracking-[-0.03em] leading-none text-black" data-testid="hero-metric">171,000+</p>
+          <p className="mt-2 text-base text-black">Daily Passenger Trips</p>
+          <p className="mt-1 text-xs text-black">Source: <a className="underline underline-offset-2 hover:text-black" href="https://www.dart.org/about/news-and-events/newsreleases/newsrelease-detail/dallas-area-rapid-transit-releases-point-b-strategic-plan-annual-report-highlighting-major-investments-and-accomplishments" target="_blank" rel="noopener noreferrer">DART</a></p>
           <YtdTrips />
         </div>
       </div>
@@ -76,9 +76,9 @@ export function WorkflowSteps() {
     <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
       {STEPS.map((s) => (
         <li key={s.n} className="bg-white p-6 sm:p-8">
-          <div className="text-4xl font-thin text-gray-500 mb-4" aria-hidden="true">{s.n}</div>
+          <div className="text-4xl font-thin text-black mb-4" aria-hidden="true">{s.n}</div>
           <h3 className="text-xl font-light mb-2">{s.t}</h3>
-          <p className="text-sm text-gray-700 leading-relaxed font-light">{s.d}</p>
+          <p className="text-sm text-black leading-relaxed font-light">{s.d}</p>
         </li>
       ))}
     </ol>
