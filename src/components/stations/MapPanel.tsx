@@ -24,7 +24,7 @@ export default function MapPanel(props: MapProps) {
     return (
       <figure className="m-0">
         <StationsMapbox token={MAPBOX_TOKEN} mode={props.mode ?? "network"} line={props.line} selectedKey={props.selectedKey} onSelect={props.onSelect} />
-        <figcaption className="mt-2 text-xs text-gray-600">Base map © Mapbox © OpenStreetMap. Station positions: the app&apos;s station coordinates. Orientation only, not a navigation map.</figcaption>
+        <figcaption className="mt-2 text-xs text-black">Base map © Mapbox © OpenStreetMap. Station positions: the app&apos;s station coordinates. Orientation only, not a navigation map.</figcaption>
       </figure>
     );
   }
@@ -61,9 +61,9 @@ function SvgCountyMap({ mode = "network", selectedKey, line, onSelect }: MapProp
       const st: RolloutStatus = rolloutOf(s.key);
       if (st === "demo") return <circle key={s.key} cx={x} cy={y} r={8} fill="#F59E0B" stroke="#0B1F33" strokeWidth={2}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
       if (st === "connected") return <circle key={s.key} cx={x} cy={y} r={6} fill="#0057A8" stroke="#fff" strokeWidth={1.5}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
-      if (st === "public-data") return <circle key={s.key} cx={x} cy={y} r={4.6} fill="#0E7490" stroke="#fff" strokeWidth={1.4}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
-      if (st === "pilot-planned") return <circle key={s.key} cx={x} cy={y} r={8} fill="#fff" stroke="#0057A8" strokeWidth={3}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
-      return <circle key={s.key} cx={x} cy={y} r={3.6} fill="#fff" stroke="#6B7280" strokeWidth={1.4}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
+      if (st === "public-data") return <circle key={s.key} cx={x} cy={y} r={4.6} fill="#9CA3AF" stroke="#fff" strokeWidth={1.4}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
+      if (st === "pilot-planned") return <circle key={s.key} cx={x} cy={y} r={8} fill="#0057A8" stroke="#fff" strokeWidth={2.5}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
+      return <circle key={s.key} cx={x} cy={y} r={3.6} fill="#9CA3AF" stroke="#fff" strokeWidth={1.2}><title>{`${s.name} — ${ROLLOUT_LABEL[st]}`}</title></circle>;
     }
     return (
       <circle key={s.key} cx={x} cy={y} r={s.key === selectedKey ? 7 : 3.6} fill={s.key === selectedKey ? "#0B1F33" : "#fff"} stroke="#0B1F33" strokeWidth={1.5} opacity={dim ? 0.2 : 1}
@@ -87,7 +87,7 @@ function SvgCountyMap({ mode = "network", selectedKey, line, onSelect }: MapProp
           {!rollout && sel && (() => { const [x, y] = g.proj(sel.lat, sel.lng); return <text x={Math.min(x + 12, W - 110)} y={y - 10} fontSize="14" fill="#0B1F33" fontWeight="600" paintOrder="stroke" stroke="#fff" strokeWidth="4">{sel.name}</text>; })()}
         </g>
       </svg>
-      <figcaption className="mt-2 text-xs text-gray-600">County outlines: US Census cartographic boundaries. Station positions: the app&apos;s station coordinates. Orientation only, not a navigation map.</figcaption>
+      <figcaption className="mt-2 text-xs text-black">County outlines: US Census cartographic boundaries. Station positions: the app&apos;s station coordinates. Orientation only, not a navigation map.</figcaption>
     </figure>
   );
 }

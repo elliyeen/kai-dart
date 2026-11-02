@@ -21,7 +21,7 @@ export default function FaqPage() {
           <div className="mt-10"><Faq items={FAQ14} /></div>
           <div className="mt-12 flex flex-wrap gap-3">
             <GetStartedButton />
-            <CtaBadge href="/stations" caption="Try the" label="Demo" icon={<MonitorPlay className="w-[22px] h-[22px]" strokeWidth={1.75} />} />
+            <CtaBadge href="/stations?guide=1" caption="Try the" label="Demo" icon={<MonitorPlay className="w-[22px] h-[22px]" strokeWidth={1.75} />} />
           </div>
         </div>
       </main>

@@ -38,16 +38,16 @@ export default function StationFocusMap({ station }: { station: Station }) {
   useEffect(() => { const m = mapRef.current; if (m?.getLayer("nearby")) m.setLayoutProperty("nearby", "visibility", nearby ? "visible" : "none"); }, [nearby]);
 
   if (!TOKEN) return <MapPanel selectedKey={station.key} />;
-  const pill = "inline-flex items-center gap-1.5 min-h-11 px-4 rounded-full text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]";
+  const pill = "inline-flex items-center gap-1.5 min-h-11 px-4 rounded-md text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]";
   return (
     <div className="relative">
       <div ref={box} role="region" aria-label={`Interactive map centered on ${station.name} station`} data-testid="station-focus-map" className="w-full rounded-2xl overflow-hidden border border-gray-200" style={{ aspectRatio: "1000 / 440" }} />
       <div className="absolute left-3 bottom-3 flex items-center gap-2">
-        <button type="button" aria-pressed={!three} onClick={() => setThree(false)} className={`${pill} ${!three ? "bg-[#0057A8] text-white" : "bg-white text-gray-900 border border-gray-200"}`}><Waypoints className="w-4 h-4" aria-hidden="true" />2D</button>
-        <button type="button" aria-pressed={three} onClick={() => setThree(true)} className={`${pill} ${three ? "bg-[#0057A8] text-white" : "bg-white text-gray-900 border border-gray-200"}`}><Box className="w-4 h-4" aria-hidden="true" />3D</button>
+        <button type="button" aria-pressed={!three} onClick={() => setThree(false)} className={`${pill} ${!three ? "bg-[#0057A8] text-white" : "bg-white text-black border border-gray-200"}`}><Waypoints className="w-4 h-4" aria-hidden="true" />2D</button>
+        <button type="button" aria-pressed={three} onClick={() => setThree(true)} className={`${pill} ${three ? "bg-[#0057A8] text-white" : "bg-white text-black border border-gray-200"}`}><Box className="w-4 h-4" aria-hidden="true" />3D</button>
         <div className="relative">
-          <button type="button" aria-expanded={layers} aria-controls="focus-layers" onClick={() => setLayers((o) => !o)} className={`${pill} bg-white text-gray-900 border border-gray-200`}><Layers className="w-4 h-4" aria-hidden="true" />Layers</button>
-          {layers && <div id="focus-layers" className="absolute bottom-12 left-0 w-56 rounded-xl bg-white border border-gray-200 shadow-lg p-3"><label className="flex items-center gap-2 min-h-11 text-sm text-gray-900"><input type="checkbox" checked={nearby} onChange={(e) => setNearby(e.target.checked)} className="w-4 h-4" />Nearby stations</label></div>}
+          <button type="button" aria-expanded={layers} aria-controls="focus-layers" onClick={() => setLayers((o) => !o)} className={`${pill} bg-white text-black border border-gray-200`}><Layers className="w-4 h-4" aria-hidden="true" />Layers</button>
+          {layers && <div id="focus-layers" className="absolute bottom-12 left-0 w-56 rounded-xl bg-white border border-gray-200 shadow-lg p-3"><label className="flex items-center gap-2 min-h-11 text-sm text-black"><input type="checkbox" checked={nearby} onChange={(e) => setNearby(e.target.checked)} className="w-4 h-4" />Nearby stations</label></div>}
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ export function EvidencePanel({ kind, caption }: { kind: "reported" | "proof"; c
         <Camera x="136" y="52" width="48" height="48" color="#6B7480" aria-hidden="true" />
         <text x="160" y="150" textAnchor="middle" fontSize="12" fill="#1F2937" fontWeight="600">SYNTHETIC PLACEHOLDER</text>
       </svg>
-      <figcaption className="mt-1.5 text-xs text-gray-600">{caption}</figcaption>
+      <figcaption className="mt-1.5 text-xs text-black">{caption}</figcaption>
     </figure>
   );
 }
@@ -29,9 +29,9 @@ export function VerificationTimeline({ events }: { events: AuditEvent[] }) {
       {events.map((e) => (
         <li key={e.seq} className="relative">
           <span aria-hidden="true" className={`absolute -left-[23px] top-1.5 w-3 h-3 rounded-full border-2 border-white ${e.action === "verified" ? "bg-emerald-600" : e.action === "rejected" ? "bg-red-600" : "bg-[#0057A8]"}`} />
-          <p className="text-sm font-medium text-gray-900">{label[e.action] ?? e.action}</p>
-          <p className="text-xs text-gray-600">{e.actor} · demo clock {e.at.slice(11, 16)}Z</p>
-          <p className="text-sm text-gray-800">{e.note}</p>
+          <p className="text-sm font-medium text-black">{label[e.action] ?? e.action}</p>
+          <p className="text-xs text-black">{e.actor} · demo clock {e.at.slice(11, 16)}Z</p>
+          <p className="text-sm text-black">{e.note}</p>
         </li>
       ))}
     </ol>
@@ -47,7 +47,7 @@ export function AssignmentCard({ demo }: { demo: DemoState }) {
   const run = (type: "assign" | "submitProof" | "verify" | "reject") => setMsg(dispatch({ type }));
   const btn = "min-h-11 px-5 rounded-md text-sm font-semibold inline-flex items-center justify-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]";
   const primary = `${btn} bg-[#0057A8] text-white hover:bg-[#004a8f]`;
-  const secondary = `${btn} border border-gray-300 bg-white text-gray-900 hover:bg-gray-50`;
+  const secondary = `${btn} border border-gray-300 bg-white text-black hover:bg-gray-50`;
 
   const actions: React.ReactNode[] = [];
   if (wo.status === "reported" && authorize(role, "assign_work", ctx).allowed)
@@ -70,17 +70,17 @@ export function AssignmentCard({ demo }: { demo: DemoState }) {
   return (
     <section aria-labelledby="wo-h" className="border border-gray-200 rounded-xl p-5 bg-white" data-testid="work-order" data-status={wo.status}>
       <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-        <h3 id="wo-h" className="text-base font-semibold text-gray-900">{wo.id} · {wo.title}</h3>
+        <h3 id="wo-h" className="text-base font-semibold text-black">{wo.id} · {wo.title}</h3>
         <DemoBadge />
       </div>
-      <p className="text-sm text-gray-800 mb-1" data-testid="wo-status">{STATUS_COPY[wo.status]}</p>
+      <p className="text-sm text-black mb-1" data-testid="wo-status">{STATUS_COPY[wo.status]}</p>
       <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm mb-4">
-        <dt className="text-gray-600">Owner</dt><dd className="text-gray-900">{wo.assignedTo ?? "Unassigned"}</dd>
-        <dt className="text-gray-600">Proof submitted by</dt><dd className="text-gray-900">{wo.submittedBy ?? "—"}</dd>
-        <dt className="text-gray-600">Verified by</dt><dd className="text-gray-900">{wo.verifiedBy ?? "Not yet verified"}</dd>
+        <dt className="text-black">Owner</dt><dd className="text-black">{wo.assignedTo ?? "Unassigned"}</dd>
+        <dt className="text-black">Proof submitted by</dt><dd className="text-black">{wo.submittedBy ?? "—"}</dd>
+        <dt className="text-black">Verified by</dt><dd className="text-black">{wo.verifiedBy ?? "Not yet verified"}</dd>
       </dl>
       <div className="flex flex-wrap gap-2" data-testid="wo-actions">{actions}</div>
-      {why && <p className="text-sm text-gray-700 mt-2" data-testid="wo-why"><ClipboardCheck className="inline w-4 h-4 mr-1 -mt-0.5" aria-hidden="true" />{why}</p>}
+      {why && <p className="text-sm text-black mt-2" data-testid="wo-why"><ClipboardCheck className="inline w-4 h-4 mr-1 -mt-0.5" aria-hidden="true" />{why}</p>}
       <p role="alert" className="text-sm text-red-800 mt-2 empty:hidden">{msg}</p>
     </section>
   );

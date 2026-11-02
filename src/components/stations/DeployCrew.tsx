@@ -23,9 +23,9 @@ export default function DeployCrew({ station }: { station: Station }) {
 
   if (done) return (
     <div data-testid="deploy-done" className="space-y-3">
-      <p className="inline-flex items-center gap-2 text-2xl text-gray-900" style={{ fontWeight: 800 }}><Check className="w-6 h-6 text-green-700" aria-hidden="true" />Crew deployed (simulation)</p>
-      <p className="text-gray-900"><strong>{done.provider}</strong> · technician {done.tech} → {station.name} · {PRIORITY_LABEL[done.t.priority]} · reference <strong data-testid="deploy-ref">{done.t.ref}</strong></p>
-      <p className="text-sm text-gray-700">Saved in this browser only. No crew was contacted and nothing was sent to DART or any dispatch system.</p>
+      <p className="inline-flex items-center gap-2 text-2xl text-black" style={{ fontWeight: 800 }}><Check className="w-6 h-6 text-green-700" aria-hidden="true" />Crew deployed (simulation)</p>
+      <p className="text-black"><strong>{done.provider}</strong> · technician {done.tech} → {station.name} · {PRIORITY_LABEL[done.t.priority]} · reference <strong data-testid="deploy-ref">{done.t.ref}</strong></p>
+      <p className="text-sm text-black">Saved in this browser only. No crew was contacted and nothing was sent to DART or any dispatch system.</p>
       <Link href={`/stations/ticket?ref=${encodeURIComponent(done.t.ref)}`} className="min-h-11 px-4 inline-flex items-center rounded-md bg-[#0057A8] text-white font-semibold">Track this deployment</Link>
     </div>
   );
@@ -40,13 +40,13 @@ export default function DeployCrew({ station }: { station: Station }) {
 
   return (
     <form onSubmit={submit} className="space-y-6" data-testid="deploy-form">
-      <p className="text-sm text-gray-700">Send a crew to <strong>{station.name}</strong>. Work goes to the contract holder for the scope you choose.</p>
+      <p className="text-sm text-black">Send a crew to <strong>{station.name}</strong>. Work goes to the contract holder for the scope you choose.</p>
       <label className="block"><span className="block text-sm font-semibold mb-1.5">Crew</span>
         <select className={field} value={providerId} onChange={(e) => setProviderId(e.target.value)} data-testid="deploy-crew">{PROVIDERS.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</select>
-        <span className="mt-1.5 block text-xs text-gray-700">{provider.scope} · {provider.kind === "Contractor" ? `Contract ${provider.contractRef} (sample)` : "DART in-house"} · responds in {provider.respondMin[PRIORITY_LABEL[priority] as "Critical" | "High" | "Routine"]} min or less</span></label>
+        <span className="mt-1.5 block text-xs text-black">{provider.scope} · {provider.kind === "Contractor" ? `Contract ${provider.contractRef} (sample)` : "DART in-house"} · responds in {provider.respondMin[PRIORITY_LABEL[priority] as "Critical" | "High" | "Routine"]} min or less</span></label>
       <fieldset><legend className="text-sm font-semibold mb-1.5">Priority</legend>
         <div className="flex flex-wrap gap-2">{(Object.keys(PRIORITY_LABEL) as Priority[]).map((p) => <button key={p} type="button" aria-pressed={priority === p} data-testid={`deploy-priority-${p}`} className={chip(priority === p)} onClick={() => setPriority(p)}>{PRIORITY_LABEL[p]}</button>)}</div></fieldset>
-      <p className="text-sm text-gray-800 border border-gray-200 rounded-lg p-3">Technician <strong>{tech.id}</strong> · {tech.label} · currently <em>{tech.status.toLowerCase()}</em> (sample status)</p>
+      <p className="text-sm text-black border border-gray-200 rounded-lg p-3">Technician <strong>{tech.id}</strong> · {tech.label} · currently <em>{tech.status.toLowerCase()}</em> (sample status)</p>
       <label className="block"><span className="block text-sm font-semibold mb-1.5">Instructions</span>
         <textarea rows={3} className={`${field} py-2`} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="What should the crew do and where?" /></label>
       <div className="flex justify-end border-t border-gray-200 pt-4"><button type="submit" data-testid="deploy-submit" className="min-h-11 px-6 rounded-md bg-[#0057A8] text-white font-semibold">Deploy crew</button></div>

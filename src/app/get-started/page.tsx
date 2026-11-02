@@ -22,22 +22,22 @@ export default function GetStartedPage() {
       <main id="main" className="bg-white pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-[-0.02em] leading-[1.05] max-w-4xl">A more intelligent transit network.</h1>
-          <p className="mt-5 text-lg sm:text-xl text-gray-800 font-light max-w-2xl">Improve operational visibility, detect risks earlier, and make better decisions with KAI.</p>
+          <p className="mt-5 text-lg sm:text-xl text-black font-light max-w-2xl">Improve operational visibility, detect risks earlier, and make better decisions with KAI.</p>
 
           <ol className="mt-14 max-w-3xl border-l border-gray-300" data-testid="steps">
             {STEPS.map((s) => (
               <li key={s.n} className="pl-8 pb-10 last:pb-0" data-testid="step">
-                <p className="text-xs uppercase tracking-wider text-gray-700">Step {s.n}</p>
+                <p className="text-xs uppercase tracking-wider text-black">Step {s.n}</p>
                 <h2 className="mt-1.5 text-2xl font-normal">{s.title}</h2>
-                <p className="mt-2 text-base text-gray-800 leading-relaxed">{s.body}</p>
+                <p className="mt-2 text-base text-black leading-relaxed">{s.body}</p>
               </li>
             ))}
           </ol>
 
           <section aria-labelledby="deploy-summary" className="mt-12 max-w-3xl border-t border-gray-200 pt-8" data-testid="deployment-summary">
             <h2 id="deploy-summary" className="text-xl font-normal">Illustrative deployment</h2>
-            <p className="mt-3 text-base text-gray-800 leading-relaxed">A three-year initial agreement that begins with a six-month evaluation phase, followed by two optional one-year renewals.</p>
-            <p className="mt-3 text-sm text-gray-700">These are proposed terms for discussion, not terms approved by DART. The starting stations suggested are Akard, Park Lane and Spring Valley, and they are proposals, not approved sites.</p>
+            <p className="mt-3 text-base text-black leading-relaxed">A three-year initial agreement that begins with a six-month evaluation phase, followed by two optional one-year renewals.</p>
+            <p className="mt-3 text-sm text-black">These are proposed terms for discussion, not terms approved by DART. The starting stations suggested are Akard, Park Lane and Spring Valley, and they are proposals, not approved sites.</p>
           </section>
 
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">

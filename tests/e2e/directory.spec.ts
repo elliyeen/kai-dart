@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { BASE, UNIQUE_NAMES, noHorizontalOverflow } from "./helpers";
+import { BASE, UNIQUE_NAMES, isDesktop, noHorizontalOverflow } from "./helpers";
 
 const rowNames = (page: import("@playwright/test").Page) => page.getByTestId("station-row").evaluateAll((els) => els.map((e) => e.querySelector("span.truncate")!.textContent));
 
@@ -103,7 +103,15 @@ test("restored tools: report an issue, track it, log, checklist, intelligence", 
   await expect(page.getByTestId("checklist-count")).toContainText("1 of 45");
   await page.goto("stations/intelligence");
   await expect(page.getByTestId("intelligence")).toContainText("not machine-learning predictions");
-  await expect(page.getByTestId("tools-bar")).toBeVisible();
+  await expect(page.getByTestId(isDesktop(page) ? "side-nav" : "tools-bar")).toBeVisible();
+});
+
+test("auto demo opens on Park Lane as a digital twin and the groups in the tools menu are labelled", async ({ page }) => {
+  await page.goto("stations/loop");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Park Lane station");
+  await expect(page.getByTestId("loop-scene")).toHaveAttribute("data-scene", "park-lane");
+  await expect(page.getByTestId("station-twin")).toBeVisible();
+  for (const g of ["Field work", "Intelligence", "Operations"]) await expect(page.getByTestId(isDesktop(page) ? "side-nav" : "tools-bar").getByRole("group", { name: g })).toBeVisible();
 });
 
 test("auto demo loop runs, can be deep-linked and paused", async ({ page }) => {
@@ -118,6 +126,8 @@ test("auto demo loop runs, can be deep-linked and paused", async ({ page }) => {
   expect(await page.getByTestId("loop-score").textContent()).toBe(before);
   await page.getByRole("button", { name: "Park Lane" }).click();
   await expect(page.getByTestId("loop-scene")).toHaveAttribute("data-scene", "park-lane");
+  await expect(page.getByTestId("station-twin")).toBeVisible();
+  await expect(page.getByTestId("loop-now")).toContainText("Step");
 });
 
 test("audit log records sign-in and actions; inventory lists owned assets", async ({ page }) => {
@@ -147,4 +157,24 @@ test("contractors page lists contract holders and personnel; elevator waits on p
   await expect(page.getByTestId("personnel")).toContainText("On site");
   await page.goto("stations/loop#smu-mockingbird");
   await expect(page.getByTestId("loop-stage")).toContainText("Waiting on parts", { timeout: 25000 });
+});
+
+test("side navigation slides between full width and an icon rail, remembers the choice, and reaches every tool", async ({ page }) => {
+  test.skip(!isDesktop(page), "the sidebar is a desktop (lg+) control; phones and tablets use the bottom bar");
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("stations");
+  const side = page.getByTestId("side-nav");
+  await expect(side).toHaveAttribute("data-collapsed", "false");
+  const wide = (await side.boundingBox())!.width;
+  for (const g of ["Field work", "Intelligence", "Operations"]) await expect(side.getByRole("group", { name: g })).toBeVisible();
+  await page.getByTestId("side-toggle").click();
+  await expect(side).toHaveAttribute("data-collapsed", "true");
+  await expect.poll(async () => (await side.boundingBox())!.width, { timeout: 3000 }).toBeLessThan(wide / 2);
+  await page.reload();
+  await expect(page.getByTestId("side-nav")).toHaveAttribute("data-collapsed", "true");
+  await page.keyboard.press("Control+b");
+  await expect(page.getByTestId("side-nav")).toHaveAttribute("data-collapsed", "false");
+  await side.getByRole("link", { name: "Inspection checklist" }).click();
+  await expect(page).toHaveURL(/stations\/checklist/);
+  await expect(page.getByText("KAI facilities management")).toHaveCount(0);
 });

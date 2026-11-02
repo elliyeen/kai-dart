@@ -21,18 +21,18 @@ export default function Intelligence() {
   const card = "border border-gray-200 rounded-lg p-4";
   return (
     <div className="p-4 lg:p-8 max-w-5xl space-y-6" data-testid="intelligence">
-      <div><h1 className="text-4xl text-gray-900" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>Intelligence engine</h1>
-        <p className="text-sm text-gray-700 max-w-2xl">Recommended decisions, anomalies and recurring patterns, computed by simple published rules over the demo dataset. These are rules, not machine-learning predictions, and no accuracy is claimed.</p></div>
+      <div><h1 className="text-4xl text-black" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>Intelligence engine</h1>
+        <p className="text-sm text-black max-w-2xl">Recommended decisions, anomalies and recurring patterns, computed by simple published rules over the demo dataset. These are rules, not machine-learning predictions, and no accuracy is claimed.</p></div>
       <LinePicker value={line} onChange={setLine} />
       <dl className="grid grid-cols-2 sm:grid-cols-4 gap-3" data-testid="intel-summary" aria-label={`Summary for ${lineName}`}>
-        {[["Stations", String(onLine.length)], ["Average readiness", `${open}%`], ["Below 50%", String(ranked.filter((s) => s.demo.score < 50).length)], ["Open issues", String(onLine.reduce((n, s) => n + s.demo.issues.length, 0))]].map(([k, v]) => <div key={k} className={card}><dt className="text-xs uppercase tracking-wider text-gray-700">{k}</dt><dd className="text-3xl font-light tabular-nums">{v}</dd></div>)}
+        {[["Stations", String(onLine.length)], ["Average readiness", `${open}%`], ["Below 50%", String(ranked.filter((s) => s.demo.score < 50).length)], ["Open issues", String(onLine.reduce((n, s) => n + s.demo.issues.length, 0))]].map(([k, v]) => <div key={k} className={card}><dt className="text-xs uppercase tracking-wider text-black">{k}</dt><dd className="text-3xl font-light tabular-nums">{v}</dd></div>)}
       </dl>
-      <p className="text-xs text-gray-700">Showing {lineName}. Sample demo data, not live DART data.</p>
-      <section className={card} aria-labelledby="dec"><h2 id="dec" className="text-lg font-semibold">Recommended decisions</h2><p className="text-xs text-gray-700 mb-3">Rule: readiness score below 50 → schedule a priority independent inspection.</p>
+      <p className="text-xs text-black">Showing {lineName}. Sample demo data, not live DART data.</p>
+      <section className={card} aria-labelledby="dec"><h2 id="dec" className="text-lg font-semibold">Recommended decisions</h2><p className="text-xs text-black mb-3">Rule: readiness score below 50 → schedule a priority independent inspection.</p>
         <ul className="divide-y divide-gray-100">{decisions.map((s) => <li key={s.key}><Link className="flex flex-wrap justify-between gap-2 min-h-11 py-2 hover:bg-gray-50" href={`/stations/${s.key}`}><span>Inspect <strong>{s.name}</strong>{s.demo.issues[0] ? ` — ${ISSUE_LABELS[s.demo.issues[0]] ?? s.demo.issues[0]}` : ""}</span><span className="tabular-nums">{s.demo.score}%</span></Link></li>)}</ul></section>
-      <section className={card} aria-labelledby="ano"><h2 id="ano" className="text-lg font-semibold">Anomalies</h2><p className="text-xs text-gray-700 mb-3">Rule: a station scoring 25+ points below its own line average.</p>
-        <ul className="divide-y divide-gray-100">{anomalies.map((r) => <li key={r.id} className="flex justify-between gap-2 min-h-11 py-2"><span>{r.name} <span className="text-gray-700">({LINES.find((l) => l.id === r.lineId)!.name})</span></span><span className="tabular-nums">{r.demo.score}% vs line {Math.round(avg[r.lineId])}%</span></li>)}</ul></section>
-      <section className={card} aria-labelledby="pat"><h2 id="pat" className="text-lg font-semibold">Recurring patterns</h2><p className="text-xs text-gray-700 mb-3">Most common open issue types on {lineName}.</p>
+      <section className={card} aria-labelledby="ano"><h2 id="ano" className="text-lg font-semibold">Anomalies</h2><p className="text-xs text-black mb-3">Rule: a station scoring 25+ points below its own line average.</p>
+        <ul className="divide-y divide-gray-100">{anomalies.map((r) => <li key={r.id} className="flex justify-between gap-2 min-h-11 py-2"><span>{r.name} <span className="text-black">({LINES.find((l) => l.id === r.lineId)!.name})</span></span><span className="tabular-nums">{r.demo.score}% vs line {Math.round(avg[r.lineId])}%</span></li>)}</ul></section>
+      <section className={card} aria-labelledby="pat"><h2 id="pat" className="text-lg font-semibold">Recurring patterns</h2><p className="text-xs text-black mb-3">Most common open issue types on {lineName}.</p>
         <ul>{patterns.map(([k, n]) => <li key={k} className="flex justify-between min-h-9 py-1"><span>{ISSUE_LABELS[k] ?? k}</span><span className="tabular-nums">{n} stations</span></li>)}</ul></section>
     </div>
   );

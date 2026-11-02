@@ -35,12 +35,12 @@ export default function ExperienceTabs() {
           <Image key={t.id} src={img(t.image.file)} alt={i === active ? t.image.alt : ""} aria-hidden={i !== active} fill sizes="(min-width:1280px) 1200px, 100vw"
             className={`object-cover transition-opacity duration-500 motion-reduce:transition-none ${i === active ? "opacity-100" : "opacity-0"}`} />
         ))}
-        <span className="absolute left-3 bottom-3 bg-white/90 text-[11px] tracking-wide text-gray-800 px-2.5 py-1 rounded">Station photography · illustrative</span>
+        <span className="absolute left-3 bottom-3 bg-white/90 text-[11px] tracking-wide text-black px-2.5 py-1 rounded">Station photography · illustrative</span>
       </div>
 
       {TABS.map((t, i) => (
         <div key={t.id} role="tabpanel" id={`panel-${t.id}`} aria-labelledby={`tab-${t.id}`} hidden={active !== i}
-          className="mt-8 mx-auto max-w-2xl text-center text-lg sm:text-xl font-light leading-relaxed text-gray-800">
+          className="mt-8 mx-auto max-w-2xl text-center text-lg sm:text-xl font-light leading-relaxed text-black">
           {t.body}
         </div>
       ))}
@@ -49,7 +49,7 @@ export default function ExperienceTabs() {
         {TABS.map((t, i) => (
           <button key={t.id} ref={(el) => { refs.current[i] = el; }} role="tab" id={`tab-${t.id}`} aria-selected={active === i} aria-controls={`panel-${t.id}`}
             tabIndex={active === i ? 0 : -1} onClick={() => setActive(i)} onKeyDown={(e) => onKeyDown(e, i)}
-            className={`min-h-11 rounded-lg px-2 text-sm sm:text-[15px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8] ${active === i ? "bg-white text-black font-semibold shadow-sm" : "text-gray-700 hover:text-black"}`}>
+            className={`min-h-11 rounded-lg px-2 text-sm sm:text-[15px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8] ${active === i ? "bg-white text-black font-semibold shadow-sm" : "text-black hover:text-black"}`}>
             {t.label}
           </button>
         ))}

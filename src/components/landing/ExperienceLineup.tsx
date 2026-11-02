@@ -37,17 +37,17 @@ export default function ExperienceLineup() {
             tabIndex={active === i ? 0 : -1} onClick={() => setActive(i)} onKeyDown={(e) => onKeyDown(e, i)}
             className="w-full text-left min-h-11 pt-4 border-t-4 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0057A8]"
             style={{ borderTopColor: active === i ? "#0B1F33" : "#D1D5DB" }}>
-            <span className={`flex flex-wrap items-center gap-3 text-2xl sm:text-3xl font-medium tracking-[-0.01em] ${active === i ? "text-gray-900" : "text-gray-600"}`}>
+            <span className={`flex flex-wrap items-center gap-3 text-2xl sm:text-3xl font-medium tracking-[-0.01em] ${active === i ? "text-black" : "text-black"}`}>
               {it.name}
-              <span className="text-[11px] font-medium tracking-wide border border-gray-300 text-gray-700 bg-gray-50 rounded px-2 py-0.5">{it.tag}</span>
+              <span className="text-[11px] font-medium tracking-wide border border-gray-300 text-black bg-gray-50 rounded px-2 py-0.5">{it.tag}</span>
             </span>
           </button>
         ))}
       </div>
       <div className="mt-3 grid md:grid-cols-3 gap-x-6">
         {ITEMS.map((it, i) => active === i
-          ? <p key={it.id} id={`exp-panel-${it.id}`} role="tabpanel" aria-labelledby={`exp-${it.id}`} className="text-lg text-gray-900 md:col-start-[var(--c)]" style={{ ["--c" as string]: i + 1 }}>{it.body}</p>
-          : <p key={it.id} aria-hidden="true" className="hidden md:block text-lg text-gray-600 md:col-start-[var(--c)]" style={{ ["--c" as string]: i + 1 }}>{it.body}</p>)}
+          ? <p key={it.id} id={`exp-panel-${it.id}`} role="tabpanel" aria-labelledby={`exp-${it.id}`} className="text-lg text-black md:col-start-[var(--c)]" style={{ ["--c" as string]: i + 1 }}>{it.body}</p>
+          : <p key={it.id} aria-hidden="true" className="hidden md:block text-lg text-black md:col-start-[var(--c)]" style={{ ["--c" as string]: i + 1 }}>{it.body}</p>)}
       </div>
     </div>
   );

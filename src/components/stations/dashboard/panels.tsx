@@ -16,15 +16,15 @@ export function KpiTile({ Icon, label, value, sub, step, pct, tone = "#16A34A", 
     <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-4 flex items-start gap-3" data-testid={id}>
       <span className="w-11 h-11 rounded-full bg-blue-50 text-[#0057A8] grid place-items-center shrink-0"><Icon className="w-5 h-5" aria-hidden="true" /></span>
       <div className="min-w-0 grow">
-        <p className="text-sm text-gray-800">{label}</p>
-        <p className="text-xl font-bold text-gray-900 leading-tight" style={{ fontWeight: 700 }}>{value}</p>
+        <p className="text-sm text-black">{label}</p>
+        <p className="text-xl font-bold text-black leading-tight" style={{ fontWeight: 700 }}>{value}</p>
         {step !== undefined && (
           <div className="mt-2 flex gap-1" role="img" aria-label={`Step ${step} of 4`}>
             {[1, 2, 3, 4].map((n) => <span key={n} className="h-1.5 flex-1 rounded-full" style={{ background: n <= step ? tone : "#E5E7EB" }} />)}
           </div>
         )}
         {pct !== undefined && <div className="mt-2 h-1.5 rounded-full bg-gray-200" role="img" aria-label={`${pct} percent`}><div className="h-1.5 rounded-full" style={{ width: `${pct}%`, background: tone }} /></div>}
-        <p className="text-xs text-gray-700 mt-1.5">{sub}</p>
+        <p className="text-xs text-black mt-1.5">{sub}</p>
       </div>
     </div>
   );
@@ -56,7 +56,7 @@ export function KpiRow({ demo, status, isDemoStation, issueCount, station }: { d
 function Card({ title, Icon, children }: { title: string; Icon: LucideIcon; children: React.ReactNode }) {
   return (
     <section className="rounded-2xl border border-gray-200 bg-white shadow-sm p-4">
-      <h3 className="flex items-center gap-2 text-[15px] text-gray-900 mb-3" style={{ fontWeight: 700 }}><Icon className="w-4 h-4 text-gray-700" aria-hidden="true" />{title}</h3>
+      <h3 className="flex items-center gap-2 text-[15px] text-black mb-3" style={{ fontWeight: 700 }}><Icon className="w-4 h-4 text-black" aria-hidden="true" />{title}</h3>
       {children}
     </section>
   );
@@ -76,32 +76,32 @@ export function LowerStrip({ demo, isDemoStation, issues, station }: { demo: Dem
     <div className="grid lg:grid-cols-3 gap-3">
       <Card title="Readiness by area" Icon={BarChart3}>
         <ul className="space-y-3" data-testid="areas">{areas.map((r) => (
-          <li key={r.area} className="text-sm text-gray-900"><div className="flex items-center justify-between"><span>{r.area}</span><span style={{ fontWeight: 700 }}>{r.pct === null ? "Not connected" : `${r.pct}%`}</span></div>
+          <li key={r.area} className="text-sm text-black"><div className="flex items-center justify-between"><span>{r.area}</span><span style={{ fontWeight: 700 }}>{r.pct === null ? "Not connected" : `${r.pct}%`}</span></div>
             {r.pct !== null && <div className="mt-1 h-1.5 rounded-full bg-gray-200"><div className="h-1.5 rounded-full" style={{ width: `${r.pct}%`, background: scoreTone(r.pct) }} /></div>}
-            <p className="text-[11px] text-gray-700">{r.note}</p></li>))}</ul>
-        <p className="text-xs text-gray-700 mt-3">Synthetic demo values from the original app. No inventory is verified.</p>
+            <p className="text-[11px] text-black">{r.note}</p></li>))}</ul>
+        <p className="text-xs text-black mt-3">Synthetic demo values from the original app. No inventory is verified.</p>
       </Card>
       <Card title="Open work orders" Icon={ClipboardCheck}>
-        <p className="text-3xl text-gray-900" style={{ fontWeight: 300 }} data-testid="open-wo">{open}</p>
-        <ul className="mt-2 space-y-1.5 text-sm text-gray-900">
+        <p className="text-3xl text-black" style={{ fontWeight: 300 }} data-testid="open-wo">{open}</p>
+        <ul className="mt-2 space-y-1.5 text-sm text-black">
           <li className="flex items-center gap-2"><span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-red-600" />{isDemoStation && open ? 1 : 0} High</li>
           <li className="flex items-center gap-2"><span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-amber-500" />0 Medium</li>
           <li className="flex items-center gap-2"><span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-green-600" />0 Routine</li>
         </ul>
-        <p className="text-xs text-gray-700 mt-3">Synthetic demo work order; no real dispatch.</p>
+        <p className="text-xs text-black mt-3">Synthetic demo work order; no real dispatch.</p>
       </Card>
       <Card title="Inspection activity" Icon={CheckCircle2}>
-        <p className="text-3xl text-gray-900" style={{ fontWeight: 300 }}>{isDemoStation ? steps : 0}</p>
-        <p className="text-sm text-gray-800">{isDemoStation ? "audit events in this demo session" : "No inspections connected"}</p>
+        <p className="text-3xl text-black" style={{ fontWeight: 300 }}>{isDemoStation ? steps : 0}</p>
+        <p className="text-sm text-black">{isDemoStation ? "audit events in this demo session" : "No inspections connected"}</p>
         {isDemoStation && <div className="mt-3 flex items-end gap-1.5 h-10" role="img" aria-label={`${steps} of 4 workflow events recorded`}>{[1, 2, 3, 4].map((n) => <span key={n} className="flex-1 rounded-t" style={{ height: `${n * 25}%`, background: n <= steps ? "#16A34A" : "#E5E7EB" }} />)}</div>}
-        <p className="text-xs text-gray-700 mt-3">Real inspection history requires an authorized data connection.</p>
+        <p className="text-xs text-black mt-3">Real inspection history requires an authorized data connection.</p>
       </Card>
     </div>
   );
 }
 
 function Row({ k, v }: { k: string; v: React.ReactNode }) {
-  return <div className="flex items-start justify-between gap-4 py-2.5 border-b border-gray-100 text-sm"><dt className="text-gray-700">{k}</dt><dd className="text-gray-900 text-right" style={{ fontWeight: 500 }}>{v}</dd></div>;
+  return <div className="flex items-start justify-between gap-4 py-2.5 border-b border-gray-100 text-sm"><dt className="text-black">{k}</dt><dd className="text-black text-right" style={{ fontWeight: 500 }}>{v}</dd></div>;
 }
 
 export function AssetDrawer({ demo, assetId, onClose }: { demo: DemoState; assetId: TwinAsset["id"]; onClose?: () => void }) {
@@ -111,11 +111,11 @@ export function AssetDrawer({ demo, assetId, onClose }: { demo: DemoState; asset
   return (
     <aside aria-labelledby="drawer-h" data-testid="asset-drawer" data-asset={assetId} className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5 space-y-4">
       <div className="flex items-start justify-between gap-3">
-        <div><h2 id="drawer-h" className="text-2xl text-gray-900" style={{ fontWeight: 700 }}>{a.name}</h2><p className="text-sm text-gray-700">{a.location}</p></div>
-        {onClose && <button type="button" onClick={onClose} aria-label="Close asset details" className="min-h-11 min-w-11 grid place-items-center rounded-full hover:bg-gray-100"><X className="w-5 h-5" aria-hidden="true" /></button>}
+        <div><h2 id="drawer-h" className="text-2xl text-black" style={{ fontWeight: 700 }}>{a.name}</h2><p className="text-sm text-black">{a.location}</p></div>
+        {onClose && <button type="button" onClick={onClose} aria-label="Close asset details" className="min-h-11 min-w-11 grid place-items-center rounded-md hover:bg-gray-100"><X className="w-5 h-5" aria-hidden="true" /></button>}
       </div>
       <StatusIndicator status={st} />
-      <p className="text-sm text-gray-800">Last inspected: <strong>Not connected</strong></p>
+      <p className="text-sm text-black">Last inspected: <strong>Not connected</strong></p>
       {hasWo && <EvidencePanel kind={demo.wo.status === "awaiting_verification" || demo.wo.status === "verified" ? "proof" : "reported"} caption={demo.wo.status === "awaiting_verification" || demo.wo.status === "verified" ? "Completion proof — synthetic placeholder" : "Reported condition — synthetic placeholder"} />}
       <dl>
         <Row k="Condition" v={EFF_LABEL[st]} />
@@ -123,10 +123,10 @@ export function AssetDrawer({ demo, assetId, onClose }: { demo: DemoState; asset
         <Row k="Accessibility" v="Not verified" />
         <Row k="Last cleaning" v="Not connected" />
         <Row k="Next service" v="Not connected" />
-        <Row k="Work order" v={hasWo ? <span>{demo.wo.id} <span className="text-gray-700">({STATUS_COPY[demo.wo.status]})</span></span> : "None"} />
+        <Row k="Work order" v={hasWo ? <span>{demo.wo.id} <span className="text-black">({STATUS_COPY[demo.wo.status]})</span></span> : "None"} />
       </dl>
       {hasWo && <><AssignmentCard demo={demo} /><details className="rounded-lg border border-gray-200"><summary className="cursor-pointer min-h-11 px-3 py-2.5 text-sm font-semibold">Timeline and audit trail</summary><div className="p-3"><VerificationTimeline events={demo.wo.events} /></div></details></>}
-      <p className="text-xs text-gray-700">Linked from the demo only. <Link href="/stations/inspections" className="underline text-[#0057A8]">Open inspections</Link></p>
+      <p className="text-xs text-black">Linked from the demo only. <Link href="/stations/inspections" className="underline text-[#0057A8]">Open inspections</Link></p>
     </aside>
   );
 }
@@ -135,34 +135,34 @@ export function DataSources({ stationKey }: { stationKey: string }) {
   const stop = publicStopFor(stationKey);
   return (
     <section aria-labelledby="ds-h" className="rounded-2xl border border-gray-200 bg-white shadow-sm p-4" data-testid="data-sources">
-      <h3 id="ds-h" className="flex items-center gap-2 text-[15px] text-gray-900 mb-3" style={{ fontWeight: 700 }}><Layers className="w-4 h-4 text-gray-700" aria-hidden="true" />Data sources</h3>
+      <h3 id="ds-h" className="flex items-center gap-2 text-[15px] text-black mb-3" style={{ fontWeight: 700 }}><Layers className="w-4 h-4 text-black" aria-hidden="true" />Data sources</h3>
       <ul className="divide-y divide-gray-100 text-sm">
         <li className="py-2.5 flex flex-wrap items-start justify-between gap-2" data-testid="ds-public">
-          <span><strong>Official schedule data (public)</strong><br /><span className="text-gray-700">{PUBLIC_SOURCE.name} · feed {PUBLIC_SOURCE.feedVersion} · retrieved {PUBLIC_SOURCE.retrieved}</span>
-            {stop && <><br /><span className="text-gray-700">Matched official stop {stop.stopId} “{stop.officialName}” · official lines: {stop.officialLines.join(", ")}{stop.lineConfirmed ? "" : " (a listed line is unconfirmed)"}</span></>}
+          <span><strong>Official schedule data (public)</strong><br /><span className="text-black">{PUBLIC_SOURCE.name} · feed {PUBLIC_SOURCE.feedVersion} · retrieved {PUBLIC_SOURCE.retrieved}</span>
+            {stop && <><br /><span className="text-black">Matched official stop {stop.stopId} “{stop.officialName}” · official lines: {stop.officialLines.join(", ")}{stop.lineConfirmed ? "" : " (a listed line is unconfirmed)"}</span></>}
             {stop?.note && <><br /><span className="text-amber-900">{stop.note}</span></>}</span>
-          <span className={`inline-flex items-center gap-1.5 text-xs font-medium border rounded-full px-2.5 py-0.5 ${stop ? "bg-cyan-50 text-cyan-900 border-cyan-200" : "bg-gray-50 text-gray-800 border-gray-300"}`}>{stop ? "Connected" : "No match"}</span>
+          <span className={`inline-flex items-center gap-1.5 text-xs font-medium border rounded px-2.5 py-0.5 ${stop ? "bg-cyan-50 text-cyan-900 border-cyan-200" : "bg-gray-50 text-black border-gray-300"}`}>{stop ? "Connected" : "No match"}</span>
         </li>
-        <li className="py-2.5 flex items-center justify-between gap-2"><span><strong>Live condition and inspection feed</strong><br /><span className="text-gray-700">Requires written DART authorization</span></span><span className="text-xs font-medium border rounded-full px-2.5 py-0.5 bg-gray-50 text-gray-800 border-gray-300">Not connected</span></li>
-        <li className="py-2.5 flex items-center justify-between gap-2"><span><strong>Asset inventory (e.g. Maximo export)</strong><br /><span className="text-gray-700">Requires written DART authorization</span></span><span className="text-xs font-medium border rounded-full px-2.5 py-0.5 bg-gray-50 text-gray-800 border-gray-300">Not connected</span></li>
+        <li className="py-2.5 flex items-center justify-between gap-2"><span><strong>Live condition and inspection feed</strong><br /><span className="text-black">Requires written DART authorization</span></span><span className="text-xs font-medium border rounded px-2.5 py-0.5 bg-gray-50 text-black border-gray-300">Not connected</span></li>
+        <li className="py-2.5 flex items-center justify-between gap-2"><span><strong>Asset inventory (e.g. Maximo export)</strong><br /><span className="text-black">Requires written DART authorization</span></span><span className="text-xs font-medium border rounded px-2.5 py-0.5 bg-gray-50 text-black border-gray-300">Not connected</span></li>
       </ul>
     </section>
   );
 }
 
 const PRIO: Record<string, string> = { critical: "bg-red-50 text-red-900 border-red-200", high: "bg-amber-50 text-amber-900 border-amber-200", routine: "bg-green-50 text-green-900 border-green-200" };
-const ISTAT: Record<string, { label: string; cls: string }> = { open: { label: "Open", cls: "bg-amber-50 text-amber-900" }, in_progress: { label: "In progress", cls: "bg-blue-50 text-blue-900" }, hold: { label: "On hold", cls: "bg-gray-100 text-gray-800" } };
+const ISTAT: Record<string, { label: string; cls: string }> = { open: { label: "Open", cls: "bg-amber-50 text-amber-900" }, in_progress: { label: "In progress", cls: "bg-blue-50 text-blue-900" }, hold: { label: "On hold", cls: "bg-gray-100 text-black" } };
 
 /** Right-hand drawer for stations without a workflow demo: the station's open (synthetic) issues. */
 export function IssuesDrawer({ station }: { station: Station }) {
   return (
     <aside aria-labelledby="iss-h" data-testid="issues-drawer" className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5 space-y-4">
-      <div><h2 id="iss-h" className="text-2xl text-gray-900" style={{ fontWeight: 700 }}>Open issues</h2><p className="text-sm text-gray-700">Synthetic demo issues for {station.name}</p></div>
-      {station.demo.issues.length === 0 ? <p className="text-sm text-gray-800 border border-green-200 bg-green-50 rounded-lg p-3">No open issue recorded in the demo data.</p> : (
+      <div><h2 id="iss-h" className="text-2xl text-black" style={{ fontWeight: 700 }}>Open issues</h2><p className="text-sm text-black">Synthetic demo issues for {station.name}</p></div>
+      {station.demo.issues.length === 0 ? <p className="text-sm text-black border border-green-200 bg-green-50 rounded-lg p-3">No open issue recorded in the demo data.</p> : (
         <ul className="divide-y divide-gray-100">{station.demo.issues.map((i) => { const m = ISSUE_META[i] ?? { priority: "routine", status: "open" }; return (
-          <li key={i} className="py-3 flex items-start justify-between gap-3"><span><span className="block text-sm text-gray-900" style={{ fontWeight: 600 }}>{ISSUE_LABELS[i] ?? i}</span><span className={`inline-block mt-1 text-[11px] rounded px-2 py-0.5 ${ISTAT[m.status].cls}`}>{ISTAT[m.status].label}</span></span><span className={`text-[11px] uppercase tracking-wide border rounded px-2 py-0.5 ${PRIO[m.priority]}`}>{m.priority}</span></li>); })}</ul>)}
-      <div><h3 className="text-xs tracking-[0.2em] uppercase text-gray-700 mb-1">Deployed staff</h3><p className="text-sm text-gray-800">No staff currently assigned (no live crew data is connected).</p></div>
-      <p className="text-xs text-gray-700">The independent-verification workflow is demonstrated at <Link href="/stations/akard" className="underline text-[#0057A8]">Akard</Link>.</p>
+          <li key={i} className="py-3 flex items-start justify-between gap-3"><span><span className="block text-sm text-black" style={{ fontWeight: 600 }}>{ISSUE_LABELS[i] ?? i}</span><span className={`inline-block mt-1 text-[11px] rounded px-2 py-0.5 ${ISTAT[m.status].cls}`}>{ISTAT[m.status].label}</span></span><span className={`text-[11px] uppercase tracking-wide border rounded px-2 py-0.5 ${PRIO[m.priority]}`}>{m.priority}</span></li>); })}</ul>)}
+      <div><h3 className="text-xs tracking-[0.2em] uppercase text-black mb-1">Deployed staff</h3><p className="text-sm text-black">No staff currently assigned (no live crew data is connected).</p></div>
+      <p className="text-xs text-black">The independent-verification workflow is demonstrated at <Link href="/stations/akard" className="underline text-[#0057A8]">Akard</Link>.</p>
     </aside>
   );
 }

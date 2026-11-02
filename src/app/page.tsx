@@ -9,7 +9,7 @@ import ExperienceLineup from "@/components/landing/ExperienceLineup";
 import { CinematicHero, HeroIntro, WorkflowSteps, FinalCTA } from "@/components/landing/sections";
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-4 uppercase">{children}</p>
+  <p className="text-[11px] font-medium tracking-[0.3em] text-black mb-4 uppercase">{children}</p>
 );
 
 export default function Home() {
@@ -58,7 +58,7 @@ export default function Home() {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light leading-tight tracking-[-0.02em]">The organic improvement of the spaces we share.</h2>
             </FadeUp>
             <FadeUp delay={120}>
-              <p className="text-xl text-gray-700 leading-relaxed font-light">
+              <p className="text-xl text-black leading-relaxed font-light">
                 Good spaces don&apos;t happen by accident. They&apos;re built by people who care, using tools that respect their expertise. KAI gives frontline teams cleaner data and clear ownership, and leaves safety and contract decisions with the people accountable for them.
               </p>
             </FadeUp>

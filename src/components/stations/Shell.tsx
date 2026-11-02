@@ -2,12 +2,12 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Bell, BarChart3, ClipboardCheck, Home, Layers, PlayCircle, RotateCcw, Search, X, type LucideIcon } from "lucide-react";
+import { Bell, BarChart3, ClipboardCheck, Home, Layers, PanelLeftClose, PanelLeftOpen, PlayCircle, RotateCcw, Search, X, type LucideIcon } from "lucide-react";
 import { PERSONAS, PERSONA_BY_ROLE, type Role } from "@/lib/demo/roles";
 import { dispatch, useDemo } from "@/lib/demo/store";
 import { logAudit } from "@/lib/audit";
 import type { Cmd, DemoState } from "@/lib/demo/workflow";
-import ToolsBar from "./ToolsBar";
+import ToolsBar, { TOOL_GROUPS } from "./ToolsBar";
 
 const STEPS: { label: string; cta: string; role: Role; cmd?: Cmd; go?: string }[] = [
   { label: "1 · See the whole network", cta: "Start the guided demo", role: "executive", go: "/stations" },
@@ -37,6 +37,27 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const path = usePathname();
   const [guideOpen, setGuideOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  useEffect(() => { // restore the sidebar state; default to the icon rail on narrower desktops
+    let v: string | null = null;
+    try { v = window.localStorage.getItem("kai-side-collapsed"); } catch { /* ignore */ }
+    const want = v === null ? window.innerWidth < 1280 : v === "1";
+    const id = window.setTimeout(() => setCollapsed(want), 0);
+    return () => window.clearTimeout(id);
+  }, []);
+  const toggleSide = () => setCollapsed((c) => { try { window.localStorage.setItem("kai-side-collapsed", c ? "0" : "1"); } catch { /* ignore */ } return !c; });
+  useEffect(() => { // Ctrl/Cmd + B toggles the sidebar
+    const k = (e: KeyboardEvent) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "b") { e.preventDefault(); toggleSide(); } };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { // "Demo" on the landing page links here with ?guide=1: start the guided demo wizard from a clean state
+    if (new URLSearchParams(window.location.search).get("guide") !== "1") return;
+    dispatch({ type: "reset" });
+    const id = window.setTimeout(() => setGuideOpen(true), 0);
+    try { window.history.replaceState(null, "", window.location.pathname); } catch { /* ignore */ }
+    return () => window.clearTimeout(id);
+  }, []);
   useEffect(() => { // one sign-in audit entry per browser session
     try { if (window.sessionStorage.getItem("kai-signin-logged")) return; window.sessionStorage.setItem("kai-signin-logged", "1"); } catch { /* ignore */ }
     const p = PERSONA_BY_ROLE[demo.role];
@@ -68,31 +89,56 @@ export default function Shell({ children }: { children: React.ReactNode }) {
     if (s.go) router.push(s.go);
   };
   const reset = () => { dispatch({ type: "reset" }); setGuideOpen(false); router.push("/stations"); };
-  const btn = "min-h-11 px-3.5 rounded-full text-sm inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]";
+  const btn = "min-h-11 px-3.5 rounded-md text-sm inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]";
 
   return (
-    <div ref={rootRef} className="min-h-dvh bg-white text-gray-900 pb-20 lg:pb-0 font-[family-name:var(--font-geist)]">
+    <div ref={rootRef} className="min-h-dvh bg-white text-black font-[family-name:var(--font-geist)] lg:flex">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-3">Skip to content</a>
+      <aside aria-label="Side navigation" data-testid="side-nav" data-collapsed={collapsed ? "true" : "false"}
+        className={`hidden lg:flex shrink-0 flex-col sticky top-0 h-dvh z-20 border-r border-gray-200 bg-white overflow-hidden transition-[width] duration-300 ease-[cubic-bezier(.16,1,.3,1)] motion-reduce:transition-none ${collapsed ? "w-[68px]" : "w-[256px]"}`}>
+        <div className={`h-[68px] shrink-0 flex items-center border-b border-gray-100 px-3 ${collapsed ? "justify-center" : "justify-between"}`}>
+          <Link href="/" inert={collapsed} className={`inline-flex items-center gap-2.5 min-h-11 whitespace-nowrap transition-opacity duration-200 motion-reduce:transition-none ${collapsed ? "w-0 opacity-0 overflow-hidden" : "opacity-100"}`}>
+            <span className="text-2xl text-black" style={{ fontWeight: 800, fontStyle: "italic", letterSpacing: "-0.04em" }}>KAI</span>
+            <span aria-hidden="true" className="h-6 w-px bg-gray-300" />
+            <span className="text-base text-[#0057A8]" style={{ fontWeight: 700 }}>DART pilot</span>
+          </Link>
+          <button type="button" data-testid="side-toggle" onClick={toggleSide} aria-expanded={!collapsed} aria-controls="side-nav-items" aria-label={collapsed ? "Open sidebar" : "Close sidebar"} title={`${collapsed ? "Open" : "Close"} sidebar (Ctrl/Cmd+B)`}
+            className="w-11 h-11 shrink-0 grid place-items-center rounded-md text-black hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]">
+            {collapsed ? <PanelLeftOpen className="w-5 h-5" aria-hidden="true" /> : <PanelLeftClose className="w-5 h-5" aria-hidden="true" />}
+          </button>
+        </div>
+        <nav aria-label="Primary" id="side-nav-items" className="flex-1 overflow-y-auto overflow-x-hidden px-2 py-3">
+          <ul className="space-y-0.5">
+            {NAV.map((n) => { const on = n.match(path); return (
+              <li key={n.href}><Link href={n.href} title={n.label} aria-current={on ? "page" : undefined} className={`min-h-11 rounded-md flex items-center whitespace-nowrap ${collapsed ? "justify-center px-0 gap-0" : "px-3 gap-3"} text-[15px] transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8] ${on ? "bg-gray-100 font-semibold shadow-[inset_3px_0_0_#0057A8]" : "hover:bg-gray-50"}`}>
+                <n.Icon className="w-5 h-5 shrink-0" aria-hidden="true" /><span className={`overflow-hidden transition-opacity duration-200 motion-reduce:transition-none ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>{n.label}</span></Link></li>); })}
+          </ul>
+          {TOOL_GROUPS.map((g) => (
+            <div key={g.label} role="group" aria-label={g.label} className="mt-4 pt-4 border-t border-gray-100">
+              <p className={`px-3 mb-1 text-[11px] tracking-[0.18em] uppercase whitespace-nowrap transition-opacity duration-200 motion-reduce:transition-none ${collapsed ? "opacity-0 h-0 mb-0 overflow-hidden" : "opacity-100"}`} style={{ fontWeight: 600 }}>{g.label}</p>
+              <ul className="space-y-0.5">
+                {g.tools.map(({ href, label, Icon }) => { const on = path.startsWith(href); return (
+                  <li key={href}><Link href={href} title={label} aria-current={on ? "page" : undefined} className={`min-h-11 rounded-md flex items-center whitespace-nowrap ${collapsed ? "justify-center px-0 gap-0" : "px-3 gap-3"} text-[15px] transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8] ${on ? "bg-gray-100 font-semibold shadow-[inset_3px_0_0_#0057A8]" : "hover:bg-gray-50"}`}>
+                    <Icon className="w-5 h-5 shrink-0" aria-hidden="true" /><span className={`overflow-hidden transition-opacity duration-200 motion-reduce:transition-none ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>{label}</span></Link></li>); })}
+              </ul>
+            </div>
+          ))}
+        </nav>
+      </aside>
+      <div className="min-w-0 flex-1 pb-20 lg:pb-0">
       <header ref={headRef} className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-gray-200">
         <div className="max-w-[1600px] mx-auto px-4 lg:px-6 min-h-[68px] flex flex-wrap items-center gap-x-4 gap-y-2 py-2">
-          <Link href="/" className="inline-flex items-center gap-3 min-h-11 min-w-11">
-            <span className="text-2xl text-gray-900" style={{ fontWeight: 800, fontStyle: "italic", letterSpacing: "-0.04em" }}>KAI</span>
+          <Link href="/" className="lg:hidden inline-flex items-center gap-3 min-h-11 min-w-11">
+            <span className="text-2xl text-black" style={{ fontWeight: 800, fontStyle: "italic", letterSpacing: "-0.04em" }}>KAI</span>
             <span aria-hidden="true" className="h-7 w-px bg-gray-300" />
             <span className="text-lg text-[#0057A8]" style={{ fontWeight: 700 }}>DART pilot</span>
           </Link>
-          <nav aria-label="Primary" className="hidden lg:flex items-center gap-1 mx-auto">
-            {NAV.map((n) => { const on = n.match(path); return (
-              <Link key={n.href} href={n.href} aria-current={on ? "page" : undefined} className={`${btn} text-[15px] ${on ? "bg-blue-100 text-[#0057A8] font-semibold" : "text-gray-900 hover:bg-gray-100"}`}>
-                <n.Icon className="w-5 h-5" aria-hidden="true" />{n.label}
-              </Link>); })}
-          </nav>
           <div className="ml-auto flex flex-wrap items-center justify-end gap-1.5 sm:gap-2">
             <Link href="/stations#station-search" aria-label="Go to station search" className={`${btn} px-3 hover:bg-gray-100 hidden sm:inline-flex`}><Search className="w-5 h-5" aria-hidden="true" /></Link>
             <Link href="/stations/inspections" aria-label={`Alerts: ${badge} waiting for you`} className={`${btn} px-3 hover:bg-gray-100 relative`}>
               <Bell className="w-5 h-5" aria-hidden="true" />{badge > 0 && <span data-testid="bell-badge" className="absolute top-1.5 right-1.5 w-3 h-3 rounded-full bg-red-600 border-2 border-white" />}
             </Link>
             <label className="flex items-center gap-2 text-sm">
-              <span aria-hidden="true" className="hidden sm:grid w-9 h-9 rounded-full bg-slate-500 text-white grid place-items-center text-sm font-semibold">{persona.label[0]}</span>
               <span className="sr-only">Demo role (simulation only)</span>
               <select aria-label="Demo role (simulation only)" data-testid="role-select" value={demo.role} onChange={(e) => dispatch({ type: "setRole", role: e.target.value as Role })}
                 className="min-h-11 border border-gray-300 rounded-md px-2 bg-white text-sm max-w-[8.25rem] sm:max-w-none">
@@ -110,7 +156,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         {guideOpen && (
           <section id="guide" aria-label="Guided demo" data-testid="guide" className="border-t border-gray-200 bg-slate-50">
             <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-3 flex flex-wrap items-center gap-3">
-              <p className="text-sm text-gray-900 grow" aria-live="polite" data-testid="guide-step">{done ? "Demo complete — the Akard issue is verified resolved (synthetic). Reset to run it again." : STEPS[step].label}</p>
+              <p className="text-sm text-black grow" aria-live="polite" data-testid="guide-step">{done ? "Demo complete — the Akard issue is verified resolved (synthetic). Reset to run it again." : STEPS[step].label}</p>
               {!done && <button type="button" data-testid="guide-next" onClick={advance} className={`${btn} bg-[#0B1F33] text-white font-semibold`}>{STEPS[step].cta}</button>}
               <button type="button" aria-label="Close guided demo" onClick={() => setGuideOpen(false)} className={`${btn} hover:bg-gray-100`}><X className="w-4 h-4" aria-hidden="true" /></button>
             </div>
@@ -121,10 +167,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       <main id="main" tabIndex={-1} className="max-w-[1600px] mx-auto">{children}</main>
       <nav aria-label="Primary mobile" className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-200 grid grid-cols-4 pb-[env(safe-area-inset-bottom)]">
         {NAV.map((n) => { const on = n.match(path); return (
-          <Link key={n.href} href={n.href} aria-current={on ? "page" : undefined} className={`min-h-14 flex flex-col items-center justify-center gap-0.5 text-xs ${on ? "text-[#0057A8] font-semibold" : "text-gray-700"}`}>
+          <Link key={n.href} href={n.href} aria-current={on ? "page" : undefined} className={`min-h-14 flex flex-col items-center justify-center gap-0.5 text-xs ${on ? "text-[#0057A8] font-semibold" : "text-black"}`}>
             <n.Icon className="w-5 h-5" aria-hidden="true" />{n.label}
           </Link>); })}
       </nav>
+      </div>
     </div>
   );
 }

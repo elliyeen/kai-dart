@@ -90,12 +90,12 @@ export default function ContactPage() {
             <div>
               {!submitted ? (
                 <>
-                  <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-10 uppercase">Send a Message</p>
+                  <p className="text-[11px] font-medium tracking-[0.3em] text-black mb-10 uppercase">Send a Message</p>
                   <form onSubmit={handleSubmit} className="space-y-7 sm:space-y-10">
 
                     <div className="grid md:grid-cols-2 gap-8">
                       <div>
-                        <label htmlFor="name" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
+                        <label htmlFor="name" className="block text-[11px] font-medium tracking-[0.25em] text-black mb-4 uppercase">
                           Full Name *
                         </label>
                         <input
@@ -110,7 +110,7 @@ export default function ContactPage() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
+                        <label htmlFor="email" className="block text-[11px] font-medium tracking-[0.25em] text-black mb-4 uppercase">
                           Email Address *
                         </label>
                         <input
@@ -128,7 +128,7 @@ export default function ContactPage() {
 
                     <div className="grid md:grid-cols-2 gap-8">
                       <div>
-                        <label htmlFor="company" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
+                        <label htmlFor="company" className="block text-[11px] font-medium tracking-[0.25em] text-black mb-4 uppercase">
                           Organization
                         </label>
                         <input
@@ -142,7 +142,7 @@ export default function ContactPage() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="phone" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
+                        <label htmlFor="phone" className="block text-[11px] font-medium tracking-[0.25em] text-black mb-4 uppercase">
                           Phone
                         </label>
                         <input
@@ -158,7 +158,7 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="inquiryType" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
+                      <label htmlFor="inquiryType" className="block text-[11px] font-medium tracking-[0.25em] text-black mb-4 uppercase">
                         I&apos;m interested in *
                       </label>
                       <select
@@ -178,7 +178,7 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-[11px] font-medium tracking-[0.25em] text-gray-600 mb-4 uppercase">
+                      <label htmlFor="message" className="block text-[11px] font-medium tracking-[0.25em] text-black mb-4 uppercase">
                         Message
                       </label>
                       <textarea
@@ -208,7 +208,7 @@ export default function ContactPage() {
                           </svg>
                         )}
                       </div>
-                      <span className="text-sm font-light text-gray-700 group-hover:text-black transition-colors duration-200">
+                      <span className="text-sm font-light text-black group-hover:text-black transition-colors duration-200">
                         I am a human
                       </span>
                     </label>
@@ -224,7 +224,7 @@ export default function ContactPage() {
                       {error && (
                         <p className="text-[12px] text-red-500 text-center mt-4">{error}</p>
                       )}
-                      <p className="text-[12px] text-gray-600 text-center mt-5">
+                      <p className="text-[12px] text-black text-center mt-5">
                         By submitting you agree to our privacy policy.
                       </p>
                     </div>
@@ -235,7 +235,7 @@ export default function ContactPage() {
                 <div className="py-20 space-y-6">
                   <div className="text-5xl font-thin text-[#FF6B35] leading-none">✓</div>
                   <h3 className="text-4xl font-thin tracking-[-0.02em]">Message received.</h3>
-                  <p className="text-gray-700 leading-relaxed font-light">
+                  <p className="text-black leading-relaxed font-light">
                     We respond within 24 hours.<br />In the meantime, explore the platform.
                   </p>
                   <div className="pt-4 flex flex-col sm:flex-row gap-4">
@@ -247,7 +247,7 @@ export default function ContactPage() {
                     </Link>
                     <button
                       onClick={() => setSubmitted(false)}
-                      className="text-sm font-light text-gray-600 hover:text-black transition-colors duration-200"
+                      className="text-sm font-light text-black hover:text-black transition-colors duration-200"
                     >
                       Send another message
                     </button>
@@ -261,7 +261,7 @@ export default function ContactPage() {
 
               {/* Contact info */}
               <div>
-                <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-8 uppercase">Contact</p>
+                <p className="text-[11px] font-medium tracking-[0.3em] text-black mb-8 uppercase">Contact</p>
                 <div className="space-y-0">
                   {[
                     { icon: <MapPin className="w-4 h-4" />, label: "Location", value: "Dallas, Texas", href: null },
@@ -269,20 +269,20 @@ export default function ContactPage() {
                   ].map((item) => (
                     <div key={item.label} className="flex items-center justify-between border-b border-gray-100 py-5">
                       <div className="flex items-center gap-3">
-                        <span className="text-gray-600">{item.icon}</span>
-                        <span className="text-[11px] font-medium text-gray-600 tracking-[0.2em] uppercase">{item.label}</span>
+                        <span className="text-black">{item.icon}</span>
+                        <span className="text-[11px] font-medium text-black tracking-[0.2em] uppercase">{item.label}</span>
                       </div>
                       {item.href ? (
                         <a
                           href={item.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm font-light text-gray-600 hover:text-black transition-colors duration-200 border-b border-transparent hover:border-gray-400"
+                          className="text-sm font-light text-black hover:text-black transition-colors duration-200 border-b border-transparent hover:border-gray-400"
                         >
                           {item.value}
                         </a>
                       ) : (
-                        <span className="text-sm font-light text-gray-700">{item.value}</span>
+                        <span className="text-sm font-light text-black">{item.value}</span>
                       )}
                     </div>
                   ))}
@@ -291,7 +291,7 @@ export default function ContactPage() {
 
               {/* What happens next */}
               <div>
-                <p className="text-[11px] font-medium tracking-[0.3em] text-gray-600 mb-8 uppercase">What Happens Next</p>
+                <p className="text-[11px] font-medium tracking-[0.3em] text-black mb-8 uppercase">What Happens Next</p>
                 <div className="space-y-0">
                   {[
                     { step: "01", title: "Initial response",   desc: "We reach out within 24 hours to understand your environment and goals." },
@@ -300,10 +300,10 @@ export default function ContactPage() {
                     { step: "04", title: "Go live",            desc: "From contract to live operations in 30 days. No rip-and-replace required." },
                   ].map((item) => (
                     <div key={item.step} className="grid grid-cols-[48px_1fr] gap-4 border-b border-gray-100 py-6">
-                      <span className="text-[11px] font-medium text-gray-600 tracking-[0.2em] pt-0.5">{item.step}</span>
+                      <span className="text-[11px] font-medium text-black tracking-[0.2em] pt-0.5">{item.step}</span>
                       <div>
                         <div className="text-sm font-medium mb-1.5">{item.title}</div>
-                        <div className="text-sm font-light text-gray-600 leading-relaxed">{item.desc}</div>
+                        <div className="text-sm font-light text-black leading-relaxed">{item.desc}</div>
                       </div>
                     </div>
                   ))}

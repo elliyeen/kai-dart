@@ -5,22 +5,22 @@ import { basePath } from "./assets";
 import { ArrowDown, KeyRound, Lock, ShieldCheck } from "lucide-react";
 
 type Status = "demo" | "proposed";
-const SCENE = (file: string, alt: string, w: number) => <img src={`${basePath}/images/architecture/${file}`} alt={alt} width={w} height={282} loading="lazy" decoding="async" className="w-full h-full object-contain object-bottom mix-blend-multiply" />;
+const SCENE = (file: string, alt: string, w: number, h: number) => <img src={`${basePath}/images/architecture/${file}`} alt={alt} width={w} height={h} loading="lazy" decoding="async" className="w-full h-full object-contain object-bottom mix-blend-multiply" />;
 
 type Item = { id: string; title: string; sub: string; extra?: string; status: Status; detail: string[]; art?: ReactNode };
 
 const STATUS: Record<Status, string> = { demo: "Shown in the demo with synthetic data", proposed: "Proposed for the pilot" };
 
 const STAGES: Item[] = [
-  { id: "data", title: "Data In", sub: "Vehicles · Stations · Operations", status: "proposed", art: SCENE("data-in.png", "Light-rail vehicle stopped at a station platform", 345),
+  { id: "data", title: "Data In", sub: "Vehicles · Stations · Operations", status: "proposed", art: SCENE("data-in.png", "Light-rail vehicle stopped at a station platform", 332, 223),
     detail: ["KAI would begin from DART-approved sources such as inspection, maintenance and station-condition records, plus optional approved sensors.", "Access starts read-only. Nothing in an existing DART system changes without DART approval.", "In this demonstration every record is synthetic. No DART system is connected."] },
-  { id: "kai", title: "DART Platform", sub: "Ingest · Model · Analyze", status: "demo", art: SCENE("kai.png", "Three layered tiles in white, yellow and navy labelled KAI", 272),
+  { id: "kai", title: "DART Platform", sub: "Ingest · Model · Analyze", status: "demo", art: SCENE("kai.png", "Three layered tiles in white, yellow and navy labelled KAI", 282, 223),
     detail: ["Each record keeps its source and time, so every finding can be traced back to where it came from.", "A shared model links the station, the issue, the work order, the evidence and the inspector.", "The demonstration shows this model with synthetic records."] },
-  { id: "intelligence", title: "Intelligence", sub: "Detect · Predict · Prioritize", status: "demo", art: SCENE("intelligence.png", "Operations screen showing a network map with an alert", 252),
+  { id: "intelligence", title: "Intelligence", sub: "Detect · Predict · Prioritize", status: "demo", art: SCENE("intelligence.png", "Operations screen showing a network map with an alert", 242, 223),
     detail: ["Clear, explainable rules rank station issues by severity, repeat history and what is blocking the fix.", "Every recommendation shows the evidence behind it. DART staff make the final decision.", "The demonstration ranks synthetic issues this way. Prediction is a proposed capability and is not shown."] },
-  { id: "action", title: "Action", sub: "Dispatch · Maintain · Resolve", status: "demo", art: SCENE("action.png", "Maintenance van with a technician on a station platform", 278),
+  { id: "action", title: "Action", sub: "Dispatch · Maintain · Resolve", status: "demo", art: SCENE("action.png", "Maintenance van with a technician on a station platform", 270, 195),
     detail: ["Authorized staff dispatch a ticket. A technician acknowledges it, checks in on site and confirms the work.", "A separate inspector verifies the result. People approve and confirm every step; nothing acts on its own.", "The demonstration simulates this full path with timing at every stage."] },
-  { id: "outcomes", title: "Outcomes", sub: "Safer. Cleaner. DART", status: "proposed", art: SCENE("outcomes.png", "Smiling riders walking through a station shelter", 335),
+  { id: "outcomes", title: "Outcomes", sub: "Safer. Cleaner. DART", status: "proposed", art: SCENE("outcomes.png", "Smiling riders walking through a station shelter", 324, 249),
     detail: ["The goal is a station that is cleaner, safer and more reliable for the people who use it.", "Progress would be measured against agreed baselines, such as verified closures and time to verification. This is an intended goal, not a proven result.", "Expansion beyond a pilot would be DART's separate decision."] },
 ];
 
@@ -49,9 +49,9 @@ export default function ArchitectureMap() {
             <button type="button" onClick={() => setSel(s.id)} aria-pressed={sel === s.id} data-testid="arch-node"
               className="group min-w-0 text-center rounded-xl px-2 pt-2 pb-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]">
               <div className="mx-auto max-w-[300px] md:max-w-none md:-mx-4 aspect-[6/5] transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">{s.art}</div>
-              <span className="mt-3 block text-2xl font-semibold text-[#0B1F33] leading-tight"><span aria-hidden="true" className="mr-3 font-medium">{i + 1}</span>{s.title}</span>
-              <span className="mt-1.5 block text-base text-gray-700">{s.sub}</span>
-              {s.extra && <span className="mt-1 block text-base text-gray-700">{s.extra}</span>}
+              <span className="mt-3 block whitespace-nowrap text-xl xl:text-2xl font-semibold text-black leading-tight"><span aria-hidden="true" className="mr-2.5 font-semibold">{i + 1}</span>{s.title}</span>
+              <span className="mt-1.5 block text-base text-black">{s.sub}</span>
+              {s.extra && <span className="mt-1 block text-base text-black">{s.extra}</span>}
               <span aria-hidden="true" className={`mx-auto mt-3 block h-[3px] rounded-full bg-[#FFD21F] transition-all duration-300 ${sel === s.id ? "w-10" : "w-0 group-hover:w-6"}`} />
             </button>
             {i < STAGES.length - 1 && (
@@ -74,27 +74,27 @@ export default function ArchitectureMap() {
           {SECURITY.map((s) => (
             <button key={s.id} type="button" onClick={() => setSel(s.id)} aria-pressed={sel === s.id} data-testid="arch-sec"
               className={`flex items-center gap-2.5 px-4 py-2.5 min-h-[48px] text-left text-[#0B1F33] border-t md:border-t-0 md:border-l border-[#D5DCE6] first:border-t-0 hover:bg-white focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8] ${sel === s.id ? "bg-white shadow-[inset_0_-3px_0_#FFD21F]" : ""}`}>
-              {SEC_ICON[s.id]}<span className="min-w-0"><span className="block text-[15px] font-semibold leading-tight">{s.title}</span><span className="block text-xs font-normal leading-snug text-[#3B4A5C]">{s.sub}</span></span>
+              {SEC_ICON[s.id]}<span className="min-w-0"><span className="block text-[15px] font-semibold leading-tight">{s.title}</span><span className="block text-xs font-normal leading-snug text-black">{s.sub}</span></span>
             </button>
           ))}
         </div>
       </div>
 
-      <p className="mt-3 px-2 text-xs text-gray-700" data-testid="arch-security-note">Design intent; no certification or audit has been completed.</p>
+      <p className="mt-3 px-2 text-xs text-black" data-testid="arch-security-note">Design intent; no certification or audit has been completed.</p>
 
       <section aria-live="polite" aria-labelledby="arch-detail-title" className="mt-8 max-w-3xl border-l-[3px] border-[#FFD21F] pl-5" data-testid="arch-detail">
-        {!cur.id.startsWith("sec-") && <p className="text-xs uppercase tracking-wider text-gray-700">{STATUS[cur.status]}</p>}
+        {!cur.id.startsWith("sec-") && <p className="text-xs uppercase tracking-wider text-black">{STATUS[cur.status]}</p>}
         <h2 id="arch-detail-title" style={{ fontWeight: 600 }} className="mt-1 text-2xl font-semibold text-[#0B1F33]">{cur.title}</h2>
-        <div className="mt-2 space-y-2">{cur.detail.map((d) => <p key={d} className="text-base text-gray-800 leading-relaxed">{d}</p>)}</div>
+        <div className="mt-2 space-y-2">{cur.detail.map((d) => <p key={d} className="text-base text-black leading-relaxed">{d}</p>)}</div>
       </section>
 
       <details className="mt-8 border-t border-gray-200 pt-3" data-testid="arch-text">
-        <summary className="cursor-pointer text-sm text-gray-700 py-2">Read this diagram as text</summary>
-        <ol className="mt-3 space-y-3 text-sm text-gray-800 list-decimal pl-5">
+        <summary className="cursor-pointer text-sm text-black py-2">Read this diagram as text</summary>
+        <ol className="mt-3 space-y-3 text-sm text-black list-decimal pl-5">
           {STAGES.map((n) => <li key={n.id}><span className="font-semibold">{n.title}</span> ({STATUS[n.status]}): {n.detail[0]}</li>)}
         </ol>
         <p className="mt-4 text-sm font-semibold">Enterprise Security</p>
-        <ul className="mt-2 space-y-2 text-sm text-gray-800 list-disc pl-5">{SECURITY.map((s) => <li key={s.id}><span className="font-semibold">{s.title}</span>: {s.detail[0]}</li>)}</ul>
+        <ul className="mt-2 space-y-2 text-sm text-black list-disc pl-5">{SECURITY.map((s) => <li key={s.id}><span className="font-semibold">{s.title}</span>: {s.detail[0]}</li>)}</ul>
       </details>
     </div>
   );

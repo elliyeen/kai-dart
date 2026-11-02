@@ -18,11 +18,11 @@ export default function Faq({ items = FAQ }: { items?: { q: string; a: React.Rea
     <div className="max-w-3xl divide-y divide-gray-200 border-y border-gray-200" data-testid="faq">
       {items.map(({ q, a }) => (
         <details key={q} className="group py-1">
-          <summary className="flex items-center justify-between gap-4 min-h-14 py-3 cursor-pointer list-none text-lg font-normal text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8] [&::-webkit-details-marker]:hidden">
+          <summary className="flex items-center justify-between gap-4 min-h-14 py-3 cursor-pointer list-none text-lg font-normal text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8] [&::-webkit-details-marker]:hidden">
             <span>{q}</span>
-            <span aria-hidden="true" className="shrink-0 text-2xl leading-none text-gray-700 transition-transform duration-200 group-open:rotate-45 motion-reduce:transition-none">+</span>
+            <span aria-hidden="true" className="shrink-0 text-2xl leading-none text-black transition-transform duration-200 group-open:rotate-45 motion-reduce:transition-none">+</span>
           </summary>
-          <p className="pb-4 pr-8 text-base text-gray-800 leading-relaxed">{a}</p>
+          <p className="pb-4 pr-8 text-base text-black leading-relaxed">{a}</p>
         </details>
       ))}
     </div>

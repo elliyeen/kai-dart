@@ -27,7 +27,7 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await expect(page.getByText("Capabilities", { exact: true })).toHaveCount(0);
   await expect(page.locator("#hero-note")).toHaveCount(0);
   await noHorizontalOverflow(page);
-  await expect(page.getByRole("link", { name: /^Get Started$/ }).first()).toHaveAttribute("href", /get-started/);
+  await expect(page.getByRole("link", { name: /^Get Started$/ }).first()).toHaveAttribute("href", /architecture/);
   await page.getByRole("link", { name: /Demo$/ }).first().click();
   await expect(page).toHaveURL(/\/stations\/?$/);
 });
@@ -38,9 +38,9 @@ test("pilot section names the three pilot stations; nothing is shown as live", a
   await expect(page.getByText("The Standard in clean transportation in North Texas", { exact: true })).toBeVisible();
   await expect(page.getByText("Bringing stations online.")).toHaveCount(0);
   const legend = page.getByTestId("rollout-legend");
-  await expect(legend).toContainText("Pilot site (proposed) · 3");
+  await expect(legend).toContainText("Test station · 3");
   await expect(legend).not.toContainText("Connected to live data");
-  await expect(legend).toContainText("Public schedule data connected · 73");
+  await expect(legend).toContainText("Other stations · 73");
   await expect(page.getByTestId("map-rollout").locator("circle")).toHaveCount(76);
   for (const n of ["Park Lane", "Akard", "Spring Valley"]) await expect(page.getByTestId("map-rollout").getByText(n, { exact: true })).toBeVisible();
 });
@@ -91,4 +91,20 @@ test("Get Started button is blue, label only (no caption or rocket), and reacts 
   await btn.hover();
   await expect.poll(async () => (await btn.boundingBox())!.y).toBeLessThan(before!.y - 1);
   await expect(btn.locator(".cta-primary-arrow")).toHaveCSS("opacity", "1");
+});
+
+test("pilot map: test stations are blue, every other station is gray, no Talk about a pilot button", async ({ page }) => {
+  await page.goto("");
+  await expect(page.getByText("Talk about a pilot")).toHaveCount(0);
+  const fills = await page.getByTestId("map-rollout").locator("circle").evaluateAll((cs) => cs.map((c) => c.getAttribute("fill")));
+  expect(fills.filter((f) => f === "#0057A8")).toHaveLength(3);
+  expect(fills.filter((f) => f === "#9CA3AF")).toHaveLength(73);
+});
+
+test("Demo launches the guided demo wizard from a clean start", async ({ page }) => {
+  await page.goto("");
+  await page.getByRole("link", { name: /Demo$/ }).first().click();
+  await expect(page).toHaveURL(/\/stations\/?$/);
+  await expect(page.getByTestId("guide")).toBeVisible();
+  await expect(page.getByTestId("guide-step")).toContainText("1 · See the whole network");
 });
