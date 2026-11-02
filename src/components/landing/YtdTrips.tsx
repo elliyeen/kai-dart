@@ -12,12 +12,10 @@ export default function YtdTrips() {
   const now = new Date(key);
   const days = completedDaysThisYear(now);
   if (days < 1) return null;
-  const through = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
   return (
     <div className="mt-6" data-testid="ytd-trips">
       <p className="text-3xl sm:text-4xl font-light tracking-[-0.02em] leading-none text-gray-900">≈ {estimateYtdTrips(now).toLocaleString("en-US")}</p>
       <p className="mt-2 text-base text-gray-800">Estimated trips so far in {now.getFullYear()}</p>
-      <p className="mt-1 text-xs text-gray-600">171,000 × {days} days through {through.toLocaleDateString("en-US", { month: "short", day: "numeric" })}. Estimated from DART&rsquo;s published daily figure.</p>
     </div>
   );
 }

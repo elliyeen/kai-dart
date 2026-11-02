@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { MonitorPlay, Rocket } from "lucide-react";
-import CtaBadge from "@/components/landing/CtaBadge";
+import { MonitorPlay } from "lucide-react";
+import CtaBadge, { GetStartedButton } from "@/components/landing/CtaBadge";
 import Nav from "@/components/Nav";
 import Faq from "@/components/landing/Faq";
 import SiteFooter from "@/components/landing/SiteFooter";
@@ -20,7 +20,7 @@ export default function FaqPage() {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-[-0.02em] leading-[1.05]">FAQ</h1>
           <div className="mt-10"><Faq items={FAQ14} /></div>
           <div className="mt-12 flex flex-wrap gap-3">
-            <CtaBadge href="/get-started" caption="Start with KAI" label="Get started" icon={<Rocket className="w-[22px] h-[22px]" strokeWidth={1.75} />} />
+            <GetStartedButton />
             <CtaBadge href="/stations" caption="Try the" label="Demo" icon={<MonitorPlay className="w-[22px] h-[22px]" strokeWidth={1.75} />} />
           </div>
         </div>

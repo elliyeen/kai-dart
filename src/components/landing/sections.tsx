@@ -1,18 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MonitorPlay, Rocket } from "lucide-react";
-import CtaBadge from "./CtaBadge";
+import { MonitorPlay } from "lucide-react";
+import CtaBadge, { GetStartedButton } from "./CtaBadge";
 import FadeUp from "@/components/FadeUp";
 import { IMAGES, img } from "./assets";
 import YtdTrips from "./YtdTrips";
 
-const START = <Rocket className="w-[22px] h-[22px]" strokeWidth={1.75} />;
 const DEMO = <MonitorPlay className="w-[22px] h-[22px]" strokeWidth={1.75} />;
 
 export function CTAButtons() {
   return (
     <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-      <CtaBadge href="/get-started" caption="Start with KAI" label="Get started" icon={START} />
+      <GetStartedButton />
       <CtaBadge href="/stations" caption="Try the" label="Demo" icon={DEMO} />
     </div>
   );
@@ -38,7 +37,7 @@ export function CinematicHero() {
 function HeroButtons() {
   return (
     <div className="flex flex-col sm:flex-row gap-3 items-start">
-      <CtaBadge href="/get-started" caption="Start with KAI" label="Get started" icon={START} />
+      <GetStartedButton />
     </div>
   );
 }
