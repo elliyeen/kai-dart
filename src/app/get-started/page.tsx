@@ -37,7 +37,7 @@ export default function GetStartedPage() {
           <section aria-labelledby="deploy-summary" className="mt-12 max-w-3xl border-t border-gray-200 pt-8" data-testid="deployment-summary">
             <h2 id="deploy-summary" className="text-xl font-normal">Illustrative deployment</h2>
             <p className="mt-3 text-base text-gray-800 leading-relaxed">A three-year initial agreement that begins with a six-month evaluation phase, followed by two optional one-year renewals.</p>
-            <p className="mt-3 text-sm text-gray-700">These are proposed terms for discussion, not terms approved by DART. The starting stations suggested are Park Lane, Akard and Spring Valley, and they are proposals, not approved sites.</p>
+            <p className="mt-3 text-sm text-gray-700">These are proposed terms for discussion, not terms approved by DART. The starting stations suggested are Akard, Park Lane and Spring Valley, and they are proposals, not approved sites.</p>
           </section>
 
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">

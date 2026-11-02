@@ -11,7 +11,7 @@ export type RolloutEntry =
 export type RolloutStatus = RolloutEntry["status"] | "public-data" | "not-connected";
 
 /** Proposed pilot sites (by station name). Keyed to canonical station keys below. */
-export const PILOT_STATION_NAMES = ["Park Lane", "Akard", "Spring Valley"] as const;
+export const PILOT_STATION_NAMES = ["Akard", "Park Lane", "Spring Valley"] as const;
 
 import { STATIONS } from "./index";
 import { PUBLIC_STOPS } from "./publicData.generated";

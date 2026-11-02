@@ -24,8 +24,8 @@ export default function RolloutSection() {
     <section id="rollout" className="bg-white py-16 sm:py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-10 lg:gap-16 items-center">
         <FadeUp>
-          <h2 className="text-4xl sm:text-5xl font-light tracking-[-0.02em] leading-[1.05]" data-testid="pilot-title">Pilot for Park Lane, Akard and Spring Valley Station</h2>
-          <p className="mt-6 text-xl text-gray-800 leading-relaxed font-light">The Standard in clean transportation in North Texas</p>
+          <h2 style={{ fontWeight: 600 }} className="text-[2.5rem] sm:text-6xl xl:text-[4.25rem] tracking-[-0.03em] leading-[1.04] text-[#1d1d1f] [text-wrap:balance]" data-testid="pilot-title"><span className="text-[#6e6e73]">Pilot for </span><span className="whitespace-nowrap">Akard,</span> <span className="whitespace-nowrap">Park Lane</span> and <span className="whitespace-nowrap">Spring Valley</span> Stations</h2>
+          <p className="mt-6 text-xl sm:text-2xl text-[#6e6e73] leading-snug tracking-[-0.01em] font-normal [text-wrap:balance]">The Standard in clean transportation in North Texas</p>
           <p className="sr-only" data-testid="rollout-connected">{count("connected")} stations connected to live DART data</p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <Link href="/stations" className="font-ui inline-flex items-center justify-center min-h-11 px-8 text-[13px] font-bold tracking-[0.05em] text-white hover:opacity-90" style={{ background: "#0057A8" }}>Explore the stations</Link>

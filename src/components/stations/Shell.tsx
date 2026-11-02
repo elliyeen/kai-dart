@@ -12,10 +12,11 @@ import ToolsBar from "./ToolsBar";
 const STEPS: { label: string; cta: string; role: Role; cmd?: Cmd; go?: string }[] = [
   { label: "1 · See the whole network", cta: "Start the guided demo", role: "executive", go: "/stations" },
   { label: "2 · Open Akard Station", cta: "Open Akard", role: "executive", go: "/stations/akard" },
-  { label: "3 · Operations assigns the work", cta: "Assign as Operations", role: "operations", cmd: { type: "assign" } },
-  { label: "4 · Contractor submits proof", cta: "Submit proof as Contractor", role: "contractor", cmd: { type: "submitProof" } },
-  { label: "5 · Independent inspector verifies", cta: "Verify as Inspector", role: "inspector", cmd: { type: "verify" } },
-  { label: "6 · Executive sees the result", cta: "Return to network", role: "executive", go: "/stations" },
+  { label: "3 · Inspector runs the checklist and KAI closes the loop", cta: "Run inspection as Inspector", role: "inspector", go: "/stations/checklist?station=akard&demo=1&run=1" },
+  { label: "4 · Operations assigns the work", cta: "Assign as Operations", role: "operations", cmd: { type: "assign" }, go: "/stations/akard" },
+  { label: "5 · Contractor submits proof", cta: "Submit proof as Contractor", role: "contractor", cmd: { type: "submitProof" } },
+  { label: "6 · Independent inspector verifies", cta: "Verify as Inspector", role: "inspector", cmd: { type: "verify" } },
+  { label: "7 · Executive sees the result", cta: "Return to network", role: "executive", go: "/stations" },
 ];
 
 const NAV: { href: string; label: string; Icon: LucideIcon; match: (p: string) => boolean }[] = [

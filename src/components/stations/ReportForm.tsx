@@ -7,9 +7,10 @@ import { PRIORITY_LABEL, REPORTERS, REPORT_TYPES, submitTicket, type Priority, t
 const chip = (on: boolean) => `min-h-11 px-4 rounded-md border text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8] ${on ? "bg-[#0B1F33] text-white border-[#0B1F33]" : "bg-white border-gray-300 hover:bg-gray-50"}`;
 const field = "w-full min-h-11 border border-gray-300 rounded-md px-3 bg-white text-sm focus-visible:outline-2 focus-visible:outline-[#0057A8]";
 
-export default function ReportForm() {
+/** `stationKey` pre-selects the station; `embedded` drops the page padding and uses a section heading (for the station-page sheet). */
+export default function ReportForm({ stationKey, embedded = false }: { stationKey?: string; embedded?: boolean } = {}) {
   const sorted = [...STATIONS].sort((a, b) => a.name.localeCompare(b.name));
-  const [station, setStation] = useState(sorted[0].key);
+  const [station, setStation] = useState(stationKey && sorted.some((s) => s.key === stationKey) ? stationKey : sorted[0].key);
   const [type, setType] = useState<string | null>(null);
   const [priority, setPriority] = useState<Priority | null>(null);
   const [notes, setNotes] = useState("");
@@ -20,8 +21,8 @@ export default function ReportForm() {
   const [done, setDone] = useState<Ticket | null>(null);
 
   if (done) return (
-    <div className="p-4 lg:p-8 max-w-2xl" data-testid="report-done">
-      <h1 className="text-3xl text-gray-900" style={{ fontWeight: 800 }}>Report submitted</h1>
+    <div className={embedded ? "" : "p-4 lg:p-8 max-w-2xl"} data-testid="report-done">
+      <h2 className="text-3xl text-gray-900" style={{ fontWeight: 800 }}>Report submitted</h2>
       <p className="mt-3 text-gray-900">Reference <strong data-testid="report-ref">{done.ref}</strong> · {done.stationName} · {done.typeLabel} · {PRIORITY_LABEL[done.priority]}</p>
       <p className="mt-2 text-sm text-gray-700">Saved in this browser only. In this demo it is not sent to DART or any dispatch system.</p>
       <div className="mt-5 flex flex-wrap gap-3">
@@ -40,8 +41,8 @@ export default function ReportForm() {
   };
 
   return (
-    <form onSubmit={submit} className="p-4 lg:p-8 max-w-2xl space-y-6" data-testid="report-form">
-      <div><h1 className="text-4xl text-gray-900" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>Report an issue</h1><p className="text-sm text-gray-700">Safety, vandalism, equipment, cleaning and more.</p></div>
+    <form onSubmit={submit} className={embedded ? "space-y-6" : "p-4 lg:p-8 max-w-2xl space-y-6"} data-testid="report-form">
+      {embedded ? <p className="text-sm text-gray-700">Safety, vandalism, equipment, cleaning and more.</p> : <div><h1 className="text-4xl text-gray-900" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>Report an issue</h1><p className="text-sm text-gray-700">Safety, vandalism, equipment, cleaning and more.</p></div>}
       <label className="block"><span className="block text-sm font-semibold mb-1.5">Station <span aria-hidden="true" className="text-red-700">*</span></span>
         <select className={field} value={station} onChange={(e) => setStation(e.target.value)} data-testid="report-station">{sorted.map((s) => <option key={s.key} value={s.key}>{s.name}</option>)}</select></label>
       <fieldset><legend className="text-sm font-semibold mb-1.5">Issue type <span aria-hidden="true" className="text-red-700">*</span></legend>

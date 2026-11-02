@@ -99,8 +99,8 @@ test("restored tools: report an issue, track it, log, checklist, intelligence", 
   await page.goto("stations/issues");
   await expect(page.getByTestId("issue-row").first()).toContainText(ref);
   await page.goto("stations/checklist");
-  await page.getByRole("checkbox").first().check();
-  await expect(page.getByTestId("checklist-count")).toContainText("1 of 48");
+  await page.getByTestId("ans-pass").first().click();
+  await expect(page.getByTestId("checklist-count")).toContainText("1 of 45");
   await page.goto("stations/intelligence");
   await expect(page.getByTestId("intelligence")).toContainText("not machine-learning predictions");
   await expect(page.getByTestId("tools-bar")).toBeVisible();
