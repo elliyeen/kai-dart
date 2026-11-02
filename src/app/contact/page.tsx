@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, MapPin, Linkedin } from "lucide-react";
 import Nav from "@/components/Nav";
+import SiteFooter from "@/components/landing/SiteFooter";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -52,38 +53,24 @@ export default function ContactPage() {
 
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="landing-sans min-h-screen bg-white text-black">
 
       <Nav />
 
+      <main id="main">
       {/* Hero */}
-      <section className="pt-24 sm:pt-36 lg:pt-48 pb-12 sm:pb-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto">
-          <p
-            className="hero-animate text-[11px] font-medium tracking-[0.4em] text-white/70 mb-10 uppercase"
-            style={{ animationDelay: "0ms" }}
-          >
-            Contact
-          </p>
-          <h1
-            className="hero-animate text-[2.2rem] sm:text-[3.5rem] lg:text-[6rem] font-thin leading-[0.93] tracking-[-0.03em] mb-10"
-            style={{ animationDelay: "160ms" }}
-          >
-            Let&apos;s talk.
-          </h1>
-          <p
-            className="hero-animate text-xl text-white/75 max-w-xl leading-relaxed font-light"
-            style={{ animationDelay: "320ms" }}
-          >
-            Whether you&apos;re a city, transit authority, or enterprise —
-            we&apos;re ready to show you what Kai can do in your environment.
+      <section className="pt-28 sm:pt-36 pb-6 sm:pb-10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-[-0.02em] leading-[1.05] mb-6">Let&apos;s talk.</h1>
+          <p className="text-xl text-black max-w-xl leading-relaxed font-light">
+            Whether you&apos;re a city, transit authority, or enterprise, we&apos;re ready to show you what KAI can do in your environment.
           </p>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="bg-white text-black">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-24">
+      <section className="bg-[#F8F7F4]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-20">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-20">
 
             {/* Form */}
@@ -105,7 +92,7 @@ export default function ContactPage() {
                           required
                           value={formData.name}
                           onChange={handleChange}
-                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-500"
+                          className="w-full border-b border-black/30 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-black/60"
                           placeholder="Jane Smith"
                         />
                       </div>
@@ -120,7 +107,7 @@ export default function ContactPage() {
                           required
                           value={formData.email}
                           onChange={handleChange}
-                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-500"
+                          className="w-full border-b border-black/30 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-black/60"
                           placeholder="jane@city.gov"
                         />
                       </div>
@@ -137,7 +124,7 @@ export default function ContactPage() {
                           name="company"
                           value={formData.company}
                           onChange={handleChange}
-                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-500"
+                          className="w-full border-b border-black/30 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-black/60"
                           placeholder="City of Dallas"
                         />
                       </div>
@@ -151,7 +138,7 @@ export default function ContactPage() {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-gray-500"
+                          className="w-full border-b border-black/30 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent placeholder:text-black/60"
                           placeholder="(214) 555-0100"
                         />
                       </div>
@@ -167,7 +154,7 @@ export default function ContactPage() {
                         required
                         value={formData.inquiryType}
                         onChange={handleChange}
-                        className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent appearance-none cursor-pointer"
+                        className="w-full border-b border-black/30 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent appearance-none cursor-pointer"
                       >
                         <option value="demo">Platform demo</option>
                         <option value="pilot">Pilot program</option>
@@ -187,7 +174,7 @@ export default function ContactPage() {
                         rows={5}
                         value={formData.message}
                         onChange={handleChange}
-                        className="w-full border-b border-gray-200 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent resize-none placeholder:text-gray-500"
+                        className="w-full border-b border-black/30 py-3 text-lg font-light focus:border-black outline-none transition-colors duration-200 bg-transparent resize-none placeholder:text-black/60"
                         placeholder="Tell us about your environment and timeline..."
                       />
                     </div>
@@ -201,7 +188,7 @@ export default function ContactPage() {
                           onChange={(e) => setHumanChecked(e.target.checked)}
                           className="peer sr-only"
                         />
-                        <div className="w-5 h-5 border border-gray-300 peer-checked:border-black peer-checked:bg-black transition-all duration-200" />
+                        <div className="w-5 h-5 border border-black/40 peer-checked:border-black peer-checked:bg-black transition-all duration-200" />
                         {humanChecked && (
                           <svg className="absolute inset-0 w-5 h-5 text-white p-0.5 pointer-events-none" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L8.414 15l-5.121-5.121a1 1 0 011.414-1.414L8.414 12.172l6.879-6.879a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -222,7 +209,7 @@ export default function ContactPage() {
                         {sending ? "Sending…" : "Send message"}
                       </button>
                       {error && (
-                        <p className="text-[12px] text-red-500 text-center mt-4">{error}</p>
+                        <p className="text-[12px] text-black font-medium text-center mt-4">{error}</p>
                       )}
                       <p className="text-[12px] text-black text-center mt-5">
                         By submitting you agree to our privacy policy.
@@ -233,7 +220,7 @@ export default function ContactPage() {
                 </>
               ) : (
                 <div className="py-20 space-y-6">
-                  <div className="text-5xl font-thin text-[#FF6B35] leading-none">✓</div>
+                  <div className="text-5xl font-thin text-black leading-none">✓</div>
                   <h3 className="text-4xl font-thin tracking-[-0.02em]">Message received.</h3>
                   <p className="text-black leading-relaxed font-light">
                     We respond within 24 hours.<br />In the meantime, explore the platform.
@@ -267,7 +254,7 @@ export default function ContactPage() {
                     { icon: <MapPin className="w-4 h-4" />, label: "Location", value: "Dallas, Texas", href: null },
                     { icon: <Linkedin className="w-4 h-4" />, label: "LinkedIn", value: "linkedin.com/in/abbasabdullah", href: "https://www.linkedin.com/in/abbasabdullah/" },
                   ].map((item) => (
-                    <div key={item.label} className="flex items-center justify-between border-b border-gray-100 py-5">
+                    <div key={item.label} className="flex items-center justify-between border-b border-black/15 py-5">
                       <div className="flex items-center gap-3">
                         <span className="text-black">{item.icon}</span>
                         <span className="text-[11px] font-medium text-black tracking-[0.2em] uppercase">{item.label}</span>
@@ -277,7 +264,7 @@ export default function ContactPage() {
                           href={item.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm font-light text-black hover:text-black transition-colors duration-200 border-b border-transparent hover:border-gray-400"
+                          className="text-sm font-light text-black hover:text-black transition-colors duration-200 border-b border-transparent hover:border-black"
                         >
                           {item.value}
                         </a>
@@ -295,11 +282,11 @@ export default function ContactPage() {
                 <div className="space-y-0">
                   {[
                     { step: "01", title: "Initial response",   desc: "We reach out within 24 hours to understand your environment and goals." },
-                    { step: "02", title: "Live platform demo", desc: "5-minute interactive walkthrough — command center, AI prediction, and surge scenario." },
+                    { step: "02", title: "Live platform demo", desc: "A short interactive walkthrough of the station demo." },
                     { step: "03", title: "Custom proposal",    desc: "A tailored implementation plan built around your infrastructure and timeline." },
-                    { step: "04", title: "Go live",            desc: "From contract to live operations in 30 days. No rip-and-replace required." },
+                    { step: "04", title: "Go live",            desc: "Scope, timing and pricing are agreed with your team. Pricing is pending an approved quote." },
                   ].map((item) => (
-                    <div key={item.step} className="grid grid-cols-[48px_1fr] gap-4 border-b border-gray-100 py-6">
+                    <div key={item.step} className="grid grid-cols-[48px_1fr] gap-4 border-b border-black/15 py-6">
                       <span className="text-[11px] font-medium text-black tracking-[0.2em] pt-0.5">{item.step}</span>
                       <div>
                         <div className="text-sm font-medium mb-1.5">{item.title}</div>
@@ -315,20 +302,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-white/[0.06] py-12">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-6 text-center lg:text-left">
-            <div className="text-[13px] text-white/70">
-              © {new Date().getFullYear()} KAI — The Operating System for Cities and Enterprise.
-            </div>
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
-              <Link href="/#about" className="text-[13px] text-white/70 hover:text-white/70 transition-colors duration-200">About</Link>
-              <Link href="/contact" className="text-[13px] text-white/70 hover:text-white/70 transition-colors duration-200">Contact</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      </main>
+
+      <SiteFooter />
 
     </div>
   );
