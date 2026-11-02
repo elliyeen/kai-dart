@@ -323,7 +323,6 @@ export default function ContactPage() {
               © {new Date().getFullYear()} KAI — The Operating System for Cities and Enterprise.
             </div>
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
-              <Link href="/platform" className="text-[13px] text-white/70 hover:text-white/70 transition-colors duration-200">Platform</Link>
               <Link href="/#about" className="text-[13px] text-white/70 hover:text-white/70 transition-colors duration-200">About</Link>
               <Link href="/contact" className="text-[13px] text-white/70 hover:text-white/70 transition-colors duration-200">Contact</Link>
             </div>
