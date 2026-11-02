@@ -55,8 +55,8 @@ export default function AccountMenu({ collapsed, onReset }: { collapsed: boolean
       )}
       <button ref={btnRef} type="button" data-testid="account-button" aria-haspopup="menu" aria-expanded={open} onClick={() => { const r = btnRef.current?.getBoundingClientRect(); if (r) setPos({ left: r.left, bottom: window.innerHeight - r.top + 8 }); setOpen((o) => !o); }} title={`${p.label} · ${p.identity}`}
         className={`w-full min-h-12 rounded-md flex items-center ${collapsed ? "justify-center" : "gap-3 px-2"} hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]`}>
-        <span aria-hidden="true" className="w-8 h-8 shrink-0 rounded-md bg-[#0057A8] text-white grid place-items-center text-xs" style={{ fontWeight: 700 }}>{initials(p.label)}</span>
-        {!collapsed && <><span className="min-w-0 flex-1 text-left"><span data-testid="account-name" className="block text-sm font-semibold truncate">{p.label}</span><span className="block text-xs truncate">{p.identity} · demo</span></span><ChevronsUpDown className="w-4 h-4 shrink-0" aria-hidden="true" /></>}
+        <span aria-hidden="true" className="w-8 h-8 shrink-0 rounded-full bg-[#0057A8] text-white grid place-items-center text-xs" style={{ fontWeight: 700 }}>{initials(p.label)}</span>
+        <span className={collapsed ? "sr-only" : "min-w-0 flex-1 text-left"}><span data-testid="account-name" className="block text-sm font-semibold truncate">{p.label}</span><span className="block text-xs truncate">{p.identity} · demo</span></span>{!collapsed && <ChevronsUpDown className="w-4 h-4 shrink-0" aria-hidden="true" />}
       </button>
     </div>
   );
