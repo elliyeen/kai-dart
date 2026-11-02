@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { noHorizontalOverflow } from "./helpers";
 
-const PAGES = ["", "faq", "get-started", "architecture", "checkout", "stations", "stations/akard", "stations/inspections", "stations/assets", "stations/readiness", "stations/report", "stations/issues", "stations/checklist", "stations/intelligence", "stations/inventory", "stations/audit", "stations/loop", "stations/scenarios", "stations/contractors", "stations/convention-blue", "contact"];
+const PAGES = ["", "faq", "get-started", "architecture", "checkout", "stations", "stations/akard", "stations/inspections", "stations/assets", "stations/readiness", "stations/report", "stations/issues", "stations/checklist", "stations/overview", "stations/intelligence", "stations/inventory", "stations/audit", "stations/loop", "stations/scenarios", "stations/contractors", "stations/convention-blue", "contact"];
 
 for (const path of PAGES) {
   test(`axe WCAG 2.x A/AA: /${path}`, async ({ page }) => {

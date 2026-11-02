@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlertTriangle, ClipboardList, ListChecks, Sparkles, Boxes, ScrollText, PlayCircle, FlaskConical, HardHat } from "lucide-react";
+import { AlertTriangle, ClipboardList, ListChecks, Sparkles, Boxes, ScrollText, PlayCircle, FlaskConical, HardHat, LayoutDashboard } from "lucide-react";
 
 /** Nine tools in three groups by what the person is trying to do, so the bar reads as three choices instead of nine. */
 export const TOOL_GROUPS = [
@@ -14,6 +14,7 @@ export const TOOL_GROUPS = [
     { href: "/stations/scenarios", label: "Test scenarios", Icon: FlaskConical },
   ] },
   { label: "Operations", tools: [
+    { href: "/stations/overview", label: "Operations overview", Icon: LayoutDashboard },
     { href: "/stations/inventory", label: "Inventory", Icon: Boxes },
     { href: "/stations/contractors", label: "Contractors", Icon: HardHat },
     { href: "/stations/audit", label: "Audit log", Icon: ScrollText },

@@ -1,12 +1,11 @@
 "use client";
 import Link from "next/link";
 import { useId } from "react";
-import { PERSONA_BY_ROLE } from "@/lib/demo/roles";
 import { useDemo } from "@/lib/demo/store";
 import { ASSET_META, lineStats, lowest, overall, scoreTone, type RecStatus } from "@/lib/stations/readiness";
 import { ISSUE_LABELS, STATIONS, type LineId } from "@/lib/stations";
-import { LineDot, DemoBadge, StatusIndicator } from "./ui";
-import MapPanel from "./MapPanel";
+import { LineDot, StatusIndicator } from "./ui";
+import ReadinessHero from "./ReadinessHero";
 import type { Eff } from "@/lib/stations/effective";
 
 const DOT: Record<RecStatus, string> = { good: "#16A34A", warning: "#D97706", critical: "#DC2626", closed: "#9CA3AF", deploying: "#2563EB", assigned: "#2563EB", awaiting: "#4F46E5", verified: "#16A34A" };
@@ -25,13 +24,8 @@ export function Spark({ scores, statuses, color, label }: { scores: number[]; st
   );
 }
 
-function Stat({ n, label, sub, id, tone }: { n: number | string; label: string; sub: string; id: string; tone?: string }) {
-  return <div className="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm"><p className="text-xs tracking-[0.14em] uppercase text-black">{label}</p><p className="text-4xl mt-1" style={{ fontWeight: 300, color: tone ?? "#111827" }} data-testid={id}>{n}</p><p className="text-xs text-black mt-1">{sub}</p></div>;
-}
-
 export default function NetworkOverview({ line, onSelect }: { line: LineId | null; onSelect: (key: string) => void }) {
   const demo = useDemo();
-  const persona = PERSONA_BY_ROLE[demo.role];
   const o = overall(demo);
   const lines = lineStats(demo);
   const low = lowest(demo);
@@ -40,22 +34,7 @@ export default function NetworkOverview({ line, onSelect }: { line: LineId | nul
 
   return (
     <section aria-labelledby="net-h" className="space-y-6 p-4 lg:p-8" data-testid="network-overview">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h1 id="net-h" className="text-4xl text-black" style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>Station Readiness Command Center</h1>
-          <p className="text-sm text-black mt-1">Viewing as {persona.label} — {persona.blurb}</p>
-        </div>
-        <DemoBadge />
-      </div>
-
-      <div className="grid grid-cols-2 xl:grid-cols-5 gap-3">
-        <Stat id="stat-critical" n={o.critical} label="Critical stations" sub={`Line-station entries · ${o.criticalUnique} unique stations`} tone="#B91C1C" />
-        <Stat id="stat-attention" n={o.attention} label="Needs attention" sub={`Scheduled service needed · ${o.attentionUnique} unique`} tone="#B45309" />
-        <Stat id="stat-avg" n={o.avg} label="Avg readiness" sub="Network average / 100" tone="#B45309" />
-        <Stat id="stat-awaiting" n={o.awaiting} label="Awaiting verification" sub="Independent inspector pending" />
-        <Stat id="stat-verified" n={o.verified} label="Verified resolved" sub="Independently verified" tone="#15803D" />
-      </div>
-      <p className="text-xs text-black -mt-3">All readiness scores, issues and asset counts on this page are <strong>synthetic demo values</strong>, not DART data. Line and station membership comes from the original app and is checked against DART&apos;s public schedule feed.</p>
+      <ReadinessHero line={line} onOpen={onSelect} />
 
       <div>
         <h2 className="text-xs tracking-[0.2em] uppercase text-black mb-2" style={{ fontWeight: 600 }}>Lines — readiness overview · click to drill down</h2>
@@ -109,7 +88,6 @@ export default function NetworkOverview({ line, onSelect }: { line: LineId | nul
         {o.verified > 0 && <p className="mt-2 text-sm text-emerald-900" data-testid="verified-note">Akard: issue independently verified resolved (synthetic demo).</p>}
       </div>
 
-      <details className="border border-gray-200 rounded-2xl bg-white"><summary className="cursor-pointer min-h-11 px-4 py-3 text-sm font-semibold">Network map</summary><div className="p-4 pt-0"><MapPanel line={line} onSelect={onSelect} /></div></details>
     </section>
   );
 }
