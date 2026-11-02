@@ -18,7 +18,7 @@ export default function ArchitecturePage() {
           <p className="text-[11px] font-medium tracking-[0.3em] text-[#3B4A5C] uppercase">Technical architecture</p>
           <h1 style={{ fontWeight: 700 }} className="mt-3 text-4xl sm:text-5xl lg:text-6xl tracking-[-0.02em] leading-[1.05] text-[#0B1F33]">DART Super Intelligence</h1>
           <div aria-hidden="true" className="mt-5 h-1 w-14 rounded bg-[#FFD21F]" />
-          <p className="mt-5 text-xl text-[#3B4A5C] font-normal max-w-2xl">Turn transit data into a clean and safe experience for all.</p>
+          <p className="mt-5 text-xl text-[#3B4A5C] font-normal max-w-2xl">Turn transit data into the right action, at the right time.</p>
           <div className="mt-10"><ArchitectureMap /></div>
         </div>
       </main>
