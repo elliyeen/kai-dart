@@ -27,7 +27,7 @@ test("landing: no tournament content, CTAs reach the platform, tabs and accordio
   await expect(page.getByText("Capabilities", { exact: true })).toHaveCount(0);
   await expect(page.locator("#hero-note")).toHaveCount(0);
   await noHorizontalOverflow(page);
-  await expect(page.getByRole("link", { name: /Get started$/ }).first()).toHaveAttribute("href", /get-started/);
+  await expect(page.getByRole("link", { name: /^Get Started$/ }).first()).toHaveAttribute("href", /get-started/);
   await page.getByRole("link", { name: /Demo$/ }).first().click();
   await expect(page).toHaveURL(/\/stations\/?$/);
 });
@@ -61,11 +61,12 @@ test("old World Cup route is gone", async ({ request }) => {
   expect((await request.get("world-cup-2026")).status()).toBe(404);
 });
 
-test("year-to-date trips is labeled as an estimate, not a DART figure", async ({ page }) => {
+test("year-to-date trips is labeled as an estimate and has no formula footnote", async ({ page }) => {
   await page.goto("");
   const box = page.getByTestId("ytd-trips");
   await expect(box).toContainText("Estimated trips so far");
-  await expect(box).toContainText("Estimated from DART");
+  await expect(box).not.toContainText("171,000 ×");
+  await expect(box).not.toContainText("Estimated from DART");
   await expect(box).toContainText(/≈ [\d,]+/);
 });
 
@@ -76,4 +77,18 @@ test("FAQ answers ten questions and expands", async ({ page }) => {
   await items.first().locator("summary").click();
   await expect(items.first()).toHaveAttribute("open", "");
   await expect(page.getByTestId("faq")).toContainText("independent");
+});
+
+test("Get Started button is blue, label only (no caption or rocket), and reacts on hover", async ({ page }) => {
+  await page.goto("");
+  const btn = page.locator("a.cta-primary").first();
+  await expect(btn).toHaveText("Get Started");
+  await expect(btn).not.toContainText("Start with KAI");
+  await expect(btn.locator("svg.lucide-rocket")).toHaveCount(0);
+  const bg = await btn.evaluate((e) => getComputedStyle(e).backgroundImage);
+  expect(bg).toMatch(/rgb\(10, 107, 209\)|rgb\(0, 87, 168\)/);
+  const before = await btn.boundingBox();
+  await btn.hover();
+  await expect.poll(async () => (await btn.boundingBox())!.y).toBeLessThan(before!.y - 1);
+  await expect(btn.locator(".cta-primary-arrow")).toHaveCSS("opacity", "1");
 });
