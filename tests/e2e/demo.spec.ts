@@ -70,6 +70,7 @@ test.describe("executive demo and workflow", () => {
     await expect(page.getByTestId("timeline")).toContainText("Rejected by inspector");
     await page.reload();
     await expect(status(page)).toHaveText("Assigned — work in progress");
+    await page.locator('[data-testid^="demo-toggle"]:visible').click();   // demo controls live in the sidebar (desktop) / bottom bar (phone, tablet)
     await page.getByTestId("reset-demo").click();
   });
 
@@ -123,6 +124,24 @@ test.describe("executive demo and workflow", () => {
       await page.goto(path);
       await expect(page.getByTestId("demo-banner")).toHaveCount(0);
       await expect(page.getByText("SYNTHETIC DEMO", { exact: true })).toHaveCount(0);
+    }
+  });
+});
+
+test.describe("demo controls are out of the top bar", () => {
+  test("header has no Guided demo / Reset demo; they live in the sidebar (desktop) or bottom bar (phone/tablet)", async ({ page }) => {
+    await page.goto("stations");
+    const head = page.locator("header").first();
+    await expect(head.getByRole("button", { name: /Guided demo|Reset demo|^Demo$/ })).toHaveCount(0);
+    const toggle = page.locator('[data-testid^="demo-toggle"]:visible');
+    await expect(toggle).toHaveCount(1);
+    await expect(page.getByTestId("guide")).toHaveCount(0);
+    await toggle.click();
+    await expect(page.getByTestId("guide")).toBeVisible();
+    await expect(page.getByTestId("reset-demo")).toBeVisible();
+    if (await page.getByTestId("side-nav").isVisible()) {
+      await expect(page.getByTestId("side-nav").getByRole("group", { name: "Demo" })).toBeVisible();
+      await expect(page.getByTestId("side-reset-demo")).toBeVisible();
     }
   });
 });

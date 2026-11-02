@@ -124,6 +124,15 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               </ul>
             </div>
           ))}
+          <div role="group" aria-label="Demo" className="mt-4 pt-4 border-t border-gray-100">
+            <p className={`px-3 mb-1 text-[11px] tracking-[0.18em] uppercase whitespace-nowrap transition-opacity duration-200 motion-reduce:transition-none ${collapsed ? "opacity-0 h-0 mb-0 overflow-hidden" : "opacity-100"}`} style={{ fontWeight: 600 }}>Demo</p>
+            <ul className="space-y-0.5">
+              {[{ id: "demo-toggle", label: "Guided demo", Icon: PlayCircle, on: guideOpen, run: () => setGuideOpen((o) => !o) }, { id: "side-reset-demo", label: "Reset demo", Icon: RotateCcw, on: false, run: reset }].map(({ id, label, Icon, on, run }) => (
+                <li key={id}><button type="button" data-testid={id} title={label} onClick={run} aria-expanded={id === "demo-toggle" ? guideOpen : undefined} aria-controls={id === "demo-toggle" ? "guide" : undefined} className={`w-full min-h-11 rounded-md flex items-center whitespace-nowrap ${collapsed ? "justify-center px-0 gap-0" : "px-3 gap-3"} text-[15px] text-left transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8] ${on ? "bg-gray-100 font-semibold" : "hover:bg-gray-50"}`}>
+                  <Icon className="w-5 h-5 shrink-0" aria-hidden="true" /><span className={`overflow-hidden transition-opacity duration-200 motion-reduce:transition-none ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>{label}</span></button></li>
+              ))}
+            </ul>
+          </div>
         </nav>
         <AccountMenu collapsed={collapsed} onReset={reset} />
       </aside>
@@ -147,12 +156,6 @@ export default function Shell({ children }: { children: React.ReactNode }) {
                 {PERSONAS.map((p) => <option key={p.role} value={p.role}>{p.label}</option>)}
               </select>
             </label>
-            <button type="button" className={`${btn} bg-[#0057A8] text-white font-semibold hover:bg-[#004a8f]`} onClick={() => setGuideOpen((o) => !o)} aria-expanded={guideOpen} aria-controls="guide">
-              <PlayCircle className="w-4 h-4" aria-hidden="true" /><span className="hidden sm:inline">Guided demo</span><span className="sm:hidden">Demo</span>
-            </button>
-            <button type="button" data-testid="reset-demo" className={`${btn} border border-gray-300 hover:bg-gray-50`} onClick={reset}>
-              <RotateCcw className="w-4 h-4" aria-hidden="true" /><span className="hidden sm:inline">Reset demo</span><span className="sr-only sm:hidden">Reset demo</span>
-            </button>
           </div>
         </div>
         {guideOpen && (
@@ -160,6 +163,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-3 flex flex-wrap items-center gap-3">
               <p className="text-sm text-black grow" aria-live="polite" data-testid="guide-step">{done ? "Demo complete — the Akard issue is verified resolved (synthetic). Reset to run it again." : STEPS[step].label}</p>
               {!done && <button type="button" data-testid="guide-next" onClick={advance} className={`${btn} bg-[#0B1F33] text-white font-semibold`}>{STEPS[step].cta}</button>}
+              <button type="button" data-testid="reset-demo" onClick={reset} className={`${btn} border border-gray-300 hover:bg-gray-50`}><RotateCcw className="w-4 h-4" aria-hidden="true" />Reset demo</button>
               <button type="button" aria-label="Close guided demo" onClick={() => setGuideOpen(false)} className={`${btn} hover:bg-gray-100`}><X className="w-4 h-4" aria-hidden="true" /></button>
             </div>
           </section>
@@ -167,11 +171,14 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       </header>
       <div ref={toolsRef}><ToolsBar path={path} /></div>
       <main id="main" tabIndex={-1} className="max-w-[1600px] mx-auto">{children}</main>
-      <nav aria-label="Primary mobile" className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-200 grid grid-cols-4 pb-[env(safe-area-inset-bottom)]">
+      <nav aria-label="Primary mobile" className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-200 grid grid-cols-5 pb-[env(safe-area-inset-bottom)]">
         {NAV.map((n) => { const on = n.match(path); return (
           <Link key={n.href} href={n.href} aria-current={on ? "page" : undefined} className={`min-h-14 flex flex-col items-center justify-center gap-0.5 text-xs ${on ? "text-[#0057A8] font-semibold" : "text-black"}`}>
             <n.Icon className="w-5 h-5" aria-hidden="true" />{n.label}
           </Link>); })}
+        <button type="button" data-testid="demo-toggle-mobile" aria-expanded={guideOpen} aria-controls="guide" onClick={() => { setGuideOpen((o) => !o); window.scrollTo({ top: 0 }); }} className={`min-h-14 flex flex-col items-center justify-center gap-0.5 text-xs ${guideOpen ? "text-[#0057A8] font-semibold" : "text-black"}`}>
+          <PlayCircle className="w-5 h-5" aria-hidden="true" />Demo
+        </button>
       </nav>
       </div>
     </div>
