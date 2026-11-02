@@ -1,11 +1,28 @@
 import { expect, test } from "@playwright/test";
 import { BASE, UNIQUE_NAMES, isDesktop, noHorizontalOverflow, setRole } from "./helpers";
 
+const openList = async (page: import("@playwright/test").Page) => { await page.getByTestId("stations-dropdown").click(); await expect(page.getByTestId("station-panel")).toBeVisible(); };
 const rowNames = (page: import("@playwright/test").Page) => page.getByTestId("station-row").evaluateAll((els) => els.map((e) => e.querySelector("span.truncate")!.textContent));
 
 test.describe("station directory", () => {
+  test("command view is full width and the station list is collapsed by default", async ({ page }) => {
+    await page.goto("stations");
+    await expect(page.getByTestId("readiness-hero")).toBeVisible();
+    await expect(page.getByTestId("stations-dropdown")).toHaveAttribute("aria-expanded", "false");
+    await expect(page.getByTestId("station-panel")).toHaveCount(0);
+    await expect(page.getByTestId("station-row")).toHaveCount(0);
+    await openList(page);
+    await expect(page.getByTestId("stations-dropdown")).toHaveAttribute("aria-expanded", "true");
+    for (const l of ["red", "green", "blue", "orange", "silver"]) await expect(page.getByTestId(`toggle-${l}`)).toHaveAttribute("aria-expanded", "false");
+    await expect(page.getByTestId("station-row").first()).toBeHidden();
+    await page.keyboard.press("Escape");
+    await expect(page.getByTestId("station-panel")).toHaveCount(0);
+    await noHorizontalOverflow(page);
+  });
+
   test("lists every unique original station and the counts add up", async ({ page }) => {
     await page.goto("stations");
+    await openList(page);
     await expect(page.getByTestId("result-count")).toHaveText(new RegExp(`^${UNIQUE_NAMES.length} of ${UNIQUE_NAMES.length} stations`));
     await expect(page.getByTestId("station-row")).toHaveCount(BASE.length);              // one row per original line-station entry
     expect(new Set(await rowNames(page))).toEqual(new Set(UNIQUE_NAMES));
@@ -18,6 +35,7 @@ test.describe("station directory", () => {
   for (const line of ["red", "blue", "green", "orange", "silver"]) {
     test(`${line} line filter shows exactly that line's stations`, async ({ page }) => {
       await page.goto("stations");
+      await openList(page);
       await page.getByRole("group", { name: "Filter by line" }).getByRole("button", { name: new RegExp(`^${line} line`, "i") }).click();
       const expected = new Set(BASE.filter((b) => b.lineId === line).map((b) => b.name));
       await expect(page.getByTestId("result-count")).toContainText(`${expected.size} of`);
@@ -30,6 +48,7 @@ test.describe("station directory", () => {
 
   test("search narrows the list and a deep link restores it", async ({ page }) => {
     await page.goto("stations");
+    await openList(page);
     await page.getByLabel("Search stations").fill("akard");
     await expect(page.getByTestId("station-row")).toHaveCount(4);                         // Akard serves four lines
     await page.goto("stations?line=silver&q=carrollton");
@@ -41,6 +60,7 @@ test.describe("station directory", () => {
 
   test("selecting a station opens its dashboard", async ({ page }) => {
     await page.goto("stations");
+    await openList(page);
     await page.getByLabel("Search stations").fill("cedars");
     await page.getByTestId("station-row").first().click();
     await expect(page).toHaveURL(/stations\/cedars-r/);
@@ -66,11 +86,16 @@ test.describe("station directory", () => {
 
 test("each line collapses and expands on its own", async ({ page }) => {
   await page.goto("stations");
+  await openList(page);
   await page.waitForLoadState("networkidle");
   const red = page.getByTestId("group-red"), green = page.getByTestId("group-green");
   const redRows = red.getByTestId("station-row"), greenRows = green.getByTestId("station-row");
   const before = await redRows.count();
   expect(before).toBeGreaterThan(0);
+  await expect(page.getByTestId("toggle-red")).toHaveAttribute("aria-expanded", "false");   // collapsed by default
+  await page.getByTestId("toggle-red").click();
+  await page.getByTestId("toggle-green").click();
+  await expect(redRows.first()).toBeVisible();
   await page.getByTestId("toggle-red").click();
   await expect(page.getByTestId("toggle-red")).toHaveAttribute("aria-expanded", "false");
   await expect(redRows.first()).toBeHidden();

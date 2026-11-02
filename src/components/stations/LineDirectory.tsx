@@ -49,8 +49,8 @@ function Row({ r, first, last, color, score }: { r: StationRecord; first: boolea
 }
 
 /** Every line-station entry, grouped by line in the original order, as a connected timeline. Each line collapses on its own. */
-export default function LineDirectory({ records, line }: { records: StationRecord[]; line: LineId | null }) {
-  const [collapsed, setCollapsed] = useState<ReadonlySet<LineId>>(new Set());
+export default function LineDirectory({ records, line, startCollapsed = false }: { records: StationRecord[]; line: LineId | null; startCollapsed?: boolean }) {
+  const [collapsed, setCollapsed] = useState<ReadonlySet<LineId>>(() => (startCollapsed ? new Set(LINES.map((l) => l.id)) : new Set()));
   const groups = LINES.filter((l) => !line || l.id === line).map((l) => ({ l, recs: records.filter((r) => r.lineId === l.id) })).filter((g) => g.recs.length);
   const toggle = (id: LineId) => setCollapsed((c) => { const n = new Set(c); if (n.has(id)) n.delete(id); else n.add(id); return n; });
   const allCollapsed = groups.length > 0 && groups.every((g) => collapsed.has(g.l.id));
