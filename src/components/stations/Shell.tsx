@@ -111,7 +111,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         <nav aria-label="Primary" id="side-nav-items" className="flex-1 overflow-y-auto overflow-x-hidden px-2 py-3">
           <ul className="space-y-0.5">
             {NAV.map((n) => { const on = n.match(path); return (
-              <li key={n.href}><Link href={n.href} title={n.label} aria-current={on ? "page" : undefined} className={`min-h-11 rounded-md flex items-center whitespace-nowrap ${collapsed ? "justify-center px-0 gap-0" : "px-3 gap-3"} text-[15px] transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8] ${on ? "bg-gray-100 font-semibold shadow-[inset_3px_0_0_#0057A8]" : "hover:bg-gray-50"}`}>
+              <li key={n.href}><Link href={n.href} title={n.label} aria-current={on ? "page" : undefined} className={`min-h-11 rounded-md flex items-center whitespace-nowrap ${collapsed ? "justify-center px-0 gap-0" : "px-3 gap-3"} text-[15px] transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8] ${on ? "bg-gray-100 font-semibold" : "hover:bg-gray-50"}`}>
                 <n.Icon className="w-5 h-5 shrink-0" aria-hidden="true" /><span className={`overflow-hidden transition-opacity duration-200 motion-reduce:transition-none ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>{n.label}</span></Link></li>); })}
           </ul>
           {TOOL_GROUPS.map((g) => (
@@ -119,7 +119,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               <p className={`px-3 mb-1 text-[11px] tracking-[0.18em] uppercase whitespace-nowrap transition-opacity duration-200 motion-reduce:transition-none ${collapsed ? "opacity-0 h-0 mb-0 overflow-hidden" : "opacity-100"}`} style={{ fontWeight: 600 }}>{g.label}</p>
               <ul className="space-y-0.5">
                 {g.tools.map(({ href, label, Icon }) => { const on = path.startsWith(href); return (
-                  <li key={href}><Link href={href} title={label} aria-current={on ? "page" : undefined} className={`min-h-11 rounded-md flex items-center whitespace-nowrap ${collapsed ? "justify-center px-0 gap-0" : "px-3 gap-3"} text-[15px] transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8] ${on ? "bg-gray-100 font-semibold shadow-[inset_3px_0_0_#0057A8]" : "hover:bg-gray-50"}`}>
+                  <li key={href}><Link href={href} title={label} aria-current={on ? "page" : undefined} className={`min-h-11 rounded-md flex items-center whitespace-nowrap ${collapsed ? "justify-center px-0 gap-0" : "px-3 gap-3"} text-[15px] transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#0057A8] ${on ? "bg-gray-100 font-semibold" : "hover:bg-gray-50"}`}>
                     <Icon className="w-5 h-5 shrink-0" aria-hidden="true" /><span className={`overflow-hidden transition-opacity duration-200 motion-reduce:transition-none ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>{label}</span></Link></li>); })}
               </ul>
             </div>
