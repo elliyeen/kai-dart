@@ -46,6 +46,17 @@ jobs:
       - name: E2E, accessibility and responsive tests (5 viewports)
         run: npm run test:e2e
 
+      - name: Build (Cloudflare /dart static export for www.elliyeen.com/dart)
+        env:
+          EXPORT_TARGET: cloudflare-dart
+        run: npm run build
+
+      - name: Route manifest + link/asset crawl under /dart (fails on any non-200)
+        run: |
+          SITE_BASE=/dart PORT=4173 node scripts/serve-out.mjs &
+          sleep 2
+          node scripts/route-manifest.mjs http://localhost:4173 /dart docs/route-manifest-cloudflare-dart
+
       - name: Upload Playwright traces on failure
         if: failure()
         uses: actions/upload-artifact@v4

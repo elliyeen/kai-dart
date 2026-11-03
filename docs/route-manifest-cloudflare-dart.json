@@ -1,0 +1,1124 @@
+{
+  "basePath": "/dart",
+  "routeCount": 186,
+  "uniqueRefsChecked": 256,
+  "failures": 0,
+  "routes": [
+    {
+      "route": "/dart/",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/alerts",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/incidents",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/incidents/new",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/overview",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/reports",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/settings",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations/akard",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations/buckner",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations/cedars",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations/cityplace",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations/downtown-garland",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations/farmers-branch",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations/mockingbird",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations/union",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations/victory",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/stations/west-transfer",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/tasks",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/tasks/task-001",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/tasks/task-002",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/tasks/task-003",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/tasks/task-004",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/tasks/task-005",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/tasks/task-006",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/tasks/task-007",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/tasks/task-008",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/work-orders",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/work-orders/wo-001",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/work-orders/wo-002",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/work-orders/wo-003",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/work-orders/wo-004",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/work-orders/wo-005",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/work-orders/wo-006",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/work-orders/wo-007",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/app/work-orders/wo-008",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/architecture",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/checkout",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/cities",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/cities/addison",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/cities/dallas",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/cities/plano",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/contact",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/dart",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/dart/line/blue",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/dart/line/red",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/dart/line/silver",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/dart/station/addison",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/dart/station/downtown-plano",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/dart/station/mockingbird",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/demo",
+      "kind": "alias",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/faq",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/get-started",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/platform",
+      "kind": "legacy",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/12th-street",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/12th-street-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/12th-street-sl",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/8th-corinth-r",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/addison-sl",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/akard",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/akard-blue",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/akard-g",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/akard-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/arapaho-center",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/arapaho-center-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/assets",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/audit",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/bachman",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/bachman-g",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/baylor",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/belt-line",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/buckner",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/burbank",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/burbank-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/camp-wisdom",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/cedars-blue",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/cedars-r",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/checklist",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/cityline-bush",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/cityline-bush-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/cityline-bush-sl",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/cityplace-blue",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/cityplace-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/cityplace-up",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/contractors",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/convention-blue",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/convention-r",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/cypress-waters",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/deep-ellum",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/dfw-a",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/dfw-b",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/dfw-north-sl",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/dfw-terminal-b-sl",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/downtown-carrollton",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/downtown-carrollton-sl",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/downtown-garland",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/downtown-plano",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/downtown-plano-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/downtown-rowlett",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/eight-blue",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/fair-park",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/farmers-branch",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/forest-jupiter",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/forest-lane",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/forest-ln-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/galatyn-park",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/galatyn-park-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/hampton",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/hatcher",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/hidden-ridge",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/illinois-tc",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/inspections",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/intelligence",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/inventory",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/inwood-g",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/irving",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/issues",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/kiest",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/knoll-trail",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/lake-highlands",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/lake-june",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/las-colinas",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/lawnview",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/lbj-central",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/lbj-central-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/lbj-skillman",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/ledbetter",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/loop",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/love-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/lovers-lane",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/lovers-lane-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/market-center-g",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/market-center-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/mlk",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/mockingbird-blue",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/morrell",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/north-carrollton-frank",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/north-lake",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/overview",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/park-lane",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/park-lane-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/park-lane/demo",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/parker-road",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/parker-road-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/pearl",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/pearl-blue",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/pearl-g",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/pearl-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/readiness",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/report",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/royal-lane",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/scenarios",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/shiloh-sl",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/smu",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/smu-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/spring-valley",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/spring-valley-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/st-paul",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/st-paul-blue",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/st-paul-g",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/st-paul-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/sw-medical",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/sw-medical-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/ticket",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/trinity-mills",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/tyler-vernon",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/union-blue",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/union-r",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/univ-dallas",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/unt-dallas",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/ut-dallas-sl",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/va-medical",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/victory-g",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/victory-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/walnut-hill",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/walnut-hill-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/walnut-hill-r",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/west-end-blue",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/west-end-g",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/west-end-o",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/west-end-r",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/westmoreland",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/white-rock",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    },
+    {
+      "route": "/dart/stations/zoo",
+      "kind": "canonical",
+      "status": 200,
+      "brokenRefs": []
+    }
+  ]
+}

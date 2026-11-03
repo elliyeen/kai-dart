@@ -11,6 +11,7 @@
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "build:pages": "GITHUB_PAGES=true next build",
+    "build:cloudflare-dart": "EXPORT_TARGET=cloudflare-dart next build",
     "screenshots": "node scripts/capture-screenshots.mjs"
   },
   "dependencies": {

@@ -19,7 +19,11 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
 });
 
+// Static icon referenced through the base path: Next's generated icon route ignores basePath on static export.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export const metadata: Metadata = {
+  icons: { icon: [{ url: `${basePath}/kai-icon.png`, type: "image/png", sizes: "32x32" }] },
   title: "KAI — The Operating System for Cities and Enterprise",
   description: "AI-powered facilities management and station readiness. An Elliyeen demonstration and proposed pilot for transit operators.",
 };
