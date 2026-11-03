@@ -1,9 +1,9 @@
-// Minimal static server for the GitHub-Pages-style export: serves ./out under /kai-dart/.
+// Minimal static server for the GitHub-Pages-style export: serves ./out under SITE_BASE (default /kai-dart; use /dart for the Cloudflare /dart build).
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 const root = path.resolve("out");
-const base = "/kai-dart";
+const base = process.env.SITE_BASE || "/kai-dart";
 const types = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".jpg": "image/jpeg", ".png": "image/png", ".mp4": "video/mp4", ".woff2": "font/woff2", ".txt": "text/plain", ".ico": "image/x-icon" };
 const port = Number(process.env.PORT || 4173);
 const tryFile = (p) => { try { return fs.statSync(p).isFile() ? p : null; } catch { return null; } };

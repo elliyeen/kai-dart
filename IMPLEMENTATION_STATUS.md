@@ -2,6 +2,21 @@
 
 Last updated: 2026-11-01 · Version 0.2.0 · Branch `docs/status-readme-changelog` · Evidence below was produced by the commands shown. Nothing here is a claim about DART operations.
 
+## Update — Cloudflare `/dart` mount for www.elliyeen.com (branch `feat/cloudflare-dart-basepath`, 2026-11-03)
+**State: IN PROGRESS — not deployed. `https://www.elliyeen.com/dart` returned HTTP 404 when checked 2026-11-03; `/capabilities` also 404.**
+
+Audit: `www.elliyeen.com` is served by Cloudflare Pages project `elliyeen-get-started` (source repo `elliyeen/elliyeen-get-started`, Next.js static export, deploys on push to `master`). A separate Pages project would not serve `/dart`, so kai-dart is built with `EXPORT_TARGET=cloudflare-dart` (basePath + assetPrefix `/dart`, one prefix applied once) and copied into the main site's `out/dart` at build time. GitHub Pages (`/kai-dart`) is unchanged.
+
+Changes: `next.config.ts` new target; `npm run build:cloudflare-dart`; `src/app/demo` (`/dart/demo`, same guided demo as `/stations/park-lane/demo`); static `public/kai-icon.png` replaces generated `src/app/icon.tsx` (Next ignores basePath for that route on static export; it would have 404'd at `/icon`); `scripts/serve-out.mjs` and `playwright.config.ts` accept `SITE_BASE`; `scripts/route-manifest.mjs` enumerates every exported page and checks every internal link/asset; CI builds and crawls the `/dart` target.
+
+Evidence (local): `lint` 0 errors / 22 warnings; `typecheck` pass; `test:unit` 46 passed; `build:cloudflare-dart` ok; no `kai-dart` strings and no unprefixed root links in `out/`; route manifest `docs/route-manifest-cloudflare-dart.{json,csv}` = 186 routes (173 canonical, 1 alias `/dart/demo`, 12 legacy), 256 unique refs, 0 failures; `SITE_BASE=/dart npx playwright test --project=desktop-1440 --project=mobile-390` = 236 passed, 4 skipped. Simulated merge into the main-site build (scratch): `/dart`, `/dart/demo`, `/dart/stations/park-lane` all 200; main-site routes unaffected.
+
+Legacy namespace: the old dashboard (`/dart`, `/dart/line/*`, `/dart/station/*`) and `/cities/*` and `/platform` ship under the prefix as `/dart/dart/*`, `/dart/cities/*`, `/dart/platform` (intentional, reachable only from legacy pages; no customer-facing page links to them). Not renamed or dropped.
+
+Not done / blockers: Cloudflare preview and production deploy (needs owner approval for production); `/capabilities` page does not exist (separate brief; needs verified company identifiers) and is NOT linked from the demo yet; no real-browser incognito check on the deployed URL; no human business sign-off. Pre-existing, not ours: main-site homepage links to `/reports/golf-program-audit.html` (404).
+
+Rollback: GitHub Pages deploy untouched; revert the main-site workflow step (removes `out/dart`) and redeploy the previous Pages deployment.
+
 ## Update — Park Lane 90-second guided demo (branch `feat/park-lane-auto-demo`, 2026-11-03)
 Route `/stations/park-lane/demo` (GitHub Pages: `https://elliyeen.github.io/kai-dart/stations/park-lane/demo` **after merge + Pages deploy; NOT live yet**). Canonical station id `park-lane` (Red Line). Engine `src/lib/parkLaneDemo.ts` (pure, deterministic), UI `src/components/stations/ParkLaneDemo.tsx`, CTAs on `/stations` and the Park Lane station page. Elevator and kiosk are labelled hypothetical; Park Lane's real asset inventory is unverified.
 

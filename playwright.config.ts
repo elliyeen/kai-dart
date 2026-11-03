@@ -1,13 +1,14 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const PORT = 4173;
+const BASE = process.env.SITE_BASE || "/kai-dart";
 export default defineConfig({
   testDir: "tests/e2e",
   timeout: 30_000,
   retries: process.env.CI ? 1 : 0,
   reporter: [["list"]],
-  use: { baseURL: `http://localhost:${PORT}/kai-dart/`, trace: "retain-on-failure" },
-  webServer: { command: "node scripts/serve-out.mjs", url: `http://localhost:${PORT}/kai-dart/`, reuseExistingServer: !process.env.CI, env: { PORT: String(PORT) } },
+  use: { baseURL: `http://localhost:${PORT}${BASE}/`, trace: "retain-on-failure" },
+  webServer: { command: "node scripts/serve-out.mjs", url: `http://localhost:${PORT}${BASE}/`, reuseExistingServer: !process.env.CI, env: { PORT: String(PORT), SITE_BASE: BASE } },
   projects: [
     // Existing Chromium viewport projects run everything except the cross-browser sweep.
     { name: "desktop-1440", testIgnore: /cross-browser/, use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } } },
