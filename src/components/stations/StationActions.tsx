@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import { AlertTriangle, PlayCircle, Truck } from "lucide-react";
 import type { Station } from "@/lib/stations";
@@ -17,6 +18,7 @@ export default function StationActions({ station, canDeploy, roleLabel }: { stat
       <div className="flex flex-wrap gap-2">
         <button type="button" data-testid="act-report" onClick={() => setOpen("report")} className={`${btn} bg-[#0B1F33] text-white hover:bg-black`}><AlertTriangle className="w-4 h-4" aria-hidden="true" />Report an issue</button>
         <button type="button" data-testid="act-deploy" disabled={!canDeploy} aria-describedby={canDeploy ? undefined : "deploy-hint"} onClick={() => setOpen("deploy")} className={`${btn} bg-[#0057A8] text-white hover:bg-[#004a8f] disabled:bg-gray-200 disabled:text-black disabled:cursor-not-allowed`}><Truck className="w-4 h-4" aria-hidden="true" />Deploy crew</button>
+        {station.key === "park-lane" && <Link href="/stations/park-lane/demo" data-testid="act-pl-demo" className={`${btn} bg-[#0057A8] text-white hover:bg-[#004a8f]`}><PlayCircle className="w-4 h-4" aria-hidden="true" />Play Park Lane Demo</Link>}
         <a href="#station-demo" data-testid="act-demo" className={`${btn} border border-gray-300 bg-white text-black hover:bg-gray-50`}><PlayCircle className="w-4 h-4" aria-hidden="true" />Autonomous demo</a>
       </div>
       {!canDeploy && <p id="deploy-hint" data-testid="deploy-hint" className="text-xs text-black">Viewing as {roleLabel}. Only Operations can deploy a crew (role switching is a simulation); switch role to enable it.</p>}

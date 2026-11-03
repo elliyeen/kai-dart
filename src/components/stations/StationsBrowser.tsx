@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { ChevronDown, Search, X } from "lucide-react";
@@ -77,6 +78,7 @@ export default function StationsBrowser() {
           )}
         </div>
       </div>
+      <div className="px-4 lg:px-8 py-2 border-t border-gray-100 bg-white"><Link href="/stations/park-lane/demo" data-testid="pl-demo-cta" className="min-h-11 inline-flex items-center gap-2 text-sm font-semibold text-[#0057A8] underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0057A8]">Play the 90-second Park Lane demo (simulated)</Link></div>
       <section aria-label="Network overview" className="relative grow min-h-0 lg:overflow-y-auto">
         <NetworkOverview line={line} onSelect={go} />
       </section>

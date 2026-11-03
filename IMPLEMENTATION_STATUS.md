@@ -2,6 +2,27 @@
 
 Last updated: 2026-11-01 · Version 0.2.0 · Branch `docs/status-readme-changelog` · Evidence below was produced by the commands shown. Nothing here is a claim about DART operations.
 
+## Update — Park Lane 90-second guided demo (branch `feat/park-lane-auto-demo`, 2026-11-03)
+Route `/stations/park-lane/demo` (GitHub Pages: `https://elliyeen.github.io/kai-dart/stations/park-lane/demo` **after merge + Pages deploy; NOT live yet**). Canonical station id `park-lane` (Red Line). Engine `src/lib/parkLaneDemo.ts` (pure, deterministic), UI `src/components/stations/ParkLaneDemo.tsx`, CTAs on `/stations` and the Park Lane station page. Elevator and kiosk are labelled hypothetical; Park Lane's real asset inventory is unverified.
+
+Evidence (local, this branch): `npx tsc --noEmit` pass; `npm run lint` 0 errors (22 warnings, none in the new files); `npm run test:unit` 46 passed (8 new); `GITHUB_PAGES=true npm run build` ok; `npx playwright test tests/e2e/park-lane-demo.spec.ts` on desktop-1440, ipad-1024, ipad-768, mobile-430, mobile-390 = 50 passed; `station-actions`, `directory`, `pages`, `a11y-responsive`, `demo` specs on desktop-1440 + mobile-390 = 185 passed, 3 skipped. Screenshots: `docs/screenshots/park-lane/`.
+
+| DOD | Status |
+|---|---|
+| 01 shareable URL, incognito, HTTP 200 | BLOCKED — not deployed until merge; local `/kai-dart/` static server only |
+| 02 one-click ~90 s, 3 incidents, independent verification | PASS locally (fake-clock E2E PL-T01) |
+| 03 pause/resume/next/back/restart | PASS locally |
+| 04 contractor never verifies alone; reject/rework path | PASS (unit + E2E; rework is an optional toggle) |
+| 05 deterministic readiness, labelled synthetic | PASS (unit) |
+| 06 links work, no dead buttons | PASS locally (Get started, Capabilities, station page) |
+| 07 390/768/1440, keyboard, reduced motion, axe | PASS locally (axe WCAG 2.2 AA at 5 viewports; reduced motion handled in code, not separately tested) |
+| 08 unit + E2E, lint, typecheck | PASS locally; CI not yet run |
+| 09 no secrets / real DART data | PASS by construction + no-external-request test; no separate built-file secret scan yet |
+| 10 URL, SHA, evidence recorded | PARTIAL — SHA/URL pending push and deploy |
+| 11 human sign-off | PENDING (presenter) |
+
+Known limits: not verified in a real incognito session on the deployed URL; `/dart/stations/red/park-lane` alias and Cloudflare preview not built (out of scope per the contract, no credentials used); no real-device test.
+
 ## Update — PRs #12–#30 (read this first; older sections below are the PR #4 baseline)
 **On `main` (merged 2026-11-01):** PRs #12–#30 and #32–#33 (#29 sidebar single list; #30 station actions, per-station demo, 45-item checklist + KAI loop, pilot heading; #32 architecture Enterprise Security band + per-line intelligence; #33 Platform and How It Works links removed). Docs PR #31 had merged into a stacked branch, so it lands via a rollup PR. GitHub Pages deploy status for these merges is checked separately; see the PR for the result.
 
