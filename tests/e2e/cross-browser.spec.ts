@@ -50,8 +50,8 @@ test("core content is present without JavaScript (progressive enhancement)", asy
 
 test("main flows work on this browser: mobile menu, architecture, checkout", async ({ page }) => {
   await page.goto("architecture");
-  await page.getByTestId("arch-node").nth(2).click();
-  await expect(page.getByTestId("arch-detail")).toContainText("Intelligence");
+  await expect(page.getByTestId("arch-node")).toHaveCount(5);
+  await expect(page.getByTestId("arch-akard")).toBeVisible();
   await page.goto("checkout");
   await page.getByLabel("Organization").fill("Sample Transit Agency");
   await page.getByLabel("Business email", { exact: true }).fill("person@agency.example.org");

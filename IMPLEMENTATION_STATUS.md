@@ -2,6 +2,15 @@
 
 Last updated: 2026-11-01 · Version 0.2.0 · Branch `docs/status-readme-changelog` · Evidence below was produced by the commands shown. Nothing here is a claim about DART operations.
 
+## Update — Architecture page matched to approved mockup + security copy removed (branch `feat/architecture-mockup-match`, 2026-11-07)
+**State: IN PROGRESS — local only, not pushed, no PR, no independent review, no stakeholder visual sign-off.** Stories: Notion "DART-US — Match Akard Architecture Page to Approved 3D Mockup" and "DART-US — Remove Enterprise Security explainer from architecture page".
+
+Changes: `ArchitectureMap.tsx` rewritten as a static server component (no numbered badges; subcopy "Live green. Ride Clean."; Akard Before/After card labelled "Illustrative demo — synthetic scenario"; slim ribbon with only Enterprise Security, Texas (DIR), Federal (FTA), Zero Trust). Removed: design-intent disclaimer, Enterprise Security explainer + detail panel, "Read this diagram as text", SOC 2 / Zero Trust / Encryption / Compliance list. Screen-reader summaries kept per stage (`sr-only`) and `aria-label` on the flow. New `arch/Scenes.tsx` (SVG Intelligence panel, Akard scenes). Tests updated in `tests/e2e/pages.spec.ts` and `cross-browser.spec.ts` (regression assertions for removed text, Akard, no Park Lane, no badges).
+
+Evidence (local): `tsc --noEmit` pass; `npm run lint` 0 errors; `test:unit` 46 passed; `build:pages` ok; Playwright pages + a11y-responsive + landing on 5 viewports = 338 passed, 2 skipped; cross-browser architecture flow on chrome-sweep + iphone-14 passed. axe WCAG 2.2 AA clean after darkening the "After" pill. Screenshots: `docs/screenshots/architecture/` (1440/1024/768/430/390).
+
+Known gaps: the approved mockup image sent in chat is not on disk, so no pixel comparison was run. Four stage illustrations are the existing 1x PNGs (not 2x, not the new mockup art); Intelligence panel and Akard scenes are SVG approximations, not the mockup's 3D renders. Nav still shows About/Architecture/FAQ/Get Started/Checkout (Platform removed in #33), not the mockup's nav. No Cloudflare `/dart` build run for this change.
+
 ## Update — Cloudflare `/dart` mount for www.elliyeen.com (branch `feat/cloudflare-dart-basepath`, 2026-11-03)
 **State: IN PROGRESS — not deployed. `https://www.elliyeen.com/dart` returned HTTP 404 when checked 2026-11-03; `/capabilities` also 404.**
 
