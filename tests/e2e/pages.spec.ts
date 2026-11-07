@@ -70,11 +70,11 @@ test("Architecture page matches approved mockup: five stages, Akard before/after
   await expect(page.getByTestId("arch-node").nth(4)).toContainText("Safer · Cleaner · More Reliable");
   // no numbered badges
   await expect(page.getByTestId("arch-flow")).not.toContainText(/^\s*[1-5]\s/);
-  // Akard before/after, labelled synthetic, no Park Lane
+  // Akard before/after, no Park Lane
   await expect(page.getByRole("heading", { name: "Akard Station" })).toBeVisible();
   await expect(page.getByTestId("arch-before").locator("li")).toHaveCount(4);
   await expect(page.getByTestId("arch-after").locator("li")).toHaveCount(4);
-  await expect(page.getByTestId("arch-illustrative")).toContainText("Illustrative demo — synthetic scenario");
+  await expect(page.locator("body")).not.toContainText("Illustrative demo");
   await expect(page.locator("main")).not.toContainText("Park Lane");
   // slim ribbon only
   await expect(page.getByTestId("arch-security")).toContainText("Enterprise Security");

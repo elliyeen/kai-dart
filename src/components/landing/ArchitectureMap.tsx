@@ -64,7 +64,6 @@ export default function ArchitectureMap() {
             </ul>
           </div>
         </div>
-        <p className="mt-3 text-center text-sm text-black" data-testid="arch-illustrative">Illustrative demo — synthetic scenario. Not photographs and not completed DART repairs.</p>
       </section>
 
       <div className="mt-8 flex flex-col lg:flex-row lg:items-stretch rounded-2xl lg:rounded-full overflow-hidden bg-[#F1F4F8]" data-testid="arch-security">
