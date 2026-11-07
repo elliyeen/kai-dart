@@ -72,6 +72,8 @@ test("Architecture page matches approved mockup: five stages, Akard before/after
   await expect(page.getByTestId("arch-flow")).not.toContainText(/^\s*[1-5]\s/);
   // Akard before/after, no Park Lane
   await expect(page.getByRole("heading", { name: "Akard Station" })).toBeVisible();
+  await expect(page.getByTestId("arch-before-col").getByText("Before", { exact: true })).toBeVisible();
+  await expect(page.getByTestId("arch-after-col").getByText("After", { exact: true })).toBeVisible();
   await expect(page.getByTestId("arch-before").locator("li")).toHaveCount(4);
   await expect(page.getByTestId("arch-after").locator("li")).toHaveCount(4);
   await expect(page.locator("body")).not.toContainText("Illustrative demo");

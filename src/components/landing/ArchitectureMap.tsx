@@ -46,22 +46,28 @@ export default function ArchitectureMap() {
       </ol>
 
       <section aria-labelledby="akard-title" className="mt-10" data-testid="arch-akard">
-        <div className="flex flex-col lg:flex-row lg:items-stretch gap-4 lg:gap-0 rounded-3xl bg-white shadow-[0_2px_24px_rgba(11,31,51,0.08)] ring-1 ring-[#E6EBF2] p-4 lg:p-5">
-          <div className="flex-1 grid gap-4 sm:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] items-center">
-            <figure className="rounded-2xl overflow-hidden"><img src={`${basePath}/images/architecture/akard-before.png`} alt="Before: Akard Station platform with trash and debris, dim lighting, a worn bench and an accessibility barrier (illustrative)" width={423} height={148} loading="lazy" decoding="async" className="w-full h-auto block" /></figure>
-            <div>
-              <h2 id="akard-title" style={{ fontWeight: 700 }} className="text-2xl text-[#0B1F33]">Akard Station</h2>
-              <ul className="mt-3 space-y-2" data-testid="arch-before">
-                {BEFORE.map((t) => <li key={t} className="flex items-center gap-2.5 text-base text-black"><CircleAlert className="w-5 h-5 shrink-0 text-[#D92D20]" strokeWidth={1.8} aria-hidden="true" />{t}</li>)}
-              </ul>
+        <div className="rounded-3xl bg-white shadow-[0_2px_24px_rgba(11,31,51,0.08)] ring-1 ring-[#E6EBF2] p-5 lg:p-6">
+          <h2 id="akard-title" style={{ fontWeight: 700 }} className="text-2xl text-[#0B1F33]">Akard Station</h2>
+          <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_auto_1fr] lg:items-start">
+            <div data-testid="arch-before-col">
+              <p className="text-lg font-semibold text-[#B42318]">Before</p>
+              <div className="mt-3 grid gap-4 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] sm:items-center">
+                <img src={`${basePath}/images/architecture/akard-before.png`} alt="Before: Akard Station platform with trash and debris, dim lighting, a worn bench and an accessibility barrier (illustrative)" width={412} height={82} loading="lazy" decoding="async" className="w-full h-auto block rounded-2xl" />
+                <ul className="space-y-2.5" data-testid="arch-before">
+                  {BEFORE.map((t) => <li key={t} className="flex items-center gap-2.5 text-base leading-6 text-black"><CircleAlert className="w-5 h-5 shrink-0 text-[#D92D20]" strokeWidth={1.8} aria-hidden="true" />{t}</li>)}
+                </ul>
+              </div>
             </div>
-          </div>
-          <span aria-hidden="true" className="self-center mx-3 grid place-items-center w-11 h-11 rounded-full bg-white shadow-[0_2px_10px_rgba(11,31,51,0.15)] text-[#0057A8] rotate-90 lg:rotate-0"><ArrowRight className="w-5 h-5" strokeWidth={2} /></span>
-          <div className="flex-1 grid gap-4 sm:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] items-center">
-            <figure className="rounded-2xl overflow-hidden"><img src={`${basePath}/images/architecture/akard-after.png`} alt="After: Akard Station platform cleaned, lighting restored, bench repaired and accessibility verified (illustrative)" width={412} height={148} loading="lazy" decoding="async" className="w-full h-auto block" /></figure>
-            <ul className="space-y-2" data-testid="arch-after">
-              {AFTER.map((t) => <li key={t} className="flex items-center gap-2.5 text-base text-black"><Check className="w-5 h-5 shrink-0 text-[#2E9E43]" strokeWidth={2.2} aria-hidden="true" />{t}</li>)}
-            </ul>
+            <span aria-hidden="true" className="self-center justify-self-center grid place-items-center w-11 h-11 rounded-full bg-white shadow-[0_2px_10px_rgba(11,31,51,0.15)] text-[#0057A8] rotate-90 lg:rotate-0"><ArrowRight className="w-5 h-5" strokeWidth={2} /></span>
+            <div data-testid="arch-after-col">
+              <p className="text-lg font-semibold text-[#1E7A32]">After</p>
+              <div className="mt-3 grid gap-4 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] sm:items-center">
+                <img src={`${basePath}/images/architecture/akard-after.png`} alt="After: Akard Station platform cleaned, lighting restored, bench repaired and accessibility verified (illustrative)" width={412} height={82} loading="lazy" decoding="async" className="w-full h-auto block rounded-2xl" />
+                <ul className="space-y-2.5" data-testid="arch-after">
+                  {AFTER.map((t) => <li key={t} className="flex items-center gap-2.5 text-base leading-6 text-black"><Check className="w-5 h-5 shrink-0 text-[#2E9E43]" strokeWidth={2.2} aria-hidden="true" />{t}</li>)}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
