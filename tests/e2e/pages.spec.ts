@@ -58,25 +58,36 @@ test("Checkout prepopulates the organization only from the DART demo link", asyn
   await expect(page.getByLabel("Organization")).toHaveValue("Dallas Area Rapid Transit");
 });
 
-test("Architecture page: five steps, security strip, keyboard-selectable details, text fallback", async ({ page }) => {
+test("Architecture page matches approved mockup: five stages, Akard before/after, slim security ribbon, old copy removed", async ({ page }) => {
   await page.goto("architecture");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("DART Super Intelligence");
-  await expect(page.getByText("Turn transit data into the right action, at the right time.")).toBeVisible();
+  await expect(page.getByText("Live green. Ride Clean.", { exact: true })).toBeVisible();
   await expect(page.getByText("Request a Proposal")).toHaveCount(0);
-  await expect(page.getByTestId("arch-flow").getByText("Platform", { exact: true })).toHaveCount(0);
   await expect(page.getByTestId("arch-node")).toHaveCount(5);
-  await expect(page.getByTestId("arch-node").nth(4)).not.toContainText("Work");
-  await expect(page.getByTestId("arch-node").nth(4)).toContainText("Safer. Cleaner. DART");
-  await expect(page.getByTestId("arch-sec")).toHaveCount(4);
-  await page.getByTestId("arch-node").nth(2).focus();
-  await page.keyboard.press("Enter");
-  await expect(page.getByTestId("arch-detail")).toContainText("Intelligence");
-  await expect(page.getByTestId("arch-detail")).toContainText("synthetic");
-  await expect(page.getByTestId("arch-node").nth(1)).toContainText("Ingest · Model · Analyze");
-  await page.getByTestId("arch-sec").nth(1).click();
-  await expect(page.getByTestId("arch-detail")).toContainText("simulation, not access control");
-  await page.getByTestId("arch-text").locator("summary").click();
-  await expect(page.getByTestId("arch-text")).toContainText("mapped to FISMA");
+  const titles = await page.getByTestId("arch-node").evaluateAll((els) => els.map((e) => (e.querySelector("span.block") as HTMLElement).textContent));
+  expect(titles).toEqual(["Data In", "DART Platform", "Intelligence", "Action", "Outcomes"]);
+  await expect(page.getByTestId("arch-node").nth(0)).toContainText("Stations · Vehicles · Operations");
+  await expect(page.getByTestId("arch-node").nth(4)).toContainText("Safer · Cleaner · More Reliable");
+  // no numbered badges
+  await expect(page.getByTestId("arch-flow")).not.toContainText(/^\s*[1-5]\s/);
+  // Akard before/after, labelled synthetic, no Park Lane
+  await expect(page.getByRole("heading", { name: "Akard Station" })).toBeVisible();
+  await expect(page.getByTestId("arch-before").locator("li")).toHaveCount(4);
+  await expect(page.getByTestId("arch-after").locator("li")).toHaveCount(4);
+  await expect(page.getByTestId("arch-illustrative")).toContainText("Illustrative demo — synthetic scenario");
+  await expect(page.locator("main")).not.toContainText("Park Lane");
+  // slim ribbon only
+  await expect(page.getByTestId("arch-security")).toContainText("Enterprise Security");
+  await expect(page.getByTestId("arch-sec")).toHaveText([/Texas \(DIR\)/, /Federal \(FTA\)/, /Zero Trust/]);
+  // removed copy stays removed
+  for (const gone of ["Design intent; no certification", "Security is designed in from the first connection", "These are proposed design principles", "Read this diagram as text", "SOC 2", "FISMA", "CMMC", "Encryption", "Compliance"]) {
+    await expect(page.locator("body")).not.toContainText(gone);
+  }
+  await expect(page.getByTestId("arch-text")).toHaveCount(0);
+  await expect(page.getByTestId("arch-detail")).toHaveCount(0);
+  // accessible equivalent remains for the diagram
+  await expect(page.getByTestId("arch-flow")).toHaveAttribute("aria-label", /left to right/);
+  await expect(page.getByTestId("arch-node").nth(2).locator(".sr-only")).not.toBeEmpty();
 });
 
 test("intelligence engine can be viewed for each line", async ({ page }) => {
